@@ -1,0 +1,15 @@
+export { default as App } from './App';
+export { default as DefaultPage } from './DefaultPage';
+export { default as Home } from './Home';
+export { default as NavBar } from './NavBar';
+export { default as BannerMidd } from './BannerMidd';
+export { default as News } from './News';
+export { default as BigNews } from './BigNews';
+export { default as Login } from './Login';
+export { default as Article } from './Article';
+export { default as Register } from './Register';
+export { default as TextEditor } from './TextEditor';
+export { default as UploadImages } from './UploadImages';
+export { default as UserProfile } from './UserProfile';
+export { default as UserHeader } from './UserHeader';
+export { default as SimilarNews } from './SimilarNews';

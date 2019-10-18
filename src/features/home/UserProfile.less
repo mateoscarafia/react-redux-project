@@ -1,0 +1,129 @@
+@import '../../styles/mixins';
+
+.home-user-profile {
+  background-color: #f5f5f5;
+
+  .user-profile-wrapper-content-title{
+    font-size: 14px;
+  }
+  
+  .inputfile {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    margin: 0;
+    z-index: -1;
+  }
+
+  .inputfile + label {
+    font-size: 15px;
+    color: white;
+    padding: 10px 15px 10px 15px;
+    background-color: #151515;
+    display: inline-block;
+    margin-left: 20px;
+    border-radius: 2px;
+    margin: 0;
+    cursor:pointer;
+  }
+
+  .inputfile:focus + label,
+  .inputfile + label:hover {
+    background-color: #151515;
+  }
+
+  .user-profile-wrapper {
+    padding: 20px 10% 0 10%;
+  }
+
+  .profile-wrapper-content {
+    padding: 20px 10% 0 10%;
+    width: 100%;
+    min-height: 500px;
+
+    .about-me-user-profile {
+      h4 {
+        font-size: 19px;
+      }
+      p{
+        text-indent: 20px;
+        text-align: justify;
+      }
+      background-color: white;
+      width: 100%;
+      margin-top: -35px;
+      margin-bottom: 20px;
+      min-height: 50px;
+      font-size: 15px;
+      padding: 20px;
+    }
+  }
+
+  .user-profile-wrapper-content {
+    width: 100%;
+    min-height: 500px;
+
+    .news-conts {
+      background-color: #fff;
+      width: 24%;
+      height: 250px;
+      box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15), 0 2px 3px rgba(0, 0, 0, 0.2);
+      margin: 0px 1% 10px 0px;
+      position: relative;
+
+      .header-div {
+        width: 100%;
+        height: 10%;
+        overflow: hidden;
+      }
+
+      .header-text {
+        font-size: 12px;
+        padding: 4px 10px 3px 8px;
+        color: rgba(0, 0, 0, 0.6);
+      }
+
+      .profile-news-date {
+        position: absolute;
+        top: 5px;
+        right: 10px;
+        font-size: 12px;
+        color: rgba(0, 0, 0, 0.6);
+        cursor: pointer;
+      }
+
+      .three-dots:hover {
+        color: #000;
+        font-size: 24px;
+        top: -4px;
+      }
+
+      .img-div {
+        width: 100%;
+        height: 60%;
+        overflow: hidden;
+      }
+
+      .p-div {
+        width: 100%;
+        height: 30%;
+        background-color: #fff;
+        min-height: 10px;
+
+        p {
+          text-align: left;
+          padding: 5px 10px 0 10px;
+          font-size: 15px;
+          line-height: 15px;
+          margin: 0 0 0 0;
+        }
+      }
+    }
+    .news-conts:hover {
+      cursor: pointer;
+      box-shadow: 0 1px 6px 1px rgba(0, 0, 0, 0.25), 0 1px 6px rgba(0, 0, 0, 0.3);
+    }
+  }
+}

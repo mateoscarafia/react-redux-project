@@ -1,0 +1,111 @@
+@import '../../styles/mixins';
+
+.home-user-header {
+  width: 100%;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  padding: 20px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  background-color: #fff;
+  position:relative;
+
+  .modal-header-edit-user{
+    height: 20px;
+  }
+
+  .edit-user-button-form{
+    width:100%;
+  }
+
+  .form-modal-edit-user{
+    padding:20px;
+  }
+
+  .close-modal-header-edit-user{
+    position: absolute;
+    right:20px;
+    top:20px;
+    cursor:pointer;
+  }
+
+  .follow-button-user-header{
+    position: absolute;
+    top:15px;
+    padding: 10px 15px 10px 15px;
+    border: 1px solid #A4A4A4;
+    right:10px;
+    font-size:12px;
+    color:rgba(0,0,0,.6);
+    cursor:pointer;
+    border-radius: 2px;
+  }
+
+  .edit-pen-user-profile-style{
+    margin-left: 20px;
+  }
+
+  .follow-button-user-header:hover{
+    font-weight: bold;
+    color:#fff;
+    background-color: #A4A4A4;
+  }
+
+  p {
+    margin-top: -5px;
+  }
+
+  .user-pic-header {
+    height: 100px;
+    width: 20%;
+  }
+
+  .user-data-header {
+    height: 100px;
+    width: 80%;
+
+    h4 {
+      cursor: pointer;
+    }
+    
+    ul {
+      list-style-type: none;
+      margin: -7px 0px 0px 0px;
+      padding: 0;
+      overflow: hidden;
+    }
+
+    li {
+      float: left;
+    }
+
+    li a {
+      display: block;
+      font-size: 14px;
+      color: rgba(0, 0, 0, 0.6);
+      text-align: center;
+      padding: 5px 5px 5px 0px;
+      text-decoration: none;
+    }
+
+    .li-font-weight-detail {
+      font-weight: bold;
+    }
+  }
+
+  .user-detail {
+    font-size: 14px;
+    margin-top: -15px;
+    color: rgba(0, 0, 0, 0.6);
+  }
+
+  .user-profile-picture {
+    width: 100px;
+    height: 100px;
+    cursor: pointer;
+    margin: auto;
+    border-radius: 50px;
+    background-size: 150px;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+}

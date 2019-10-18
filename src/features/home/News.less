@@ -1,0 +1,129 @@
+@import '../../styles/mixins';
+
+.home-news {
+  .news-style {
+    height: 100%;
+    width: 100%;
+  }
+
+  .follow-button{
+     text-align: center;
+     width:100px;
+    padding: 4px 10px 4px 10px;
+    border: 1px solid #A4A4A4;
+    font-size:14px;
+    color:rgba(0,0,0,.6);
+    cursor:pointer;
+    border-radius: 2px;
+    margin: auto;
+  }
+
+  .follow-button:hover{
+    font-weight: bold;
+    background-color: #A4A4A4;
+    color:#fff;
+  }
+
+  .user-popup-content {
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    p {
+      margin-top: -6px;
+    }
+    h4:hover{
+      cursor:pointer;
+    }
+    .smaller-p-popup{
+      font-size: 13px;
+      color:rgba(0,0,0,.6);
+      margin-top:-10px;
+    }
+  }
+
+  .user-popup-header-img {
+    cursor:pointer;
+    width: 100%;
+    height: 180px;
+    text-align: center;
+    padding-top: 20px;
+  }
+
+  .user-data-header-popup {
+    height: 100px;
+    width: 100%;
+    text-align: center;
+  }
+
+  .user-profile-picture-popup {
+    width: 150px;
+    height: 150px;
+    margin: auto;
+    border-radius: 50%;
+    background-size: 200px;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+
+  .news-conts {
+    background-color: #fff;
+    width: 24%;
+    height: 250px;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15), 0 2px 3px rgba(0, 0, 0, 0.2);
+    margin: 0px 1% 10px 0px;
+    position: relative;
+
+    .header-div {
+      width: 100%;
+      height: 10%;
+      overflow: hidden;
+    }
+
+    .header-text {
+      font-size: 12px;
+      padding: 4px 10px 3px 8px;
+      color: rgba(0, 0, 0, 0.6);
+    }
+    
+
+    .three-dots {
+      position: absolute;
+      top: 0px;
+      margin-top: -8px;
+      right: 10px;
+      font-size: 20px;
+      cursor: pointer;
+    }
+
+    .three-dots:hover {
+      color: #000;
+      font-size: 24px;
+      top: -4px;
+    }
+
+    .img-div {
+      width: 100%;
+      height: 60%;
+      overflow: hidden;
+    }
+
+    .p-div {
+      width: 100%;
+      height: 30%;
+      background-color: #fff;
+      min-height: 10px;
+
+      p {
+        text-align: left;
+        padding: 5px 10px 0 10px;
+        font-size: 15px;
+        line-height: 15px;
+        margin: 0 0 0 0;
+      }
+    }
+  }
+  .news-conts:hover {
+    cursor: pointer;
+    box-shadow: 0 1px 6px 1px rgba(0, 0, 0, 0.25), 0 1px 6px rgba(0, 0, 0, 0.3);
+  }
+}
