@@ -14,6 +14,14 @@ import { reducer as getWriterReducer } from './getWriter';
 import { reducer as followUserReducer } from './followUser';
 import { reducer as userLikeReducer } from './userLike';
 import { reducer as reportArticleReducer } from './reportArticle';
+import { reducer as postViewsReducer } from './postViews';
+import { reducer as postVisitReducer } from './postVisit';
+import { reducer as isAuthReducer } from './isAuth';
+import { reducer as getRelatedReducer } from './getRelated';
+import { reducer as editUserReducer } from './editUser';
+import { reducer as sendCommentReducer } from './sendComment';
+import { reducer as getCommentsReducer } from './getComments';
+import { reducer as isFollowReducer } from './isFollow';
 
 const reducers = [
   getNewsReducer,
@@ -31,6 +39,14 @@ const reducers = [
   followUserReducer,
   userLikeReducer,
   reportArticleReducer,
+  postViewsReducer,
+  postVisitReducer,
+  isAuthReducer,
+  getRelatedReducer,
+  editUserReducer,
+  sendCommentReducer,
+  getCommentsReducer,
+  isFollowReducer,
 ];
 
 export default function reducer(state = initialState, action) {

@@ -42,109 +42,51 @@ export class BigNews extends Component {
 
   buildNewsMain = () => {
     return (
-      <div className="big-news-1">
-        <div className="big-news-user-info">
-          <ul>
-            <li>
-              <img
-                onClick={() => this.handleModal(true, this.props.articles.data[0].user.id)}
-                className="user-img-style"
-                alt=""
-                src={this.props.articles.data[0].user.profile_img_url}
-              />
-            </li>
-            <li>
-              <a
-                className="user-name-popup-news"
-                onClick={() => this.handleModal(true, this.props.articles.data[0].user.id)}
-              >
-                {this.props.articles.data[0].user.username}
-              </a>
-            </li>
-          </ul>
-          <p className="user-detail">
-            {this.props.articles.data[0].user.profession +
-              ' | ' +
-              this.props.articles.data[0].created_at}
-          </p>
-          <p
-            onClick={() => this.followUser(this.props.articles.data[0].user.id, true)}
-            className="follow-button"
+      this.props.articles.data[0] && (
+        <div className="big-news-1">
+          <div
+            onClick={() => this.routerMethod('../news/' + this.props.articles.data[0].id)}
+            className="big-news-header"
+            style={{
+              backgroundImage: `url(${this.props.articles.data[0].img_url})`,
+            }}
           >
-            Seguir
-          </p>
-        </div>
-        <div
-          onClick={() => this.routerMethod('news/34200112')}
-          className="big-news-header"
-          style={{
-            backgroundImage: `url(${this.props.articles.data[0].img_url})`,
-          }}
-        >
-          <div className="floating-div-header">
-            <p>{this.props.articles.data[0].category.name}</p>
+            <div className="floating-div-header">
+              <p>{this.props.articles.data[0].name}</p>
+            </div>
+          </div>
+          <div className="big-news-content-big">
+            <h4 onClick={() => this.routerMethod('../news/' + this.props.articles.data[0].id)}>
+              {this.props.articles.data[0].title}
+            </h4>
           </div>
         </div>
-        <div className="big-news-content-big">
-          <h4 onClick={() => this.routerMethod('news/34200112')}>
-            {this.props.articles.data[0].title}
-          </h4>
-        </div>
-      </div>
+      )
     );
   };
 
   buildNewsSecondary = () => {
     return (
-      <div className="big-news-2">
-        <div className="big-news-user-info">
-          <ul>
-            <li>
-              <img
-                onClick={() => this.handleModal(true, this.props.articles.data[1].user.id)}
-                className="user-img-style"
-                alt=""
-                src={this.props.articles.data[1].user.profile_img_url}
-              />
-            </li>
-            <li className="user-name-popup-news">
-              <a
-                className="user-name-popup-news"
-                onClick={() => this.handleModal(true, this.props.articles.data[1].user.id)}
-              >
-                {this.props.articles.data[1].user.username}
-              </a>
-            </li>
-          </ul>
-          <p className="user-detail">
-            {this.props.articles.data[1].user.profession +
-              ' | ' +
-              this.props.articles.data[1].created_at}
-          </p>
-          <p
-            onClick={() => this.followUser(this.props.articles.data[0].user.id, true)}
-            className="follow-button"
+      this.props.articles.data[1] && (
+        <div className="big-news-2">
+          <div
+            onClick={() => this.routerMethod('../news/' + this.props.articles.data[1].id)}
+            className="big-news-header"
+            style={{
+              backgroundImage: `url(${this.props.articles.data[1].img_url})`,
+            }}
           >
-            Seguir
-          </p>
-        </div>
-        <div
-          onClick={() => this.routerMethod('news/34200112')}
-          className="big-news-header"
-          style={{
-            backgroundImage: `url(${this.props.articles.data[1].img_url})`,
-          }}
-        >
-          <div className="floating-div-header">
-            <p>{this.props.articles.data[1].category.name}</p>
+            <div className="floating-div-header">
+              <p>{this.props.articles.data[1].name}</p>
+            </div>
+          </div>
+          <div className="big-news-content">
+            <h4 onClick={() => this.routerMethod('../news/' + this.props.articles.data[1].id)}>
+              {this.props.articles.data[1].title}
+            </h4>
           </div>
         </div>
-        <div className="big-news-content">
-          <h4 onClick={() => this.routerMethod('news/34200112')}>
-            {this.props.articles.data[1].title}
-          </h4>
-        </div>
-      </div>
+      )
     );
   };
 
@@ -219,7 +161,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(BigNews);
+export default connect(mapStateToProps, mapDispatchToProps)(BigNews);

@@ -29,6 +29,22 @@ const initialState = {
   userLikeError: null,
   reportArticlePending: false,
   reportArticleError: null,
+  postViewsPending: false,
+  postViewsError: null,
+  postVisitPending: false,
+  postVisitError: null,
+  isAuthPending: false,
+  isAuthError: null,
+  getRelatedPending: false,
+  getRelatedError: null,
+  editUserPending: false,
+  editUserError: null,
+  sendCommentPending: false,
+  sendCommentError: null,
+  getCommentsPending: false,
+  getCommentsError: null,
+  isFollowPending: false,
+  isFollowError: null,
 };
 
 export default initialState;

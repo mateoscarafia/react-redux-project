@@ -6,6 +6,7 @@ import {
   Register,
   TextEditor,
   UserProfile,
+  TermsAndCond,
 } from './';
 
 export default {
@@ -17,11 +18,12 @@ export default {
       component: DefaultPage,
       isIndex: true,
     },
-    { path: 'feed', name: 'Home', component: Home },
     { path: 'login', name: 'Login', component: Login },
+    { path: 'feed/:info', name: 'Home', component: Home },
     { path: 'register', name: 'Register', component: Register },
     { path: 'news/:id', name: 'Article', component: Article },
     { path: 'editor/:id', name: 'TextEditor', component: TextEditor },
     { path: 'profile/:id', name: 'User profile', component: UserProfile },
+    { path: '/terminosycondiciones', name: 'Terms and cond', component: TermsAndCond },
   ],
 };

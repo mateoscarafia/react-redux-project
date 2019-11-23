@@ -1,18 +1,18 @@
 import {
-  HOME_FOLLOW_USER_BEGIN,
-  HOME_FOLLOW_USER_SUCCESS,
-  HOME_FOLLOW_USER_FAILURE,
-  HOME_FOLLOW_USER_DISMISS_ERROR,
+  HOME_GET_RELATED_BEGIN,
+  HOME_GET_RELATED_SUCCESS,
+  HOME_GET_RELATED_FAILURE,
+  HOME_GET_RELATED_DISMISS_ERROR,
 } from './constants';
 const axios = require('axios');
 
 // Rekit uses redux-thunk for async actions by default: https://github.com/gaearon/redux-thunk
 // If you prefer redux-saga, you can use rekit-plugin-redux-saga: https://github.com/supnate/rekit-plugin-redux-saga
-export function followUser(args = {}) {
+export function getRelated(args = {}) {
   return dispatch => {
     // optionally you can have getState as the second argument
     dispatch({
-      type: HOME_FOLLOW_USER_BEGIN,
+      type: HOME_GET_RELATED_BEGIN,
     });
 
     // Return a promise so that you could control UI flow without states in the store.
@@ -23,11 +23,11 @@ export function followUser(args = {}) {
       // doRequest is a placeholder Promise. You should replace it with your own logic.
       // See the real-word example at:  https://github.com/supnate/rekit/blob/master/src/features/home/redux/fetchRedditReactjsList.js
       // args.error here is only for test coverage purpose.
-      const doRequest = axios.post('http://localhost:3000/follow', args);
+      const doRequest = axios.post('http://localhost:3000/getrelated', args);
       doRequest.then(
         res => {
           dispatch({
-            type: HOME_FOLLOW_USER_SUCCESS,
+            type: HOME_GET_RELATED_SUCCESS,
             data: res,
           });
           resolve(res);
@@ -35,7 +35,7 @@ export function followUser(args = {}) {
         // Use rejectHandler as the second argument so that render errors won't be caught.
         err => {
           dispatch({
-            type: HOME_FOLLOW_USER_FAILURE,
+            type: HOME_GET_RELATED_FAILURE,
             data: { error: err },
           });
           reject(err);
@@ -49,44 +49,44 @@ export function followUser(args = {}) {
 
 // Async action saves request error by default, this method is used to dismiss the error info.
 // If you don't want errors to be saved in Redux store, just ignore this method.
-export function dismissFollowUserError() {
+export function dismissGetRelatedError() {
   return {
-    type: HOME_FOLLOW_USER_DISMISS_ERROR,
+    type: HOME_GET_RELATED_DISMISS_ERROR,
   };
 }
 
 export function reducer(state, action) {
   switch (action.type) {
-    case HOME_FOLLOW_USER_BEGIN:
+    case HOME_GET_RELATED_BEGIN:
       // Just after a request is sent
       return {
         ...state,
-        followUserPending: true,
-        followUserError: null,
+        getRelatedPending: true,
+        getRelatedError: null,
       };
 
-    case HOME_FOLLOW_USER_SUCCESS:
+    case HOME_GET_RELATED_SUCCESS:
       // The request is success
       return {
         ...state,
-        followUserPending: false,
-        followUserError: null,
-        follow: action.data,
+        getRelatedPending: false,
+        getRelatedError: null,
+        related: action.data,
       };
 
-    case HOME_FOLLOW_USER_FAILURE:
+    case HOME_GET_RELATED_FAILURE:
       // The request is failed
       return {
         ...state,
-        followUserPending: false,
-        followUserError: action.data.error,
+        getRelatedPending: false,
+        getRelatedError: action.data.error,
       };
 
-    case HOME_FOLLOW_USER_DISMISS_ERROR:
+    case HOME_GET_RELATED_DISMISS_ERROR:
       // Dismiss the request failure error
       return {
         ...state,
-        followUserError: null,
+        getRelatedError: null,
       };
 
     default:

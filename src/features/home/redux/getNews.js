@@ -4,11 +4,13 @@ import {
   HOME_GET_NEWS_FAILURE,
   HOME_GET_NEWS_DISMISS_ERROR,
 } from './constants';
+const axios = require('axios');
 
 // Rekit uses redux-thunk for async actions by default: https://github.com/gaearon/redux-thunk
 // If you prefer redux-saga, you can use rekit-plugin-redux-saga: https://github.com/supnate/rekit-plugin-redux-saga
 export function getNews(args = {}) {
-  return (dispatch) => { // optionally you can have getState as the second argument
+  return dispatch => {
+    // optionally you can have getState as the second argument
     dispatch({
       type: HOME_GET_NEWS_BEGIN,
     });
@@ -22,9 +24,9 @@ export function getNews(args = {}) {
       // See the real-word example at:  https://github.com/supnate/rekit/blob/master/src/features/home/redux/fetchRedditReactjsList.js
       // args.error here is only for test coverage purpose.
       //https://newsapi.org/v2/everything?q=bitcoin&from=2019-06-14&sortBy=publishedAt&apiKey=c4d5421f5471419d84d56449b1369083
-      const doRequest = args.error ? Promise.reject(new Error()) : Promise.resolve();
+      const doRequest = axios.post('http://localhost:3000/userarticles', args);
       doRequest.then(
-        (res) => {
+        res => {
           dispatch({
             type: HOME_GET_NEWS_SUCCESS,
             data: res,
@@ -32,7 +34,7 @@ export function getNews(args = {}) {
           resolve(res);
         },
         // Use rejectHandler as the second argument so that render errors won't be caught.
-        (err) => {
+        err => {
           dispatch({
             type: HOME_GET_NEWS_FAILURE,
             data: { error: err },
@@ -70,6 +72,7 @@ export function reducer(state, action) {
         ...state,
         getNewsPending: false,
         getNewsError: null,
+        userarticles: action.data,
       };
 
     case HOME_GET_NEWS_FAILURE:

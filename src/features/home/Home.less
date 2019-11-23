@@ -5,6 +5,14 @@
   background-color: #f5f5f5;
   position: relative;
 
+  .margin-top-cont{
+    min-height:1000px;
+  }
+
+  .container-not-logged{
+    padding:0% 10% 0% 10%;
+  }
+
   .home-notification-alerts{
     position: absolute;
     top:80px;
@@ -153,5 +161,16 @@
   .news-content-index-fullwidth {
     padding-top: 20px;
     width: 100%;
+  }
+
+  @media (max-width: 800px) {
+    .user-content {
+      display: none;
+    }
+
+    .news-content-index {
+      width: 100%;
+      margin-left: 0%;
+    }
   }
 }

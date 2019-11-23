@@ -2,26 +2,49 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
+import * as VALUES from '../../constants';
+import { NotificationContainer, NotificationManager } from 'react-notifications';
+import 'react-notifications/lib/notifications.css';
 
 export class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
       email: '',
-      password: ''
+      password: '',
     };
-    this.handleChange = this.handleChange.bind(this)
+    this.handleChange = this.handleChange.bind(this);
   }
 
   handleChange(event) {
-    this.setState({ [event.target.name]: event.target.value })
+    this.setState({ [event.target.name]: event.target.value });
   }
 
-  loginForm(){
-    let data = {email: this.state.email, password: this.state.password}
-    this.props.actions.login(data)
+  loginForm() {
+    let data = { mail: this.state.email, pass: this.state.password, token: VALUES.DEEP_TOKEN };
+    this.props.actions.login(data);
   }
 
+  goToRegister() {
+    window.location.replace('http://localhost:6075/register');
+  }
+
+  async componentDidMount() {
+    if (localStorage.getItem('token-app-auth-current')) {
+      let auth = { token: localStorage.getItem('token-app-auth-current') };
+      await this.props.actions.isAuth(auth);
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.home.loginPending && nextProps.home.loginError) {
+      NotificationManager.warning('Ups, algo fue mal');
+      NotificationManager.warning('Revisa los datos ingresados');
+    } else if (this.props.home.loginPending && nextProps.home.logindata) {
+      localStorage.setItem('token-app-auth-current', nextProps.home.logindata.data.token);
+      window.location.replace('http://localhost:6075/feed/main');
+    }
+  }
 
   render() {
     return (
@@ -45,10 +68,12 @@ export class Login extends Component {
               placeholder="Password"
             />
           </div>
-          <button onClick={() => this.loginForm()} type='button' className="login-button">
+          <button onClick={() => this.loginForm()} type="button" className="login-button">
             Login
           </button>
+          <p onClick={() => this.goToRegister()} className="register-link-in-login-form">¿No tienes cuenta? Registrate</p>
         </form>
+        <NotificationContainer />
       </div>
     );
   }
@@ -68,7 +93,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

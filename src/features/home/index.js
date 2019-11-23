@@ -13,3 +13,6 @@ export { default as UploadImages } from './UploadImages';
 export { default as UserProfile } from './UserProfile';
 export { default as UserHeader } from './UserHeader';
 export { default as SimilarNews } from './SimilarNews';
+export { default as SearchEngine } from './SearchEngine';
+export { default as TermsAndCond } from './TermsAndCond';
+export { default as Comments } from './Comments';

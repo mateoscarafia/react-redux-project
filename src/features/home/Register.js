@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
+import * as VALUES from '../../constants';
+import { NotificationContainer, NotificationManager } from 'react-notifications';
+import 'react-notifications/lib/notifications.css';
 
 export class Register extends Component {
   constructor(props) {
@@ -9,25 +12,39 @@ export class Register extends Component {
     this.state = {
       email: '',
       password: '',
-      fullname: ''
+      fullname: '',
     };
-    this.handleChange = this.handleChange.bind(this)
+    this.handleChange = this.handleChange.bind(this);
   }
 
   handleChange(event) {
-    this.setState({ [event.target.name]: event.target.value })
+    this.setState({ [event.target.name]: event.target.value });
   }
 
-  registerForm(){
-    let data = {email: this.state.email, password: this.state.password, fullname: this.state.fullname}
-    this.props.actions.register(data)
+  registerForm() {
+    let data = {
+      token: VALUES.DEEP_TOKEN,
+      mail: this.state.email,
+      pass: this.state.password,
+      username: this.state.fullname,
+    };
+    this.props.actions.register(data);
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (this.props.home.registerPending && nextProps.home.registerError) {
+      NotificationManager.warning('Ups, algo fue mal');
+      NotificationManager.warning('Revisa los datos ingresados');
+    } else if (this.props.home.registerPending && nextProps.home.registerdata) {
+      localStorage.setItem('token-app-auth-current', nextProps.home.registerdata.data.token);
+      window.location.replace('http://localhost:6075/feed/main');
+    }
+  }
 
   render() {
     return (
       <div className="home-register">
-         <form className="home-register-form">
+        <form className="home-register-form">
           <div className="form-group">
             <input
               type="email"
@@ -55,10 +72,17 @@ export class Register extends Component {
               placeholder="Fullname"
             />
           </div>
-          <button onClick={() => this.registerForm()} type='button' className="register-button">
+          <button onClick={() => this.registerForm()} type="button" className="register-button">
             Register
           </button>
+          <p
+            onClick={() => window.location.replace('http://localhost:6075/terminosycondicones')}
+            className="terms-link-in-register-form"
+          >
+            Términos y Condiciones
+          </p>
         </form>
+        <NotificationContainer />
       </div>
     );
   }
@@ -74,11 +98,8 @@ function mapStateToProps(state) {
 /* istanbul ignore next */
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({ ...actions }, dispatch)
+    actions: bindActionCreators({ ...actions }, dispatch),
   };
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Register);
+export default connect(mapStateToProps, mapDispatchToProps)(Register);

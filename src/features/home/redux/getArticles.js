@@ -4,12 +4,13 @@ import {
   HOME_GET_ARTICLES_FAILURE,
   HOME_GET_ARTICLES_DISMISS_ERROR,
 } from './constants';
-const axios = require('axios')
+const axios = require('axios');
 
 // Rekit uses redux-thunk for async actions by default: https://github.com/gaearon/redux-thunk
 // If you prefer redux-saga, you can use rekit-plugin-redux-saga: https://github.com/supnate/rekit-plugin-redux-saga
 export function getArticles(args = {}) {
-  return (dispatch) => { // optionally you can have getState as the second argument
+  return dispatch => {
+    // optionally you can have getState as the second argument
     dispatch({
       type: HOME_GET_ARTICLES_BEGIN,
     });
@@ -22,9 +23,9 @@ export function getArticles(args = {}) {
       // doRequest is a placeholder Promise. You should replace it with your own logic.
       // See the real-word example at:  https://github.com/supnate/rekit/blob/master/src/features/home/redux/fetchRedditReactjsList.js
       // args.error here is only for test coverage purpose.
-      const doRequest = axios.get('http://localhost:3000/articles/')
+      const doRequest = axios.post('http://localhost:3000/searcharticles/', args);
       doRequest.then(
-        (res) => {
+        res => {
           dispatch({
             type: HOME_GET_ARTICLES_SUCCESS,
             data: res,
@@ -32,7 +33,7 @@ export function getArticles(args = {}) {
           resolve(res);
         },
         // Use rejectHandler as the second argument so that render errors won't be caught.
-        (err) => {
+        err => {
           dispatch({
             type: HOME_GET_ARTICLES_FAILURE,
             data: { error: err },
@@ -70,7 +71,7 @@ export function reducer(state, action) {
         ...state,
         getArticlesPending: false,
         getArticlesError: null,
-        articles: action.data
+        articles: action.data,
       };
 
     case HOME_GET_ARTICLES_FAILURE:

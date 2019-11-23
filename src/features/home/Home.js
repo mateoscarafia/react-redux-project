@@ -7,12 +7,15 @@ import * as actions from './redux/actions';
 import Modal from 'react-awesome-modal';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
+import * as VALUES from '../../constants';
 
 //Components
 import NavBar from './NavBar';
 import News from './News';
 import BigNews from './BigNews';
 import TextEditor from './TextEditor';
+
+const jwt = require('jsonwebtoken');
 
 export class Home extends Component {
   static propTypes = {
@@ -28,23 +31,58 @@ export class Home extends Component {
       login: true,
       openEditor: false,
       userProfile: false,
+      id: null,
       notification: false,
       notMessage: '',
     };
   }
 
   async componentWillMount() {
-    await this.props.actions.getCategories();
-    await this.props.actions.getArticles();
-    await this.props.actions.getSecArticles();
-    await this.props.actions.getPromoted();
-    await this.props.actions.getUser(6767676);
+    if (localStorage.getItem('token-app-auth-current')) {
+      try {
+        var user = jwt.verify(localStorage.getItem('token-app-auth-current'), VALUES.API_KEY);
+      } catch (err) {
+        await this.props.actions.getCategories();
+        await this.props.actions.getArticles({
+          token: VALUES.DEEP_TOKEN,
+          param: this.props.match.params.info,
+          id: null,
+        });
+        this.setState({
+          login: false,
+        });
+      }
+      if (user) {
+        let data = { token: localStorage.getItem('token-app-auth-current'), id: user.id };
+        await this.props.actions.getCategories();
+        await this.props.actions.getArticles({
+          token: VALUES.DEEP_TOKEN,
+          param: this.props.match.params.info,
+          id: user.id,
+        });
+        await this.props.actions.getUser(data);
+        this.setState({
+          login: true,
+          id: user.id,
+        });
+      }
+    } else {
+      this.setState({
+        login: false,
+      });
+      await this.props.actions.getCategories();
+      await this.props.actions.getArticles({
+        token: VALUES.DEEP_TOKEN,
+        param: this.props.match.params.info,
+        id: null,
+      });
+    }
   }
 
-  componentWillReceiveProps(nextProps) {
+  async componentWillReceiveProps(nextProps) {
     this.props.home.followUserPending &&
       !nextProps.followUserPending &&
-      NotificationManager.info('Sigues al usuario.');
+      NotificationManager.info('Sigues al usuario');
   }
 
   handleModal = action => {
@@ -75,48 +113,60 @@ export class Home extends Component {
   };
 
   render() {
+    let params = this.props.match.params.info;
     return (
       <div className="home-home">
         {typeof this.props.home.categories !== 'undefined' && (
-          <NavBar history={this.props.history} categories={this.props.home.categories} />
+          <NavBar
+            login={this.state.login}
+            history={this.props.history}
+            categories={this.props.home.categories}
+            user={this.state.id}
+          />
         )}
         <div className="container margin-top-cont">
           <div className="row">
-            {this.state.login && !this.state.userProfile && (
+            {this.props.home.user && this.state.login && !this.state.userProfile && (
               <div className="user-content">
                 {typeof this.props.home.user !== 'undefined' && (
                   <div className="user-content-index">
                     <div
-                      onClick={() => this.routerMethod('/profile/4141514')}
+                      onClick={() =>
+                        this.routerMethod('../../profile/' + this.props.home.user.data[0].id)
+                      }
                       style={{
-                        backgroundImage: `url(${this.props.home.user.data.profile_img_url})`,
+                        backgroundImage: `url(${this.props.home.user.data[0].profile_img_url})`,
                       }}
                       className="user-profile-picture"
                     ></div>
                     <p
-                      onClick={() => this.routerMethod('/profile/4141514')}
+                      onClick={() =>
+                        this.routerMethod('../../profile/' + this.props.home.user.data[0].id)
+                      }
                       className="user-profile-name"
                     >
-                      {this.props.home.user.data.username}
+                      {this.props.home.user.data[0].username}
                     </p>
-                    <p className="user-profile-title">{this.props.home.user.data.profession}</p>
+                    <p className="user-profile-title">{this.props.home.user.data[0].profession}</p>
                     <div className="user-profile-content-detail">
                       <table>
                         <tbody>
                           <tr>
-                            <td>Me Gustas</td>
-                            <td className="td-float-right">{this.props.home.user.data.likes}</td>
+                            <td>Seguidos</td>
+                            <td className="td-float-right">
+                              {this.props.home.user.data[0].following}
+                            </td>
                           </tr>
                           <tr>
                             <td>Seguidores</td>
                             <td className="td-float-right">
-                              {this.props.home.user.data.followers}
+                              {this.props.home.user.data[0].followers}
                             </td>
                           </tr>
                           <tr>
                             <td>Articulos</td>
                             <td className="td-float-right">
-                              {this.props.home.user.data.num_articles}
+                              {this.props.home.user.data[0].num_articles}
                             </td>
                           </tr>
                         </tbody>
@@ -129,24 +179,32 @@ export class Home extends Component {
                     VOLVER
                   </button>
                 )}
-                <button
-                  className="open-editor-button"
-                  onClick={() => this.routerMethod('/editor/4141514')}
-                >
-                  {'NUEVA PUBLICACIÓN'}
-                </button>
+                {this.props.home.user && (
+                  <button
+                    className="open-editor-button"
+                    onClick={() =>
+                      this.routerMethod('../editor/' + this.props.home.user.data[0].id)
+                    }
+                  >
+                    {'ESCRIBIR ARTICULO'}
+                  </button>
+                )}
               </div>
             )}
-            {this.state.userProfile && <div className="user-profile-info"></div>}
             {this.state.feed && (
               <div
                 className={this.state.login ? 'news-content-index' : 'news-content-index-fullwidth'}
               >
-                {typeof this.props.home.promoted !== 'undefined' && (
-                  <BigNews articles={this.props.home.promoted} />
+                {typeof this.props.home.articles !== 'undefined' && params === 'main' && (
+                  <BigNews articles={this.props.home.articles} />
                 )}
-                {typeof this.props.home.secarticles !== 'undefined' && (
-                  <News articles={this.props.home.secarticles} isSimilar={false}/>
+                {this.props.home.articles && (
+                  <News
+                    routeparams={params}
+                    id={this.state.id}
+                    articles={this.props.home.articles}
+                    isSimilar={false}
+                  />
                 )}
               </div>
             )}
@@ -191,7 +249,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(Home);
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
