@@ -4,6 +4,7 @@ import {
   HOME_GET_NEWS_FAILURE,
   HOME_GET_NEWS_DISMISS_ERROR,
 } from './constants';
+import * as VALUES from '../../../constants';
 const axios = require('axios');
 
 // Rekit uses redux-thunk for async actions by default: https://github.com/gaearon/redux-thunk
@@ -24,7 +25,7 @@ export function getNews(args = {}) {
       // See the real-word example at:  https://github.com/supnate/rekit/blob/master/src/features/home/redux/fetchRedditReactjsList.js
       // args.error here is only for test coverage purpose.
       //https://newsapi.org/v2/everything?q=bitcoin&from=2019-06-14&sortBy=publishedAt&apiKey=c4d5421f5471419d84d56449b1369083
-      const doRequest = axios.post('http://66.97.36.167:3000/userarticles', args);
+      const doRequest = axios.post('http://'+VALUES.BD_ORIGIN+':3000/userarticles', args);
       doRequest.then(
         res => {
           dispatch({

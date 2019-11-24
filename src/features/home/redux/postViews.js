@@ -4,6 +4,7 @@ import {
   HOME_POST_VIEWS_FAILURE,
   HOME_POST_VIEWS_DISMISS_ERROR,
 } from './constants';
+import * as VALUES from '../../../constants';
 const axios = require('axios')
 
 // Rekit uses redux-thunk for async actions by default: https://github.com/gaearon/redux-thunk
@@ -22,7 +23,7 @@ export function postViews(args = {}) {
       // doRequest is a placeholder Promise. You should replace it with your own logic.
       // See the real-word example at:  https://github.com/supnate/rekit/blob/master/src/features/home/redux/fetchRedditReactjsList.js
       // args.error here is only for test coverage purpose.
-      const doRequest = axios.post('http://66.97.36.167:3000/views/6787678687')
+      const doRequest = axios.post('http://'+VALUES.BD_ORIGIN+':3000/views/6787678687')
       doRequest.then(
         (res) => {
           dispatch({

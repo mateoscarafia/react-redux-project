@@ -4,6 +4,7 @@ import {
   HOME_SEND_COMMENT_FAILURE,
   HOME_SEND_COMMENT_DISMISS_ERROR,
 } from './constants';
+import * as VALUES from '../../../constants';
 const axios = require('axios');
 
 // Rekit uses redux-thunk for async actions by default: https://github.com/gaearon/redux-thunk
@@ -23,7 +24,7 @@ export function sendComment(args = {}) {
       // doRequest is a placeholder Promise. You should replace it with your own logic.
       // See the real-word example at:  https://github.com/supnate/rekit/blob/master/src/features/home/redux/fetchRedditReactjsList.js
       // args.error here is only for test coverage purpose.
-      const doRequest = axios.post('http://66.97.36.167:3000/comment', args);
+      const doRequest = axios.post('http://'+VALUES.BD_ORIGIN+':3000/comment', args);
       doRequest.then(
         res => {
           dispatch({
