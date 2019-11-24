@@ -22,7 +22,7 @@ export function getSecArticles(args = {}) {
       // doRequest is a placeholder Promise. You should replace it with your own logic.
       // See the real-word example at:  https://github.com/supnate/rekit/blob/master/src/features/home/redux/fetchRedditReactjsList.js
       // args.error here is only for test coverage purpose.
-      const doRequest = axios.get('http://127.0.0.1:3000/sec-articles')
+      const doRequest = axios.get('http://localhost:8080/sec-articles')
       doRequest.then(
         (res) => {
           dispatch({
