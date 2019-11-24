@@ -22,7 +22,7 @@ export function getCategories(args = {}) {
       // doRequest is a placeholder Promise. You should replace it with your own logic.
       // See the real-word example at:  https://github.com/supnate/rekit/blob/master/src/features/home/redux/fetchRedditReactjsList.js
       // args.error here is only for test coverage purpose.
-      const doRequest = axios.get('https://localhost:3000/categories/')
+      const doRequest = axios.get('http://66.97.36.167:3000/categories/')
       doRequest.then(
         (res) => {
           dispatch({

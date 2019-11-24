@@ -22,7 +22,7 @@ export function userLike(args = {}) {
       // doRequest is a placeholder Promise. You should replace it with your own logic.
       // See the real-word example at:  https://github.com/supnate/rekit/blob/master/src/features/home/redux/fetchRedditReactjsList.js
       // args.error here is only for test coverage purpose.
-      const doRequest = axios.post('https://localhost:3000/likes/', args)
+      const doRequest = axios.post('http://66.97.36.167:3000/likes/', args)
       doRequest.then(
         (res) => {
           dispatch({
