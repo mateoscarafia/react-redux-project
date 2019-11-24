@@ -43,7 +43,7 @@ export class TextEditor extends Component {
     if (this.props.home.postArticlePending && nextProps.home.postarticle) {
       NotificationManager.info('Articulo guardado');
       setTimeout(() => {
-        window.location.replace('http://localhost:6075/news/' + nextProps.home.postarticle.data.id);
+        window.location.replace('http://'+VALUES.BD_ORIGIN+':6075/news/' + nextProps.home.postarticle.data.id);
       }, 1000);
     }
     if (this.props.home.postArticlePending && nextProps.home.postArticleError) {

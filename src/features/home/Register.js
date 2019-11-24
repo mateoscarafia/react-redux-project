@@ -37,7 +37,7 @@ export class Register extends Component {
       NotificationManager.warning('Revisa los datos ingresados');
     } else if (this.props.home.registerPending && nextProps.home.registerdata) {
       localStorage.setItem('token-app-auth-current', nextProps.home.registerdata.data.token);
-      window.location.replace('http://localhost:6075/feed/main');
+      window.location.replace('http://' + VALUES.BD_ORIGIN + ':6075/feed/main');
     }
   }
 
@@ -76,7 +76,9 @@ export class Register extends Component {
             Register
           </button>
           <p
-            onClick={() => window.location.replace('http://localhost:6075/terminosycondicones')}
+            onClick={() =>
+              window.location.replace('http://' + VALUES.BD_ORIGIN + ':6075/terminosycondicones')
+            }
             className="terms-link-in-register-form"
           >
             Términos y Condiciones

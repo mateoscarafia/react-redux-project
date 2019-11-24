@@ -26,7 +26,7 @@ export class Login extends Component {
   }
 
   goToRegister() {
-    window.location.replace('http://localhost:6075/register');
+    window.location.replace('http://'+VALUES.BD_ORIGIN+':6075/register');
   }
 
   async componentDidMount() {
@@ -42,7 +42,7 @@ export class Login extends Component {
       NotificationManager.warning('Revisa los datos ingresados');
     } else if (this.props.home.loginPending && nextProps.home.logindata) {
       localStorage.setItem('token-app-auth-current', nextProps.home.logindata.data.token);
-      window.location.replace('http://localhost:6075/feed/main');
+      window.location.replace('http://'+VALUES.BD_ORIGIN+':6075/feed/main');
     }
   }
 
