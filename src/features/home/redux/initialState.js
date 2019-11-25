@@ -7,8 +7,6 @@ const initialState = {
   getCategoriesError: null,
   getArticlesPending: false,
   getArticlesError: null,
-  getPromotedPending: false,
-  getPromotedError: null,
   registerPending: false,
   registerError: null,
   getUserPending: false,
@@ -19,8 +17,6 @@ const initialState = {
   getArticleError: null,
   fullUserPending: false,
   fullUserError: null,
-  getSecArticlesPending: false,
-  getSecArticlesError: null,
   getWriterPending: false,
   getWriterError: null,
   followUserPending: false,
@@ -45,6 +41,8 @@ const initialState = {
   getCommentsError: null,
   isFollowPending: false,
   isFollowError: null,
+  deleteCommentPending: false,
+  deleteCommentError: null,
 };
 
 export default initialState;

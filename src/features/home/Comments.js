@@ -20,6 +20,17 @@ export class Comments extends Component {
     actions: PropTypes.object.isRequired,
   };
 
+  deleteComment = id => {
+    this.props.actions.deleteComment({ token: VALUES.DEEP_TOKEN, comment_id: id });
+  };
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.home.deleteCommentPending && nextProps.home.deletedcomment) {
+      NotificationManager.info('Comentario eliminado');
+      this.props.actions.getComments({ news_id: this.props.news_id, token: VALUES.DEEP_TOKEN });
+    }
+  }
+
   componentWillMount() {
     this.props.actions.getComments({ news_id: this.props.news_id, token: VALUES.DEEP_TOKEN });
   }
@@ -28,9 +39,14 @@ export class Comments extends Component {
     return this.props.home.comments.data.map(item => {
       return (
         <div key={item.created_at} className="comment-show-divs-list">
+          {item.user_id === this.props.user_id && (
+            <p onClick={() => this.deleteComment(item.id)} className="delete-comment-float-right">
+              Eliminar
+            </p>
+          )}
           <p
             className="username-p-design"
-            onClick={() => this.routerMethod('../../profile/' + item.id)}
+            onClick={() => this.routerMethod('../../profile/' + item.user_id)}
           >
             {item.username}
           </p>

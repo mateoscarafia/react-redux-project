@@ -40,6 +40,7 @@ export class Article extends Component {
         this.setState({
           login: true,
           id: user.id,
+          article_likes: null,
         });
       }
     }
@@ -53,11 +54,14 @@ export class Article extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    console.log(nextProps.userLikeError);
+    this.props.home.userLikePending && NotificationManager.info('Te gusta el articulo');
     this.props.home.userLikePending &&
-      !nextProps.userLikePending &&
-      NotificationManager.info('Te gusta el articulo');
+      !nextProps.home.userLikeError &&
+      this.setState({
+        article_likes: this.props.home.uniquearticle.data[0].total_likes + 1,
+      });
     this.props.home.reportArticlePending &&
-      !nextProps.reportArticlePending &&
       NotificationManager.info('Denunciaste el articulo');
   }
 
@@ -223,7 +227,7 @@ export class Article extends Component {
                   Me gusta
                 </p>
                 <p className="review-article-user-num">
-                  +{this.props.home.uniquearticle.data[0].total_likes}
+                  +{this.state.article_likes || this.props.home.uniquearticle.data[0].total_likes}
                 </p>
               </div>
               <div className="review-article-user-div-second">

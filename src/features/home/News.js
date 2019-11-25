@@ -42,7 +42,7 @@ export class News extends Component {
 
   buildNews = (type, min, max) => {
     let data = [];
-    if (type == 'main') {
+    if (type === 'main') {
       max = max === 'end' ? this.props.articles.data.main_feed.length : max;
       for (const prop in this.props.articles.data.main_feed) {
         if (prop >= min && prop < max) {
@@ -442,7 +442,7 @@ export class News extends Component {
 
   buildMainNews = type => {
     let data = [];
-    if (type == 'main') {
+    if (type === 'main') {
       for (const prop in this.props.articles.data.main_feed) {
         if (prop >= 0 && prop < 2) {
           data.push(
