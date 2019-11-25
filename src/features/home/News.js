@@ -529,9 +529,6 @@ export class News extends Component {
 
         if (typeof this.props.articles.data.main_feed[0] === 'undefined') {
           contentNews.push(
-            <div className="row margin-for-news">{this.buildNews('main', 11, 'end')}</div>,
-          );
-          contentNews.push(
             <div className="row margin-for-news">{this.buildNews('backup', 0, 'end')}</div>,
           );
         } else if (
