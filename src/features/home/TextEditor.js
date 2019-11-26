@@ -14,6 +14,7 @@ import 'react-notifications/lib/notifications.css';
 //Components
 import NavBar from './NavBar';
 import UserHeader from './UserHeader';
+import Footer from './Footer';
 
 const jwt = require('jsonwebtoken');
 
@@ -43,7 +44,9 @@ export class TextEditor extends Component {
     if (this.props.home.postArticlePending && nextProps.home.postarticle) {
       NotificationManager.info('Articulo guardado');
       setTimeout(() => {
-        window.location.replace('http://'+VALUES.BD_ORIGIN+':6075/news/' + nextProps.home.postarticle.data.id);
+        window.location.replace(
+          'http://' + VALUES.BD_ORIGIN + ':6075/news/' + nextProps.home.postarticle.data.id,
+        );
       }, 1000);
     }
     if (this.props.home.postArticlePending && nextProps.home.postArticleError) {
@@ -235,6 +238,7 @@ export class TextEditor extends Component {
             </button>
           </div>
         </div>
+        <Footer />
         <NotificationContainer />
       </div>
     );

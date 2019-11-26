@@ -12,6 +12,7 @@ import * as VALUES from '../../constants';
 //Components
 import NavBar from './NavBar';
 import Comments from './Comments';
+import Footer from './Footer';
 
 const jwt = require('jsonwebtoken');
 
@@ -253,6 +254,7 @@ export class Article extends Component {
               {typeof this.props.home.related !== 'undefined' && this.buildNews()}
             </div>
           </div>
+          <Footer/>
           <Modal
             visible={this.state.visible}
             width="300px"

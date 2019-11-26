@@ -77,11 +77,11 @@ export class Register extends Component {
           </button>
           <p
             onClick={() =>
-              window.location.replace('http://' + VALUES.BD_ORIGIN + ':6075/terminosycondicones')
+              window.open('http://' + VALUES.BD_ORIGIN + ':6075/terminosycondiciones', '_blank')
             }
             className="terms-link-in-register-form"
           >
-            Términos y Condiciones
+            Al registrarse usted acepta <b>Términos y Condiciones</b>
           </p>
         </form>
         <NotificationContainer />

@@ -234,7 +234,12 @@ export class News extends Component {
                 }}
               >
                 <div className="img-div-news-category-recommended-news">
-                  <p className="tit-news-category-recommended-news">
+                  <p
+                    onClick={() =>
+                      this.routerMethod('news/' + this.props.articles.data.main_feed[prop].id)
+                    }
+                    className="tit-news-category-recommended-news"
+                  >
                     {this.props.articles.data.main_feed[prop].title}
                   </p>
                 </div>
@@ -261,7 +266,12 @@ export class News extends Component {
                 }}
               >
                 <div className="img-div-news-category-recommended-news">
-                  <p className="tit-news-category-recommended-news">
+                  <p
+                    onClick={() =>
+                      this.routerMethod('news/' + this.props.articles.data.backup_feed[prop].id)
+                    }
+                    className="tit-news-category-recommended-news"
+                  >
                     {this.props.articles.data.backup_feed[prop].title}
                   </p>
                 </div>

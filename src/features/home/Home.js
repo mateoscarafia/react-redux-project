@@ -13,7 +13,7 @@ import * as VALUES from '../../constants';
 import NavBar from './NavBar';
 import News from './News';
 import BigNews from './BigNews';
-import TextEditor from './TextEditor';
+import Footer from './Footer';
 
 const jwt = require('jsonwebtoken');
 
@@ -29,7 +29,6 @@ export class Home extends Component {
       visible: false,
       feed: true,
       login: true,
-      openEditor: false,
       userProfile: false,
       id: null,
       notification: false,
@@ -210,11 +209,7 @@ export class Home extends Component {
             )}
           </div>
         </div>
-        {this.state.openEditor && (
-          <div className="news-content-index">
-            <TextEditor />
-          </div>
-        )}
+        <Footer/>
         <Modal
           visible={this.state.visible}
           width="50%"

@@ -11,6 +11,7 @@ import 'react-notifications/lib/notifications.css';
 //Components
 import NavBar from './NavBar';
 import UserHeader from './UserHeader';
+import Footer from './Footer';
 
 const jwt = require('jsonwebtoken');
 
@@ -165,6 +166,7 @@ export class UserProfile extends Component {
             </div>
           </div>
         </div>
+        <Footer />
         <Modal
           visible={this.state.editUser && this.state.isProfile}
           width="500px"
