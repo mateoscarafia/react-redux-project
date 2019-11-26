@@ -602,7 +602,7 @@ export class News extends Component {
         ---SIN USER ID----
 
         */
-
+        contentNews.push(<div className="row margin-for-news">{this.buildMainNews('main')}</div>);
         if (this.props.articles.data.main_feed.length > 20) {
           contentNews.push(<div className="row margin-for-news">{this.buildMainNews('main')}</div>);
           contentNews.push(
