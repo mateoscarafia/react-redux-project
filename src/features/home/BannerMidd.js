@@ -14,7 +14,7 @@ export class BannerMidd extends Component {
     return (
       <div className="home-banner-midd">
         <div className="midd-bann">
-          <a className="midd-bann-a">Dolar: Compra 44,3 Venta 46,6 | Euro: Compra 44,3 Venta 46,6  | Domingo 7 de Julio, 2019</a>
+          <a className="midd-bann-a">Domingo 7 de Julio, 2019</a>
         </div>
       </div>
     );
