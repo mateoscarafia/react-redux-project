@@ -29,9 +29,10 @@ export class TextEditor extends Component {
     this.state = {
       editorState: EditorState.createEmpty(),
       file: '',
-      imagePreviewUrl: '',
+      imagePreviewUrl: null,
       login: false,
       title: '',
+      category: 'Opinión',
       id: null,
       subtitle: '',
       keywords: '',
@@ -69,20 +70,21 @@ export class TextEditor extends Component {
       } catch (err) {
         this.props.actions.getCategories();
       }
-      this.setState({
-        login: true,
-        id: user.id,
-      });
-      user.id === parseInt(id, 10)
-        ? this.setState({
+      if (user) {
+        this.setState({
+          login: true,
+          id: user.id,
+        });
+        user.id === parseInt(id, 10) &&
+          this.setState({
             isProfile: true,
-          })
-        : this.props.actions.postVisit(id);
+          });
+      }
     }
     //For every user
-    this.props.actions.getNews({ token: VALUES.DEEP_TOKEN, id: id });
     this.props.actions.getUser({ token: VALUES.DEEP_TOKEN, id: id });
     this.props.actions.getCategories();
+    window.scrollTo(0, 0);
   }
 
   _handleSubmit(e) {
@@ -96,7 +98,12 @@ export class TextEditor extends Component {
 
   postArticle() {
     if (this.state.login) {
+      const categoryObj = this.props.home.categories.data.find(
+        element => element.name === this.state.category,
+      );
       let keywords = (
+        this.state.keywords +
+        ' ' +
         this.state.title +
         ' ' +
         this.state.subtitle +
@@ -105,6 +112,7 @@ export class TextEditor extends Component {
       )
         .toLowerCase()
         .normalize('NFD')
+        .replace(/\"/g, '\\"')
         .replace(/[\u0300-\u036f]/g, '')
         .replace(/[^a-zA-Z0-9 ]/g, '')
         .replace(/ /g, '-');
@@ -112,6 +120,10 @@ export class TextEditor extends Component {
         token: localStorage.getItem('token-app-auth-current'),
         title: this.state.title.replace(/\"/g, '\\"'),
         subtitle: this.state.subtitle.replace(/\"/g, '\\"'),
+        category_id: categoryObj.id,
+        img_url:
+          this.state.imagePreviewUrl ||
+          'https://aliceasmartialarts.com/wp-content/uploads/2017/04/default-image.jpg',
         content: draftToHtml(convertToRaw(this.state.editorState.getCurrentContent())).replace(
           /\"/g,
           '\\"',
@@ -122,6 +134,12 @@ export class TextEditor extends Component {
       this.props.actions.postArticle(data);
     }
   }
+
+  buildCategories = () => {
+    return this.props.home.categories.data.map(item => {
+      return <option>{item.name}</option>;
+    });
+  };
 
   _handleImageChange(e) {
     e.preventDefault();
@@ -139,6 +157,7 @@ export class TextEditor extends Component {
   render() {
     const { editorState } = this.state;
     let { imagePreviewUrl } = this.state;
+    console.log(this.state.imagePreviewUrl);
     let $imagePreview = null;
     if (imagePreviewUrl) {
       $imagePreview = <img alt="img-preview" src={imagePreviewUrl} />;
@@ -183,25 +202,27 @@ export class TextEditor extends Component {
                   placeholder="Subtítulo"
                 />
               </div>
+              <div className="form-group">
+                <input
+                  type="text"
+                  name="keywords"
+                  onChange={this.handleChange}
+                  id="keywords"
+                  placeholder="Palabras claves"
+                />
+              </div>
             </form>
             <form className="select-form">
               <div className="row">
                 <div className="col">
-                  <select className="form-control" id="exampleFormControlSelect1">
-                    <option>Categoría</option>
-                    <option>Politica</option>
-                    <option>Economia</option>
-                    <option>Noticias</option>
-                    <option>Analisis</option>
-                  </select>
-                </div>
-                <div className="col">
-                  <select className="form-control" id="exampleFormControlSelect1">
-                    <option>Ciudad</option>
-                    <option>Buenos Aires</option>
-                    <option>Formosa</option>
-                    <option>Tucuman</option>
-                    <option>Córdona</option>
+                  <select
+                    name="category"
+                    onChange={this.handleChange}
+                    className="form-control"
+                    id="category"
+                  >
+                    <option>Categorias</option>
+                    {this.props.home.categories && this.buildCategories()}
                   </select>
                 </div>
               </div>

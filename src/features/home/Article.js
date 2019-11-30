@@ -55,15 +55,13 @@ export class Article extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log(nextProps.userLikeError);
     this.props.home.userLikePending && NotificationManager.info('Te gusta el articulo');
     this.props.home.userLikePending &&
       !nextProps.home.userLikeError &&
       this.setState({
         article_likes: this.props.home.uniquearticle.data[0].total_likes + 1,
       });
-    this.props.home.reportArticlePending &&
-      NotificationManager.info('Denunciaste el articulo');
+    this.props.home.reportArticlePending && NotificationManager.info('Denunciaste el articulo');
   }
 
   routerMethod = async (destiny, id) => {
@@ -166,7 +164,7 @@ export class Article extends Component {
             <div className="home-article-content">
               <div className="home-article-header-content">
                 <div className="row">
-                  <div className="col-lg-2 col-md-3 col-sm-12 col-xs-12">
+                  <div className="col-lg-1 col-md-3 col-sm-12 col-xs-12">
                     <div
                       className="img-div-article-news-header"
                       onClick={() =>
@@ -205,39 +203,43 @@ export class Article extends Component {
                   </div>
                 </div>
               </div>
-              <h1>{this.props.home.uniquearticle.data[0].title}</h1>
-              <h4 className="subtitle-article">{this.props.home.uniquearticle.data[0].subtitle}</h4>
               <h5 className="date-article-font">
-                {this.props.home.uniquearticle.data[0].created_at}
-              </h5>
+                  {Date(this.props.home.uniquearticle.data[0].created_at).toString()}
+                </h5>
               <div
                 style={{
                   backgroundImage: `url(${this.props.home.uniquearticle.data[0].img_url})`,
                 }}
                 className="single-article-image-show-div"
               ></div>
-              <div className="single-article-text-font-style">
-                {ReactHtmlParser(this.props.home.uniquearticle.data[0].content)}
-              </div>
-              <br />
-              <div className="review-article-user-div">
-                <p
-                  onClick={() => this.likeArticle(this.props.match.params.id, true)}
-                  className="review-article-user"
-                >
-                  Me gusta
-                </p>
-                <p className="review-article-user-num">
-                  +{this.state.article_likes || this.props.home.uniquearticle.data[0].total_likes}
-                </p>
-              </div>
-              <div className="review-article-user-div-second">
-                <p
-                  onClick={() => this.reportArticle(this.props.match.params.id, true)}
-                  className="review-article-user"
-                >
-                  Denunciar
-                </p>
+              <div className="article-content-text-show-div">
+                <h1>{this.props.home.uniquearticle.data[0].title}</h1>
+                <h4 className="subtitle-article">
+                  {this.props.home.uniquearticle.data[0].subtitle}
+                </h4>
+                <div className="single-article-text-font-style">
+                  {ReactHtmlParser(this.props.home.uniquearticle.data[0].content)}
+                </div>
+                <br />
+                <div className="review-article-user-div">
+                  <p
+                    onClick={() => this.likeArticle(this.props.match.params.id, true)}
+                    className="review-article-user"
+                  >
+                    Me gusta
+                  </p>
+                  <p className="review-article-user-num">
+                    +{this.state.article_likes || this.props.home.uniquearticle.data[0].total_likes}
+                  </p>
+                </div>
+                <div className="review-article-user-div-second">
+                  <p
+                    onClick={() => this.reportArticle(this.props.match.params.id, true)}
+                    className="review-article-user"
+                  >
+                    Denunciar
+                  </p>
+                </div>
               </div>
             </div>
           )}
@@ -254,7 +256,7 @@ export class Article extends Component {
               {typeof this.props.home.related !== 'undefined' && this.buildNews()}
             </div>
           </div>
-          <Footer/>
+          <Footer />
           <Modal
             visible={this.state.visible}
             width="300px"
