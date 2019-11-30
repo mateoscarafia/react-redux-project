@@ -101,7 +101,7 @@ export class TextEditor extends Component {
     if (this.state.login) {
       const data = new FormData();
       data.append('file', this.state.file);
-      axios.post('http://localhost:3000/file-upload', data, {}).then(res => {
+      axios.post('http://' + VALUES.BD_ORIGIN + ':3000/file-upload', data, {}).then(res => {
         const categoryObj = this.props.home.categories.data.find(
           element => element.name === this.state.category,
         );
