@@ -529,7 +529,7 @@ export class News extends Component {
 
   newsDistribution = () => {
     var contentNews = [];
-    if (this.props.articles && this.props.articles.data.main_feed && this.props.articles.data.backup_feed && this.props.routeparams === 'main' && this.props.id) {
+    if (this.props.articles && this.props.articles.data.main_feed && this.props.articles.data.backup_feed && this.props.id) {
         this.checkIfArrayContainsMain(2) && contentNews.push(<div className="row margin-for-news">{this.buildMainNews('main')}</div>)
         this.checkIfArrayContainsMain(9) && contentNews.push(<div className="row margin-for-news">{this.buildNews('main', 2, 10)}</div>)
         this.checkIfArrayContainsMain(12) && contentNews.push(<div className="row margin-for-news">{this.buildProfileNews('main', 10, 13)}</div>)
@@ -540,7 +540,7 @@ export class News extends Component {
         !this.checkIfArrayContainsMain(2) && contentNews.push(<div className="row margin-for-news">{this.buildNews('main', 0, 'end')}</div>)
         this.checkIfArrayContainsBack(2) && contentNews.push(<div className="row margin-for-news">{this.buildNews('back', 3, 'end')}</div>)
         !this.checkIfArrayContainsBack(2) && contentNews.push(<div className="row margin-for-news">{this.buildNews('back', 0, 'end')}</div>)
-    } else if (this.props.articles && this.props.articles.data.main_feed && this.props.articles.data.backup_feed && this.props.routeparams === 'main' && !this.props.id) {
+    } else if (this.props.articles && this.props.articles.data.main_feed && && !this.props.id) {
         this.checkIfArrayContainsMain(2) && contentNews.push(<div className="row margin-for-news">{this.buildMainNews('main')}</div>)
         this.checkIfArrayContainsMain(9) && contentNews.push(<div className="row margin-for-news">{this.buildNews('main', 2, 10)}</div>)
         this.checkIfArrayContainsMain(12) && contentNews.push(<div className="row margin-for-news">{this.buildProfileNews('main', 10, 13)}</div>)
