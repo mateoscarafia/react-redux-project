@@ -54,7 +54,10 @@ export class News extends Component {
                   this.routerMethod('news/' + this.props.articles.data.main_feed[prop].id)
                 }
                 style={{
-                  backgroundImage: `url(${this.props.articles.data.main_feed[prop].img_url})`,
+                  backgroundImage: `url(${'http://' +
+                    VALUES.BD_ORIGIN +
+                    ':3000/article_images/' +
+                    this.props.articles.data.main_feed[prop].img_url})`,
                 }}
               >
                 <div className="img-div-news-category">
@@ -87,7 +90,10 @@ export class News extends Component {
                   this.routerMethod('news/' + this.props.articles.data.backup_feed[prop].id)
                 }
                 style={{
-                  backgroundImage: `url(${this.props.articles.data.backup_feed[prop].img_url})`,
+                  backgroundImage: `url(${'http://' +
+                    VALUES.BD_ORIGIN +
+                    ':3000/article_images/' +
+                    this.props.articles.data.backup_feed[prop].img_url})`,
                 }}
               >
                 <div className="img-div-news-category">
@@ -121,7 +127,10 @@ export class News extends Component {
             className="img-div"
             onClick={() => this.routerMethod('news/' + this.props.articles.data.main_feed[prop].id)}
             style={{
-              backgroundImage: `url(${this.props.articles.data.main_feed[prop].img_url})`,
+              backgroundImage: `url(${'http://' +
+                VALUES.BD_ORIGIN +
+                ':3000/article_images/' +
+                this.props.articles.data.main_feed[prop].img_url})`,
             }}
           >
             <div className="img-div-news-category">
@@ -157,7 +166,10 @@ export class News extends Component {
                   this.routerMethod('news/' + this.props.articles.data.main_feed[prop].id)
                 }
                 style={{
-                  backgroundImage: `url(${this.props.articles.data.main_feed[prop].img_url})`,
+                  backgroundImage: `url(${'http://' +
+                    VALUES.BD_ORIGIN +
+                    ':3000/article_images/' +
+                    this.props.articles.data.main_feed[prop].img_url})`,
                 }}
               >
                 <div className="img-div-news-category-secondary-news">
@@ -189,7 +201,10 @@ export class News extends Component {
                   this.routerMethod('news/' + this.props.articles.data.backup_feed[prop].id)
                 }
                 style={{
-                  backgroundImage: `url(${this.props.articles.data.backup_feed[prop].img_url})`,
+                  backgroundImage: `url(${'http://' +
+                    VALUES.BD_ORIGIN +
+                    ':3000/article_images/' +
+                    this.props.articles.data.backup_feed[prop].img_url})`,
                 }}
               >
                 <div className="img-div-news-category-secondary-news">
@@ -230,7 +245,10 @@ export class News extends Component {
                   this.routerMethod('news/' + this.props.articles.data.main_feed[prop].id)
                 }
                 style={{
-                  backgroundImage: `url(${this.props.articles.data.main_feed[prop].img_url})`,
+                  backgroundImage: `url(${'http://' +
+                    VALUES.BD_ORIGIN +
+                    ':3000/article_images/' +
+                    this.props.articles.data.main_feed[prop].img_url})`,
                 }}
               >
                 <div className="img-div-news-category-recommended-news">
@@ -262,7 +280,10 @@ export class News extends Component {
                   this.routerMethod('news/' + this.props.articles.data.backup_feed[prop].id)
                 }
                 style={{
-                  backgroundImage: `url(${this.props.articles.data.backup_feed[prop].img_url})`,
+                  backgroundImage: `url(${'http://' +
+                    VALUES.BD_ORIGIN +
+                    ':3000/article_images/' +
+                    this.props.articles.data.backup_feed[prop].img_url})`,
                 }}
               >
                 <div className="img-div-news-category-recommended-news">
@@ -300,7 +321,10 @@ export class News extends Component {
                   this.routerMethod('news/' + this.props.articles.data.main_feed[prop].id)
                 }
                 style={{
-                  backgroundImage: `url(${this.props.articles.data.main_feed[prop].img_url})`,
+                  backgroundImage: `url(${'http://' +
+                    VALUES.BD_ORIGIN +
+                    ':3000/article_images/' +
+                    this.props.articles.data.main_feed[prop].img_url})`,
                 }}
               ></div>
               <div className="p-div-mostseen-news">
@@ -334,7 +358,10 @@ export class News extends Component {
                   this.routerMethod('news/' + this.props.articles.data.backup_feed[prop].id)
                 }
                 style={{
-                  backgroundImage: `url(${this.props.articles.data.backup_feed[prop].img_url})`,
+                  backgroundImage: `url(${'http://' +
+                    VALUES.BD_ORIGIN +
+                    ':3000/article_images/' +
+                    this.props.articles.data.backup_feed[prop].img_url})`,
                 }}
               ></div>
               <div className="p-div-mostseen-news">
@@ -463,7 +490,10 @@ export class News extends Component {
                   this.routerMethod('news/' + this.props.articles.data.main_feed[prop].id)
                 }
                 style={{
-                  backgroundImage: `url(${this.props.articles.data.main_feed[prop].img_url})`,
+                  backgroundImage: `url(${'http://' +
+                    VALUES.BD_ORIGIN +
+                    ':3000/article_images/' +
+                    this.props.articles.data.main_feed[prop].img_url})`,
                 }}
               >
                 <div className="img-div-news-category-main-div-info">
@@ -495,7 +525,10 @@ export class News extends Component {
                   this.routerMethod('news/' + this.props.articles.data.backup_feed[prop].id)
                 }
                 style={{
-                  backgroundImage: `url(${this.props.articles.data.backup_feed[prop].img_url})`,
+                  backgroundImage: `url(${'http://' +
+                    VALUES.BD_ORIGIN +
+                    ':3000/article_images/' +
+                    this.props.articles.data.backup_feed[prop].img_url})`,
                 }}
               >
                 <div className="img-div-news-category-main-div-info">
@@ -521,34 +554,107 @@ export class News extends Component {
   };
 
   checkIfArrayContainsMain(max) {
-    return this.props.articles.data.main_feed[max] ? true : false
+    return this.props.articles.data.main_feed[max] ? true : false;
   }
   checkIfArrayContainsBack(max) {
-    return this.props.articles.data.backup_feed[max] ? true : false
+    return this.props.articles.data.backup_feed[max] ? true : false;
   }
 
   newsDistribution = () => {
     var contentNews = [];
-    if (this.props.articles && this.props.articles.data.main_feed && this.props.articles.data.backup_feed && this.props.routeparams === 'main' && this.props.id) {
-        this.checkIfArrayContainsMain(2) && contentNews.push(<div className="row margin-for-news">{this.buildMainNews('main')}</div>)
-        this.checkIfArrayContainsMain(9) && contentNews.push(<div className="row margin-for-news">{this.buildNews('main', 2, 10)}</div>)
-        this.checkIfArrayContainsMain(12) && contentNews.push(<div className="row margin-for-news">{this.buildProfileNews('main', 10, 13)}</div>)
-        this.checkIfArrayContainsBack(2) && contentNews.push(<div className="most-see-news-div margin-for-news"><h1 className="h1-news-main-title-mostseen">Te puede interesar</h1>{this.buildMostSeenNews('back', 0, 3)}</div>)
-        this.checkIfArrayContainsMain(14) && contentNews.push(<div className="row margin-for-news">{this.buildRecommendedNews('main', 13, 15)}</div>)
-        this.checkIfArrayContainsMain(17) && contentNews.push(<div className="row margin-for-news"><h1 className="h1-news-main-title-opinion">Análisis</h1>{this.buildOpinionNews('main', 15, 17)}</div>)
-        this.checkIfArrayContainsMain(20) && contentNews.push(<div className="row margin-for-news">{this.buildNews('main', 17, 'end')}</div>)
-        !this.checkIfArrayContainsMain(2) && contentNews.push(<div className="row margin-for-news">{this.buildNews('main', 0, 'end')}</div>)
-        this.checkIfArrayContainsBack(2) && contentNews.push(<div className="row margin-for-news">{this.buildNews('back', 3, 'end')}</div>)
-        !this.checkIfArrayContainsBack(2) && contentNews.push(<div className="row margin-for-news">{this.buildNews('back', 0, 'end')}</div>)
-    } else if (this.props.articles && this.props.articles.data.main_feed && this.props.routeparams === 'main' && !this.props.id) {
-        this.checkIfArrayContainsMain(2) && contentNews.push(<div className="row margin-for-news">{this.buildMainNews('main')}</div>)
-        this.checkIfArrayContainsMain(9) && contentNews.push(<div className="row margin-for-news">{this.buildNews('main', 2, 10)}</div>)
-        this.checkIfArrayContainsMain(12) && contentNews.push(<div className="row margin-for-news">{this.buildProfileNews('main', 10, 13)}</div>)
-        this.checkIfArrayContainsMain(15) && contentNews.push(<div className="most-see-news-div margin-for-news"><h1 className="h1-news-main-title-mostseen">Te puede interesar</h1>{this.buildMostSeenNews('main', 13, 16)}</div>)
-        this.checkIfArrayContainsMain(17) && contentNews.push(<div className="row margin-for-news">{this.buildRecommendedNews('main', 15, 17)}</div>)
-        this.checkIfArrayContainsMain(19) && contentNews.push(<div className="row margin-for-news"><h1 className="h1-news-main-title-opinion">Análisis</h1>{this.buildOpinionNews('main', 18, 20)}</div>)
-        this.checkIfArrayContainsMain(20) && contentNews.push(<div className="row margin-for-news">{this.buildNews('main', 20, 'end')}</div>)
-        !this.checkIfArrayContainsMain(2) && contentNews.push(<div className="row margin-for-news">{this.buildNews('main', 0, 'end')}</div>)
+    if (
+      this.props.articles &&
+      this.props.articles.data.main_feed &&
+      this.props.articles.data.backup_feed &&
+      this.props.routeparams === 'main' &&
+      this.props.id
+    ) {
+      this.checkIfArrayContainsMain(2) &&
+        contentNews.push(<div className="row margin-for-news">{this.buildMainNews('main')}</div>);
+      this.checkIfArrayContainsMain(9) &&
+        contentNews.push(
+          <div className="row margin-for-news">{this.buildNews('main', 2, 10)}</div>,
+        );
+      this.checkIfArrayContainsMain(12) &&
+        contentNews.push(
+          <div className="row margin-for-news">{this.buildProfileNews('main', 10, 13)}</div>,
+        );
+      this.checkIfArrayContainsBack(2) &&
+        contentNews.push(
+          <div className="most-see-news-div margin-for-news">
+            <h1 className="h1-news-main-title-mostseen">Te puede interesar</h1>
+            {this.buildMostSeenNews('back', 0, 3)}
+          </div>,
+        );
+      this.checkIfArrayContainsMain(14) &&
+        contentNews.push(
+          <div className="row margin-for-news">{this.buildRecommendedNews('main', 13, 15)}</div>,
+        );
+      this.checkIfArrayContainsMain(17) &&
+        contentNews.push(
+          <div className="row margin-for-news">
+            <h1 className="h1-news-main-title-opinion">Análisis</h1>
+            {this.buildOpinionNews('main', 15, 17)}
+          </div>,
+        );
+      this.checkIfArrayContainsMain(20) &&
+        contentNews.push(
+          <div className="row margin-for-news">{this.buildNews('main', 17, 'end')}</div>,
+        );
+      !this.checkIfArrayContainsMain(2) &&
+        contentNews.push(
+          <div className="row margin-for-news">{this.buildNews('main', 0, 'end')}</div>,
+        );
+      this.checkIfArrayContainsBack(2) &&
+        contentNews.push(
+          <div className="row margin-for-news">{this.buildNews('back', 3, 'end')}</div>,
+        );
+      !this.checkIfArrayContainsBack(2) &&
+        contentNews.push(
+          <div className="row margin-for-news">{this.buildNews('back', 0, 'end')}</div>,
+        );
+    } else if (
+      this.props.articles &&
+      this.props.articles.data.main_feed &&
+      this.props.routeparams === 'main' &&
+      !this.props.id
+    ) {
+      this.checkIfArrayContainsMain(2) &&
+        contentNews.push(<div className="row margin-for-news">{this.buildMainNews('main')}</div>);
+      this.checkIfArrayContainsMain(9) &&
+        contentNews.push(
+          <div className="row margin-for-news">{this.buildNews('main', 2, 10)}</div>,
+        );
+      this.checkIfArrayContainsMain(12) &&
+        contentNews.push(
+          <div className="row margin-for-news">{this.buildProfileNews('main', 10, 13)}</div>,
+        );
+      this.checkIfArrayContainsMain(15) &&
+        contentNews.push(
+          <div className="most-see-news-div margin-for-news">
+            <h1 className="h1-news-main-title-mostseen">Te puede interesar</h1>
+            {this.buildMostSeenNews('main', 13, 16)}
+          </div>,
+        );
+      this.checkIfArrayContainsMain(17) &&
+        contentNews.push(
+          <div className="row margin-for-news">{this.buildRecommendedNews('main', 15, 17)}</div>,
+        );
+      this.checkIfArrayContainsMain(19) &&
+        contentNews.push(
+          <div className="row margin-for-news">
+            <h1 className="h1-news-main-title-opinion">Análisis</h1>
+            {this.buildOpinionNews('main', 18, 20)}
+          </div>,
+        );
+      this.checkIfArrayContainsMain(20) &&
+        contentNews.push(
+          <div className="row margin-for-news">{this.buildNews('main', 20, 'end')}</div>,
+        );
+      !this.checkIfArrayContainsMain(2) &&
+        contentNews.push(
+          <div className="row margin-for-news">{this.buildNews('main', 0, 'end')}</div>,
+        );
     }
     return contentNews;
   };

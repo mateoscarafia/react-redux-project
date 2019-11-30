@@ -127,7 +127,10 @@ export class Article extends Component {
             className="img-div"
             onClick={() => this.routerMethod('../news/' + item.id, item.id)}
             style={{
-              backgroundImage: `url(${item.img_url})`,
+              backgroundImage: `url(${'http://' +
+                VALUES.BD_ORIGIN +
+                ':3000/article_images/' +
+                item.img_url})`,
             }}
           >
             <div className="img-div-news-category">{item.username}</div>
@@ -204,11 +207,14 @@ export class Article extends Component {
                 </div>
               </div>
               <h5 className="date-article-font">
-                  {Date(this.props.home.uniquearticle.data[0].created_at).toString()}
-                </h5>
+                {Date(this.props.home.uniquearticle.data[0].created_at).toString()}
+              </h5>
               <div
                 style={{
-                  backgroundImage: `url(${'http://'+VALUES.BD_ORIGIN+':3000/article_images/'+this.props.home.uniquearticle.data[0].img_url})`,
+                  backgroundImage: `url(${'http://' +
+                    VALUES.BD_ORIGIN +
+                    ':3000/article_images/' +
+                    this.props.home.uniquearticle.data[0].img_url})`,
                 }}
                 className="single-article-image-show-div"
               ></div>

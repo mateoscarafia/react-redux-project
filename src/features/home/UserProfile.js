@@ -95,7 +95,10 @@ export class UserProfile extends Component {
             className="img-div"
             onClick={() => this.routerMethod('../news/' + item.id, item.id)}
             style={{
-              backgroundImage: `url(${item.img_url})`,
+              backgroundImage: `url(${'http://' +
+                VALUES.BD_ORIGIN +
+                ':3000/article_images/' +
+                item.img_url})`,
             }}
           >
             <div className="img-div-news-category">{item.name}</div>
