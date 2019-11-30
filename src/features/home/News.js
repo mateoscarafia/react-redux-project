@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import Modal from 'react-awesome-modal';
 import history from '../../common/history';
+import * as VALUES from '../../constants';
 
 export class News extends Component {
   static propTypes = {
