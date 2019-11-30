@@ -208,7 +208,7 @@ export class Article extends Component {
                 </h5>
               <div
                 style={{
-                  backgroundImage: `url(${this.props.home.uniquearticle.data[0].img_url})`,
+                  backgroundImage: `url(${'http://'+VALUES.BD_ORIGIN+':3000/article_images/'+this.props.home.uniquearticle.data[0].img_url})`,
                 }}
                 className="single-article-image-show-div"
               ></div>

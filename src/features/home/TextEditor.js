@@ -17,6 +17,7 @@ import UserHeader from './UserHeader';
 import Footer from './Footer';
 
 const jwt = require('jsonwebtoken');
+const axios = require('axios');
 
 export class TextEditor extends Component {
   static propTypes = {
@@ -98,40 +99,42 @@ export class TextEditor extends Component {
 
   postArticle() {
     if (this.state.login) {
-      const categoryObj = this.props.home.categories.data.find(
-        element => element.name === this.state.category,
-      );
-      let keywords = (
-        this.state.keywords +
-        ' ' +
-        this.state.title +
-        ' ' +
-        this.state.subtitle +
-        ' ' +
-        this.props.home.user.data[0].username
-      )
-        .toLowerCase()
-        .normalize('NFD')
-        .replace(/\"/g, '\\"')
-        .replace(/[\u0300-\u036f]/g, '')
-        .replace(/[^a-zA-Z0-9 ]/g, '')
-        .replace(/ /g, '-');
-      let data = {
-        token: localStorage.getItem('token-app-auth-current'),
-        title: this.state.title.replace(/\"/g, '\\"'),
-        subtitle: this.state.subtitle.replace(/\"/g, '\\"'),
-        category_id: categoryObj.id,
-        img_url:
-          this.state.imagePreviewUrl ||
-          'https://aliceasmartialarts.com/wp-content/uploads/2017/04/default-image.jpg',
-        content: draftToHtml(convertToRaw(this.state.editorState.getCurrentContent())).replace(
-          /\"/g,
-          '\\"',
-        ),
-        key_words: keywords,
-        user_id: this.props.home.user.data[0].id,
-      };
-      this.props.actions.postArticle(data);
+      const data = new FormData();
+      data.append('file', this.state.file);
+      axios.post('http://localhost:3000/file-upload', data, {}).then(res => {
+        const categoryObj = this.props.home.categories.data.find(
+          element => element.name === this.state.category,
+        );
+        let keywords = (
+          this.state.keywords +
+          ' ' +
+          this.state.title +
+          ' ' +
+          this.state.subtitle +
+          ' ' +
+          this.props.home.user.data[0].username
+        )
+          .toLowerCase()
+          .normalize('NFD')
+          .replace(/\"/g, '\\"')
+          .replace(/[\u0300-\u036f]/g, '')
+          .replace(/[^a-zA-Z0-9 ]/g, '')
+          .replace(/ /g, '-');
+        let data = {
+          token: localStorage.getItem('token-app-auth-current'),
+          title: this.state.title.replace(/\"/g, '\\"'),
+          subtitle: this.state.subtitle.replace(/\"/g, '\\"'),
+          category_id: categoryObj.id,
+          img_url: res.data.filename,
+          content: draftToHtml(convertToRaw(this.state.editorState.getCurrentContent())).replace(
+            /\"/g,
+            '\\"',
+          ),
+          key_words: keywords,
+          user_id: this.props.home.user.data[0].id,
+        };
+        this.props.actions.postArticle(data);
+      });
     }
   }
 
@@ -157,7 +160,6 @@ export class TextEditor extends Component {
   render() {
     const { editorState } = this.state;
     let { imagePreviewUrl } = this.state;
-    console.log(this.state.imagePreviewUrl);
     let $imagePreview = null;
     if (imagePreviewUrl) {
       $imagePreview = <img alt="img-preview" src={imagePreviewUrl} />;
