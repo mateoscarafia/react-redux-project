@@ -159,31 +159,59 @@ export class NavBar extends Component {
                   {this.buildList(1)}
                 </div>
               </li>
-              <li className="nav-item active border-top-white diss-in-desktop">
-                <a
-                  onClick={() => {
-                    this.routerMethod('/editor/' + this.props.user);
-                  }}
-                  className="nav-link a-link"
-                >
-                  Escribir articulo
-                </a>
-              </li>
-              <li className="nav-item active diss-in-desktop">
-                <a
-                  onClick={() => {
-                    this.routerMethod('/profile/' + this.props.user);
-                  }}
-                  className="nav-link a-link"
-                >
-                  Mi perfil
-                </a>
-              </li>
-              <li className="nav-item active diss-in-desktop">
-                <a onClick={this.logoutUser} className="nav-link a-link">
-                  Logout
-                </a>
-              </li>
+              {!this.props.login && (
+                <div>
+                  <li className="nav-item active">
+                    <a
+                      onClick={() => {
+                        this.routerMethod('/login');
+                      }}
+                      className="nav-link a-link"
+                    >
+                      Login
+                    </a>
+                  </li>
+                  <li className="nav-item">
+                    <a
+                      onClick={() => {
+                        this.routerMethod('/register');
+                      }}
+                      className="nav-link a-link"
+                    >
+                      Registrate
+                    </a>
+                  </li>
+                </div>
+              )}
+              {this.props.login && (
+                <div>
+                  <li className="nav-item active border-top-white diss-in-desktop">
+                    <a
+                      onClick={() => {
+                        this.routerMethod('/editor/' + this.props.user);
+                      }}
+                      className="nav-link a-link"
+                    >
+                      Escribir articulo
+                    </a>
+                  </li>
+                  <li className="nav-item active diss-in-desktop">
+                    <a
+                      onClick={() => {
+                        this.routerMethod('/profile/' + this.props.user);
+                      }}
+                      className="nav-link a-link"
+                    >
+                      Mi perfil
+                    </a>
+                  </li>
+                  <li className="nav-item active diss-in-desktop">
+                    <a onClick={this.logoutUser} className="nav-link a-link">
+                      Logout
+                    </a>
+                  </li>
+                </div>
+              )}
             </ul>
             <form className="form-inline my-2 my-lg-0 disappear-on-mobile">
               <ul className="navbar-nav mr-auto">
