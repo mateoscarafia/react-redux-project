@@ -608,6 +608,8 @@ export class News extends Component {
           <div className="row margin-for-news">{this.buildNews('main', 17, 'end')}</div>,
         );
       !this.checkIfArrayContainsMain(2) &&
+        this.checkIfArrayContainsMain(1) &&
+        this.checkIfArrayContainsMain(0) &&
         contentNews.push(
           <div className="row margin-for-news">{this.buildNews('main', 0, 'end')}</div>,
         );
