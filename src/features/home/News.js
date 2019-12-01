@@ -121,6 +121,11 @@ export class News extends Component {
 
   buildNewsSearch = () => {
     let data = [];
+    data.push(
+      <div className="width-search-result-cont">
+        <p className="search-result-text">Resultados de busqueda</p>
+      </div>,
+    );
     for (const prop in this.props.articles.data.main_feed) {
       data.push(
         <div key={Math.random()} className="news-conts">
@@ -135,7 +140,7 @@ export class News extends Component {
             }}
           >
             <div className="img-div-news-category">
-              {this.props.articles.data.main_feed[prop].name}
+              {this.props.articles.data.main_feed[prop].username}
             </div>
           </div>
           <div className="p-div">

@@ -12,7 +12,6 @@ import * as VALUES from '../../constants';
 //Components
 import NavBar from './NavBar';
 import News from './News';
-import BigNews from './BigNews';
 import Footer from './Footer';
 
 const jwt = require('jsonwebtoken');
@@ -194,9 +193,6 @@ export class Home extends Component {
               <div
                 className={this.state.login ? 'news-content-index' : 'news-content-index-fullwidth'}
               >
-                {typeof this.props.home.articles !== 'undefined' && params === 'main' && (
-                  <BigNews articles={this.props.home.articles} />
-                )}
                 {this.props.home.articles && (
                   <News
                     routeparams={params}

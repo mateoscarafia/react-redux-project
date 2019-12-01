@@ -13,13 +13,14 @@ export class NavBar extends Component {
       visible: false,
       feed: true,
       searchEngine: false,
+      searchWords: null,
     };
     this.searchArticlesMotor = this.searchArticlesMotor.bind(this);
   }
 
   routerMethod = async destiny => {
     if (destiny.includes('profile')) {
-      var user_destiny_id = destiny.split('/')
+      var user_destiny_id = destiny.split('/');
       await this.props.actions.getNews({ token: VALUES.DEEP_TOKEN, id: user_destiny_id[2] });
       await this.props.actions.getUser({ token: VALUES.DEEP_TOKEN, id: user_destiny_id[2] });
     }
@@ -29,7 +30,7 @@ export class NavBar extends Component {
         param: 'main',
         id: this.props.user || null,
       }));
-      this.props.history.push(destiny);
+    this.props.history.push(destiny);
   };
 
   async handleNews(news_id, news_name) {
@@ -60,7 +61,11 @@ export class NavBar extends Component {
 
   logoutUser = () => {
     localStorage.removeItem('token-app-auth-current');
-    window.location.replace('http://'+VALUES.BD_ORIGIN+':6075/feed/main');
+    window.location.replace('http://' + VALUES.BD_ORIGIN + ':6075/feed/main');
+  };
+
+  handleChange = event => {
+    this.setState({ [event.target.name]: event.target.value });
   };
 
   searchArticlesMotor = async searchword => {
@@ -71,6 +76,24 @@ export class NavBar extends Component {
     });
     this.openSearchEngine;
     this.props.history.push('/feed/-engine-' + searchword);
+  };
+
+  searchArticlesMotorFromNav = async () => {
+    if (this.state.searchWords) {
+      let search = this.state.searchWords
+        .toLowerCase()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .replace(/[^a-zA-Z0-9 ]/g, '')
+        .replace(/ /g, '-');
+      window.scrollTo(0, 0);
+      document.getElementById('navbar-toggler-id-for-clicking').click();
+      await this.props.actions.getArticles({
+        token: VALUES.DEEP_TOKEN,
+        param: '-engine-' + search,
+      });
+      this.props.history.push('/feed/-engine-' + search);
+    }
   };
 
   openSearchEngine() {
@@ -87,6 +110,7 @@ export class NavBar extends Component {
             <b>NEDDLY</b>
           </a>
           <button
+            id="navbar-toggler-id-for-clicking"
             className="navbar-toggler"
             type="button"
             data-toggle="collapse"
@@ -99,6 +123,25 @@ export class NavBar extends Component {
           </button>
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav mr-auto">
+              <li className="nav-item active diss-in-desktop search-input-menu">
+                <div className="search-form-nav-float">
+                  <input
+                    type="text"
+                    class="width-input"
+                    id="searchWords"
+                    name="searchWords"
+                    onChange={this.handleChange}
+                    placeholder="Buscar.."
+                  />
+                  <button
+                    type="button"
+                    className="width-button"
+                    onClick={() => this.searchArticlesMotorFromNav()}
+                  >
+                    Buscar
+                  </button>
+                </div>
+              </li>
               {this.buildList(0)}
               <li className="nav-item dropdown">
                 <a
@@ -116,8 +159,33 @@ export class NavBar extends Component {
                   {this.buildList(1)}
                 </div>
               </li>
+              <li className="nav-item active border-top-white diss-in-desktop">
+                <a
+                  onClick={() => {
+                    this.routerMethod('/editor/' + this.props.user);
+                  }}
+                  className="nav-link a-link"
+                >
+                  Escribir articulo
+                </a>
+              </li>
+              <li className="nav-item active diss-in-desktop">
+                <a
+                  onClick={() => {
+                    this.routerMethod('/profile/' + this.props.user);
+                  }}
+                  className="nav-link a-link"
+                >
+                  Mi perfil
+                </a>
+              </li>
+              <li className="nav-item active diss-in-desktop">
+                <a onClick={this.logoutUser} className="nav-link a-link">
+                  Logout
+                </a>
+              </li>
             </ul>
-            <form className="form-inline my-2 my-lg-0">
+            <form className="form-inline my-2 my-lg-0 disappear-on-mobile">
               <ul className="navbar-nav mr-auto">
                 <li className="nav-item active">
                   <a
