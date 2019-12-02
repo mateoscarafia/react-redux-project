@@ -13,22 +13,31 @@ export class Register extends Component {
       email: '',
       password: '',
       fullname: '',
+      error: false,
     };
     this.handleChange = this.handleChange.bind(this);
   }
 
   handleChange(event) {
-    this.setState({ [event.target.name]: event.target.value });
+    this.setState({ [event.target.name]: event.target.value, error: false });
   }
 
   registerForm() {
-    let data = {
-      token: VALUES.DEEP_TOKEN,
-      mail: this.state.email,
-      pass: this.state.password,
-      username: this.state.fullname,
-    };
-    this.props.actions.register(data);
+    if (
+      /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.state.email) &&
+      this.state.password.length > 5 &&
+      this.state.fullname.length > 4
+    ) {
+      let data = {
+        token: VALUES.DEEP_TOKEN,
+        mail: this.state.email,
+        pass: this.state.password,
+        username: this.state.fullname,
+      };
+      this.props.actions.register(data);
+    } else {
+      this.setState({ error: true });
+    }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -72,6 +81,11 @@ export class Register extends Component {
               placeholder="Fullname"
             />
           </div>
+          {this.state.error && (
+            <div className="error-message-input">
+              <p>Datos inválidos</p>
+            </div>
+          )}
           <button onClick={() => this.registerForm()} type="button" className="register-button">
             Register
           </button>

@@ -12,21 +12,29 @@ export class Login extends Component {
     this.state = {
       email: '',
       password: '',
+      error: false,
     };
     this.handleChange = this.handleChange.bind(this);
   }
 
   handleChange(event) {
-    this.setState({ [event.target.name]: event.target.value });
+    this.setState({ [event.target.name]: event.target.value, error: false });
   }
 
   loginForm() {
-    let data = { mail: this.state.email, pass: this.state.password, token: VALUES.DEEP_TOKEN };
-    this.props.actions.login(data);
+    if (
+      /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.state.email) &&
+      this.state.password.length > 5
+    ) {
+      let data = { mail: this.state.email, pass: this.state.password, token: VALUES.DEEP_TOKEN };
+      this.props.actions.login(data);
+    } else {
+      this.setState({ error: true });
+    }
   }
 
   goToRegister() {
-    window.location.replace('http://'+VALUES.BD_ORIGIN+':6075/register');
+    window.location.replace('http://' + VALUES.BD_ORIGIN + ':6075/register');
   }
 
   async componentDidMount() {
@@ -42,7 +50,7 @@ export class Login extends Component {
       NotificationManager.warning('Revisa los datos ingresados');
     } else if (this.props.home.loginPending && nextProps.home.logindata) {
       localStorage.setItem('token-app-auth-current', nextProps.home.logindata.data.token);
-      window.location.replace('http://'+VALUES.BD_ORIGIN+':6075/feed/main');
+      window.location.replace('http://' + VALUES.BD_ORIGIN + ':6075/feed/main');
     }
   }
 
@@ -68,10 +76,17 @@ export class Login extends Component {
               placeholder="Password"
             />
           </div>
+          {this.state.error && (
+            <div className="error-message-input">
+              <p>Datos inválidos</p>
+            </div>
+          )}
           <button onClick={() => this.loginForm()} type="button" className="login-button">
             Login
           </button>
-          <p onClick={() => this.goToRegister()} className="register-link-in-login-form">¿No tienes cuenta? Registrate</p>
+          <p onClick={() => this.goToRegister()} className="register-link-in-login-form">
+            ¿No tienes cuenta? <b> Registrate </b>
+          </p>
         </form>
         <NotificationContainer />
       </div>
