@@ -25,7 +25,10 @@ export class UserHeader extends Component {
     if (localStorage.getItem('token-app-auth-current')) {
       try {
         var user = jwt.verify(localStorage.getItem('token-app-auth-current'), VALUES.API_KEY);
-      } catch (err) {}
+      } catch (err) {
+        localStorage.removeItem('token-app-auth-current');
+        window.location.replace('http://' + VALUES.BD_ORIGIN + ':6075/feed/main');
+      }
       if (user) {
         this.setState({
           id: user.id,

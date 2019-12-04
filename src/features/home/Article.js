@@ -36,7 +36,10 @@ export class Article extends Component {
     if (localStorage.getItem('token-app-auth-current')) {
       try {
         var user = jwt.verify(localStorage.getItem('token-app-auth-current'), VALUES.API_KEY);
-      } catch (err) {}
+      } catch (err) {
+        localStorage.removeItem('token-app-auth-current');
+        window.location.replace('http://' + VALUES.BD_ORIGIN + ':6075/feed/main');
+      }
       if (user) {
         this.setState({
           login: true,
@@ -65,6 +68,7 @@ export class Article extends Component {
   }
 
   routerMethod = async (destiny, id) => {
+    alert(destiny);
     window.scrollTo(0, 0);
     if (id) {
       await this.props.actions.getArticle({ token: VALUES.DEEP_TOKEN, id: id });
@@ -166,6 +170,17 @@ export class Article extends Component {
           {typeof this.props.home.uniquearticle !== 'undefined' && (
             <div className="home-article-content">
               <div className="home-article-header-content">
+                {this.props.home.uniquearticle.data[0].user_id === this.state.id && (
+                  <button
+                    type="button"
+                    onClick={() =>
+                      this.routerMethod('../editarticle/' + this.props.match.params.id, null)
+                    }
+                    className="btn btn-primary button-absolute-top-right"
+                  >
+                    Editar articulo
+                  </button>
+                )}
                 <div className="row">
                   <div className="col-lg-1 col-md-3 col-sm-12 col-xs-12">
                     <div
@@ -181,7 +196,7 @@ export class Article extends Component {
                       }}
                     ></div>
                   </div>
-                  <div className="col-lg-10 col-md-10 col-sm-12 col-xs-12">
+                  <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                     <p
                       onClick={() =>
                         this.routerMethod(

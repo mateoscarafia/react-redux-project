@@ -127,7 +127,7 @@ export class NavBar extends Component {
                 <div className="search-form-nav-float">
                   <input
                     type="text"
-                    class="width-input"
+                    className="width-input"
                     id="searchWords"
                     name="searchWords"
                     onChange={this.handleChange}

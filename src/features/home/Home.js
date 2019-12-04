@@ -40,15 +40,8 @@ export class Home extends Component {
       try {
         var user = jwt.verify(localStorage.getItem('token-app-auth-current'), VALUES.API_KEY);
       } catch (err) {
-        await this.props.actions.getCategories();
-        await this.props.actions.getArticles({
-          token: VALUES.DEEP_TOKEN,
-          param: this.props.match.params.info,
-          id: null,
-        });
-        this.setState({
-          login: false,
-        });
+        localStorage.removeItem('token-app-auth-current');
+        window.location.replace('http://' + VALUES.BD_ORIGIN + ':6075/feed/main');
       }
       if (user) {
         let data = { token: localStorage.getItem('token-app-auth-current'), id: user.id };
@@ -60,7 +53,6 @@ export class Home extends Component {
         });
         await this.props.actions.getUser(data);
         this.setState({
-          login: true,
           id: user.id,
         });
       }
@@ -205,7 +197,7 @@ export class Home extends Component {
             )}
           </div>
         </div>
-        <Footer/>
+        <Footer />
         <Modal
           visible={this.state.visible}
           width="50%"

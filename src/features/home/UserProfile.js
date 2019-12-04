@@ -44,18 +44,16 @@ export class UserProfile extends Component {
       try {
         var user = jwt.verify(localStorage.getItem('token-app-auth-current'), VALUES.API_KEY);
       } catch (err) {
-        this.props.actions.getCategories();
+        localStorage.removeItem('token-app-auth-current');
+        window.location.replace('http://' + VALUES.BD_ORIGIN + ':6075/feed/main');
       }
       if (user) {
         this.setState({
           login: true,
           id: user.id,
+          isProfile: user.id === parseInt(id, 10),
         });
-        user.id === parseInt(id, 10)
-          ? this.setState({
-              isProfile: true,
-            })
-          : this.props.actions.postVisit(id);
+        user.id !== parseInt(id, 10) && this.props.actions.postVisit(id);
       }
     }
     //For every user

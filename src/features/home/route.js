@@ -7,6 +7,7 @@ import {
   TextEditor,
   UserProfile,
   TermsAndCond,
+  EditArticle,
 } from './';
 
 export default {
@@ -25,5 +26,6 @@ export default {
     { path: 'editor/:id', name: 'TextEditor', component: TextEditor },
     { path: 'profile/:id', name: 'User profile', component: UserProfile },
     { path: '/terminosycondiciones', name: 'Terms and cond', component: TermsAndCond },
+    { path: 'editarticle/:id', name: 'Edit article', component: EditArticle },
   ],
 };
