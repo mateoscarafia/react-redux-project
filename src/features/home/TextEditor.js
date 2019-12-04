@@ -182,7 +182,7 @@ export class TextEditor extends Component {
             />
           )}
           <div className="editor-header">
-            <h4>Nueva publicación</h4>
+            <h4>Nuevo artículo</h4>
             <form className="home-editor-form">
               <div className="form-group">
                 <input
@@ -234,9 +234,6 @@ export class TextEditor extends Component {
                     <input onChange={this._handleImageChange} type="file" />
                     Subir imagen
                   </label>
-                  {/*<button type="submit" onClick={this._handleSubmit}>
-                    Upload Image
-        </button>*/}
                 </form>
                 <div className="show-image-preview-text-editor">{$imagePreview}</div>
               </div>
@@ -255,7 +252,7 @@ export class TextEditor extends Component {
               type="button"
               className="btn btn-primary btn-lg"
             >
-              Send article
+              Publicar artículo
             </button>
           </div>
         </div>

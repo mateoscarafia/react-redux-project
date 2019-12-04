@@ -20,6 +20,7 @@ import Footer from './Footer';
 const jwt = require('jsonwebtoken');
 const axios = require('axios');
 const htmlToText = require('html-to-text');
+const stateFromHTML = require('draft-js-import-html').stateFromHTML;
 
 export class EditArticle extends Component {
   static propTypes = {
@@ -35,7 +36,7 @@ export class EditArticle extends Component {
       imagePreviewUrl: null,
       login: false,
       title: '',
-      category: 'Opinión',
+      category: null,
       id: null,
       subtitle: '',
       keywords: '',
@@ -107,9 +108,10 @@ export class EditArticle extends Component {
       data.append('file', this.state.file);
       axios.post('http://' + VALUES.BD_ORIGIN + ':3000/file-upload', data, {}).then(res => {
         const categoryObj = this.props.home.categories.data.find(
-          element => element.name === this.state.category,
+          element =>
+            element.name === this.state.category || this.props.home.uniquearticle.data[0].name,
         );
-        let keywords = (
+        let keyword_content = (
           this.state.keywords +
           ' ' +
           this.state.title +
@@ -126,15 +128,19 @@ export class EditArticle extends Component {
           .replace(/ /g, '-');
         let data = {
           token: localStorage.getItem('token-app-auth-current'),
-          title: this.state.title.replace(/\"/g, '\\"'),
-          subtitle: this.state.subtitle.replace(/\"/g, '\\"'),
+          title: this.state.title
+            ? this.state.title.replace(/\"/g, '\\"')
+            : this.props.home.uniquearticle.data[0].title,
+          subtitle: this.state.title
+            ? this.state.subtitle.replace(/\"/g, '\\"')
+            : this.props.home.uniquearticle.data[0].subtitle,
           category_id: categoryObj.id,
           img_url: res.data.filename,
           content: draftToHtml(convertToRaw(this.state.editorState.getCurrentContent())).replace(
             /\"/g,
             '\\"',
           ),
-          key_words: keywords,
+          key_words: keyword_content,
           user_id: this.props.home.user.data[0].id,
         };
         this.props.actions.postArticle(data);
@@ -165,9 +171,7 @@ export class EditArticle extends Component {
     let editorState = this.state.changedEditor && this.state.editorState;
     if (this.props.home.uniquearticle && !this.state.changedEditor) {
       editorState = EditorState.createWithContent(
-        ContentState.createFromText(
-          htmlToText.fromString(this.props.home.uniquearticle.data[0].content),
-        ),
+        stateFromHTML(this.props.home.uniquearticle.data[0].content),
       );
     }
     let imagePreviewUrl =
@@ -202,7 +206,7 @@ export class EditArticle extends Component {
               />
             )}
             <div className="editor-header">
-              <h4>Nueva publicación</h4>
+              <h4>Editar artículo</h4>
               <form className="home-editor-form">
                 <div className="form-group">
                   <input
@@ -222,19 +226,6 @@ export class EditArticle extends Component {
                     onChange={this.handleChange}
                     id="subtitle"
                     placeholder="Subtítulo"
-                  />
-                </div>
-                <div className="form-group">
-                  <input
-                    type="text"
-                    name="keywords"
-                    value={
-                      this.state.keywords ||
-                      this.props.home.uniquearticle.data[0].key_words.replace('-', ' ')
-                    }
-                    onChange={this.handleChange}
-                    id="keywords"
-                    placeholder="Palabras claves"
                   />
                 </div>
               </form>
@@ -278,7 +269,7 @@ export class EditArticle extends Component {
                 type="button"
                 className="btn btn-primary btn-lg"
               >
-                Send article
+                Guardar cambios
               </button>
             </div>
           </div>

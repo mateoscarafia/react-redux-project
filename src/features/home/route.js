@@ -8,6 +8,7 @@ import {
   UserProfile,
   TermsAndCond,
   EditArticle,
+  ErrorLanding,
 } from './';
 
 export default {
@@ -27,5 +28,6 @@ export default {
     { path: 'profile/:id', name: 'User profile', component: UserProfile },
     { path: '/terminosycondiciones', name: 'Terms and cond', component: TermsAndCond },
     { path: 'editarticle/:id', name: 'Edit article', component: EditArticle },
+    { path: 'errorlanding', name: 'Error landing', component: ErrorLanding },
   ],
 };

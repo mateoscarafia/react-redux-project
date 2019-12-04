@@ -18,3 +18,4 @@ export { default as TermsAndCond } from './TermsAndCond';
 export { default as Comments } from './Comments';
 export { default as Footer } from './Footer';
 export { default as EditArticle } from './EditArticle';
+export { default as ErrorLanding } from './ErrorLanding';

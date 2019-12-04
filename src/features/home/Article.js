@@ -68,7 +68,6 @@ export class Article extends Component {
   }
 
   routerMethod = async (destiny, id) => {
-    alert(destiny);
     window.scrollTo(0, 0);
     if (id) {
       await this.props.actions.getArticle({ token: VALUES.DEEP_TOKEN, id: id });
@@ -152,9 +151,47 @@ export class Article extends Component {
     });
   };
 
+  goToErrorLanding = () => {
+    window.location.replace('http://' + VALUES.BD_ORIGIN + ':6075/errorlanding');
+  };
+
+  convertDate = date => {
+    let newFormat = date.split(' ');
+    return (
+      newFormat[2] +
+      '/' +
+      (newFormat[1] === 'Jan'
+        ? '01'
+        : newFormat[1] === 'Feb'
+        ? '02'
+        : newFormat[1] === 'Mar'
+        ? '03'
+        : newFormat[1] === 'Abr'
+        ? '04'
+        : newFormat[1] === 'May'
+        ? '05'
+        : newFormat[1] === 'Jun'
+        ? '06'
+        : newFormat[1] === 'Jul'
+        ? '07'
+        : newFormat[1] === 'Aug'
+        ? '08'
+        : newFormat[1] === 'Sep'
+        ? '09'
+        : newFormat[1] === 'Oct'
+        ? '10'
+        : newFormat[1] === 'Nov'
+        ? '11'
+        : '12') +
+      '/' +
+      newFormat[3]
+    );
+  };
+
   render() {
     if (this.props.home.uniquearticle && !this.props.home.uniquearticle.data[0]) {
-      return <h1>Sin datos</h1>;
+      this.goToErrorLanding();
+      return null;
     } else {
       return (
         <div className="home-article">
@@ -222,7 +259,10 @@ export class Article extends Component {
                 </div>
               </div>
               <h5 className="date-article-font">
-                {Date(this.props.home.uniquearticle.data[0].created_at).toString()}
+                {this.props.home.uniquearticle &&
+                  this.convertDate(
+                    Date(this.props.home.uniquearticle.data[0].created_at).toString(),
+                  )}
               </h5>
               <div
                 style={{

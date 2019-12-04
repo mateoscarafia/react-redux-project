@@ -102,119 +102,136 @@ export class Home extends Component {
     window.scrollTo(0, 0);
   };
 
+  goToErrorLanding = () => {
+    localStorage.removeItem('token-app-auth-current');
+    window.location.replace('http://' + VALUES.BD_ORIGIN + ':6075/errorlanding');
+  };
+
   render() {
-    let params = this.props.match.params.info;
-    return (
-      <div className="home-home">
-        {typeof this.props.home.categories !== 'undefined' && (
-          <NavBar
-            login={this.state.login}
-            history={this.props.history}
-            categories={this.props.home.categories}
-            user={this.state.id}
-          />
-        )}
-        <div className="container margin-top-cont">
-          <div className="row">
-            {this.props.home.user && this.state.login && !this.state.userProfile && (
-              <div className="user-content">
-                {typeof this.props.home.user !== 'undefined' && (
-                  <div className="user-content-index">
-                    <div
-                      onClick={() =>
-                        this.routerMethod('../../profile/' + this.props.home.user.data[0].id)
-                      }
-                      style={{
-                        backgroundImage: `url(${this.props.home.user.data[0].profile_img_url})`,
-                      }}
-                      className="user-profile-picture"
-                    ></div>
-                    <p
-                      onClick={() =>
-                        this.routerMethod('../../profile/' + this.props.home.user.data[0].id)
-                      }
-                      className="user-profile-name"
-                    >
-                      {this.props.home.user.data[0].username}
-                    </p>
-                    <p className="user-profile-title">{this.props.home.user.data[0].profession}</p>
-                    <div className="user-profile-content-detail">
-                      <table>
-                        <tbody>
-                          <tr>
-                            <td>Seguidos</td>
-                            <td className="td-float-right">
-                              {this.props.home.user.data[0].following}
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>Seguidores</td>
-                            <td className="td-float-right">
-                              {this.props.home.user.data[0].followers}
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>Articulos</td>
-                            <td className="td-float-right">
-                              {this.props.home.user.data[0].num_articles}
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
+    if (this.props.home.user && !this.props.home.user.data[0]) {
+      this.goToErrorLanding();
+      return null;
+    } else {
+      let params = this.props.match.params.info;
+      return (
+        <div className="home-home">
+          {typeof this.props.home.categories !== 'undefined' && (
+            <NavBar
+              login={this.state.login}
+              history={this.props.history}
+              categories={this.props.home.categories}
+              user={this.state.id}
+            />
+          )}
+          <div className="container margin-top-cont">
+            <div className="row">
+              {this.props.home.user && this.state.login && !this.state.userProfile && (
+                <div className="user-content">
+                  {typeof this.props.home.user !== 'undefined' && (
+                    <div className="user-content-index">
+                      <div
+                        onClick={() =>
+                          this.routerMethod('../../profile/' + this.props.home.user.data[0].id)
+                        }
+                        style={{
+                          backgroundImage: `url(${this.props.home.user.data[0].profile_img_url})`,
+                        }}
+                        className="user-profile-picture"
+                      ></div>
+                      <p
+                        onClick={() =>
+                          this.routerMethod('../../profile/' + this.props.home.user.data[0].id)
+                        }
+                        className="user-profile-name"
+                      >
+                        {this.props.home.user.data[0].username}
+                      </p>
+                      <p className="user-profile-title">
+                        {this.props.home.user.data[0].profession}
+                      </p>
+                      <div className="user-profile-content-detail">
+                        <table>
+                          <tbody>
+                            <tr>
+                              <td>Seguidos</td>
+                              <td className="td-float-right">
+                                {this.props.home.user.data[0].following}
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>Seguidores</td>
+                              <td className="td-float-right">
+                                {this.props.home.user.data[0].followers}
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>Articulos</td>
+                              <td className="td-float-right">
+                                {this.props.home.user.data[0].num_articles}
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
                     </div>
-                  </div>
-                )}
-                {this.state.userProfile && (
-                  <button className="open-editor-button" onClick={() => this.handleProfile(false)}>
-                    VOLVER
-                  </button>
-                )}
-                {this.props.home.user && (
-                  <button
-                    className="open-editor-button"
-                    onClick={() =>
-                      this.routerMethod('../editor/' + this.props.home.user.data[0].id)
-                    }
-                  >
-                    {'ESCRIBIR ARTICULO'}
-                  </button>
-                )}
-              </div>
-            )}
-            {this.state.feed && (
-              <div
-                className={this.state.login ? 'news-content-index' : 'news-content-index-fullwidth'}
-              >
-                {this.props.home.articles && (
-                  <News
-                    routeparams={params}
-                    id={this.state.id}
-                    articles={this.props.home.articles}
-                    isSimilar={false}
-                  />
-                )}
-              </div>
-            )}
+                  )}
+                  {this.state.userProfile && (
+                    <button
+                      className="open-editor-button"
+                      onClick={() => this.handleProfile(false)}
+                    >
+                      VOLVER
+                    </button>
+                  )}
+                  {this.props.home.user && (
+                    <button
+                      className="open-editor-button"
+                      onClick={() =>
+                        this.routerMethod('../editor/' + this.props.home.user.data[0].id)
+                      }
+                    >
+                      {'ESCRIBIR ARTICULO'}
+                    </button>
+                  )}
+                </div>
+              )}
+              {this.state.feed && (
+                <div
+                  className={
+                    this.state.login ? 'news-content-index' : 'news-content-index-fullwidth'
+                  }
+                >
+                  {this.props.home.articles && (
+                    <News
+                      routeparams={params}
+                      id={this.state.id}
+                      articles={this.props.home.articles}
+                      isSimilar={false}
+                    />
+                  )}
+                </div>
+              )}
+            </div>
           </div>
+          <Footer />
+          <Modal
+            visible={this.state.visible}
+            width="50%"
+            height="50%"
+            borderRadius="0px"
+            effect="fadeInDown"
+            onClickAway={() => this.handleModal(false)}
+          >
+            <div className="modal-header">
+              <a className="close-modal-header" onClick={() => this.handleModal(false)}>
+                X
+              </a>
+            </div>
+          </Modal>
+          <NotificationContainer />
         </div>
-        <Footer />
-        <Modal
-          visible={this.state.visible}
-          width="50%"
-          height="50%"
-          borderRadius="0px"
-          effect="fadeInDown"
-          onClickAway={() => this.handleModal(false)}
-        >
-          <div className="modal-header">
-            <a className="close-modal-header" onClick={() => this.handleModal(false)}>
-              X
-            </a>
-          </div>
-        </Modal>
-        <NotificationContainer />
-      </div>
-    );
+      );
+    }
   }
 }
 
