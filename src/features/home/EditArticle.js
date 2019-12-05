@@ -104,7 +104,10 @@ export class EditArticle extends Component {
   }
 
   deleteArticle = () => {
-    this.props.actions.deleteArticle({ token: VALUES.DEEP_TOKEN, id: this.props.match.params.id });
+    this.props.actions.deleteArticle({
+      token: localStorage.getItem('token-app-auth-current'),
+      id: this.props.match.params.id,
+    });
   };
 
   _handleSubmit(e) {
@@ -134,24 +137,32 @@ export class EditArticle extends Component {
           .toLowerCase()
           .normalize('NFD')
           .replace(/\"/g, '\\"')
+          .replace(/\'/g, '\\"')
+          .replace(/\`/g, '\\"')
           .replace(/[\u0300-\u036f]/g, '')
           .replace(/[^a-zA-Z0-9 ]/g, '')
           .replace(/ /g, '-');
         let data = {
           token: localStorage.getItem('token-app-auth-current'),
           title: this.state.title
-            ? this.state.title.replace(/\"/g, '\\"')
+            ? this.state.title
+                .replace(/\"/g, '\\"')
+                .replace(/\'/g, '\\"')
+                .replace(/\`/g, '\\"')
             : this.props.home.uniquearticle.data[0].title,
           subtitle: this.state.subtitle
-            ? this.state.subtitle.replace(/\"/g, '\\"')
+            ? this.state.subtitle
+                .replace(/\"/g, '\\"')
+                .replace(/\'/g, '\\"')
+                .replace(/\`/g, '\\"')
             : this.props.home.uniquearticle.data[0].subtitle,
           category_id: categoryObj.id,
           img_url: res.data.filename || this.props.home.uniquearticle.data[0].img_url,
           content: this.state.changedEditor
-            ? draftToHtml(convertToRaw(this.state.editorState.getCurrentContent())).replace(
-                /\"/g,
-                '\\"',
-              )
+            ? draftToHtml(convertToRaw(this.state.editorState.getCurrentContent()))
+                .replace(/\"/g, '\\"')
+                .replace(/\'/g, '\\"')
+                .replace(/\`/g, '\\"')
             : this.props.home.uniquearticle.data[0].content,
           key_words: this.props.home.uniquearticle.data[0].key_words + '-' + keyword_content,
           id: this.props.match.params.id,
@@ -180,6 +191,10 @@ export class EditArticle extends Component {
     reader.readAsDataURL(file);
   }
 
+  goToErrorLanding = () => {
+    window.location.replace('http://' + VALUES.BD_ORIGIN + ':6075/errorlanding');
+  };
+
   render() {
     let editorState = this.state.changedEditor && this.state.editorState;
     if (this.props.home.uniquearticle && !this.state.changedEditor) {
@@ -198,98 +213,107 @@ export class EditArticle extends Component {
     if (imagePreviewUrl) {
       $imagePreview = <img alt="img-preview" src={imagePreviewUrl} />;
     }
-    return (
-      <div className="home-text-editor-css-style">
-        {typeof this.props.home.categories !== 'undefined' &&
-          typeof this.props.home.user !== 'undefined' && (
-            <NavBar
-              login={this.state.login}
-              history={this.props.history}
-              categories={this.props.home.categories}
-              user={this.state.id}
-            />
-          )}
-        {this.props.home.uniquearticle && (
-          <div className="editor-wrapper">
-            {typeof this.props.home.user !== 'undefined' && (
-              <UserHeader
-                isProfile={this.state.isProfile}
-                user={this.props.home.user.data[0]}
-                user_id={this.props.home.user.data[0].id}
+    if (this.props.home.uniquearticle && !this.props.home.uniquearticle.data[0]) {
+      this.goToErrorLanding();
+      return null;
+    } else {
+      return (
+        <div className="home-text-editor-css-style">
+          {typeof this.props.home.categories !== 'undefined' &&
+            typeof this.props.home.user !== 'undefined' && (
+              <NavBar
+                login={this.state.login}
+                history={this.props.history}
+                categories={this.props.home.categories}
+                user={this.state.id}
               />
             )}
-            <div className="editor-header">
-              <h4>Editar artículo</h4>
-              <form className="home-editor-form">
-                <div className="form-group">
-                  <input
-                    type="text"
-                    id="title"
-                    name="title"
-                    value={this.state.title || this.props.home.uniquearticle.data[0].title}
-                    onChange={this.handleChange}
-                    placeholder="Título"
-                  />
-                </div>
-                <div className="form-group">
-                  <input
-                    type="text"
-                    name="subtitle"
-                    value={this.state.subtitle || this.props.home.uniquearticle.data[0].subtitle}
-                    onChange={this.handleChange}
-                    id="subtitle"
-                    placeholder="Subtítulo"
-                  />
-                </div>
-              </form>
-              <form className="select-form">
-                <div className="row">
-                  <div className="col">
-                    <select
-                      name="category"
+          {this.props.home.uniquearticle && (
+            <div className="editor-wrapper">
+              {typeof this.props.home.user !== 'undefined' && (
+                <UserHeader
+                  isProfile={true}
+                  user={this.props.home.user.data[0]}
+                  user_id={this.props.home.user.data[0].id}
+                />
+              )}
+              <div className="editor-header">
+                <h4>Editar artículo</h4>
+                <form className="home-editor-form">
+                  <div className="form-group">
+                    <input
+                      type="text"
+                      id="title"
+                      name="title"
+                      value={this.state.title || this.props.home.uniquearticle.data[0].title}
                       onChange={this.handleChange}
-                      className="form-control"
-                      id="category"
-                    >
-                      <option>{this.props.home.uniquearticle.data[0].name}</option>
-                      {this.props.home.categories && this.buildCategories()}
-                    </select>
+                      placeholder="Título"
+                    />
+                  </div>
+                  <div className="form-group">
+                    <input
+                      type="text"
+                      name="subtitle"
+                      value={this.state.subtitle || this.props.home.uniquearticle.data[0].subtitle}
+                      onChange={this.handleChange}
+                      id="subtitle"
+                      placeholder="Subtítulo"
+                    />
+                  </div>
+                </form>
+                <form className="select-form">
+                  <div className="row">
+                    <div className="col">
+                      <select
+                        name="category"
+                        onChange={this.handleChange}
+                        className="form-control"
+                        id="category"
+                      >
+                        <option>{this.props.home.uniquearticle.data[0].name}</option>
+                        {this.props.home.categories && this.buildCategories()}
+                      </select>
+                    </div>
+                  </div>
+                </form>
+                <div className="form-group">
+                  <div>
+                    <form className="upload-image-form-editor" onSubmit={this._handleSubmit}>
+                      <label className="custom-file-upload">
+                        <input onChange={this._handleImageChange} type="file" />
+                        Subir imagen
+                      </label>
+                    </form>
+                    <div className="show-image-preview-text-editor">{$imagePreview}</div>
                   </div>
                 </div>
-              </form>
-              <div className="form-group">
-                <div>
-                  <form className="upload-image-form-editor" onSubmit={this._handleSubmit}>
-                    <label className="custom-file-upload">
-                      <input onChange={this._handleImageChange} type="file" />
-                      Subir imagen
-                    </label>
-                  </form>
-                  <div className="show-image-preview-text-editor">{$imagePreview}</div>
-                </div>
+              </div>
+              <Editor
+                editorState={editorState}
+                wrapperClassName="wrapper-class"
+                editorClassName="rdw-editor-toolbar"
+                toolbarClassName="toolbar-class"
+                onEditorStateChange={this.onEditorStateChange}
+              />
+              <div className="send-article-div-control">
+                <button
+                  onClick={() => this.deleteArticle()}
+                  type="button"
+                  className="delete-button"
+                >
+                  Borrar articulo
+                </button>
+                <button onClick={() => this.editArticle()} type="button" className="edit-button">
+                  Guardar cambios
+                </button>
               </div>
             </div>
-            <Editor
-              editorState={editorState}
-              wrapperClassName="wrapper-class"
-              editorClassName="rdw-editor-toolbar"
-              toolbarClassName="toolbar-class"
-              onEditorStateChange={this.onEditorStateChange}
-            />
-            <div className="send-article-div-control">
-              <button onClick={() => this.deleteArticle()} type="button" className="delete-button">
-                Borrar articulo
-              </button>
-              <button onClick={() => this.editArticle()} type="button" className="edit-button">
-                Guardar cambios
-              </button>
-            </div>
-          </div>
-        )}
-        <Footer />
-        <NotificationContainer />
-      </div>
-    );
+          )}
+          <Footer />
+          <NotificationContainer />
+        </div>
+      );
+    }
   }
 }
 
