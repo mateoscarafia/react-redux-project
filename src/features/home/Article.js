@@ -219,7 +219,7 @@ export class Article extends Component {
                   </button>
                 )}
                 <div className="row">
-                  <div className="col-lg-1 col-md-3 col-sm-12 col-xs-12">
+                  <div className="col-lg-1 col-md-3 col-sm-6 col-xs-6">
                     <div
                       className="img-div-article-news-header"
                       onClick={() =>

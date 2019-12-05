@@ -166,6 +166,7 @@ export class EditArticle extends Component {
             : this.props.home.uniquearticle.data[0].content,
           key_words: this.props.home.uniquearticle.data[0].key_words + '-' + keyword_content,
           id: this.props.match.params.id,
+          user_id: this.state.id,
         };
         this.props.actions.editArticle(data);
       });

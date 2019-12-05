@@ -21,7 +21,10 @@ export class Comments extends Component {
   };
 
   deleteComment = id => {
-    this.props.actions.deleteComment({ token: VALUES.DEEP_TOKEN, comment_id: id });
+    this.props.actions.deleteComment({
+      token: localStorage.getItem('token-app-auth-current'),
+      comment_id: id,
+    });
   };
 
   componentWillReceiveProps(nextProps) {
@@ -78,10 +81,12 @@ export class Comments extends Component {
     this.state.comment === '' && NotificationManager.warning('Escribe comentario');
     if (this.state.comment !== '') {
       let data_comment = {
-        user_id: this.props.user_id,
         news_id: this.props.news_id,
-        comment_text: this.state.comment.replace(/\"/g, '\\"'),
-        token: VALUES.DEEP_TOKEN,
+        comment_text: this.state.comment
+          .replace(/\"/g, '\\"')
+          .replace(/\'/g, '\\"')
+          .replace(/\`/g, '\\"'),
+        token: localStorage.getItem('token-app-auth-current'),
       };
       await this.props.actions.sendComment(data_comment);
       await this.props.actions.getComments({
