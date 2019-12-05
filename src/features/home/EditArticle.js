@@ -47,15 +47,24 @@ export class EditArticle extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.home.postArticlePending && nextProps.home.postarticle) {
+    if (this.props.home.editArticlePending && nextProps.home.editarticle) {
       NotificationManager.info('Articulo guardado');
       setTimeout(() => {
         window.location.replace(
-          'http://' + VALUES.BD_ORIGIN + ':6075/news/' + nextProps.home.postarticle.data.id,
+          'http://' + VALUES.BD_ORIGIN + ':6075/news/' + this.props.match.params.id,
         );
       }, 1000);
     }
-    if (this.props.home.postArticlePending && nextProps.home.postArticleError) {
+    if (this.props.home.editArticlePending && nextProps.home.editArticleError) {
+      NotificationManager.warning('Ups, algo fue mal');
+    }
+    if (this.props.home.deleteArticlePending && nextProps.home.deletearticle) {
+      NotificationManager.info('Articulo eliminado');
+      setTimeout(() => {
+        window.location.replace('http://' + VALUES.BD_ORIGIN + ':6075/feed/main');
+      }, 1000);
+    }
+    if (this.props.home.deleteArticlePending && nextProps.home.deleteArticleError) {
       NotificationManager.warning('Ups, algo fue mal');
     }
   }
@@ -94,6 +103,10 @@ export class EditArticle extends Component {
     }
   }
 
+  deleteArticle = () => {
+    this.props.actions.deleteArticle({ token: VALUES.DEEP_TOKEN, id: this.props.match.params.id });
+  };
+
   _handleSubmit(e) {
     e.preventDefault();
   }
@@ -102,21 +115,19 @@ export class EditArticle extends Component {
     this.setState({ [event.target.name]: event.target.value });
   };
 
-  postArticle() {
+  editArticle() {
     if (this.state.login) {
       const data = new FormData();
       data.append('file', this.state.file);
       axios.post('http://' + VALUES.BD_ORIGIN + ':3000/file-upload', data, {}).then(res => {
         const categoryObj = this.props.home.categories.data.find(
           element =>
-            element.name === this.state.category || this.props.home.uniquearticle.data[0].name,
+            element.name === (this.state.category || this.props.home.uniquearticle.data[0].name),
         );
         let keyword_content = (
-          this.state.keywords +
+          (this.state.title || this.props.home.uniquearticle.data[0].title) +
           ' ' +
-          this.state.title +
-          ' ' +
-          this.state.subtitle +
+          (this.state.subtitle || this.props.home.uniquearticle.data[0].subtitle) +
           ' ' +
           this.props.home.user.data[0].username
         )
@@ -131,19 +142,21 @@ export class EditArticle extends Component {
           title: this.state.title
             ? this.state.title.replace(/\"/g, '\\"')
             : this.props.home.uniquearticle.data[0].title,
-          subtitle: this.state.title
+          subtitle: this.state.subtitle
             ? this.state.subtitle.replace(/\"/g, '\\"')
             : this.props.home.uniquearticle.data[0].subtitle,
           category_id: categoryObj.id,
-          img_url: res.data.filename,
-          content: draftToHtml(convertToRaw(this.state.editorState.getCurrentContent())).replace(
-            /\"/g,
-            '\\"',
-          ),
-          key_words: keyword_content,
-          user_id: this.props.home.user.data[0].id,
+          img_url: res.data.filename || this.props.home.uniquearticle.data[0].img_url,
+          content: this.state.changedEditor
+            ? draftToHtml(convertToRaw(this.state.editorState.getCurrentContent())).replace(
+                /\"/g,
+                '\\"',
+              )
+            : this.props.home.uniquearticle.data[0].content,
+          key_words: this.props.home.uniquearticle.data[0].key_words + '-' + keyword_content,
+          id: this.props.match.params.id,
         };
-        this.props.actions.postArticle(data);
+        this.props.actions.editArticle(data);
       });
     }
   }
@@ -264,11 +277,10 @@ export class EditArticle extends Component {
               onEditorStateChange={this.onEditorStateChange}
             />
             <div className="send-article-div-control">
-              <button
-                onClick={() => this.postArticle()}
-                type="button"
-                className="btn btn-primary btn-lg"
-              >
+              <button onClick={() => this.deleteArticle()} type="button" className="delete-button">
+                Borrar articulo
+              </button>
+              <button onClick={() => this.editArticle()} type="button" className="edit-button">
                 Guardar cambios
               </button>
             </div>

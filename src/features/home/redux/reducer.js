@@ -21,6 +21,8 @@ import { reducer as sendCommentReducer } from './sendComment';
 import { reducer as getCommentsReducer } from './getComments';
 import { reducer as isFollowReducer } from './isFollow';
 import { reducer as deleteCommentReducer } from './deleteComment';
+import { reducer as editArticleReducer } from './editArticle';
+import { reducer as deleteArticleReducer } from './deleteArticle';
 
 const reducers = [
   getNewsReducer,
@@ -45,6 +47,8 @@ const reducers = [
   getCommentsReducer,
   isFollowReducer,
   deleteCommentReducer,
+  editArticleReducer,
+  deleteArticleReducer,
 ];
 
 export default function reducer(state = initialState, action) {

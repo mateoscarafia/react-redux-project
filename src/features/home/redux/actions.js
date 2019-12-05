@@ -20,3 +20,5 @@ export { sendComment, dismissSendCommentError } from './sendComment';
 export { getComments, dismissGetCommentsError } from './getComments';
 export { isFollow, dismissIsFollowError } from './isFollow';
 export { deleteComment, dismissDeleteCommentError } from './deleteComment';
+export { editArticle, dismissEditArticleError } from './editArticle';
+export { deleteArticle, dismissDeleteArticleError } from './deleteArticle';

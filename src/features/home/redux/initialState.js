@@ -43,6 +43,10 @@ const initialState = {
   isFollowError: null,
   deleteCommentPending: false,
   deleteCommentError: null,
+  editArticlePending: false,
+  editArticleError: null,
+  deleteArticlePending: false,
+  deleteArticleError: null,
 };
 
 export default initialState;
