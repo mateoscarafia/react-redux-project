@@ -124,30 +124,34 @@ export class Article extends Component {
 
   buildNews = () => {
     return this.props.home.related.data.map(item => {
-      return (
-        <div key={item.title + '-' + item.id} className="news-conts">
-          <div
-            className="img-div"
-            onClick={() => this.routerMethod('../news/' + item.id, item.id)}
-            style={{
-              backgroundImage: `url(${'http://' +
-                VALUES.BD_ORIGIN +
-                ':3000/network_images/' +
-                item.img_url})`,
-            }}
-          >
-            <div className="img-div-news-category">{item.username}</div>
-          </div>
-          <div className="p-div">
-            <p
-              className="p-div-title-text"
+      if (item.id !== parseInt(this.props.match.params.id, 10)) {
+        return (
+          <div key={item.title + '-' + item.id} className="news-conts">
+            <div
+              className="img-div"
               onClick={() => this.routerMethod('../news/' + item.id, item.id)}
+              style={{
+                backgroundImage: `url(${'http://' +
+                  VALUES.BD_ORIGIN +
+                  ':3000/network_images/' +
+                  item.img_url})`,
+              }}
             >
-              {item.title}
-            </p>
+              <div className="img-div-news-category">{item.username}</div>
+            </div>
+            <div className="p-div">
+              <p
+                className="p-div-title-text"
+                onClick={() => this.routerMethod('../news/' + item.id, item.id)}
+              >
+                {item.title}
+              </p>
+            </div>
           </div>
-        </div>
-      );
+        );
+      } else {
+        return null;
+      }
     });
   };
 

@@ -168,6 +168,7 @@ export class EditArticle extends Component {
           id: this.props.match.params.id,
           user_id: this.state.id,
         };
+        console.log(data);
         this.props.actions.editArticle(data);
       });
     }

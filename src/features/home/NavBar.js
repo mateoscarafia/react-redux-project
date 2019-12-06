@@ -34,7 +34,6 @@ export class NavBar extends Component {
   };
 
   async handleNews(news_id, news_name) {
-    document.getElementById('navbar-toggler-id-for-clicking').click();
     await this.props.actions.getArticles({ token: VALUES.DEEP_TOKEN, param: news_id });
     window.scrollTo(0, 0);
     this.props.history.push('/feed/' + news_name);

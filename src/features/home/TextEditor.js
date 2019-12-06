@@ -118,28 +118,28 @@ export class TextEditor extends Component {
         )
           .toLowerCase()
           .normalize('NFD')
-          .replace(/\"/g, '\\"')
-          .replace(/\'/g, '\\"')
-          .replace(/\`/g, '\\"')
+          .replace(/\"/g, '"')
+          .replace(/\'/g, '"')
+          .replace(/\`/g, '"')
           .replace(/[\u0300-\u036f]/g, '')
           .replace(/[^a-zA-Z0-9 ]/g, '')
           .replace(/ /g, '-');
         let data = {
           token: localStorage.getItem('token-app-auth-current'),
           title: this.state.title
-            .replace(/\"/g, '\\"')
-            .replace(/\'/g, '\\"')
-            .replace(/\`/g, '\\"'),
+            .replace(/\"/g, '"')
+            .replace(/\'/g, '"')
+            .replace(/\`/g, '"'),
           subtitle: this.state.subtitle
-            .replace(/\"/g, '\\"')
-            .replace(/\'/g, '\\"')
-            .replace(/\`/g, '\\"'),
+            .replace(/\"/g, '"')
+            .replace(/\'/g, '"')
+            .replace(/\`/g, '"'),
           category_id: categoryObj.id,
           img_url: res.data.filename,
           content: draftToHtml(convertToRaw(this.state.editorState.getCurrentContent()))
-            .replace(/\"/g, '\\"')
-            .replace(/\'/g, '\\"')
-            .replace(/\`/g, '\\"'),
+            .replace(/\"/g, '"')
+            .replace(/\'/g, '"')
+            .replace(/\`/g, '"'),
           key_words: keywords,
           user_id: this.props.home.user.data[0].id,
         };
@@ -150,7 +150,7 @@ export class TextEditor extends Component {
 
   buildCategories = () => {
     return this.props.home.categories.data.map(item => {
-      return <option>{item.name}</option>;
+      return <option key={item.id}>{item.name}</option>;
     });
   };
 
