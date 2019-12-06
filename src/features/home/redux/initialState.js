@@ -47,6 +47,12 @@ const initialState = {
   editArticleError: null,
   deleteArticlePending: false,
   deleteArticleError: null,
+  getFollowingPending: false,
+  getFollowingError: null,
+  getFollowersPending: false,
+  getFollowersError: null,
+  searchUsersPending: false,
+  searchUsersError: null,
 };
 
 export default initialState;

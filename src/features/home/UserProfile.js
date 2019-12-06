@@ -93,6 +93,9 @@ export class UserProfile extends Component {
           isProfile: user.id === parseInt(id, 10),
         });
         user.id !== parseInt(id, 10) && this.props.actions.postVisit(id);
+        this.props.actions.getFollowing({ token: localStorage.getItem('token-app-auth-current') });
+        this.props.actions.getFollowers({ token: localStorage.getItem('token-app-auth-current') });
+        this.props.actions.searchUsers({ token: localStorage.getItem('token-app-auth-current') });
       }
     }
     //For every user
@@ -116,9 +119,18 @@ export class UserProfile extends Component {
       token: localStorage.getItem('token-app-auth-current'),
       profile_img_url: res.data.filename || this.props.home.user.data[0].profile_img_url,
       banner_img_url: resP.data.filename || this.props.home.user.data[0].banner_img_url,
-      username: this.state.username || this.props.home.user.data[0].username,
-      profession: this.state.profession || this.props.home.user.data[0].profession,
-      aboutme: this.state.about_me || this.props.home.user.data[0].about_me,
+      username: (this.state.username || this.props.home.user.data[0].username)
+        .replace(/\"/g, '\\"')
+        .replace(/\'/g, '\\"')
+        .replace(/\`/g, '\\"'),
+      profession: (this.state.profession || this.props.home.user.data[0].profession)
+        .replace(/\"/g, '\\"')
+        .replace(/\'/g, '\\"')
+        .replace(/\`/g, '\\"'),
+      aboutme: (this.state.about_me || this.props.home.user.data[0].about_me)
+        .replace(/\"/g, '\\"')
+        .replace(/\'/g, '\\"')
+        .replace(/\`/g, '\\"'),
     };
     this.props.actions.editUser(dataUpdate);
   };
@@ -345,13 +357,13 @@ export class UserProfile extends Component {
                   </div>
                   <hr />
                   <div className="div-edit-user-button-save-change">
-                  <button
-                    onClick={() => this.sendUpdateUser()}
-                    type="button"
-                    className="btn btn-success edit-user-button-form"
-                  >
-                    Guardar
-                  </button>
+                    <button
+                      onClick={() => this.sendUpdateUser()}
+                      type="button"
+                      className="btn btn-success edit-user-button-form"
+                    >
+                      Guardar
+                    </button>
                   </div>
                 </form>
               </div>

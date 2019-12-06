@@ -22,3 +22,6 @@ export { isFollow, dismissIsFollowError } from './isFollow';
 export { deleteComment, dismissDeleteCommentError } from './deleteComment';
 export { editArticle, dismissEditArticleError } from './editArticle';
 export { deleteArticle, dismissDeleteArticleError } from './deleteArticle';
+export { getFollowing, dismissGetFollowingError } from './getFollowing';
+export { getFollowers, dismissGetFollowersError } from './getFollowers';
+export { searchUsers, dismissSearchUsersError } from './searchUsers';

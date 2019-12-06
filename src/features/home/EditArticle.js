@@ -35,11 +35,11 @@ export class EditArticle extends Component {
       file: '',
       imagePreviewUrl: null,
       login: false,
-      title: '',
+      title: null,
       category: null,
       id: null,
-      subtitle: '',
-      keywords: '',
+      subtitle: null,
+      keywords: null,
       changedEditor: false,
     };
     this._handleImageChange = this._handleImageChange.bind(this);
@@ -247,7 +247,11 @@ export class EditArticle extends Component {
                       type="text"
                       id="title"
                       name="title"
-                      value={this.state.title || this.props.home.uniquearticle.data[0].title}
+                      value={
+                        this.state.title === null
+                          ? this.props.home.uniquearticle.data[0].title
+                          : this.state.title
+                      }
                       onChange={this.handleChange}
                       placeholder="Título"
                     />
@@ -256,7 +260,11 @@ export class EditArticle extends Component {
                     <input
                       type="text"
                       name="subtitle"
-                      value={this.state.subtitle || this.props.home.uniquearticle.data[0].subtitle}
+                      value={
+                        this.state.subtitle === null
+                          ? this.props.home.uniquearticle.data[0].subtitle
+                          : this.state.subtitle
+                      }
                       onChange={this.handleChange}
                       id="subtitle"
                       placeholder="Subtítulo"

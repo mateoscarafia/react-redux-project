@@ -32,11 +32,11 @@ export class TextEditor extends Component {
       file: '',
       imagePreviewUrl: null,
       login: false,
-      title: '',
+      title: null,
       category: 'Opinión',
       id: null,
-      subtitle: '',
-      keywords: '',
+      subtitle: null,
+      keywords: null,
     };
     this._handleImageChange = this._handleImageChange.bind(this);
     this._handleSubmit = this._handleSubmit.bind(this);
