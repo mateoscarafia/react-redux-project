@@ -69,7 +69,10 @@ export class UserHeader extends Component {
       <div className="home-user-header">
         <div
           style={{
-            backgroundImage: `url(${this.props.user.banner_img_url})`,
+            backgroundImage: `url(${'http://' +
+              VALUES.BD_ORIGIN +
+              ':3000/network_images/' +
+              this.props.user.banner_img_url})`,
           }}
           className="user-pic-header-background-image"
         ></div>
@@ -86,7 +89,10 @@ export class UserHeader extends Component {
           <div
             onClick={() => this.routerMethod('/profile/' + this.props.user_id)}
             style={{
-              backgroundImage: `url(${this.props.user.profile_img_url})`,
+              backgroundImage: `url(${'http://' +
+                VALUES.BD_ORIGIN +
+                ':3000/network_images/' +
+                this.props.user.profile_img_url})`,
             }}
             className="user-profile-picture"
           ></div>

@@ -14,6 +14,7 @@ import UserHeader from './UserHeader';
 import Footer from './Footer';
 
 const jwt = require('jsonwebtoken');
+const axios = require('axios');
 
 export class UserProfile extends Component {
   static propTypes = {
@@ -23,13 +24,51 @@ export class UserProfile extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { isProfile: false, login: false, id: null };
+    this.state = {
+      isProfile: false,
+      login: false,
+      id: null,
+      imagePreviewUrl: null,
+      imagePreviewUrlP: null,
+      editUser: false,
+      username: null,
+      profession: null,
+      about_me: null,
+    };
+    this._handleImageChange = this._handleImageChange.bind(this);
+    this._handleImageChangeP = this._handleImageChangeP.bind(this);
   }
 
   routerMethod = destiny => {
     this.props.history.push(destiny);
     window.scrollTo(0, 0);
   };
+
+  _handleImageChange(e) {
+    e.preventDefault();
+    let reader = new FileReader();
+    let file = e.target.files[0];
+    reader.onloadend = () => {
+      this.setState({
+        file: file,
+        imagePreviewUrl: reader.result,
+      });
+    };
+    reader.readAsDataURL(file);
+  }
+
+  _handleImageChangeP(e) {
+    e.preventDefault();
+    let reader = new FileReader();
+    let fileP = e.target.files[0];
+    reader.onloadend = () => {
+      this.setState({
+        fileP: fileP,
+        imagePreviewUrlP: reader.result,
+      });
+    };
+    reader.readAsDataURL(fileP);
+  }
 
   handleModal = action => {
     this.setState({
@@ -66,23 +105,35 @@ export class UserProfile extends Component {
     this.setState({ [event.target.name]: event.target.value });
   };
 
-  sendUpdateUser = () => {
-    let data = {
-      token: VALUES.DEEP_TOKEN,
-      username: this.state.username !== '' ? this.state.username : null,
-      profession: this.state.userprofession,
-      aboutme: this.state.userpresentation,
-      id: this.state.id,
+  sendUpdateUser = async () => {
+    const data = new FormData();
+    const dataP = new FormData();
+    data.append('file', this.state.file);
+    dataP.append('file', this.state.fileP);
+    let res = await axios.post('http://' + VALUES.BD_ORIGIN + ':3000/file-upload', data, {});
+    let resP = await axios.post('http://' + VALUES.BD_ORIGIN + ':3000/file-upload', dataP, {});
+    let dataUpdate = {
+      token: localStorage.getItem('token-app-auth-current'),
+      profile_img_url: res.data.filename || this.props.home.user.data[0].profile_img_url,
+      banner_img_url: resP.data.filename || this.props.home.user.data[0].banner_img_url,
+      username: this.state.username || this.props.home.user.data[0].username,
+      profession: this.state.profession || this.props.home.user.data[0].profession,
+      aboutme: this.state.about_me || this.props.home.user.data[0].about_me,
     };
-    this.props.actions.editUser(data);
+    this.props.actions.editUser(dataUpdate);
   };
 
   componentWillReceiveProps(nextProps) {
-    this.props.home.editUserPending
-      ? nextProps.home.editeduser
-        ? NotificationManager.info('Datos guardados')
-        : NotificationManager.warning('Ups, algo fue mal')
-      : null;
+    if (this.props.home.editUserPending && nextProps.home.editeduser) {
+      NotificationManager.info('Datos guardados');
+      this.props.actions.getUser({ token: VALUES.DEEP_TOKEN, id: this.state.id });
+      this.setState({
+        editUser: false,
+      });
+    }
+    if (this.props.home.editUserPending && !nextProps.home.editeduser) {
+      NotificationManager.warning('Ups, algo fue mal');
+    }
   }
 
   buildNews = () => {
@@ -95,7 +146,7 @@ export class UserProfile extends Component {
             style={{
               backgroundImage: `url(${'http://' +
                 VALUES.BD_ORIGIN +
-                ':3000/article_images/' +
+                ':3000/network_images/' +
                 item.img_url})`,
             }}
           >
@@ -115,6 +166,28 @@ export class UserProfile extends Component {
   };
 
   render() {
+    let $imagePreview,
+      $imagePreviewP = null;
+    if (typeof this.props.home.user !== 'undefined') {
+      let imagePreviewUrl =
+        this.state.imagePreviewUrl ||
+        'http://' +
+          VALUES.BD_ORIGIN +
+          ':3000/network_images/' +
+          this.props.home.user.data[0].profile_img_url;
+      let imagePreviewUrlP =
+        this.state.imagePreviewUrlP ||
+        'http://' +
+          VALUES.BD_ORIGIN +
+          ':3000/network_images/' +
+          this.props.home.user.data[0].banner_img_url;
+      if (imagePreviewUrl) {
+        $imagePreview = <img alt="img-preview" src={imagePreviewUrl} />;
+      }
+      if (imagePreviewUrlP) {
+        $imagePreviewP = <img alt="img-preview" src={imagePreviewUrlP} />;
+      }
+    }
     return (
       <div className="home-user-profile">
         {typeof this.props.home.categories !== 'undefined' &&
@@ -168,105 +241,122 @@ export class UserProfile extends Component {
           </div>
         </div>
         <Footer />
-        <Modal
-          visible={this.state.editUser && this.state.isProfile}
-          width="500px"
-          height="650px"
-          borderRadius="0px"
-          effect="fadeInDown"
-          onClickAway={() => this.handleModal(false)}
-        >
-          <div className="modal-header-edit-user">
-            <a className="close-modal-header-edit-user" onClick={() => this.handleModal(false)}>
-              X
-            </a>
-          </div>
-          <div className="form-modal-edit-user">
-            <form>
-              <div className="form-group">
-                <label>Nombre completo</label>
-                <input
-                  type="text"
-                  name="username"
-                  className="form-control"
-                  onChange={this.handleChange}
-                  id="username"
-                  placeholder="Nombre completo"
-                />
+        {typeof this.props.home.user !== 'undefined' &&
+          this.state.editUser &&
+          this.state.isProfile && (
+            <div className="edit-user-modal-absolute">
+              <div className="modal-header-edit-user">
+                <a className="close-modal-header-edit-user" onClick={() => this.handleModal(false)}>
+                  X
+                </a>
               </div>
-              <div className="form-group">
-                <input type="file" name="file" id="file" className="inputfile" />
-                <label>Foto de perfil</label>
+              <div className="form-modal-edit-user">
+                <h4>Datos personales</h4>
+                <hr />
+                <form>
+                  <div className="form-group">
+                    <label>Nombre completo</label>
+                    <input
+                      type="text"
+                      name="username"
+                      value={
+                        this.state.username !== null
+                          ? this.state.username
+                          : this.props.home.user.data[0].username
+                      }
+                      className="form-control"
+                      onChange={this.handleChange}
+                      id="username"
+                      placeholder="Nombre completo"
+                    />
+                  </div>
+                  <div class="wrapper-image-form">
+                    <div class="upload-image-form-editor">
+                      <label className="custom-file-upload">
+                        <input
+                          onChange={this._handleImageChange}
+                          type="file"
+                          className="inputfile"
+                        />
+                        Cambiar foto de perfil
+                      </label>
+                      <div className="show-image-preview-text-editor">{$imagePreview}</div>
+                    </div>
+                    <div class="upload-image-form-editor margin-left-upload-img">
+                      <label className="custom-file-upload">
+                        <input
+                          onChange={this._handleImageChangeP}
+                          type="file"
+                          className="inputfile"
+                        />
+                        Cambiar foto de portada
+                      </label>
+                      <div className="show-image-preview-text-editor">{$imagePreviewP}</div>
+                    </div>
+                  </div>
+                  <div className="form-group">
+                    <label>Profesión</label>
+                    <input
+                      type="text"
+                      name="profession"
+                      value={
+                        this.state.profession !== null
+                          ? this.state.profession
+                          : this.props.home.user.data[0].profession
+                      }
+                      onChange={this.handleChange}
+                      className="form-control"
+                      id="profession"
+                      placeholder="Periodista, columnista.."
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label>Presentación</label>
+                    <textarea
+                      name="about_me"
+                      type="text"
+                      value={
+                        this.state.about_me !== null
+                          ? this.state.about_me
+                          : this.props.home.user.data[0].about_me
+                      }
+                      className="form-control"
+                      onChange={this.handleChange}
+                      id="about_me"
+                      rows="3"
+                    ></textarea>
+                  </div>
+                  <hr />
+                  <div className="form-group">
+                    <label>Cambiar contraseña</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="exampleFormControlInput1"
+                      placeholder="Contraseña actual"
+                    />
+                    <br />
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="exampleFormControlInput1"
+                      placeholder="Contraseña nueva"
+                    />
+                  </div>
+                  <hr />
+                  <div className="div-edit-user-button-save-change">
+                  <button
+                    onClick={() => this.sendUpdateUser()}
+                    type="button"
+                    className="btn btn-success edit-user-button-form"
+                  >
+                    Guardar
+                  </button>
+                  </div>
+                </form>
               </div>
-              <div className="form-group">
-                <label>Profesión</label>
-                <input
-                  type="text"
-                  name="userprofession"
-                  onChange={this.handleChange}
-                  className="form-control"
-                  id="userprofession"
-                  placeholder="Periodista, columnista.."
-                />
-              </div>
-              <div className="form-group">
-                <label>Example select</label>
-                <select className="form-control" id="exampleFormControlSelect1">
-                  <option>Buenos Aires</option>
-                  <option>Catamarca</option>
-                  <option>Chaco</option>
-                  <option>Chubut</option>
-                  <option>Córdoba</option>
-                  <option>Corrientes</option>
-                  <option>Entre Ríos</option>
-                  <option>Formosa</option>
-                  <option>Jujuy</option>
-                  <option>La Pampa</option>
-                  <option>La Rioja</option>
-                  <option>Mendoza</option>
-                  <option>Misiones</option>
-                  <option>Neuquén</option>
-                  <option>Rio Negro</option>
-                  <option>Salta</option>
-                  <option>San Juan</option>
-                  <option>San Luis</option>
-                  <option>Santa Cruz</option>
-                  <option>Santa Fe</option>
-                  <option>Santiago del Estero</option>
-                  <option>Tierra del Fuego</option>
-                  <option>Tucumán</option>
-                </select>
-              </div>
-              <div className="form-group">
-                <label>Presentación</label>
-                <textarea
-                  name="userpresentation"
-                  type="text"
-                  className="form-control"
-                  onChange={this.handleChange}
-                  id="userpresentation"
-                  rows="3"
-                ></textarea>
-              </div>
-              <div className="form-group">
-                <label>Cambiar contraseña</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="exampleFormControlInput1"
-                  placeholder="Contraseña nueva"
-                />
-              </div>
-              <button
-                onClick={() => this.sendUpdateUser()}
-                type="button"
-                className="btn btn-success edit-user-button-form"
-              >
-                Guardar
-              </button>
-            </form>
-          </div>
-        </Modal>
+            </div>
+          )}
         <NotificationContainer />
       </div>
     );

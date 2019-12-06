@@ -57,7 +57,7 @@ export class News extends Component {
                 style={{
                   backgroundImage: `url(${'http://' +
                     VALUES.BD_ORIGIN +
-                    ':3000/article_images/' +
+                    ':3000/network_images/' +
                     this.props.articles.data.main_feed[prop].img_url})`,
                 }}
               >
@@ -93,7 +93,7 @@ export class News extends Component {
                 style={{
                   backgroundImage: `url(${'http://' +
                     VALUES.BD_ORIGIN +
-                    ':3000/article_images/' +
+                    ':3000/network_images/' +
                     this.props.articles.data.backup_feed[prop].img_url})`,
                 }}
               >
@@ -135,7 +135,7 @@ export class News extends Component {
             style={{
               backgroundImage: `url(${'http://' +
                 VALUES.BD_ORIGIN +
-                ':3000/article_images/' +
+                ':3000/network_images/' +
                 this.props.articles.data.main_feed[prop].img_url})`,
             }}
           >
@@ -174,7 +174,7 @@ export class News extends Component {
                 style={{
                   backgroundImage: `url(${'http://' +
                     VALUES.BD_ORIGIN +
-                    ':3000/article_images/' +
+                    ':3000/network_images/' +
                     this.props.articles.data.main_feed[prop].img_url})`,
                 }}
               >
@@ -209,7 +209,7 @@ export class News extends Component {
                 style={{
                   backgroundImage: `url(${'http://' +
                     VALUES.BD_ORIGIN +
-                    ':3000/article_images/' +
+                    ':3000/network_images/' +
                     this.props.articles.data.backup_feed[prop].img_url})`,
                 }}
               >
@@ -253,7 +253,7 @@ export class News extends Component {
                 style={{
                   backgroundImage: `url(${'http://' +
                     VALUES.BD_ORIGIN +
-                    ':3000/article_images/' +
+                    ':3000/network_images/' +
                     this.props.articles.data.main_feed[prop].img_url})`,
                 }}
               >
@@ -288,7 +288,7 @@ export class News extends Component {
                 style={{
                   backgroundImage: `url(${'http://' +
                     VALUES.BD_ORIGIN +
-                    ':3000/article_images/' +
+                    ':3000/network_images/' +
                     this.props.articles.data.backup_feed[prop].img_url})`,
                 }}
               >
@@ -329,7 +329,7 @@ export class News extends Component {
                 style={{
                   backgroundImage: `url(${'http://' +
                     VALUES.BD_ORIGIN +
-                    ':3000/article_images/' +
+                    ':3000/network_images/' +
                     this.props.articles.data.main_feed[prop].img_url})`,
                 }}
               ></div>
@@ -366,7 +366,7 @@ export class News extends Component {
                 style={{
                   backgroundImage: `url(${'http://' +
                     VALUES.BD_ORIGIN +
-                    ':3000/article_images/' +
+                    ':3000/network_images/' +
                     this.props.articles.data.backup_feed[prop].img_url})`,
                 }}
               ></div>
@@ -407,7 +407,10 @@ export class News extends Component {
                         this.routerMethod('news/' + this.props.articles.data.main_feed[prop].id)
                       }
                       style={{
-                        backgroundImage: `url(${this.props.articles.data.main_feed[prop].profile_img_url})`,
+                        backgroundImage: `url(${'http://' +
+                          VALUES.BD_ORIGIN +
+                          ':3000/network_images/' +
+                          this.props.articles.data.main_feed[prop].profile_img_url})`,
                       }}
                     ></div>
                   </div>
@@ -450,7 +453,10 @@ export class News extends Component {
                         this.routerMethod('news/' + this.props.articles.data.backup_feed[prop].id)
                       }
                       style={{
-                        backgroundImage: `url(${this.props.articles.data.backup_feed[prop].profile_img_url})`,
+                        backgroundImage: `url(${'http://' +
+                          VALUES.BD_ORIGIN +
+                          ':3000/network_images/' +
+                          this.props.articles.data.backup_feed[prop].profile_img_url})`,
                       }}
                     ></div>
                   </div>
@@ -498,7 +504,7 @@ export class News extends Component {
                 style={{
                   backgroundImage: `url(${'http://' +
                     VALUES.BD_ORIGIN +
-                    ':3000/article_images/' +
+                    ':3000/network_images/' +
                     this.props.articles.data.main_feed[prop].img_url})`,
                 }}
               >
@@ -533,7 +539,7 @@ export class News extends Component {
                 style={{
                   backgroundImage: `url(${'http://' +
                     VALUES.BD_ORIGIN +
-                    ':3000/article_images/' +
+                    ':3000/network_images/' +
                     this.props.articles.data.backup_feed[prop].img_url})`,
                 }}
               >
@@ -567,6 +573,7 @@ export class News extends Component {
   }
 
   newsDistribution = () => {
+    window.scrollTo(0, 0);
     var contentNews = [];
     if (
       this.props.articles &&
@@ -608,8 +615,6 @@ export class News extends Component {
           <div className="row margin-for-news">{this.buildNews('main', 17, 'end')}</div>,
         );
       !this.checkIfArrayContainsMain(2) &&
-        this.checkIfArrayContainsMain(1) &&
-        this.checkIfArrayContainsMain(0) &&
         contentNews.push(
           <div className="row margin-for-news">{this.buildNews('main', 0, 'end')}</div>,
         );
@@ -695,7 +700,10 @@ export class News extends Component {
                 <div
                   onClick={() => this.routerMethod('profile/' + this.props.home.writer.data.id)}
                   style={{
-                    backgroundImage: `url(${this.props.home.writer.data.profile_img_url})`,
+                    backgroundImage: `url(${'http://' +
+                      VALUES.BD_ORIGIN +
+                      ':3000/network_images/' +
+                      this.props.home.writer.data.profile_img_url})`,
                   }}
                   className="user-profile-picture-popup"
                 ></div>

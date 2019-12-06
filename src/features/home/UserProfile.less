@@ -17,6 +17,11 @@
     left: 0px;
   }
 
+  .div-edit-user-button-save-change{
+    width:100%;
+    text-align: right;
+  }
+
   .p-div-title-text {
     text-align: left;
     padding: 5px 10px 0 10px;
@@ -92,6 +97,54 @@
     font-size: 15px;
   }
 
+  .edit-user-modal-absolute {
+    position: absolute;
+    position: fixed;
+    box-shadow: 0 5px 9px 9px rgba(0, 0, 0, 0.15), 0 2px 3px rgba(0, 0, 0, 0.2);
+    overflow-y: scroll;
+    top: 5%;
+    left: 25%;
+    border: 1px solid rgba(0, 0, 0, 0.25);
+    z-index: 12000;
+    width: 50%;
+    height: 600px;
+    background-color: #fff;
+  }
+
+  .show-image-preview-text-editor {
+    img {
+      width: 200px;
+    }
+  }
+
+  .wrapper-image-form{
+    margin: 10px 0px 30px 0px;
+    width:100%;
+    float:left;
+  }
+
+  .upload-image-form-editor {
+    width:45%;
+    text-align: center;
+    float:left;
+    input[type='file'] {
+      display: none;
+    }
+
+    .custom-file-upload {
+      width:100%;
+      background-color: #151515;
+      color:#fff;
+      border: 1px solid #ccc;
+      display: inline-block;
+      padding: 6px 12px;
+      cursor: pointer;
+    }
+  }
+  .margin-left-upload-img{
+    margin-left:10%;
+  }
+
   .modal-header-edit-user {
     height: 20px;
   }
@@ -133,9 +186,13 @@
     padding: 10px 15px 10px 15px;
     background-color: #151515;
     display: inline-block;
-    margin-left: 20px;
+    margin-left: 5%;
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 30px;
     border-radius: 2px;
-    margin: 0;
+    width: 40%;
+    border-radius: 2px;
     cursor: pointer;
   }
 
@@ -240,17 +297,23 @@
   }
 
   @media (max-width: 800px) {
-      
-      .news-conts {
-        width: 100%;
-        margin: 5px 0px 5px 0px;
-        min-height: 300px;
-        background-repeat: no-repeat;
-        background-size: cover;
-        box-shadow: none;
-        border-top: 1px solid rgba(0, 0, 0, 0.25);
-        border-bottom: 1px solid rgba(0, 0, 0, 0.25);
-      }
+    .upload-image-form-editor {
+      width:100%;
+      margin:0px 0px 15px 0px;
+    }
+    .margin-left-upload-img{
+      margin-left:0;
+    }
+    .news-conts {
+      width: 100%;
+      margin: 5px 0px 5px 0px;
+      min-height: 300px;
+      background-repeat: no-repeat;
+      background-size: cover;
+      box-shadow: none;
+      border-top: 1px solid rgba(0, 0, 0, 0.25);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+    }
     .user-profile-wrapper {
       padding: 20px 0px 0px 0px;
     }
@@ -271,6 +334,13 @@
         width: 100%;
         margin: 5px 0px 5px 0px;
       }
+    }
+    .edit-user-modal-absolute {
+      top: 10%;
+      left: 1%;
+      z-index: 10000;
+      width: 98%;
+      height: 500px;
     }
   }
 }

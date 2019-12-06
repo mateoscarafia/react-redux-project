@@ -134,7 +134,10 @@ export class Home extends Component {
                           this.routerMethod('../../profile/' + this.props.home.user.data[0].id)
                         }
                         style={{
-                          backgroundImage: `url(${this.props.home.user.data[0].profile_img_url})`,
+                          backgroundImage: `url(${'http://' +
+                            VALUES.BD_ORIGIN +
+                            ':3000/network_images/' +
+                            this.props.home.user.data[0].profile_img_url})`,
                         }}
                         className="user-profile-picture"
                       ></div>

@@ -132,7 +132,7 @@ export class Article extends Component {
             style={{
               backgroundImage: `url(${'http://' +
                 VALUES.BD_ORIGIN +
-                ':3000/article_images/' +
+                ':3000/network_images/' +
                 item.img_url})`,
             }}
           >
@@ -229,7 +229,10 @@ export class Article extends Component {
                         )
                       }
                       style={{
-                        backgroundImage: `url(${this.props.home.uniquearticle.data[0].profile_img_url})`,
+                        backgroundImage: `url(${'http://' +
+                          VALUES.BD_ORIGIN +
+                          ':3000/network_images/' +
+                          this.props.home.uniquearticle.data[0].profile_img_url})`,
                       }}
                     ></div>
                   </div>
@@ -268,7 +271,7 @@ export class Article extends Component {
                 style={{
                   backgroundImage: `url(${'http://' +
                     VALUES.BD_ORIGIN +
-                    ':3000/article_images/' +
+                    ':3000/network_images/' +
                     this.props.home.uniquearticle.data[0].img_url})`,
                 }}
                 className="single-article-image-show-div"
@@ -334,7 +337,10 @@ export class Article extends Component {
                 <div
                   onClick={() => this.routerMethod('../profile/' + this.state.userid, null)}
                   style={{
-                    backgroundImage: `url(${this.state.profile_img_url})`,
+                    backgroundImage: `url(${'http://' +
+                      VALUES.BD_ORIGIN +
+                      ':3000/network_images/' +
+                      this.state.profile_img_url})`,
                   }}
                   className="user-profile-picture-popup"
                 ></div>

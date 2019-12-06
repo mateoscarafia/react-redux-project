@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import Modal from 'react-awesome-modal';
 import history from '../../common/history';
+import * as VALUES from '../../constants';
 
 export class BigNews extends Component {
   static propTypes = {
@@ -118,7 +119,10 @@ export class BigNews extends Component {
                 <div
                   onClick={() => this.routerMethod('profile/' + this.props.home.writer.data.id)}
                   style={{
-                    backgroundImage: `url(${this.props.home.writer.data.profile_img_url})`,
+                    backgroundImage: `url(${'http://' +
+                      VALUES.BD_ORIGIN +
+                      ':3000/network_images/' +
+                      this.props.home.writer.data.profile_img_url})`,
                   }}
                   className="user-profile-picture-popup"
                 ></div>

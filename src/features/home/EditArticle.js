@@ -208,7 +208,7 @@ export class EditArticle extends Component {
       (this.props.home.uniquearticle &&
         'http://' +
           VALUES.BD_ORIGIN +
-          ':3000/article_images/' +
+          ':3000/network_images/' +
           this.props.home.uniquearticle.data[0].img_url);
     let $imagePreview = null;
     if (imagePreviewUrl) {
@@ -282,7 +282,7 @@ export class EditArticle extends Component {
                     <form className="upload-image-form-editor" onSubmit={this._handleSubmit}>
                       <label className="custom-file-upload">
                         <input onChange={this._handleImageChange} type="file" />
-                        Subir imagen
+                        Cambiar imagen
                       </label>
                     </form>
                     <div className="show-image-preview-text-editor">{$imagePreview}</div>
