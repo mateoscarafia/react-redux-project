@@ -57,7 +57,7 @@ export class UserHeader extends Component {
 
   sendMessage = async id => {
     if (this.state.message === null || this.state.message === '') {
-      NotificationManager.warning('Mensaje vacio');
+      NotificationManager.warning('Telegrama vacío');
     } else {
       await this.props.actions.postMessage({
         token: localStorage.getItem('token-app-auth-current'),
@@ -116,10 +116,6 @@ export class UserHeader extends Component {
 
   buildMessages = () => {
     return this.props.home.mymessages.data.map(item => {
-      let date = item.created_at
-        .slice(0, 10)
-        .split('-')
-        .reverse();
       return (
         <div key={item.id} className="mailbox-inner-messages-div">
           <div
@@ -139,7 +135,7 @@ export class UserHeader extends Component {
           >
             {item.username}
           </p>
-          <p className="date-message">- {date[0] + '/' + date[1] + '/' + date[2]}</p>
+          <p className="date-message">- {this.convertDate(Date(item.created_at).toString())}</p>
           <br />
           <p className="message-content">{item.message}</p>
           <hr />
@@ -160,11 +156,46 @@ export class UserHeader extends Component {
         : NotificationManager.warning('Ups, algo fue mal')
       : null;
     this.props.home.postMessagePending
-      ? nextProps.home.sendmessage
+      ? nextProps.home.sendmessage.data === 'un dia'
+        ? NotificationManager.info('Solo un Telegrama por día')
+        : nextProps.home.sendmessage.data === 'ok'
         ? NotificationManager.info('Telegrama enviado')
         : NotificationManager.warning('Ups, algo fue mal')
       : null;
   }
+
+  convertDate = date => {
+    let newFormat = date.split(' ');
+    return (
+      newFormat[2] +
+      '/' +
+      (newFormat[1] === 'Jan'
+        ? '01'
+        : newFormat[1] === 'Feb'
+        ? '02'
+        : newFormat[1] === 'Mar'
+        ? '03'
+        : newFormat[1] === 'Abr'
+        ? '04'
+        : newFormat[1] === 'May'
+        ? '05'
+        : newFormat[1] === 'Jun'
+        ? '06'
+        : newFormat[1] === 'Jul'
+        ? '07'
+        : newFormat[1] === 'Aug'
+        ? '08'
+        : newFormat[1] === 'Sep'
+        ? '09'
+        : newFormat[1] === 'Oct'
+        ? '10'
+        : newFormat[1] === 'Nov'
+        ? '11'
+        : '12') +
+      '/' +
+      newFormat[3]
+    );
+  };
 
   render() {
     this.props.user.id === this.state.id && this.state.openTelegram && this.openMessenger();
@@ -218,7 +249,7 @@ export class UserHeader extends Component {
             </p>
           ))}
         {this.state.id && this.props.user.id !== this.state.id && (
-          <p onClick={() => this.openMessenger()} className="telegram-button-user-header">
+          <p alt="Enviar telegrama" onClick={() => this.openMessenger()} className="telegram-button-user-header">
             <img
               onClick={() => this.openMessenger()}
               alt="edit"
@@ -232,8 +263,8 @@ export class UserHeader extends Component {
           <p onClick={() => this.openMailBox()} className="mailbox-button-user-header">
             <img
               alt="edit"
-              style={{ width: '35px' }}
-              className="edit-pen-user-profile-style"
+              style={{ width: '40px' }}
+              className="mailbox-pen-user-profile-style"
               src={require('../../images/mailbox.png')}
             />
           </p>

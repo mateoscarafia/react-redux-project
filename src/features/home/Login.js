@@ -57,7 +57,7 @@ export class Login extends Component {
   render() {
     return (
       <div className="home-login">
-        {/*<form className="home-login-form">
+        <form className="home-login-form">
           <div className="form-group">
             <input
               type="email"
@@ -87,8 +87,7 @@ export class Login extends Component {
           <p onClick={() => this.goToRegister()} className="register-link-in-login-form">
             ¿No tienes cuenta? <b> Registrate </b>
           </p>
-          </form>*/}
-        <div className="postit"></div>
+        </form>
         <NotificationContainer />
       </div>
     );
