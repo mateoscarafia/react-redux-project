@@ -18,7 +18,7 @@ export class UserHeader extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = { openTelegram: false, message: null, openMailBox: false };
   }
 
   async componentWillMount() {
@@ -34,26 +34,118 @@ export class UserHeader extends Component {
           id: user.id,
         });
         await this.props.actions.isFollow({
-          token: VALUES.DEEP_TOKEN,
-          user_id_follower: user.id,
+          token: localStorage.getItem('token-app-auth-current'),
           user_id_followed: this.props.user_id,
         });
       }
     }
   }
 
-  routerMethod = destiny => {
+  routerMethod = async (destiny, id) => {
+    await this.setState({
+      openMailBox: false,
+    });
+    id && (await this.props.actions.getUser({ token: VALUES.DEEP_TOKEN, id: id }));
+    id &&
+      (await this.props.actions.isFollow({
+        token: localStorage.getItem('token-app-auth-current'),
+        user_id_followed: id,
+      }));
     history.push(destiny);
     window.scrollTo(0, 0);
   };
 
-  followUser = (id, action) => {
+  sendMessage = async id => {
+    if (this.state.message === null || this.state.message === '') {
+      NotificationManager.warning('Mensaje vacio');
+    } else {
+      await this.props.actions.postMessage({
+        token: localStorage.getItem('token-app-auth-current'),
+        message: this.state.message
+          .replace(/\"/g, '"')
+          .replace(/\'/g, '"')
+          .replace(/\`/g, '"'),
+        user_id_reader: id,
+      });
+    }
+  };
+
+  followUser = async id => {
     let data = {
-      user_id_follower: this.state.id,
       user_id_followed: id,
       token: localStorage.getItem('token-app-auth-current'),
     };
-    this.props.actions.followUser(data);
+    await this.props.actions.followUser(data);
+    await this.props.actions.isFollow({
+      token: localStorage.getItem('token-app-auth-current'),
+      user_id_followed: id,
+    });
+  };
+
+  openMessenger = () => {
+    this.setState({
+      openTelegram: !this.state.openTelegram,
+    });
+  };
+
+  openMailBox = async () => {
+    let data = {
+      token: localStorage.getItem('token-app-auth-current'),
+    };
+    await this.props.actions.getMessages(data);
+    this.setState({
+      openMailBox: !this.state.openMailBox,
+    });
+  };
+
+  stopFollowUser = async id => {
+    let data = {
+      user_id_followed: id,
+      token: localStorage.getItem('token-app-auth-current'),
+    };
+    await this.props.actions.stopFollow(data);
+    await this.props.actions.isFollow({
+      token: localStorage.getItem('token-app-auth-current'),
+      user_id_followed: id,
+    });
+  };
+
+  handleChange = event => {
+    this.setState({ [event.target.name]: event.target.value });
+  };
+
+  buildMessages = () => {
+    return this.props.home.mymessages.data.map(item => {
+      let date = item.created_at
+        .slice(0, 10)
+        .split('-')
+        .reverse();
+      return (
+        <div key={item.id} className="mailbox-inner-messages-div">
+          <div
+            style={{
+              backgroundImage: `url(${'http://' +
+                VALUES.BD_ORIGIN +
+                ':3000/network_images/' +
+                item.profile_img_url})`,
+            }}
+            className="mailbox-pic-header-background-image"
+          ></div>
+          <p
+            onClick={() =>
+              this.routerMethod('../profile/' + item.user_id_writer, item.user_id_writer)
+            }
+            className="username-name-message"
+          >
+            {item.username}
+          </p>
+          <p className="date-message">- {date[0] + '/' + date[1] + '/' + date[2]}</p>
+          <br />
+          <p className="message-content">{item.message}</p>
+          <hr />
+        </div>
+      );
+    });
   };
 
   componentWillReceiveProps(nextProps) {
@@ -62,9 +154,20 @@ export class UserHeader extends Component {
         ? NotificationManager.info('Sigues al usuario')
         : NotificationManager.warning('Ups, algo fue mal')
       : null;
+    this.props.home.stopFollowPending
+      ? nextProps.home.stopfollow
+        ? NotificationManager.info('No sigues al usuario')
+        : NotificationManager.warning('Ups, algo fue mal')
+      : null;
+    this.props.home.postMessagePending
+      ? nextProps.home.sendmessage
+        ? NotificationManager.info('Telegrama enviado')
+        : NotificationManager.warning('Ups, algo fue mal')
+      : null;
   }
 
   render() {
+    this.props.user.id === this.state.id && this.state.openTelegram && this.openMessenger();
     return (
       <div className="home-user-header">
         <div
@@ -97,10 +200,15 @@ export class UserHeader extends Component {
             className="user-profile-picture"
           ></div>
         </div>
-        {!this.props.isProfile &&
+        {this.props.user.id !== this.state.id &&
           this.props.home.isfollow &&
           (this.props.home.isfollow.data[0] ? (
-            <p className="follow-button-user-header">Sigues al usuario</p>
+            <p
+              onClick={() => this.stopFollowUser(this.props.user.id)}
+              className="follow-button-user-header"
+            >
+              Dejar de seguir
+            </p>
           ) : (
             <p
               onClick={() => this.followUser(this.props.user.id)}
@@ -109,6 +217,49 @@ export class UserHeader extends Component {
               Seguir
             </p>
           ))}
+        {this.state.id && this.props.user.id !== this.state.id && (
+          <p onClick={() => this.openMessenger()} className="telegram-button-user-header">
+            <img
+              onClick={() => this.openMessenger()}
+              alt="edit"
+              style={{ width: '35px' }}
+              className="edit-pen-user-profile-style"
+              src={require('../../images/telegram.png')}
+            />
+          </p>
+        )}
+        {!this.props.isTextEditor && this.props.user.id === this.state.id && (
+          <p onClick={() => this.openMailBox()} className="mailbox-button-user-header">
+            <img
+              alt="edit"
+              style={{ width: '35px' }}
+              className="edit-pen-user-profile-style"
+              src={require('../../images/mailbox.png')}
+            />
+          </p>
+        )}
+        {this.state.openTelegram && (
+          <div className="telegram-div">
+            <textarea
+              rows="4"
+              className="form-control"
+              placeholder="Escribe mensaje..."
+              name="message"
+              onChange={this.handleChange}
+              id="message-input"
+            ></textarea>
+            <button
+              type="button"
+              onClick={() => this.sendMessage(this.props.user.id)}
+              className="btn btn-secondary comment-button"
+            >
+              Enviar telegrama
+            </button>
+          </div>
+        )}
+        {this.state.openMailBox && (
+          <div className="mailbox-div">{this.props.home.mymessages && this.buildMessages()}</div>
+        )}
         <NotificationContainer />
       </div>
     );

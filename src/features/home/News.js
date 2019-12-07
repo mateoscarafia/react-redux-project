@@ -582,92 +582,83 @@ export class News extends Component {
       this.props.routeparams === 'main' &&
       this.props.id
     ) {
-      this.checkIfArrayContainsMain(2) &&
+      if (
+        this.props.articles.data.main_feed.length > 20 &&
+        this.props.articles.data.backup_feed.length > 10
+      ) {
         contentNews.push(<div className="row margin-for-news">{this.buildMainNews('main')}</div>);
-      this.checkIfArrayContainsMain(9) &&
         contentNews.push(
           <div className="row margin-for-news">{this.buildNews('main', 2, 10)}</div>,
         );
-      this.checkIfArrayContainsMain(12) &&
         contentNews.push(
           <div className="row margin-for-news">{this.buildProfileNews('main', 10, 13)}</div>,
         );
-      this.checkIfArrayContainsBack(2) &&
         contentNews.push(
           <div className="most-see-news-div margin-for-news">
             <h1 className="h1-news-main-title-mostseen">Te puede interesar</h1>
             {this.buildMostSeenNews('back', 0, 3)}
           </div>,
         );
-      this.checkIfArrayContainsMain(14) &&
         contentNews.push(
           <div className="row margin-for-news">{this.buildRecommendedNews('main', 13, 15)}</div>,
         );
-      this.checkIfArrayContainsMain(17) &&
         contentNews.push(
           <div className="row margin-for-news">
-            <h1 className="h1-news-main-title-opinion">Análisis</h1>
+            <h1 className="h1-news-main-title-opinion">Populares</h1>
             {this.buildOpinionNews('main', 15, 17)}
           </div>,
         );
-      this.checkIfArrayContainsMain(20) &&
         contentNews.push(
           <div className="row margin-for-news">{this.buildNews('main', 17, 'end')}</div>,
         );
-      !this.checkIfArrayContainsMain(2) &&
-        contentNews.push(
-          <div className="row margin-for-news">{this.buildNews('main', 0, 'end')}</div>,
-        );
-      this.checkIfArrayContainsBack(2) &&
         contentNews.push(
           <div className="row margin-for-news">{this.buildNews('back', 3, 'end')}</div>,
         );
-      !this.checkIfArrayContainsBack(2) &&
+      } else {
+        contentNews.push(
+          <div className="row margin-for-news">{this.buildNews('main', 0, 'end')}</div>,
+        );
         contentNews.push(
           <div className="row margin-for-news">{this.buildNews('back', 0, 'end')}</div>,
         );
+      }
     } else if (
       this.props.articles &&
       this.props.articles.data.main_feed &&
       this.props.routeparams === 'main' &&
       !this.props.id
     ) {
-      this.checkIfArrayContainsMain(2) &&
+      if (this.props.articles.data.main_feed.length > 25) {
         contentNews.push(<div className="row margin-for-news">{this.buildMainNews('main')}</div>);
-      this.checkIfArrayContainsMain(9) &&
         contentNews.push(
           <div className="row margin-for-news">{this.buildNews('main', 2, 10)}</div>,
         );
-      this.checkIfArrayContainsMain(12) &&
         contentNews.push(
           <div className="row margin-for-news">{this.buildProfileNews('main', 10, 13)}</div>,
         );
-      this.checkIfArrayContainsMain(15) &&
         contentNews.push(
           <div className="most-see-news-div margin-for-news">
             <h1 className="h1-news-main-title-mostseen">Te puede interesar</h1>
             {this.buildMostSeenNews('main', 13, 16)}
           </div>,
         );
-      this.checkIfArrayContainsMain(17) &&
         contentNews.push(
           <div className="row margin-for-news">{this.buildRecommendedNews('main', 15, 17)}</div>,
         );
-      this.checkIfArrayContainsMain(19) &&
         contentNews.push(
           <div className="row margin-for-news">
             <h1 className="h1-news-main-title-opinion">Análisis</h1>
             {this.buildOpinionNews('main', 18, 20)}
           </div>,
         );
-      this.checkIfArrayContainsMain(20) &&
         contentNews.push(
           <div className="row margin-for-news">{this.buildNews('main', 20, 'end')}</div>,
         );
-      !this.checkIfArrayContainsMain(2) &&
+      } else {
         contentNews.push(
           <div className="row margin-for-news">{this.buildNews('main', 0, 'end')}</div>,
         );
+      }
     }
     return contentNews;
   };

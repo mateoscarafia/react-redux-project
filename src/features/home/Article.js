@@ -265,12 +265,6 @@ export class Article extends Component {
                   </div>
                 </div>
               </div>
-              <h5 className="date-article-font">
-                {this.props.home.uniquearticle &&
-                  this.convertDate(
-                    Date(this.props.home.uniquearticle.data[0].created_at).toString(),
-                  )}
-              </h5>
               <div
                 style={{
                   backgroundImage: `url(${'http://' +
@@ -280,6 +274,12 @@ export class Article extends Component {
                 }}
                 className="single-article-image-show-div"
               ></div>
+              <h5 className="date-article-font">
+                {this.props.home.uniquearticle &&
+                  this.convertDate(
+                    Date(this.props.home.uniquearticle.data[0].created_at).toString(),
+                  )}
+              </h5>
               <div className="article-content-text-show-div">
                 <h1>{this.props.home.uniquearticle.data[0].title}</h1>
                 <h4 className="subtitle-article">

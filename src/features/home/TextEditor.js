@@ -196,6 +196,7 @@ export class TextEditor extends Component {
           <div className="editor-wrapper">
             {typeof this.props.home.user !== 'undefined' && (
               <UserHeader
+                isTextEditor={true}
                 isProfile={this.state.isProfile}
                 user={this.props.home.user.data[0]}
                 user_id={this.props.home.user.data[0].id}
@@ -228,7 +229,7 @@ export class TextEditor extends Component {
                     name="keywords"
                     onChange={this.handleChange}
                     id="keywords"
-                    placeholder="Palabras claves"
+                    placeholder="Palabras claves para que otros usuarios puedan encontrar tú articulo. Ciudad, personajes, tema, etc..."
                   />
                 </div>
               </form>

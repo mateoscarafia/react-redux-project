@@ -225,7 +225,7 @@ export class UserProfile extends Component {
             <div className="about-me-user-profile">
               <h4>
                 {this.props.home.user.data[0].username}
-                {this.state.isProfile && (
+                {this.props.home.user.data[0].id === this.state.id && (
                   <img
                     alt="edit"
                     onClick={() => this.handleModal(true)}
@@ -235,7 +235,12 @@ export class UserProfile extends Component {
                 )}
               </h4>
               <h5 className="country-city-user-profile">
-                {/*'Argentina - ' + this.props.home.fulluser.data.user.state.name*/}
+                {'Seguidores: ' +
+                  this.props.home.user.data[0].followers +
+                  ' - Siguiendo: ' +
+                  this.props.home.user.data[0].following +
+                  ' - Artículos: ' +
+                  this.props.home.user.data[0].num_articles}
               </h5>
               <p>{this.props.home.user.data[0].about_me}</p>
             </div>
@@ -244,8 +249,8 @@ export class UserProfile extends Component {
             <p className="user-profile-wrapper-content-title">
               {typeof this.props.home.user !== 'undefined' &&
                 !this.state.isProfile &&
-                'Publicaciones de ' + this.props.home.user.data[0].username}
-              {this.state.isProfile && 'Tus publicaciones'}
+                'Artículos de ' + this.props.home.user.data[0].username}
+              {this.state.isProfile && 'Tus artículos'}
             </p>
             <div className="row">
               {typeof this.props.home.userarticles !== 'undefined' && this.buildNews()}
@@ -255,7 +260,7 @@ export class UserProfile extends Component {
         <Footer />
         {typeof this.props.home.user !== 'undefined' &&
           this.state.editUser &&
-          this.state.isProfile && (
+          this.props.home.user.data[0].id === this.state.id && (
             <div className="edit-user-modal-absolute">
               <div className="modal-header-edit-user">
                 <a className="close-modal-header-edit-user" onClick={() => this.handleModal(false)}>

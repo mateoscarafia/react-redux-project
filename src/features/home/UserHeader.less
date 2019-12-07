@@ -47,6 +47,92 @@
     border-radius: 2px;
   }
 
+  .telegram-div {
+    position: absolute;
+    width: 300px;
+    right: 10px;
+    top: 115px;
+    height: 200px;
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15), 0 2px 3px rgba(0, 0, 0, 0.2);
+    button {
+      width: 100%;
+      margin-top: 5px;
+    }
+    textarea {
+      height: 140px;
+      border: 1px solid #f2f2f2;
+    }
+  }
+
+  .mailbox-div {
+    position: absolute;
+    width: 300px;
+    right: 10px;
+    top: 65px;
+    height: 400px;
+    padding: 15px;
+    overflow-y: scroll;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15), 0 2px 3px rgba(0, 0, 0, 0.2);
+    .mailbox-inner-messages-div {
+      float: left;
+    }
+    .mailbox-pic-header-background-image {
+      width: 30px;
+      height: 30px;
+      float: left;
+      border-radius: 15px;
+    }
+    .username-name-message {
+      float: left;
+      font-size: 13px;
+      margin:5px 0px 10px 10px;
+      font-weight: bold;
+      cursor:pointer;
+    }
+    .date-message {
+      float: left;
+      font-size: 12px;
+      margin:6px 0px 10px 10px;
+    }
+    .message-content{
+      font-size: 13px;
+      margin:18px 0px 10px 10px;
+    }
+  }
+
+  .telegram-button-user-header {
+    position: absolute;
+    top: 65px;
+    text-align: center;
+    padding: 6px 19px 6px 0px;
+    border: 1px solid #fafafa;
+    right: 10px;
+    font-size: 14px;
+    background-color: #fff;
+    color: #151515;
+    cursor: pointer;
+    border-radius: 2px;
+  }
+
+  .mailbox-button-user-header {
+    position: absolute;
+    top: 15px;
+    text-align: center;
+    padding: 6px 19px 6px 0px;
+    border: 1px solid #fafafa;
+    right: 10px;
+    font-size: 14px;
+    background-color: #fff;
+    color: #151515;
+    cursor: pointer;
+    border-radius: 2px;
+  }
+
   .user-name-header-title {
     position: absolute;
     bottom: 55px;
@@ -145,7 +231,7 @@
     .user-name-header-title {
       bottom: 0px;
       left: 5%;
-  
+
       .user-name-header-title-username {
         font-size: 20px;
         color: #fff;

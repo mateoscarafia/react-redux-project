@@ -26,6 +26,9 @@ import { reducer as deleteArticleReducer } from './deleteArticle';
 import { reducer as getFollowingReducer } from './getFollowing';
 import { reducer as getFollowersReducer } from './getFollowers';
 import { reducer as searchUsersReducer } from './searchUsers';
+import { reducer as stopFollowReducer } from './stopFollow';
+import { reducer as postMessageReducer } from './postMessage';
+import { reducer as getMessagesReducer } from './getMessages';
 
 const reducers = [
   getNewsReducer,
@@ -55,6 +58,9 @@ const reducers = [
   getFollowingReducer,
   getFollowersReducer,
   searchUsersReducer,
+  stopFollowReducer,
+  postMessageReducer,
+  getMessagesReducer,
 ];
 
 export default function reducer(state = initialState, action) {

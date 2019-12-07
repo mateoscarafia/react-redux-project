@@ -25,3 +25,6 @@ export { deleteArticle, dismissDeleteArticleError } from './deleteArticle';
 export { getFollowing, dismissGetFollowingError } from './getFollowing';
 export { getFollowers, dismissGetFollowersError } from './getFollowers';
 export { searchUsers, dismissSearchUsersError } from './searchUsers';
+export { stopFollow, dismissStopFollowError } from './stopFollow';
+export { postMessage, dismissPostMessageError } from './postMessage';
+export { getMessages, dismissGetMessagesError } from './getMessages';

@@ -53,6 +53,12 @@ const initialState = {
   getFollowersError: null,
   searchUsersPending: false,
   searchUsersError: null,
+  stopFollowPending: false,
+  stopFollowError: null,
+  postMessagePending: false,
+  postMessageError: null,
+  getMessagesPending: false,
+  getMessagesError: null,
 };
 
 export default initialState;

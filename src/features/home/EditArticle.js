@@ -234,6 +234,7 @@ export class EditArticle extends Component {
             <div className="editor-wrapper">
               {typeof this.props.home.user !== 'undefined' && (
                 <UserHeader
+                  isTextEditor={true}
                   isProfile={true}
                   user={this.props.home.user.data[0]}
                   user_id={this.props.home.user.data[0].id}
