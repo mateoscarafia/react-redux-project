@@ -211,7 +211,7 @@ export class Home extends Component {
                       />
                     </div>
                   )}
-                  {this.props.home.articles && (
+                  {!this.props.home.getArticlesPending && this.props.home.articles && (
                     <News
                       routeparams={params}
                       id={this.state.id}
