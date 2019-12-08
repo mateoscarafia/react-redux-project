@@ -42,7 +42,15 @@ export class TextEditor extends Component {
     this._handleSubmit = this._handleSubmit.bind(this);
   }
 
+  componentDidMount() {
+    document.getElementById('spinner-button-post-article').style.display = 'none';
+  }
+
   componentWillReceiveProps(nextProps) {
+    if (this.props.home.postArticlePending) {
+      document.getElementById('button-post-article').style.display = 'none';
+      document.getElementById('spinner-button-post-article').style.display = 'inline';
+    }
     if (
       this.props.home.postArticlePending &&
       nextProps.home.postarticle &&
@@ -56,6 +64,10 @@ export class TextEditor extends Component {
       }, 1000);
     }
     if (this.props.home.postArticlePending && !nextProps.home.postarticle.data.id) {
+      setTimeout(function() {
+        document.getElementById('button-post-article').style.display = 'inline';
+        document.getElementById('spinner-button-post-article').style.display = 'none';
+      }, 1000);
       NotificationManager.warning('Ups, algo fue mal');
     }
   }
@@ -100,7 +112,7 @@ export class TextEditor extends Component {
   };
 
   postArticle() {
-    if (this.state.login) {
+    if (this.state.login && this.state.title && this.state.subtitle && this.state.keywords) {
       const data = new FormData();
       data.append('file', this.state.file);
       axios.post('http://' + VALUES.BD_ORIGIN + ':3000/file-upload', data, {}).then(res => {
@@ -145,6 +157,8 @@ export class TextEditor extends Component {
         };
         this.props.actions.postArticle(data);
       });
+    } else {
+      NotificationManager.warning('Debes complear todos los campos');
     }
   }
 
@@ -271,9 +285,22 @@ export class TextEditor extends Component {
               <button
                 onClick={() => this.postArticle()}
                 type="button"
-                className="btn btn-primary btn-lg"
+                id="button-post-article"
+                className="btn btn-primary btn-lg padding-bigger"
               >
                 Publicar artículo
+              </button>
+              <button
+                type="button"
+                id="spinner-button-post-article"
+                className="btn btn-primary btn-lg spinner-button"
+              >
+                <img
+                  alt="edit"
+                  width="60"
+                  className="edit-pen-user-profile-style"
+                  src={require('../../images/spinner.gif')}
+                />
               </button>
             </div>
           </div>

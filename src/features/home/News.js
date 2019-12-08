@@ -36,7 +36,7 @@ export class News extends Component {
     this.props.actions.followUser(data);
   };
 
-  routerMethod = destiny => {
+  routerMethod = async destiny => {
     history.push(this.props.isSimilar ? '../../' + destiny : '../' + destiny);
     window.scrollTo(0, 0);
   };

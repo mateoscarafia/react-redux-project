@@ -47,6 +47,14 @@ export class EditArticle extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    if (this.props.home.editArticlePending) {
+      document.getElementById('edit-button-id').style.display = 'none';
+      document.getElementById('spinner-edit-button-id').style.display = 'inline';
+    }
+    if (this.props.home.deleteArticlePending) {
+      document.getElementById('delete-button-id').style.display = 'none';
+      document.getElementById('spinner-delete-button-id-final').style.display = 'inline';
+    }
     if (this.props.home.editArticlePending && nextProps.home.editarticle) {
       NotificationManager.info('Articulo guardado');
       setTimeout(() => {
@@ -56,6 +64,10 @@ export class EditArticle extends Component {
       }, 1000);
     }
     if (this.props.home.editArticlePending && nextProps.home.editArticleError) {
+      setTimeout(function() {
+        document.getElementById('edit-button-id').style.display = 'inline';
+        document.getElementById('spinner-edit-button-id').style.display = 'none';
+      }, 1000);
       NotificationManager.warning('Ups, algo fue mal');
     }
     if (this.props.home.deleteArticlePending && nextProps.home.deletearticle) {
@@ -65,6 +77,10 @@ export class EditArticle extends Component {
       }, 1000);
     }
     if (this.props.home.deleteArticlePending && nextProps.home.deleteArticleError) {
+      setTimeout(function() {
+        document.getElementById('delete-button-id').style.display = 'inline';
+        document.getElementById('spinner-delete-button-id-final').style.display = 'none';
+      }, 1000);
       NotificationManager.warning('Ups, algo fue mal');
     }
   }
@@ -306,16 +322,50 @@ export class EditArticle extends Component {
                 toolbarClassName="toolbar-class"
                 onEditorStateChange={this.onEditorStateChange}
               />
-              <div className="send-article-div-control">
+              <div className="send-article-div-control-edit-article">
                 <button
                   onClick={() => this.deleteArticle()}
                   type="button"
-                  className="delete-button"
+                  id="delete-button-id"
+                  style={{ marginRight: '10px' }}
+                  className="btn btn-danger btn-lg delete-button"
                 >
                   Borrar articulo
                 </button>
-                <button onClick={() => this.editArticle()} type="button" className="edit-button">
-                  Guardar cambios
+                <button
+                  onClick={() => this.deleteArticle()}
+                  type="button"
+                  style={{ marginRight: '10px' }}
+                  id="spinner-delete-button-id-final"
+                  className="btn btn-danger btn-lg spinner-delete-button"
+                >
+                  <img
+                    alt="edit"
+                    width="60"
+                    className="edit-pen-user-profile-style"
+                    src={require('../../images/spinner.gif')}
+                  />
+                </button>
+                <button
+                  onClick={() => this.editArticle()}
+                  type="button"
+                  id="edit-button-id"
+                  className="btn btn-primary btn-lg edit-button"
+                >
+                  Guardar
+                </button>
+                <button
+                  onClick={() => this.editArticle()}
+                  type="button"
+                  id="spinner-edit-button-id"
+                  className="btn btn-primary btn-lg spinner-edit-button"
+                >
+                  <img
+                    alt="edit"
+                    width="60"
+                    className="edit-pen-user-profile-style"
+                    src={require('../../images/spinner.gif')}
+                  />
                 </button>
               </div>
             </div>

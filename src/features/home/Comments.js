@@ -28,6 +28,12 @@ export class Comments extends Component {
   };
 
   componentWillReceiveProps(nextProps) {
+    if (this.props.news_id !== nextProps.news_id) {
+      this.props.actions.getComments({
+        news_id: nextProps.news_id,
+        token: VALUES.DEEP_TOKEN,
+      });
+    }
     if (this.props.home.deleteCommentPending && nextProps.home.deletedcomment) {
       NotificationManager.info('Comentario eliminado');
       this.props.actions.getComments({ news_id: this.props.news_id, token: VALUES.DEEP_TOKEN });
@@ -44,7 +50,12 @@ export class Comments extends Component {
         <div key={item.created_at} className="comment-show-divs-list">
           {item.user_id === this.props.user_id && (
             <p onClick={() => this.deleteComment(item.id)} className="delete-comment-float-right">
-              Eliminar
+              <img
+                alt="edit"
+                width="20"
+                className="edit-pen-user-profile-style"
+                src={require('../../images/trash.png')}
+              />
             </p>
           )}
           <p
@@ -103,13 +114,13 @@ export class Comments extends Component {
           <div className="col-lg-8 col-md-8 col-sm-12 col-xs-12 home-comments-list-div-history">
             {this.props.home.comments && this.buildCommentsList()}
             {this.props.home.comments && !this.props.home.comments.data[0] && (
-              <p>Sin comentarios</p>
+              <p style={{ fontSize: '14px' }}>Sin comentarios</p>
             )}
           </div>
           <div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 home-comments-post-comments">
             <div className="form-group">
               <textarea
-                rows="7"
+                rows="5"
                 className="form-control"
                 placeholder="Escribir comentario..."
                 name="comment"

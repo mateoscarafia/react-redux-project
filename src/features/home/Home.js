@@ -69,12 +69,6 @@ export class Home extends Component {
     }
   }
 
-  async componentWillReceiveProps(nextProps) {
-    this.props.home.followUserPending &&
-      !nextProps.followUserPending &&
-      NotificationManager.info('Sigues al usuario');
-  }
-
   handleModal = action => {
     this.setState({
       visible: action,
@@ -204,6 +198,19 @@ export class Home extends Component {
                     this.state.login ? 'news-content-index' : 'news-content-index-fullwidth'
                   }
                 >
+                  {this.props.home.getArticlesPending && (
+                    <div
+                      id="spinner-div-for-news-id-container-home-waiting"
+                      className="spinner-div-for-news"
+                    >
+                      <img
+                        alt="edit"
+                        width="60"
+                        className="edit-pen-user-profile-style"
+                        src={require('../../images/spinner.gif')}
+                      />
+                    </div>
+                  )}
                   {this.props.home.articles && (
                     <News
                       routeparams={params}
