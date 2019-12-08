@@ -105,21 +105,15 @@ export class Article extends Component {
   };
 
   likeArticle = (id, action) => {
-    let data = {
-      news_id: this.props.match.params.id,
-      user_id: this.state.id,
-      token: VALUES.DEEP_TOKEN,
-    };
-    this.props.actions.userLike(data);
-  };
-
-  reportArticle = (id, action) => {
-    let data = {
-      idFollower: '122',
-      idFollowed: id,
-      do: action,
-    };
-    this.props.actions.reportArticle(data);
+    if (this.state.id) {
+      let data = {
+        news_id: this.props.match.params.id,
+        token: localStorage.getItem('token-app-auth-current'),
+      };
+      this.props.actions.userLike(data);
+    } else {
+      NotificationManager.info('Solo logueado puedes dar like');
+    }
   };
 
   buildNews = () => {
@@ -273,13 +267,14 @@ export class Article extends Component {
                     this.props.home.uniquearticle.data[0].img_url})`,
                 }}
                 className="single-article-image-show-div"
-              ></div>
-              <h5 className="date-article-font">
-                {this.props.home.uniquearticle &&
-                  this.convertDate(
-                    Date(this.props.home.uniquearticle.data[0].created_at).toString(),
-                  )}
-              </h5>
+              >
+                <h5 className="date-article-font">
+                  {this.props.home.uniquearticle &&
+                    this.convertDate(
+                      Date(this.props.home.uniquearticle.data[0].created_at).toString(),
+                    )}
+                </h5>
+              </div>
               <div className="article-content-text-show-div">
                 <h1>{this.props.home.uniquearticle.data[0].title}</h1>
                 <h4 className="subtitle-article">
@@ -294,18 +289,15 @@ export class Article extends Component {
                     onClick={() => this.likeArticle(this.props.match.params.id, true)}
                     className="review-article-user"
                   >
-                    Me gusta
+                    <img
+                      alt="edit"
+                      style={{ width: '40px' }}
+                      className="edit-pen-user-profile-style"
+                      src={require('../../images/like.PNG')}
+                    />
                   </p>
                   <p className="review-article-user-num">
                     +{this.state.article_likes || this.props.home.uniquearticle.data[0].total_likes}
-                  </p>
-                </div>
-                <div className="review-article-user-div-second">
-                  <p
-                    onClick={() => this.reportArticle(this.props.match.params.id, true)}
-                    className="review-article-user"
-                  >
-                    Denunciar
                   </p>
                 </div>
               </div>
