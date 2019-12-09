@@ -180,7 +180,7 @@ export class UserProfile extends Component {
   render() {
     let $imagePreview,
       $imagePreviewP = null;
-    if (typeof this.props.home.user !== 'undefined') {
+    if (this.props.home.user) {
       let imagePreviewUrl =
         this.state.imagePreviewUrl ||
         'http://' +
@@ -202,17 +202,29 @@ export class UserProfile extends Component {
     }
     return (
       <div className="home-user-profile">
-        {typeof this.props.home.categories !== 'undefined' &&
-          typeof this.props.home.user !== 'undefined' && (
-            <NavBar
-              login={this.state.login}
-              history={this.props.history}
-              categories={this.props.home.categories}
-              user={this.state.id}
-            />
-          )}
+        {this.props.home.categories && (
+          <NavBar
+            login={this.state.login}
+            history={this.props.history}
+            categories={this.props.home.categories}
+            user={this.state.id}
+          />
+        )}
         <div className="user-profile-wrapper">
-          {typeof this.props.home.user !== 'undefined' && (
+          {(this.props.home.getUserPending || !this.props.home.user) && (
+            <div
+              id="spinner-div-for-news-id-container-home-waiting"
+              className="spinner-div-for-news-home-when-no-content-user-spin"
+            >
+              <img
+                alt="edit"
+                width="60"
+                className="edit-pen-user-profile-style"
+                src={require('../../images/spinner.gif')}
+              />
+            </div>
+          )}
+          {!this.props.home.getUserPending && this.props.home.user && (
             <UserHeader
               isProfile={this.state.isProfile}
               user={this.props.home.user.data[0]}
@@ -221,7 +233,7 @@ export class UserProfile extends Component {
           )}
         </div>
         <div className="profile-wrapper-content">
-          {typeof this.props.home.user !== 'undefined' && (
+          {!this.props.home.getUserPending && this.props.home.user && (
             <div className="about-me-user-profile">
               <h4>
                 {this.props.home.user.data[0].username}
@@ -247,18 +259,17 @@ export class UserProfile extends Component {
           )}
           <div className="user-profile-wrapper-content">
             <p className="user-profile-wrapper-content-title">
-              {typeof this.props.home.user !== 'undefined' &&
+              {!this.props.home.getUserPending &&
+                this.props.home.user &&
                 !this.state.isProfile &&
                 'Artículos de ' + this.props.home.user.data[0].username}
               {this.state.isProfile && 'Tus artículos'}
             </p>
-            <div className="row">
-              {typeof this.props.home.userarticles !== 'undefined' && this.buildNews()}
-            </div>
+            <div className="row">{this.props.home.userarticles && this.buildNews()}</div>
           </div>
         </div>
         <Footer />
-        {typeof this.props.home.user !== 'undefined' &&
+        {this.props.home.user &&
           this.state.editUser &&
           this.props.home.user.data[0].id === this.state.id && (
             <div className="edit-user-modal-absolute">
