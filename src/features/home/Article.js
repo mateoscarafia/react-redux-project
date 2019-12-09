@@ -190,33 +190,31 @@ export class Article extends Component {
     if (this.props.home.uniquearticle && !this.props.home.uniquearticle.data[0]) {
       this.goToErrorLanding();
       return null;
-    } else if (!this.props.home.uniquearticle) {
-      return (
-        <div
-          id="spinner-div-for-news-id-container-home-waiting"
-          className="spinner-div-for-news-home-when-no-content-article"
-        >
-          <img
-            alt="edit"
-            width="60"
-            className="edit-pen-user-profile-style"
-            src={require('../../images/spinner.gif')}
-          />
-        </div>
-      );
     } else {
       return (
         <div className="home-article">
-          {typeof this.props.home.categories !== 'undefined' &&
-            typeof this.props.home.uniquearticle !== 'undefined' && (
-              <NavBar
-                login={this.state.login}
-                history={this.props.history}
-                categories={this.props.home.categories}
-                user={this.state.id}
+          {typeof this.props.home.categories !== 'undefined' && (
+            <NavBar
+              login={this.state.login}
+              history={this.props.history}
+              categories={this.props.home.categories}
+              user={this.state.id}
+            />
+          )}
+          {!this.props.home.uniquearticle && (
+            <div
+              id="spinner-div-for-news-id-container-home-waiting"
+              className="spinner-div-for-news-home-when-no-content-article"
+            >
+              <img
+                alt="edit"
+                width="60"
+                className="edit-pen-user-profile-style"
+                src={require('../../images/spinner.gif')}
               />
-            )}
-          {typeof this.props.home.uniquearticle !== 'undefined' && (
+            </div>
+          )}
+          {this.props.home.uniquearticle && (
             <div className="home-article-content">
               <div className="home-article-header-content">
                 {this.props.home.uniquearticle.data[0].user_id === this.state.id && (
@@ -326,9 +324,7 @@ export class Article extends Component {
           )}
           <div className="similar-articles-article">
             <p>Relacionados</p>
-            <div className="row">
-              {typeof this.props.home.related !== 'undefined' && this.buildNews()}
-            </div>
+            <div className="row">{this.props.home.related && this.buildNews()}</div>
           </div>
           <Footer />
           <Modal
