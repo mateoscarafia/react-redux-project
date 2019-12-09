@@ -105,6 +105,33 @@ export class Home extends Component {
     if (this.props.home.user && !this.props.home.user.data[0]) {
       this.goToErrorLanding();
       return null;
+    } else if (
+      this.state.id &&
+      !this.props.home.categories &&
+      !this.props.home.user &&
+      !this.props.home.articles
+    ) {
+      return (
+        <div id="spinner-div-for-news-id-container-home-waiting" className="spinner-div-for-news-home-when-no-content">
+          <img
+            alt="edit"
+            width="60"
+            className="edit-pen-user-profile-style"
+            src={require('../../images/spinner.gif')}
+          />
+        </div>
+      );
+    } else if (!this.state.id && !this.props.home.categories && !this.props.home.articles) {
+      return (
+        <div id="spinner-div-for-news-id-container-home-waiting" className="spinner-div-for-news-home-when-no-content">
+          <img
+            alt="edit"
+            width="60"
+            className="edit-pen-user-profile-style"
+            src={require('../../images/spinner.gif')}
+          />
+        </div>
+      );
     } else {
       let params = this.props.match.params.info;
       return (
@@ -192,35 +219,31 @@ export class Home extends Component {
                   )}
                 </div>
               )}
-              {this.state.feed && (
-                <div
-                  className={
-                    this.state.login ? 'news-content-index' : 'news-content-index-fullwidth'
-                  }
-                >
-                  {this.props.home.getArticlesPending && (
-                    <div
-                      id="spinner-div-for-news-id-container-home-waiting"
-                      className="spinner-div-for-news"
-                    >
-                      <img
-                        alt="edit"
-                        width="60"
-                        className="edit-pen-user-profile-style"
-                        src={require('../../images/spinner.gif')}
-                      />
-                    </div>
-                  )}
-                  {!this.props.home.getArticlesPending && this.props.home.articles && (
-                    <News
-                      routeparams={params}
-                      id={this.state.id}
-                      articles={this.props.home.articles}
-                      isSimilar={false}
+              <div
+                className={this.state.login ? 'news-content-index' : 'news-content-index-fullwidth'}
+              >
+                {this.props.home.getArticlesPending && (
+                  <div
+                    id="spinner-div-for-news-id-container-home-waiting"
+                    className="spinner-div-for-news"
+                  >
+                    <img
+                      alt="edit"
+                      width="60"
+                      className="edit-pen-user-profile-style"
+                      src={require('../../images/spinner.gif')}
                     />
-                  )}
-                </div>
-              )}
+                  </div>
+                )}
+                {!this.props.home.getArticlesPending && this.props.home.articles && (
+                  <News
+                    routeparams={params}
+                    id={this.state.id}
+                    articles={this.props.home.articles}
+                    isSimilar={false}
+                  />
+                )}
+              </div>
             </div>
           </div>
           <Footer />
