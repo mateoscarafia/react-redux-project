@@ -190,6 +190,20 @@ export class Article extends Component {
     if (this.props.home.uniquearticle && !this.props.home.uniquearticle.data[0]) {
       this.goToErrorLanding();
       return null;
+    } else if (!this.props.home.uniquearticle) {
+      return (
+        <div
+          id="spinner-div-for-news-id-container-home-waiting"
+          className="spinner-div-for-news-home-when-no-content-article"
+        >
+          <img
+            alt="edit"
+            width="60"
+            className="edit-pen-user-profile-style"
+            src={require('../../images/spinner.gif')}
+          />
+        </div>
+      );
     } else {
       return (
         <div className="home-article">
