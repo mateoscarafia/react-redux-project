@@ -201,7 +201,7 @@ export class Article extends Component {
               user={this.state.id}
             />
           )}
-          {!this.props.home.uniquearticle && (
+          {(this.props.home.getArticlePending || !this.props.home.uniquearticle) && (
             <div
               id="spinner-div-for-news-id-container-home-waiting"
               className="spinner-div-for-news-home-when-no-content-article"
@@ -214,7 +214,7 @@ export class Article extends Component {
               />
             </div>
           )}
-          {this.props.home.uniquearticle && (
+          {!this.props.home.getArticlePending && this.props.home.uniquearticle && (
             <div className="home-article-content">
               <div className="home-article-header-content">
                 {this.props.home.uniquearticle.data[0].user_id === this.state.id && (
