@@ -24,12 +24,12 @@ export class NavBar extends Component {
       await this.props.actions.getNews({ token: VALUES.DEEP_TOKEN, id: user_destiny_id[2] });
       await this.props.actions.getUser({ token: VALUES.DEEP_TOKEN, id: user_destiny_id[2] });
     }
-    /*destiny === '/feed/main' &&
+    destiny === '/feed/main' && window.location.href.includes("feed") &&
       (await this.props.actions.getArticles({
         token: VALUES.DEEP_TOKEN,
         param: 'main',
         id: this.props.user || null,
-      }));*/
+      }));
     this.props.history.push(destiny);
   };
 
