@@ -24,7 +24,8 @@ export class NavBar extends Component {
       await this.props.actions.getNews({ token: VALUES.DEEP_TOKEN, id: user_destiny_id[2] });
       await this.props.actions.getUser({ token: VALUES.DEEP_TOKEN, id: user_destiny_id[2] });
     }
-    destiny === '/feed/main' && window.location.href.includes("feed") &&
+    destiny === '/feed/main' &&
+      window.location.href.includes('feed') &&
       (await this.props.actions.getArticles({
         token: VALUES.DEEP_TOKEN,
         param: 'main',
@@ -221,10 +222,13 @@ export class NavBar extends Component {
                     onClick={() => {
                       this.openSearchEngine();
                     }}
-                    className="nav-link a-link search-article-navbar-button"
+                    className="nav-link a-link search-article-navbar-button search-icon-button-nav"
                   >
-                    <span className="glyphicon glyphicon-search"></span>
-                    {!this.state.searchEngine ? 'Buscar' : 'Esconder buscador'}
+                    <img
+                      alt="edit"
+                      width="25"
+                      src={require('../../images/search.png')}
+                    />
                   </a>
                 </li>
               </ul>
@@ -237,7 +241,11 @@ export class NavBar extends Component {
                       }}
                       className="nav-link a-link search-article-navbar-button"
                     >
-                      Escribir articulo
+                      <img
+                      alt="edit"
+                      width="25"
+                      src={require('../../images/write.png')}
+                    />
                     </a>
                   </li>
                   <li className="nav-item active">
