@@ -187,7 +187,7 @@ export class Article extends Component {
   };
 
   render() {
-    if (this.props.home.uniquearticle && !this.props.home.uniquearticle.data[0]) {
+    if (this.props.home.getArticleError) {
       this.goToErrorLanding();
       return null;
     } else {
@@ -283,7 +283,7 @@ export class Article extends Component {
                 <h5 className="date-article-font">
                   {this.props.home.uniquearticle &&
                     this.convertDate(
-                      Date(this.props.home.uniquearticle.data[0].created_at).toString(),
+                      new Date(this.props.home.uniquearticle.data[0].created_at).toString(),
                     )}
                 </h5>
               </div>
