@@ -135,7 +135,9 @@ export class UserHeader extends Component {
           >
             {item.username}
           </p>
-          <p className="date-message">- {this.convertDate(new Date(item.created_at).toString())}</p>
+          <p className="date-message">
+            - {this.convertDate(new Date(parseInt(item.created_at, 10)).toString())}
+          </p>
           <br />
           <p className="message-content">{item.message}</p>
           <hr />
@@ -249,7 +251,11 @@ export class UserHeader extends Component {
             </p>
           ))}
         {this.state.id && this.props.user.id !== this.state.id && (
-          <p alt="Enviar telegrama" onClick={() => this.openMessenger()} className="telegram-button-user-header">
+          <p
+            alt="Enviar telegrama"
+            onClick={() => this.openMessenger()}
+            className="telegram-button-user-header"
+          >
             <img
               onClick={() => this.openMessenger()}
               alt="edit"
