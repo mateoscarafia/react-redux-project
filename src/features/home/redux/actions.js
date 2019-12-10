@@ -28,3 +28,4 @@ export { searchUsers, dismissSearchUsersError } from './searchUsers';
 export { stopFollow, dismissStopFollowError } from './stopFollow';
 export { postMessage, dismissPostMessageError } from './postMessage';
 export { getMessages, dismissGetMessagesError } from './getMessages';
+export { changePass, dismissChangePassError } from './changePass';

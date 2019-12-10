@@ -59,6 +59,8 @@ const initialState = {
   postMessageError: null,
   getMessagesPending: false,
   getMessagesError: null,
+  changePassPending: false,
+  changePassError: null,
 };
 
 export default initialState;

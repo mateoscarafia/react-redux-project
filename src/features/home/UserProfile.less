@@ -108,6 +108,7 @@
 
   .edit-user-modal-absolute {
     position: absolute;
+    border-radius: 10px;
     position: fixed;
     box-shadow: 0 5px 9px 9px rgba(0, 0, 0, 0.15), 0 2px 3px rgba(0, 0, 0, 0.2);
     overflow-y: scroll;
@@ -118,6 +119,10 @@
     width: 50%;
     height: 600px;
     background-color: #fff;
+  }
+
+  .edit-user-modal-absolute::-webkit-scrollbar {
+    display: none;
   }
 
   .show-image-preview-text-editor {
@@ -351,7 +356,8 @@
       left: 1%;
       z-index: 10000;
       width: 98%;
-      height: 500px;
+      margin-top: 50px;
+      height: 600px;
     }
   }
 }

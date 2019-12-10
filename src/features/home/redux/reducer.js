@@ -29,6 +29,7 @@ import { reducer as searchUsersReducer } from './searchUsers';
 import { reducer as stopFollowReducer } from './stopFollow';
 import { reducer as postMessageReducer } from './postMessage';
 import { reducer as getMessagesReducer } from './getMessages';
+import { reducer as changePassReducer } from './changePass';
 
 const reducers = [
   getNewsReducer,
@@ -61,6 +62,7 @@ const reducers = [
   stopFollowReducer,
   postMessageReducer,
   getMessagesReducer,
+  changePassReducer,
 ];
 
 export default function reducer(state = initialState, action) {

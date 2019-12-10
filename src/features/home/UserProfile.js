@@ -34,6 +34,8 @@ export class UserProfile extends Component {
       username: null,
       profession: null,
       about_me: null,
+      password1: null,
+      password2: null,
     };
     this._handleImageChange = this._handleImageChange.bind(this);
     this._handleImageChangeP = this._handleImageChangeP.bind(this);
@@ -108,6 +110,20 @@ export class UserProfile extends Component {
     this.setState({ [event.target.name]: event.target.value });
   };
 
+  updatePassword = async () => {
+    this.state.password2 &&
+      this.state.password2.length < 6 &&
+      NotificationManager.warning('La contraseña debe tener al menos 6 caracteres');
+    this.state.password1 &&
+      this.state.password2 &&
+      this.state.password2.length > 5 &&
+      this.props.actions.changePass({
+        token: localStorage.getItem('token-app-auth-current'),
+        pwd1: this.state.password1,
+        pwd2: this.state.password2,
+      });
+  };
+
   sendUpdateUser = async () => {
     const data = new FormData();
     const dataP = new FormData();
@@ -143,8 +159,16 @@ export class UserProfile extends Component {
         editUser: false,
       });
     }
-    if (this.props.home.editUserPending && !nextProps.home.editeduser) {
-      NotificationManager.warning('Ups, algo fue mal');
+    if (this.props.home.changePassPending && nextProps.home.password) {
+      NotificationManager.info('Contraseña actualizada');
+      this.setState({
+        editUser: false,
+        password1: '',
+        password2: '',
+      });
+    }
+    if (this.props.home.changePassPending && !nextProps.home.password) {
+      NotificationManager.warning('Ups, algo fue mal. Revise los datos');
     }
   }
 
@@ -298,8 +322,8 @@ export class UserProfile extends Component {
                       placeholder="Nombre completo"
                     />
                   </div>
-                  <div class="wrapper-image-form">
-                    <div class="upload-image-form-editor">
+                  <div className="wrapper-image-form">
+                    <div className="upload-image-form-editor">
                       <label className="custom-file-upload">
                         <input
                           onChange={this._handleImageChange}
@@ -310,7 +334,7 @@ export class UserProfile extends Component {
                       </label>
                       <div className="show-image-preview-text-editor">{$imagePreview}</div>
                     </div>
-                    <div class="upload-image-form-editor margin-left-upload-img">
+                    <div className="upload-image-form-editor margin-left-upload-img">
                       <label className="custom-file-upload">
                         <input
                           onChange={this._handleImageChangeP}
@@ -354,33 +378,47 @@ export class UserProfile extends Component {
                       rows="3"
                     ></textarea>
                   </div>
-                  <hr />
-                  <div className="form-group">
-                    <label>Cambiar contraseña</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="exampleFormControlInput1"
-                      placeholder="Contraseña actual"
-                    />
-                    <br />
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="exampleFormControlInput1"
-                      placeholder="Contraseña nueva"
-                    />
-                  </div>
-                  <hr />
                   <div className="div-edit-user-button-save-change">
                     <button
                       onClick={() => this.sendUpdateUser()}
                       type="button"
                       className="btn btn-success edit-user-button-form"
                     >
-                      Guardar
+                      Guardar datos
                     </button>
                   </div>
+                  <hr />
+                  <label>Cambio de contraseña</label>
+                  <div className="form-group">
+                    <input
+                      type="password"
+                      className="form-control"
+                      value={this.state.password1 || ''}
+                      onChange={this.handleChange}
+                      name="password1"
+                      placeholder="Contraseña actual"
+                    />
+                  </div>
+                  <div className="form-group">
+                    <input
+                      type="password"
+                      value={this.state.password2 || ''}
+                      className="form-control"
+                      onChange={this.handleChange}
+                      name="password2"
+                      placeholder="Contraseña nueva"
+                    />
+                  </div>
+                  <div className="div-edit-user-button-save-change">
+                    <button
+                      onClick={() => this.updatePassword()}
+                      type="button"
+                      className="btn btn-primary edit-user-button-form"
+                    >
+                      Cambiar contraseña
+                    </button>
+                  </div>
+                  <hr />
                 </form>
               </div>
             </div>
