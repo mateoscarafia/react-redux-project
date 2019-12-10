@@ -135,7 +135,7 @@ export class UserHeader extends Component {
           >
             {item.username}
           </p>
-          <p className="date-message">- {this.convertDate(Date(item.created_at).toString())}</p>
+          <p className="date-message">- {this.convertDate(new Date(item.created_at).toString())}</p>
           <br />
           <p className="message-content">{item.message}</p>
           <hr />
