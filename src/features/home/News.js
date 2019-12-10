@@ -609,17 +609,17 @@ export class News extends Component {
           </div>,
         );
         contentNews.push(
-          <div className="row margin-for-news">{this.buildNews('main', 17, 'end')}</div>,
-        );
-        contentNews.push(
-          <div className="row margin-for-news">{this.buildNews('back', 3, 'end')}</div>,
+          <div className="row margin-for-news">
+            {this.buildNews('main', 17, 'end')}
+            {this.buildNews('back', 3, 'end')}
+          </div>,
         );
       } else {
         contentNews.push(
-          <div className="row margin-for-news">{this.buildNews('main', 0, 'end')}</div>,
-        );
-        contentNews.push(
-          <div className="row margin-for-news">{this.buildNews('back', 0, 'end')}</div>,
+          <div className="row margin-for-news">
+            {this.buildNews('main', 0, 'end')}
+            {this.buildNews('back', 0, 'end')}
+          </div>,
         );
       }
     } else if (
