@@ -20,6 +20,7 @@ export class BannerMidd extends Component {
 
   createBanner = () => {
     let text = [];
+    if (true) {
       for (const prop in this.props.home.articles.data.main_feed) {
         text.push(<span>{this.props.home.articles.data.main_feed[prop].title.toUpperCase()}</span>);
       }
@@ -28,19 +29,32 @@ export class BannerMidd extends Component {
           <span>{this.props.home.articles.data.backup_feed[prop].title.toUpperCase()}</span>,
         );
       }
+    } else {
+      for (const prop in this.props.home.categories.data) {
+        text.push(<span>{this.props.home.categories.data[prop].name.toUpperCase()}</span>);
+      }
+    }
+
     return text.reverse();
   };
+
+  midText() {
+    var date = new Date();
+    return window.screen.width > 877
+      ? 'ÚLTIMAS NOTICIAS |'
+      : 'AHORA |';
+  }
 
   render() {
     return (
       <div className="home-banner-midd">
         <div className="midd-bann-text-slider-float-left">
           <div className="midd-bann-text-first">
-            <p className="midd-bann-p bold-text-for-banner">ÚLTIMAS NOTICIAS | </p>
+            <p className="midd-bann-p bold-text-for-banner">{this.midText()}</p>
           </div>
           <div className="midd-bann-text-second">
             <p id="text-banner-id-for-movement" className="midd-bann-p">
-              {this.props.home.articles && (
+              {this.props.home.articles && this.props.home.categories && (
                 <TextLoop interval={3000}>{this.createBanner()}</TextLoop>
               )}
             </p>

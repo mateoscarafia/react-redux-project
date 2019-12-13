@@ -641,7 +641,6 @@ export class News extends Component {
         );
         contentNews.push(
           <div className="most-see-news-div margin-for-news">
-            <h1 className="h1-news-main-title-mostseen">Te puede interesar</h1>
             {this.buildMostSeenNews('main', 13, 16)}
           </div>,
         );

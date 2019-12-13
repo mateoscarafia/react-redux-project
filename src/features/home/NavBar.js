@@ -99,15 +99,17 @@ export class NavBar extends Component {
   };
 
   openSearchEngine() {
-    this.setState({
+    document.getElementById("123456").style.opacity = '1';
+    //document.getElementById("123456").style.top = '60px';
+    /*this.setState({
       searchEngine: !this.state.searchEngine,
-    });
+    });*/
   }
 
   render() {
     return (
       <div className="home-nav-bar sticky-top">
-        <nav className="navbar navbar-expand-lg navbar-light blue-background">
+        <nav className="navbar navbar-expand-lg navbar-light blue-background brand-link-nav">
           <a onClick={() => this.routerMethod('/feed/main')} className="navbar-brand a-link">
             <b>NEDDLY</b>
           </a>
@@ -291,6 +293,9 @@ export class NavBar extends Component {
             </form>
           </div>
         </nav>
+        <div className="search-div-bar-floating" id="123456">
+        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email"/>
+        </div>
         {this.state.searchEngine && this.props.categories && (
           <SearchEngine
             categories={this.props.categories}
