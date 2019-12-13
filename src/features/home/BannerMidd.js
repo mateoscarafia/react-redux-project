@@ -3,6 +3,9 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
+import TextLoop from 'react-text-loop';
+
+let padding = 0;
 
 export class BannerMidd extends Component {
   static propTypes = {
@@ -10,11 +13,38 @@ export class BannerMidd extends Component {
     actions: PropTypes.object.isRequired,
   };
 
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+
+  createBanner = () => {
+    let text = [];
+      for (const prop in this.props.home.articles.data.main_feed) {
+        text.push(<span>{this.props.home.articles.data.main_feed[prop].title.toUpperCase()}</span>);
+      }
+      for (const prop in this.props.home.articles.data.backup_feed) {
+        text.push(
+          <span>{this.props.home.articles.data.backup_feed[prop].title.toUpperCase()}</span>,
+        );
+      }
+    return text.reverse();
+  };
+
   render() {
     return (
       <div className="home-banner-midd">
-        <div className="midd-bann">
-          <a className="midd-bann-a">Domingo 7 de Julio, 2019</a>
+        <div className="midd-bann-text-slider-float-left">
+          <div className="midd-bann-text-first">
+            <p className="midd-bann-p bold-text-for-banner">ÚLTIMAS NOTICIAS | </p>
+          </div>
+          <div className="midd-bann-text-second">
+            <p id="text-banner-id-for-movement" className="midd-bann-p">
+              {this.props.home.articles && (
+                <TextLoop interval={3000}>{this.createBanner()}</TextLoop>
+              )}
+            </p>
+          </div>
         </div>
       </div>
     );
@@ -31,11 +61,8 @@ function mapStateToProps(state) {
 /* istanbul ignore next */
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({ ...actions }, dispatch)
+    actions: bindActionCreators({ ...actions }, dispatch),
   };
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(BannerMidd);
+export default connect(mapStateToProps, mapDispatchToProps)(BannerMidd);

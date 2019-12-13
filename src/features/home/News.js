@@ -591,7 +591,7 @@ export class News extends Component {
           <div className="row margin-for-news">{this.buildNews('main', 2, 10)}</div>,
         );
         contentNews.push(
-          <div className="row margin-for-news">{this.buildProfileNews('main', 10, 13)}</div>,
+          <div className="row margin-for-news super-container-div">{this.buildProfileNews('main', 10, 13)}</div>,
         );
         contentNews.push(
           <div className="most-see-news-div margin-for-news">
@@ -634,16 +634,16 @@ export class News extends Component {
           <div className="row margin-for-news">{this.buildNews('main', 2, 10)}</div>,
         );
         contentNews.push(
-          <div className="row margin-for-news">{this.buildProfileNews('main', 10, 13)}</div>,
+          <div className="row margin-for-news super-container-div">{this.buildProfileNews('main', 10, 13)}</div>,
+        );
+        contentNews.push(
+          <div className="row margin-for-news">{this.buildRecommendedNews('main', 15, 17)}</div>,
         );
         contentNews.push(
           <div className="most-see-news-div margin-for-news">
             <h1 className="h1-news-main-title-mostseen">Te puede interesar</h1>
             {this.buildMostSeenNews('main', 13, 16)}
           </div>,
-        );
-        contentNews.push(
-          <div className="row margin-for-news">{this.buildRecommendedNews('main', 15, 17)}</div>,
         );
         contentNews.push(
           <div className="row margin-for-news">
