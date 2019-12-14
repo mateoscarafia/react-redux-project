@@ -8,7 +8,7 @@ export default class ErrorLanding extends Component {
   render() {
     return (
       <div className="home-error-landing">
-        <p>NEDDLY</p>
+        <img alt="edit" width="100" src={require('../../images/logo.png')} />
         <p className="p-subtitle">Lo sentimos, ocurrió un error.</p>
       </div>
     );

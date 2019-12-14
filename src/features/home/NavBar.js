@@ -13,7 +13,7 @@ export class NavBar extends Component {
       visible: false,
       feed: true,
       searchEngine: false,
-      searchWords: null,
+      searchwords: null,
     };
     this.searchArticlesMotor = this.searchArticlesMotor.bind(this);
   }
@@ -53,7 +53,7 @@ export class NavBar extends Component {
         <a
           key={item.name}
           onClick={() => this.handleNews(item.id, item.name)}
-          className="dropdown-item"
+          className="dropdown-item drop-down-list-items-desktop"
         >
           {item.name}
         </a>
@@ -70,19 +70,27 @@ export class NavBar extends Component {
     this.setState({ [event.target.name]: event.target.value });
   };
 
-  searchArticlesMotor = async searchword => {
-    window.scrollTo(0, 0);
-    await this.props.actions.getArticles({
-      token: VALUES.DEEP_TOKEN,
-      param: '-engine-' + searchword,
-    });
-    this.openSearchEngine;
-    this.props.history.push('/feed/-engine-' + searchword);
+  searchArticlesMotor = async () => {
+    if (this.state.searchwords) {
+      let searchword = this.state.searchwords
+        .toLowerCase()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .replace(/[^a-zA-Z0-9 ]/g, '')
+        .replace(/ /g, '-');
+      window.scrollTo(0, 0);
+      await this.props.actions.getArticles({
+        token: VALUES.DEEP_TOKEN,
+        param: '-engine-' + searchword,
+      });
+      this.openSearchEngine;
+      this.props.history.push('/feed/-engine-' + searchword);
+    }
   };
 
   searchArticlesMotorFromNav = async () => {
-    if (this.state.searchWords) {
-      let search = this.state.searchWords
+    if (this.state.searchwords) {
+      let search = this.state.searchwords
         .toLowerCase()
         .normalize('NFD')
         .replace(/[\u0300-\u036f]/g, '')
@@ -99,11 +107,9 @@ export class NavBar extends Component {
   };
 
   openSearchEngine() {
-    document.getElementById("123456").style.opacity = '1';
-    //document.getElementById("123456").style.top = '60px';
-    /*this.setState({
+    this.setState({
       searchEngine: !this.state.searchEngine,
-    });*/
+    });
   }
 
   render() {
@@ -132,8 +138,8 @@ export class NavBar extends Component {
                   <input
                     type="text"
                     className="width-input"
-                    id="searchWords"
-                    name="searchWords"
+                    id="searchwords"
+                    name="searchwords"
                     onChange={this.handleChange}
                     placeholder="Buscar.."
                   />
@@ -226,11 +232,7 @@ export class NavBar extends Component {
                     }}
                     className="nav-link a-link search-article-navbar-button search-icon-button-nav"
                   >
-                    <img
-                      alt="edit"
-                      width="25"
-                      src={require('../../images/search.png')}
-                    />
+                    <img alt="edit" width="25" src={require('../../images/search.png')} />
                   </a>
                 </li>
               </ul>
@@ -243,11 +245,7 @@ export class NavBar extends Component {
                       }}
                       className="nav-link a-link search-article-navbar-button"
                     >
-                      <img
-                      alt="edit"
-                      width="25"
-                      src={require('../../images/write.png')}
-                    />
+                      <img alt="edit" width="25" src={require('../../images/write.png')} />
                     </a>
                   </li>
                   <li className="nav-item active">
@@ -293,16 +291,28 @@ export class NavBar extends Component {
             </form>
           </div>
         </nav>
-        <div className="search-div-bar-floating" id="123456">
-        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email"/>
-        </div>
         {this.state.searchEngine && this.props.categories && (
+          <div className="search-div-bar-floating" id="123456">
+            <div className="row">
+              <input
+                type="text"
+                name="searchwords"
+                onChange={this.handleChange}
+                placeholder="Palabras claves"
+                className="form-control"
+                id="searchwords"
+              />
+              <p onClick={() => this.searchArticlesMotor()}>BUSCAR</p>
+            </div>
+          </div>
+        )}
+        {/*this.state.searchEngine && this.props.categories && (
           <SearchEngine
             categories={this.props.categories}
             searchArticlesMotor={this.searchArticlesMotor}
             history={this.props.history}
           />
-        )}
+        )*/}
         <BannerMidd />
       </div>
     );

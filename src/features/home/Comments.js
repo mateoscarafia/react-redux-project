@@ -130,7 +130,7 @@ export class Comments extends Component {
               <button
                 onClick={() => this.postComment()}
                 type="button"
-                className="btn btn-secondary comment-button"
+                className="btn btn-secondary comment-button send-comment-button-articlejs"
               >
                 Enviar
               </button>

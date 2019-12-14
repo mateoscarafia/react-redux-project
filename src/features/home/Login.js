@@ -5,6 +5,7 @@ import * as actions from './redux/actions';
 import * as VALUES from '../../constants';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
+import { FacebookProvider, LoginButton } from 'react-facebook';
 
 export class Login extends Component {
   constructor(props) {
@@ -20,6 +21,14 @@ export class Login extends Component {
   handleChange(event) {
     this.setState({ [event.target.name]: event.target.value, error: false });
   }
+
+  handleResponse = data => {
+    console.log(data);
+  };
+
+  handleError = error => {
+    this.setState({ error });
+  };
 
   loginForm() {
     if (
@@ -46,8 +55,8 @@ export class Login extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (this.props.home.loginPending && nextProps.home.loginError) {
-      NotificationManager.warning('Ups, algo fue mal');
-      NotificationManager.warning('Revisa los datos ingresados');
+      NotificationManager.error('Ups, algo fue mal');
+      NotificationManager.error('Revisa los datos ingresados');
     } else if (this.props.home.loginPending && nextProps.home.logindata) {
       localStorage.setItem('token-app-auth-current', nextProps.home.logindata.data.token);
       window.location.replace('http://' + VALUES.BD_ORIGIN + ':6075/feed/main');
@@ -58,6 +67,7 @@ export class Login extends Component {
     return (
       <div className="home-login">
         <form className="home-login-form">
+          <img alt="edit" width="100" src={require('../../images/logo.png')} />
           <div className="form-group">
             <input
               type="email"
@@ -67,7 +77,7 @@ export class Login extends Component {
               placeholder="Email"
             />
           </div>
-          <div className="form-group">
+          <div className="form-group no-margin">
             <input
               type="password"
               name="password"
@@ -76,17 +86,18 @@ export class Login extends Component {
               placeholder="Password"
             />
           </div>
-          {this.state.error && (
-            <div className="error-message-input">
-              <p>Datos inválidos</p>
-            </div>
-          )}
-          <button onClick={() => this.loginForm()} type="button" className="login-button">
+
+          <p onClick={() => this.loginForm()} className="login-button">
             Login
-          </button>
+          </p>
           <p onClick={() => this.goToRegister()} className="register-link-in-login-form">
             ¿No tienes cuenta? <b> Registrate </b>
           </p>
+          {/*<FacebookProvider appId="1525501467533850">
+            <LoginButton scope="email" onCompleted={this.handleResponse} onError={this.handleError}>
+              <span>Login via Facebook</span>
+            </LoginButton>
+          </FacebookProvider>*/}
         </form>
         <NotificationContainer />
       </div>

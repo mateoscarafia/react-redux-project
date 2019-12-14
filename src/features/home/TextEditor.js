@@ -192,7 +192,7 @@ export class TextEditor extends Component {
     if (imagePreviewUrl) {
       $imagePreview = <img alt="img-preview" src={imagePreviewUrl} />;
     }
-    if (this.props.home.user && !this.props.home.user.data[0]) {
+    if (this.props.home.getUserError) {
       this.goToErrorLanding();
       return null;
     } else {
@@ -282,14 +282,13 @@ export class TextEditor extends Component {
               onEditorStateChange={this.onEditorStateChange}
             />
             <div className="send-article-div-control">
-              <button
+              <p
                 onClick={() => this.postArticle()}
-                type="button"
                 id="button-post-article"
-                className="btn btn-primary btn-lg padding-bigger"
+                className="send-article-button-articlejs"
               >
                 Publicar artículo
-              </button>
+              </p>
               <button
                 type="button"
                 id="spinner-button-post-article"

@@ -102,7 +102,7 @@ export class Home extends Component {
   };
 
   render() {
-    if (this.props.home.user && !this.props.home.user.data[0]) {
+    if (this.props.home.getCategoriesError) {
       this.goToErrorLanding();
       return null;
     } else if (

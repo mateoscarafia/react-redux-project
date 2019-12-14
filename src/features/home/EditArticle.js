@@ -231,7 +231,7 @@ export class EditArticle extends Component {
     if (imagePreviewUrl) {
       $imagePreview = <img alt="img-preview" src={imagePreviewUrl} />;
     }
-    if (this.props.home.uniquearticle && !this.props.home.uniquearticle.data[0]) {
+    if (this.props.home.getArticleError) {
       this.goToErrorLanding();
       return null;
     } else {
