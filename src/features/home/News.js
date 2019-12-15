@@ -591,7 +591,9 @@ export class News extends Component {
           <div className="row margin-for-news">{this.buildNews('main', 2, 10)}</div>,
         );
         contentNews.push(
-          <div className="row margin-for-news super-container-div">{this.buildProfileNews('main', 10, 13)}</div>,
+          <div className="row margin-for-news super-container-div">
+            {this.buildProfileNews('main', 10, 13)}
+          </div>,
         );
         contentNews.push(
           <div className="most-see-news-div margin-for-news">
@@ -634,7 +636,9 @@ export class News extends Component {
           <div className="row margin-for-news">{this.buildNews('main', 2, 10)}</div>,
         );
         contentNews.push(
-          <div className="row margin-for-news super-container-div">{this.buildProfileNews('main', 10, 13)}</div>,
+          <div className="row margin-for-news super-container-div">
+            {this.buildProfileNews('main', 10, 13)}
+          </div>,
         );
         contentNews.push(
           <div className="row margin-for-news">{this.buildRecommendedNews('main', 15, 17)}</div>,
@@ -662,63 +666,75 @@ export class News extends Component {
     return contentNews;
   };
 
+  goToErrorLanding = () => {
+    localStorage.removeItem('token-app-auth-current');
+    window.location.replace('http://' + VALUES.BD_ORIGIN + ':6075/errorlanding');
+  };
+
   render() {
-    return (
-      <div className="home-news">
-        <div className="news-space">
-          <div className="container news-container">
-            {this.props.routeparams !== 'main' && (
-              <div className="row">{this.buildNewsSearch()}</div>
-            )}
-            {this.props.routeparams === 'main' && <div>{this.newsDistribution()}</div>}
-          </div>
-        </div>
-        <Modal
-          visible={this.state.visible}
-          width="300px"
-          height="300px"
-          borderRadius="0px"
-          effect="fadeInDown"
-          onClickAway={() => this.handleModal(false)}
-        >
-          {typeof this.props.home.writer !== 'undefined' && (
-            <div className="user-popup-content">
-              <a className="close-modal-header" onClick={() => this.handleModal(false)}>
-                X
-              </a>
-              <div className="user-popup-header-img">
-                <div
-                  onClick={() => this.routerMethod('profile/' + this.props.home.writer.data.id)}
-                  style={{
-                    backgroundImage: `url(${'http://' +
-                      VALUES.BD_ORIGIN +
-                      ':3000/network_images/' +
-                      this.props.home.writer.data.profile_img_url})`,
-                  }}
-                  className="user-profile-picture-popup"
-                ></div>
-              </div>
-              <div className="user-data-header-popup">
-                <h4 onClick={() => this.routerMethod('profile/' + this.props.home.writer.data.id)}>
-                  {this.props.home.writer.data.username}
-                </h4>
-                <p>
-                  {this.props.home.writer.data.profession +
-                    ' - ' +
-                    this.props.home.writer.data.state.name}
-                </p>
-                <p
-                  onClick={() => this.followUser(this.props.articles.data[0].user.id, true)}
-                  className="follow-button"
-                >
-                  Seguir
-                </p>
-              </div>
+    if (this.props.home.getArticlesError) {
+      this.goToErrorLanding();
+      return null;
+    } else {
+      return (
+        <div className="home-news">
+          <div className="news-space">
+            <div className="container news-container">
+              {this.props.routeparams !== 'main' && (
+                <div className="row">{this.buildNewsSearch()}</div>
+              )}
+              {this.props.routeparams === 'main' && <div>{this.newsDistribution()}</div>}
             </div>
-          )}
-        </Modal>
-      </div>
-    );
+          </div>
+          <Modal
+            visible={this.state.visible}
+            width="300px"
+            height="300px"
+            borderRadius="0px"
+            effect="fadeInDown"
+            onClickAway={() => this.handleModal(false)}
+          >
+            {typeof this.props.home.writer !== 'undefined' && (
+              <div className="user-popup-content">
+                <a className="close-modal-header" onClick={() => this.handleModal(false)}>
+                  X
+                </a>
+                <div className="user-popup-header-img">
+                  <div
+                    onClick={() => this.routerMethod('profile/' + this.props.home.writer.data.id)}
+                    style={{
+                      backgroundImage: `url(${'http://' +
+                        VALUES.BD_ORIGIN +
+                        ':3000/network_images/' +
+                        this.props.home.writer.data.profile_img_url})`,
+                    }}
+                    className="user-profile-picture-popup"
+                  ></div>
+                </div>
+                <div className="user-data-header-popup">
+                  <h4
+                    onClick={() => this.routerMethod('profile/' + this.props.home.writer.data.id)}
+                  >
+                    {this.props.home.writer.data.username}
+                  </h4>
+                  <p>
+                    {this.props.home.writer.data.profession +
+                      ' - ' +
+                      this.props.home.writer.data.state.name}
+                  </p>
+                  <p
+                    onClick={() => this.followUser(this.props.articles.data[0].user.id, true)}
+                    className="follow-button"
+                  >
+                    Seguir
+                  </p>
+                </div>
+              </div>
+            )}
+          </Modal>
+        </div>
+      );
+    }
   }
 }
 

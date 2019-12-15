@@ -165,13 +165,19 @@ export class EditArticle extends Component {
                 .replace(/\"/g, '\\"')
                 .replace(/\'/g, '\\"')
                 .replace(/\`/g, '\\"')
-            : this.props.home.uniquearticle.data[0].title,
+            : this.props.home.uniquearticle.data[0].title
+                .replace(/\"/g, '\\"')
+                .replace(/\'/g, '\\"')
+                .replace(/\`/g, '\\"'),
           subtitle: this.state.subtitle
             ? this.state.subtitle
                 .replace(/\"/g, '\\"')
                 .replace(/\'/g, '\\"')
                 .replace(/\`/g, '\\"')
-            : this.props.home.uniquearticle.data[0].subtitle,
+            : this.props.home.uniquearticle.data[0].subtitle
+                .replace(/\"/g, '\\"')
+                .replace(/\'/g, '\\"')
+                .replace(/\`/g, '\\"'),
           category_id: categoryObj.id,
           img_url: res.data.filename || this.props.home.uniquearticle.data[0].img_url,
           content: this.state.changedEditor

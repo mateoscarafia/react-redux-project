@@ -89,7 +89,7 @@ export class Register extends Component {
               type="password"
               name="password"
               onChange={this.handleChange}
-              placeholder="Password"
+              placeholder="Contraseña"
               id="password-input"
             />
           </div>
@@ -100,7 +100,7 @@ export class Register extends Component {
               value={this.state.fullname}
               onChange={this.handleChange}
               id="fullname-input"
-              placeholder="Fullname"
+              placeholder="Nombre de usuario"
             />
           </div>
           <button onClick={() => this.registerForm()} type="button" className="register-button">

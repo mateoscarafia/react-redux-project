@@ -201,6 +201,10 @@ export class UserProfile extends Component {
     });
   };
 
+  goToErrorLanding = () => {
+    window.location.replace('http://' + VALUES.BD_ORIGIN + ':6075/errorlanding');
+  };
+
   render() {
     let $imagePreview,
       $imagePreviewP = null;
@@ -224,209 +228,217 @@ export class UserProfile extends Component {
         $imagePreviewP = <img alt="img-preview" src={imagePreviewUrlP} />;
       }
     }
-    return (
-      <div className="home-user-profile">
-        {this.props.home.categories && (
-          <NavBar
-            login={this.state.login}
-            history={this.props.history}
-            categories={this.props.home.categories}
-            user={this.state.id}
-          />
-        )}
-        <div className="user-profile-wrapper">
-          {(this.props.home.getUserPending || !this.props.home.user) && (
-            <div
-              id="spinner-div-for-news-id-container-home-waiting"
-              className="spinner-div-for-news-home-when-no-content-user-spin"
-            >
-              <img
-                alt="edit"
-                width="60"
-                className="edit-pen-user-profile-style"
-                src={require('../../images/spinner.gif')}
-              />
-            </div>
-          )}
-          {!this.props.home.getUserPending && this.props.home.user && (
-            <UserHeader
-              isProfile={this.state.isProfile}
-              user={this.props.home.user.data[0]}
-              user_id={this.props.match.params.id}
+    if (this.props.home.getUserError || this.props.home.getCategoriesError) {
+      this.goToErrorLanding();
+      return null;
+    } else {
+      return (
+        <div className="home-user-profile">
+          {this.props.home.categories && (
+            <NavBar
+              login={this.state.login}
+              history={this.props.history}
+              categories={this.props.home.categories}
+              user={this.state.id}
             />
           )}
-        </div>
-        <div className="profile-wrapper-content">
-          {!this.props.home.getUserPending && this.props.home.user && (
-            <div className="about-me-user-profile">
-              <h4>
-                {this.props.home.user.data[0].username}
-                {this.props.home.user.data[0].id === this.state.id && (
-                  <img
-                    alt="edit"
-                    width='30px'
-                    onClick={() => this.handleModal(true)}
-                    className="edit-pen-user-profile-style"
-                    src={require('../../images/edit-pen.PNG')}
-                  />
-                )}
-              </h4>
-              <h5 className="country-city-user-profile">
-                {'Seguidores: ' +
-                  this.props.home.user.data[0].followers +
-                  ' - Siguiendo: ' +
-                  this.props.home.user.data[0].following +
-                  ' - Artículos: ' +
-                  this.props.home.user.data[0].num_articles}
-              </h5>
-              <p>{this.props.home.user.data[0].about_me}</p>
-            </div>
-          )}
-          <div className="user-profile-wrapper-content">
-            <p className="user-profile-wrapper-content-title">
-              {!this.props.home.getUserPending &&
-                this.props.home.user &&
-                !this.state.isProfile &&
-                'Artículos de ' + this.props.home.user.data[0].username}
-              {this.state.isProfile && 'Tus artículos'}
-            </p>
-            <div className="row">{this.props.home.userarticles && this.buildNews()}</div>
+          <div className="user-profile-wrapper">
+            {(this.props.home.getUserPending || !this.props.home.user) && (
+              <div
+                id="spinner-div-for-news-id-container-home-waiting"
+                className="spinner-div-for-news-home-when-no-content-user-spin"
+              >
+                <img
+                  alt="edit"
+                  width="60"
+                  className="edit-pen-user-profile-style"
+                  src={require('../../images/spinner.gif')}
+                />
+              </div>
+            )}
+            {!this.props.home.getUserPending && this.props.home.user && (
+              <UserHeader
+                isProfile={this.state.isProfile}
+                user={this.props.home.user.data[0]}
+                user_id={this.props.match.params.id}
+              />
+            )}
           </div>
-        </div>
-        <Footer />
-        {this.props.home.user &&
-          this.state.editUser &&
-          this.props.home.user.data[0].id === this.state.id && (
-            <div className="edit-user-modal-absolute">
-              <div className="modal-header-edit-user">
-                <a className="close-modal-header-edit-user" onClick={() => this.handleModal(false)}>
-                  X
-                </a>
+          <div className="profile-wrapper-content">
+            {!this.props.home.getUserPending && this.props.home.user && (
+              <div className="about-me-user-profile">
+                <h4>
+                  {this.props.home.user.data[0].username}
+                  {this.props.home.user.data[0].id === this.state.id && (
+                    <img
+                      alt="edit"
+                      width="30px"
+                      onClick={() => this.handleModal(true)}
+                      className="edit-pen-user-profile-style"
+                      src={require('../../images/edit-pen.PNG')}
+                    />
+                  )}
+                </h4>
+                <h5 className="country-city-user-profile">
+                  {'Seguidores: ' +
+                    this.props.home.user.data[0].followers +
+                    ' - Siguiendo: ' +
+                    this.props.home.user.data[0].following +
+                    ' - Artículos: ' +
+                    this.props.home.user.data[0].num_articles}
+                </h5>
+                <p>{this.props.home.user.data[0].about_me}</p>
               </div>
-              <div className="form-modal-edit-user">
-                <h4>Datos personales</h4>
-                <hr />
-                <form>
-                  <div className="form-group">
-                    <label>Nombre completo</label>
-                    <input
-                      type="text"
-                      name="username"
-                      value={
-                        this.state.username !== null
-                          ? this.state.username
-                          : this.props.home.user.data[0].username
-                      }
-                      className="form-control"
-                      onChange={this.handleChange}
-                      id="username"
-                      placeholder="Nombre completo"
-                    />
-                  </div>
-                  <div className="wrapper-image-form">
-                    <div className="upload-image-form-editor">
-                      <label className="custom-file-upload">
-                        <input
-                          onChange={this._handleImageChange}
-                          type="file"
-                          className="inputfile"
-                        />
-                        Cambiar foto de perfil
-                      </label>
-                      <div className="show-image-preview-text-editor">{$imagePreview}</div>
-                    </div>
-                    <div className="upload-image-form-editor margin-left-upload-img">
-                      <label className="custom-file-upload">
-                        <input
-                          onChange={this._handleImageChangeP}
-                          type="file"
-                          className="inputfile"
-                        />
-                        Cambiar foto de portada
-                      </label>
-                      <div className="show-image-preview-text-editor">{$imagePreviewP}</div>
-                    </div>
-                  </div>
-                  <div className="form-group">
-                    <label>Profesión</label>
-                    <input
-                      type="text"
-                      name="profession"
-                      value={
-                        this.state.profession !== null
-                          ? this.state.profession
-                          : this.props.home.user.data[0].profession
-                      }
-                      onChange={this.handleChange}
-                      className="form-control"
-                      id="profession"
-                      placeholder="Periodista, columnista.."
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label>Presentación</label>
-                    <textarea
-                      name="about_me"
-                      type="text"
-                      value={
-                        this.state.about_me !== null
-                          ? this.state.about_me
-                          : this.props.home.user.data[0].about_me
-                      }
-                      className="form-control"
-                      onChange={this.handleChange}
-                      id="about_me"
-                      rows="3"
-                    ></textarea>
-                  </div>
-                  <div className="div-edit-user-button-save-change">
-                    <button
-                      onClick={() => this.sendUpdateUser()}
-                      type="button"
-                      className="btn btn-success edit-user-button-form"
-                    >
-                      Guardar datos
-                    </button>
-                  </div>
-                  <hr />
-                  <label>Cambio de contraseña</label>
-                  <div className="form-group">
-                    <input
-                      type="password"
-                      className="form-control"
-                      value={this.state.password1 || ''}
-                      onChange={this.handleChange}
-                      name="password1"
-                      placeholder="Contraseña actual"
-                    />
-                  </div>
-                  <div className="form-group">
-                    <input
-                      type="password"
-                      value={this.state.password2 || ''}
-                      className="form-control"
-                      onChange={this.handleChange}
-                      name="password2"
-                      placeholder="Contraseña nueva"
-                    />
-                  </div>
-                  <div className="div-edit-user-button-save-change">
-                    <button
-                      onClick={() => this.updatePassword()}
-                      type="button"
-                      className="btn btn-primary edit-user-button-form"
-                    >
-                      Cambiar contraseña
-                    </button>
-                  </div>
-                  <hr />
-                </form>
-              </div>
+            )}
+            <div className="user-profile-wrapper-content">
+              <p className="user-profile-wrapper-content-title">
+                {!this.props.home.getUserPending &&
+                  this.props.home.user &&
+                  !this.state.isProfile &&
+                  'Artículos de ' + this.props.home.user.data[0].username}
+                {this.state.isProfile && 'Tus artículos'}
+              </p>
+              <div className="row">{this.props.home.userarticles && this.buildNews()}</div>
             </div>
-          )}
-        <NotificationContainer />
-      </div>
-    );
+          </div>
+          <Footer />
+          {this.props.home.user &&
+            this.state.editUser &&
+            this.props.home.user.data[0].id === this.state.id && (
+              <div className="edit-user-modal-absolute">
+                <div className="modal-header-edit-user">
+                  <a
+                    className="close-modal-header-edit-user"
+                    onClick={() => this.handleModal(false)}
+                  >
+                    X
+                  </a>
+                </div>
+                <div className="form-modal-edit-user">
+                  <h4>Datos personales</h4>
+                  <hr />
+                  <form>
+                    <div className="form-group">
+                      <label>Nombre completo</label>
+                      <input
+                        type="text"
+                        name="username"
+                        value={
+                          this.state.username !== null
+                            ? this.state.username
+                            : this.props.home.user.data[0].username
+                        }
+                        className="form-control"
+                        onChange={this.handleChange}
+                        id="username"
+                        placeholder="Nombre completo"
+                      />
+                    </div>
+                    <div className="wrapper-image-form">
+                      <div className="upload-image-form-editor">
+                        <label className="custom-file-upload">
+                          <input
+                            onChange={this._handleImageChange}
+                            type="file"
+                            className="inputfile"
+                          />
+                          Cambiar foto de perfil
+                        </label>
+                        <div className="show-image-preview-text-editor">{$imagePreview}</div>
+                      </div>
+                      <div className="upload-image-form-editor margin-left-upload-img">
+                        <label className="custom-file-upload">
+                          <input
+                            onChange={this._handleImageChangeP}
+                            type="file"
+                            className="inputfile"
+                          />
+                          Cambiar foto de portada
+                        </label>
+                        <div className="show-image-preview-text-editor">{$imagePreviewP}</div>
+                      </div>
+                    </div>
+                    <div className="form-group">
+                      <label>Profesión</label>
+                      <input
+                        type="text"
+                        name="profession"
+                        value={
+                          this.state.profession !== null
+                            ? this.state.profession
+                            : this.props.home.user.data[0].profession
+                        }
+                        onChange={this.handleChange}
+                        className="form-control"
+                        id="profession"
+                        placeholder="Periodista, columnista.."
+                      />
+                    </div>
+                    <div className="form-group">
+                      <label>Presentación</label>
+                      <textarea
+                        name="about_me"
+                        type="text"
+                        value={
+                          this.state.about_me !== null
+                            ? this.state.about_me
+                            : this.props.home.user.data[0].about_me
+                        }
+                        className="form-control"
+                        onChange={this.handleChange}
+                        id="about_me"
+                        rows="3"
+                      ></textarea>
+                    </div>
+                    <div className="div-edit-user-button-save-change">
+                      <button
+                        onClick={() => this.sendUpdateUser()}
+                        type="button"
+                        className="btn btn-success edit-user-button-form"
+                      >
+                        Guardar datos
+                      </button>
+                    </div>
+                    <hr />
+                    <label>Cambio de contraseña</label>
+                    <div className="form-group">
+                      <input
+                        type="password"
+                        className="form-control"
+                        value={this.state.password1 || ''}
+                        onChange={this.handleChange}
+                        name="password1"
+                        placeholder="Contraseña actual"
+                      />
+                    </div>
+                    <div className="form-group">
+                      <input
+                        type="password"
+                        value={this.state.password2 || ''}
+                        className="form-control"
+                        onChange={this.handleChange}
+                        name="password2"
+                        placeholder="Contraseña nueva"
+                      />
+                    </div>
+                    <div className="div-edit-user-button-save-change">
+                      <button
+                        onClick={() => this.updatePassword()}
+                        type="button"
+                        className="btn btn-primary edit-user-button-form"
+                      >
+                        Cambiar contraseña
+                      </button>
+                    </div>
+                    <hr />
+                  </form>
+                </div>
+              </div>
+            )}
+          <NotificationContainer />
+        </div>
+      );
+    }
   }
 }
 

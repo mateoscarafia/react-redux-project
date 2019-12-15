@@ -153,7 +153,7 @@ export class NavBar extends Component {
                 </div>
               </li>
               {this.buildList(0)}
-              <li className="nav-item dropdown">
+              <li className="nav-item dropdown diss-mobile-menu-dropdown">
                 <a
                   className="nav-link dropdown-toggle a-link"
                   href=""

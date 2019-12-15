@@ -47,10 +47,6 @@ export class TextEditor extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.home.postArticlePending) {
-      document.getElementById('button-post-article').style.display = 'none';
-      document.getElementById('spinner-button-post-article').style.display = 'inline';
-    }
     if (
       this.props.home.postArticlePending &&
       nextProps.home.postarticle &&
@@ -113,6 +109,8 @@ export class TextEditor extends Component {
 
   postArticle() {
     if (this.state.login && this.state.title && this.state.subtitle && this.state.keywords) {
+      document.getElementById('button-post-article').style.display = 'none';
+      document.getElementById('spinner-button-post-article').style.display = 'inline';
       const data = new FormData();
       data.append('file', this.state.file);
       axios.post('http://' + VALUES.BD_ORIGIN + ':3000/file-upload', data, {}).then(res => {
@@ -289,18 +287,18 @@ export class TextEditor extends Component {
               >
                 Publicar artículo
               </p>
-              <button
+              <p
                 type="button"
                 id="spinner-button-post-article"
-                className="btn btn-primary btn-lg spinner-button"
+                className="send-article-button-articlejs"
               >
                 <img
                   alt="edit"
-                  width="60"
+                  width="25"
                   className="edit-pen-user-profile-style"
                   src={require('../../images/spinner.gif')}
                 />
-              </button>
+              </p>
             </div>
           </div>
           <Footer />

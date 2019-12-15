@@ -187,7 +187,7 @@ export class Article extends Component {
   };
 
   render() {
-    if (this.props.home.getArticleError) {
+    if (this.props.home.getArticleError || this.props.home.getCategoriesError) {
       this.goToErrorLanding();
       return null;
     } else {
