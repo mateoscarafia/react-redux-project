@@ -280,13 +280,13 @@ export class TextEditor extends Component {
               onEditorStateChange={this.onEditorStateChange}
             />
             <div className="send-article-div-control">
-              <p
+              <button
                 onClick={() => this.postArticle()}
                 id="button-post-article"
                 className="send-article-button-articlejs"
               >
                 Publicar artículo
-              </p>
+              </button>
               <p
                 type="button"
                 id="spinner-button-post-article"

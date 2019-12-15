@@ -47,14 +47,6 @@ export class EditArticle extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.home.editArticlePending) {
-      document.getElementById('edit-button-id').style.display = 'none';
-      document.getElementById('spinner-edit-button-id').style.display = 'inline';
-    }
-    if (this.props.home.deleteArticlePending) {
-      document.getElementById('delete-button-id').style.display = 'none';
-      document.getElementById('spinner-delete-button-id-final').style.display = 'inline';
-    }
     if (this.props.home.editArticlePending && nextProps.home.editarticle) {
       NotificationManager.info('Articulo guardado');
       setTimeout(() => {
@@ -120,6 +112,8 @@ export class EditArticle extends Component {
   }
 
   deleteArticle = () => {
+    document.getElementById('delete-button-id').style.display = 'none';
+    document.getElementById('spinner-delete-button-id-final').style.display = 'inline';
     this.props.actions.deleteArticle({
       token: localStorage.getItem('token-app-auth-current'),
       id: this.props.match.params.id,
@@ -136,6 +130,8 @@ export class EditArticle extends Component {
 
   editArticle() {
     if (this.state.login) {
+      document.getElementById('edit-button-id').style.display = 'none';
+      document.getElementById('spinner-edit-button-id').style.display = 'inline';
       const data = new FormData();
       data.append('file', this.state.file);
       axios.post('http://' + VALUES.BD_ORIGIN + ':3000/file-upload', data, {}).then(res => {
@@ -182,9 +178,6 @@ export class EditArticle extends Component {
           img_url: res.data.filename || this.props.home.uniquearticle.data[0].img_url,
           content: this.state.changedEditor
             ? draftToHtml(convertToRaw(this.state.editorState.getCurrentContent()))
-                .replace(/\"/g, '\\"')
-                .replace(/\'/g, '\\"')
-                .replace(/\`/g, '\\"')
             : this.props.home.uniquearticle.data[0].content,
           key_words: this.props.home.uniquearticle.data[0].key_words + '-' + keyword_content,
           id: this.props.match.params.id,
@@ -347,7 +340,7 @@ export class EditArticle extends Component {
                 >
                   <img
                     alt="edit"
-                    width="60"
+                    width="35"
                     className="edit-pen-user-profile-style"
                     src={require('../../images/spinner.gif')}
                   />
@@ -368,7 +361,7 @@ export class EditArticle extends Component {
                 >
                   <img
                     alt="edit"
-                    width="60"
+                    width="35"
                     className="edit-pen-user-profile-style"
                     src={require('../../images/spinner.gif')}
                   />

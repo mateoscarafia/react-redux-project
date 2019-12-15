@@ -114,17 +114,20 @@ export class UserProfile extends Component {
     this.state.password2 &&
       this.state.password2.length < 6 &&
       NotificationManager.warning('La contraseña debe tener al menos 6 caracteres');
-    this.state.password1 &&
-      this.state.password2 &&
-      this.state.password2.length > 5 &&
+    if (this.state.password1 && this.state.password2 && this.state.password2.length > 5) {
+      document.getElementById('cambiar-pwd-id').style.display = 'none';
+      document.getElementById('cambiar-pwd-id-spinner').style.display = 'inline';
       this.props.actions.changePass({
         token: localStorage.getItem('token-app-auth-current'),
         pwd1: this.state.password1,
         pwd2: this.state.password2,
       });
+    }
   };
 
   sendUpdateUser = async () => {
+    document.getElementById('cambiar-user-data-id').style.display = 'none';
+    document.getElementById('cambiar-user-data-id-spinner').style.display = 'inline';
     const data = new FormData();
     const dataP = new FormData();
     data.append('file', this.state.file);
@@ -167,7 +170,14 @@ export class UserProfile extends Component {
         password2: '',
       });
     }
+    if (this.props.home.editUserPending && !nextProps.home.editUserError) {
+      document.getElementById('cambiar-user-data-id-spinner').style.display = 'none';
+      document.getElementById('cambiar-user-data-id').style.display = 'inline';
+      NotificationManager.warning('Ups, algo fue mal. Revise los datos');
+    }
     if (this.props.home.changePassPending && !nextProps.home.password) {
+      document.getElementById('cambiar-pwd-id-spinner').style.display = 'none';
+      document.getElementById('cambiar-pwd-id').style.display = 'inline';
       NotificationManager.warning('Ups, algo fue mal. Revise los datos');
     }
   }
@@ -394,9 +404,22 @@ export class UserProfile extends Component {
                       <button
                         onClick={() => this.sendUpdateUser()}
                         type="button"
+                        id="cambiar-user-data-id"
                         className="btn btn-success edit-user-button-form"
                       >
                         Guardar datos
+                      </button>
+                      <button
+                        type="button"
+                        id="cambiar-user-data-id-spinner"
+                        className="btn btn-success edit-user-button-form spinner"
+                      >
+                        <img
+                          alt="edit"
+                          width="25"
+                          className="edit-pen-user-profile-style"
+                          src={require('../../images/spinner.gif')}
+                        />
                       </button>
                     </div>
                     <hr />
@@ -425,9 +448,22 @@ export class UserProfile extends Component {
                       <button
                         onClick={() => this.updatePassword()}
                         type="button"
+                        id="cambiar-pwd-id"
                         className="btn btn-primary edit-user-button-form"
                       >
                         Cambiar contraseña
+                      </button>
+                      <button
+                        type="button"
+                        id="cambiar-pwd-id-spinner"
+                        className="btn btn-success edit-user-button-form spinner"
+                      >
+                        <img
+                          alt="edit"
+                          width="25"
+                          className="edit-pen-user-profile-style"
+                          src={require('../../images/spinner.gif')}
+                        />
                       </button>
                     </div>
                     <hr />
