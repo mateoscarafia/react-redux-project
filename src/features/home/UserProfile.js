@@ -170,12 +170,12 @@ export class UserProfile extends Component {
         password2: '',
       });
     }
-    if (this.props.home.editUserPending && !nextProps.home.editUserError) {
+    if (this.props.home.editUserPending && nextProps.home.editUserError) {
       document.getElementById('cambiar-user-data-id-spinner').style.display = 'none';
       document.getElementById('cambiar-user-data-id').style.display = 'inline';
       NotificationManager.warning('Ups, algo fue mal. Revise los datos');
     }
-    if (this.props.home.changePassPending && !nextProps.home.password) {
+    if (this.props.home.changePassPending && nextProps.home.changePassError) {
       document.getElementById('cambiar-pwd-id-spinner').style.display = 'none';
       document.getElementById('cambiar-pwd-id').style.display = 'inline';
       NotificationManager.warning('Ups, algo fue mal. Revise los datos');
