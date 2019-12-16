@@ -4,8 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import TextLoop from 'react-text-loop';
-
-let padding = 0;
+import * as VALUES from '../../constants';
 
 export class BannerMidd extends Component {
   static propTypes = {
@@ -18,31 +17,21 @@ export class BannerMidd extends Component {
     this.state = {};
   }
 
+  componentWillMount() {
+    this.props.actions.getLatestNews({ token: VALUES.DEEP_TOKEN });
+  }
+
   createBanner = () => {
     let text = [];
-    if (true) {
-      for (const prop in this.props.home.articles.data.main_feed) {
-        text.push(<span>{this.props.home.articles.data.main_feed[prop].title.toUpperCase()}</span>);
-      }
-      for (const prop in this.props.home.articles.data.backup_feed) {
-        text.push(
-          <span>{this.props.home.articles.data.backup_feed[prop].title.toUpperCase()}</span>,
-        );
-      }
-    } else {
-      for (const prop in this.props.home.categories.data) {
-        text.push(<span>{this.props.home.categories.data[prop].name.toUpperCase()}</span>);
-      }
+    for (const prop in this.props.home.latestnews.data) {
+      text.push(<span>{this.props.home.latestnews.data[prop].title.toUpperCase()}</span>);
     }
-
     return text.reverse();
   };
 
   midText() {
     var date = new Date();
-    return window.screen.width > 877
-      ? 'ÚLTIMAS NOTICIAS |'
-      : 'AHORA |';
+    return window.screen.width > 877 ? 'ÚLTIMAS NOTICIAS |' : 'AHORA |';
   }
 
   render() {
@@ -54,15 +43,13 @@ export class BannerMidd extends Component {
           </div>
           <div className="midd-bann-text-second">
             <p id="text-banner-id-for-movement" className="midd-bann-p">
-              {this.props.home.articles && this.props.home.categories && (
+              {this.props.home.latestnews && (
                 <TextLoop interval={3000}>{this.createBanner()}</TextLoop>
               )}
             </p>
           </div>
         </div>
-        <div className="triangle-div-down-low">
-
-        </div>
+        <div className="triangle-div-down-low"></div>
       </div>
     );
   }

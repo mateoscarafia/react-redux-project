@@ -36,12 +36,18 @@ export class UserProfile extends Component {
       about_me: null,
       password1: null,
       password2: null,
+      openMyFollowers: false,
     };
     this._handleImageChange = this._handleImageChange.bind(this);
     this._handleImageChangeP = this._handleImageChangeP.bind(this);
   }
 
-  routerMethod = destiny => {
+  routerMethod = async (destiny, id) => {
+    id && (await this.props.actions.getUser({ token: VALUES.DEEP_TOKEN, id: id }));
+    id &&
+      this.setState({
+        openMyFollowers: !this.state.openMyFollowers,
+      });
     this.props.history.push(destiny);
     window.scrollTo(0, 0);
   };
@@ -58,6 +64,42 @@ export class UserProfile extends Component {
     };
     reader.readAsDataURL(file);
   }
+
+  openMyFollowers = async () => {
+    await this.props.actions.getFollowers({
+      token: localStorage.getItem('token-app-auth-current'),
+    });
+    this.setState({
+      openMyFollowers: !this.state.openMyFollowers,
+    });
+  };
+
+  buildFollowers = () => {
+    return this.props.home.myfollowers.data.map(item => {
+      return (
+        <div key={item.id} className="mailbox-inner-messages-div">
+          <div
+            style={{
+              backgroundImage: `url(${'http://' +
+                VALUES.BD_ORIGIN +
+                ':3000/network_images/' +
+                item.profile_img_url})`,
+            }}
+            className="mailbox-pic-header-background-image"
+          ></div>
+          <p
+            onClick={() => this.routerMethod('../profile/' + item.id, item.id)}
+            className="username-name-message"
+          >
+            {item.username}
+          </p>
+          <p className="date-message">- {item.profession}</p>
+          <hr />
+          <br />
+        </div>
+      );
+    });
+  };
 
   _handleImageChangeP(e) {
     e.preventDefault();
@@ -188,7 +230,7 @@ export class UserProfile extends Component {
         <div key={item.title + '-' + item.id} className="news-conts">
           <div
             className="img-div"
-            onClick={() => this.routerMethod('../news/' + item.id, item.id)}
+            onClick={() => this.routerMethod('../news/' + item.id, null)}
             style={{
               backgroundImage: `url(${'http://' +
                 VALUES.BD_ORIGIN +
@@ -201,7 +243,7 @@ export class UserProfile extends Component {
           <div className="p-div">
             <p
               className="p-div-title-text"
-              onClick={() => this.routerMethod('../news/' + item.id, item.id)}
+              onClick={() => this.routerMethod('../news/' + item.id, null)}
             >
               {item.title}
             </p>
@@ -297,6 +339,14 @@ export class UserProfile extends Component {
                     ' - Artículos: ' +
                     this.props.home.user.data[0].num_articles}
                 </h5>
+                {this.props.home.user.data[0].id === this.state.id && (
+                  <h5
+                    onClick={() => this.openMyFollowers()}
+                    className="country-city-user-profile little-followers-text"
+                  >
+                    {this.state.openMyFollowers ? 'Esconder seguidores' : 'Ver mis seguidores'}
+                  </h5>
+                )}
                 <p>{this.props.home.user.data[0].about_me}</p>
               </div>
             )}
@@ -312,6 +362,17 @@ export class UserProfile extends Component {
             </div>
           </div>
           <Footer />
+          {this.state.openMyFollowers && (
+            <div className="followers-div">
+              <div className="followers-header-edit-user">
+                <a className="close-modal-header-edit-follower" onClick={() => this.openMyFollowers()}>
+                  X
+                </a>
+                <br />
+              </div>
+              {this.props.home.myfollowers && this.buildFollowers()}
+            </div>
+          )}
           {this.props.home.user &&
             this.state.editUser &&
             this.props.home.user.data[0].id === this.state.id && (

@@ -61,6 +61,8 @@ const initialState = {
   getMessagesError: null,
   changePassPending: false,
   changePassError: null,
+  getLatestNewsPending: false,
+  getLatestNewsError: null,
 };
 
 export default initialState;
