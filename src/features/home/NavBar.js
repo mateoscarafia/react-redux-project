@@ -176,7 +176,7 @@ export class NavBar extends Component {
                       onClick={() => {
                         this.routerMethod('/login');
                       }}
-                      className="nav-link a-link diss-in-desktop"
+                      className="nav-link a-link diss-in-desktop border-top-white"
                     >
                       Login
                     </a>

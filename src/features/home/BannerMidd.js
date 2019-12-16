@@ -60,6 +60,9 @@ export class BannerMidd extends Component {
             </p>
           </div>
         </div>
+        <div className="triangle-div-down-low">
+
+        </div>
       </div>
     );
   }
