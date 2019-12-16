@@ -30,3 +30,4 @@ export { postMessage, dismissPostMessageError } from './postMessage';
 export { getMessages, dismissGetMessagesError } from './getMessages';
 export { changePass, dismissChangePassError } from './changePass';
 export { getLatestNews, dismissGetLatestNewsError } from './getLatestNews';
+export { rotateImg, dismissRotateImgError } from './rotateImg';

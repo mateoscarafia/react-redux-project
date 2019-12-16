@@ -9,6 +9,7 @@ import 'react-notifications/lib/notifications.css';
 import * as VALUES from '../../constants';
 
 const jwt = require('jsonwebtoken');
+let degrees = 0;
 
 export class UserHeader extends Component {
   static propTypes = {
@@ -18,7 +19,7 @@ export class UserHeader extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { openTelegram: false, message: null, openMailBox: false };
+    this.state = { openTelegram: false, message: null, openMailBox: false, rotateImage: true };
   }
 
   async componentWillMount() {
@@ -40,6 +41,22 @@ export class UserHeader extends Component {
       }
     }
   }
+
+  rotateprofileImg = async () => {
+    this.setState({ rotateImage: false });
+    degrees =
+      this.props.user && this.props.user.rotateprofileImg
+        ? this.props.user.rotateprofileImg + 90
+        : degrees + 90;
+    document.getElementById('profile-image-user-on-header-profile-land').style.transform =
+      'rotate(' + degrees + 'deg)';
+    setTimeout(() => {
+      this.props.actions.rotateImg({
+        token: localStorage.getItem('token-app-auth-current'),
+        degrees: degrees,
+      });
+    }, 2000);
+  };
 
   routerMethod = async (destiny, id) => {
     await this.setState({
@@ -80,6 +97,13 @@ export class UserHeader extends Component {
       token: localStorage.getItem('token-app-auth-current'),
       user_id_followed: id,
     });
+  };
+
+  rotateImageAfterLoading = () => {
+    if (document.getElementById('profile-image-user-on-header-profile-land')) {
+      document.getElementById('profile-image-user-on-header-profile-land').style.transform =
+        'rotate(' + this.props.user.rotate_img_profile + 'deg)';
+    }
   };
 
   openMessenger = () => {
@@ -201,6 +225,10 @@ export class UserHeader extends Component {
 
   render() {
     this.props.user.id === this.state.id && this.state.openTelegram && this.openMessenger();
+    this.props.user &&
+      this.props.user.rotate_img_profile &&
+      this.state.rotateImage &&
+      this.rotateImageAfterLoading();
     return (
       <div className="home-user-header">
         <div
@@ -223,6 +251,7 @@ export class UserHeader extends Component {
         </div>
         <div className="user-pic-header">
           <div
+            id="profile-image-user-on-header-profile-land"
             onClick={() => this.routerMethod('/profile/' + this.props.user_id)}
             style={{
               backgroundImage: `url(${'http://' +
@@ -232,6 +261,15 @@ export class UserHeader extends Component {
             }}
             className="user-profile-picture"
           ></div>
+          {this.state.id && this.props.user.id === this.state.id && (
+            <img
+              onClick={() => this.rotateprofileImg()}
+              alt="edit"
+              style={{ width: '25px' }}
+              className="edit-pen-user-profile-style float-right-rotate-img-func"
+              src={require('../../images/rotate.PNG')}
+            />
+          )}
         </div>
         {this.props.user.id !== this.state.id &&
           this.props.home.isfollow &&
