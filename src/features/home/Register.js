@@ -5,9 +5,9 @@ import * as actions from './redux/actions';
 import * as VALUES from '../../constants';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
-import { FacebookProvider, LoginButton } from 'react-facebook';
 import FacebookLogin from 'react-facebook-login';
 import { GoogleLogin } from 'react-google-login';
+import { FacebookProvider, Share } from 'react-facebook';
 
 export class Register extends Component {
   constructor(props) {
@@ -69,11 +69,15 @@ export class Register extends Component {
     console.log(response);
   };
 
+  componentWillMount() {
+    window.scrollTo(0, 0);
+  }
+
   render() {
     return (
       <div className="home-register">
         <form className="home-register-form">
-        <img alt="edit" width="100" src={require('../../images/logo.png')} />
+          <img alt="edit" width="100" src={require('../../images/logo.png')} />
           <div className="form-group">
             <input
               type="email"
@@ -114,6 +118,15 @@ export class Register extends Component {
           >
             Al registrarse usted acepta <b>Términos y Condiciones</b>
           </p>
+          {/*<FacebookProvider appId="1525501467533850">
+            <Share href="https://www.google.com">
+              {({ handleClick, loading }) => (
+                <button type="button" disabled={loading} onClick={handleClick}>
+                  Share
+                </button>
+              )}
+              </Share>
+          </FacebookProvider>*/}
           {/*<FacebookProvider appId="1525501467533850">
             <LoginButton scope="email" onCompleted={this.handleResponse} onError={this.handleError}>
               <button class="loginBtn loginBtn--facebook">Login with Facebook</button>

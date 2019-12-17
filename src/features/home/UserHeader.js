@@ -9,7 +9,6 @@ import 'react-notifications/lib/notifications.css';
 import * as VALUES from '../../constants';
 
 const jwt = require('jsonwebtoken');
-let degrees = 0;
 
 export class UserHeader extends Component {
   static propTypes = {
@@ -44,10 +43,10 @@ export class UserHeader extends Component {
 
   rotateprofileImg = async () => {
     this.setState({ rotateImage: false });
-    degrees =
+    let degrees =
       this.props.user && this.props.user.rotateprofileImg
         ? this.props.user.rotateprofileImg + 90
-        : degrees + 90;
+        : 90;
     document.getElementById('profile-image-user-on-header-profile-land').style.transform =
       'rotate(' + degrees + 'deg)';
     setTimeout(() => {

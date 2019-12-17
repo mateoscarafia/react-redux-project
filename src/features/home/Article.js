@@ -8,6 +8,17 @@ import Modal from 'react-awesome-modal';
 import 'react-notifications/lib/notifications.css';
 import ReactHtmlParser from 'react-html-parser';
 import * as VALUES from '../../constants';
+import {
+  FacebookShareCount,
+  GooglePlusShareCount,
+  LinkedinShareCount,
+  PinterestShareCount,
+  VKShareCount,
+  OKShareCount,
+  RedditShareCount,
+  TumblrShareCount,
+} from 'react-share';
+
 
 //Components
 import NavBar from './NavBar';

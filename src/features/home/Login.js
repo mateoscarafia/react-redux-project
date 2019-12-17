@@ -5,7 +5,6 @@ import * as actions from './redux/actions';
 import * as VALUES from '../../constants';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
-import { FacebookProvider, LoginButton } from 'react-facebook';
 
 export class Login extends Component {
   constructor(props) {
@@ -40,6 +39,10 @@ export class Login extends Component {
     } else {
       this.setState({ error: true });
     }
+  }
+  
+  componentWillMount(){
+    window.scrollTo(0, 0);
   }
 
   goToRegister() {
