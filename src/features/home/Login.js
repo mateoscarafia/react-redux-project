@@ -5,6 +5,7 @@ import * as actions from './redux/actions';
 import * as VALUES from '../../constants';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
+require('dotenv').config()
 
 export class Login extends Component {
   constructor(props) {
@@ -67,6 +68,7 @@ export class Login extends Component {
   }
 
   render() {
+    console.log(process.env.REACT_ENV)
     return (
       <div className="home-login">
         <form className="home-login-form">
