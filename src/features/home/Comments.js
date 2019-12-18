@@ -34,6 +34,10 @@ export class Comments extends Component {
         token: VALUES.DEEP_TOKEN,
       });
     }
+    if (this.props.home.sendCommentPending && nextProps.home.commentsent) {
+      document.getElementById("spinner-comment-send-button").style.display = "none"
+      document.getElementById("comment-send-button").style.display = "inline"
+    }
     if (this.props.home.deleteCommentPending && nextProps.home.deletedcomment) {
       NotificationManager.info('Comentario eliminado');
       this.props.actions.getComments({ news_id: this.props.news_id, token: VALUES.DEEP_TOKEN });
@@ -88,6 +92,8 @@ export class Comments extends Component {
   };
 
   postComment = async () => {
+    document.getElementById("comment-send-button").style.display = "none"
+    document.getElementById("spinner-comment-send-button").style.display = "inline"
     !this.props.user_id && NotificationManager.warning('Debes loguearte para comentar');
     this.state.comment === '' && NotificationManager.warning('Escribe comentario');
     if (this.state.comment !== '') {
@@ -130,9 +136,22 @@ export class Comments extends Component {
               <button
                 onClick={() => this.postComment()}
                 type="button"
+                id="comment-send-button"
                 className="btn btn-secondary comment-button send-comment-button-articlejs"
               >
                 Enviar
+              </button>
+              <button
+                type="button"
+                id="spinner-comment-send-button"
+                className="btn btn-secondary comment-button send-comment-button-articlejs"
+              >
+                <img
+                  alt="edit"
+                  width="28"
+                  className="edit-pen-user-profile-style"
+                  src={require('../../images/spinner.gif')}
+                />
               </button>
             </div>
           </div>

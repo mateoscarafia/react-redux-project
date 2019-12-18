@@ -243,6 +243,7 @@ export class TextEditor extends Component {
                     id="keywords"
                     placeholder="Palabras claves para que otros usuarios puedan encontrar tú articulo. Ciudad, personajes, tema, etc..."
                   />
+                  <p className="key-words-detail-info">*Palabras claves relacionadas al contenido del artículo (Ciudad, personas, tema, etc..)</p>
                 </div>
               </form>
               <form className="select-form">
@@ -267,6 +268,7 @@ export class TextEditor extends Component {
                       <input onChange={this._handleImageChange} type="file" />
                       Subir imagen
                     </label>
+                    <p className="key-words-detail-info">Imagenes de 10Mb max (.png .jpg .jpeg .gif)</p>
                   </form>
                   <div className="show-image-preview-text-editor">{$imagePreview}</div>
                 </div>

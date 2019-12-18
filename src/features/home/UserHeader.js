@@ -42,19 +42,14 @@ export class UserHeader extends Component {
   }
 
   rotateprofileImg = async () => {
-    this.setState({ rotateImage: false });
-    let degrees =
+    var degrees =
       this.props.user && this.props.user.rotateprofileImg
         ? this.props.user.rotateprofileImg + 90
         : 90;
-    document.getElementById('profile-image-user-on-header-profile-land').style.transform =
-      'rotate(' + degrees + 'deg)';
-    setTimeout(() => {
-      this.props.actions.rotateImg({
-        token: localStorage.getItem('token-app-auth-current'),
-        degrees: degrees,
-      });
-    }, 2000);
+    this.props.actions.rotateImg({
+      token: localStorage.getItem('token-app-auth-current'),
+      degrees: degrees,
+    });
   };
 
   routerMethod = async (destiny, id) => {
@@ -260,7 +255,7 @@ export class UserHeader extends Component {
             }}
             className="user-profile-picture"
           ></div>
-          {this.state.id && this.props.user.id === this.state.id && (
+          {this.state.id && this.props.profileComp && this.props.user.id === this.state.id && (
             <img
               onClick={() => this.rotateprofileImg()}
               alt="edit"

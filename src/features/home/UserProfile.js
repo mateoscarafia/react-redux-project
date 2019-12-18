@@ -310,6 +310,7 @@ export class UserProfile extends Component {
             )}
             {!this.props.home.getUserPending && this.props.home.user && (
               <UserHeader
+                profileComp={true}
                 isProfile={this.state.isProfile}
                 user={this.props.home.user.data[0]}
                 user_id={this.props.match.params.id}
@@ -365,7 +366,10 @@ export class UserProfile extends Component {
           {this.state.openMyFollowers && (
             <div className="followers-div">
               <div className="followers-header-edit-user">
-                <a className="close-modal-header-edit-follower" onClick={() => this.openMyFollowers()}>
+                <a
+                  className="close-modal-header-edit-follower"
+                  onClick={() => this.openMyFollowers()}
+                >
                   X
                 </a>
                 <br />

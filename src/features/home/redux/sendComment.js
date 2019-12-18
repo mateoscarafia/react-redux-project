@@ -24,7 +24,7 @@ export function sendComment(args = {}) {
       // doRequest is a placeholder Promise. You should replace it with your own logic.
       // See the real-word example at:  https://github.com/supnate/rekit/blob/master/src/features/home/redux/fetchRedditReactjsList.js
       // args.error here is only for test coverage purpose.
-      const doRequest = axios.post('http://'+VALUES.BD_ORIGIN+':3000/comment', args);
+      const doRequest = axios.post('http://' + VALUES.BD_ORIGIN + ':3000/comment', args);
       doRequest.then(
         res => {
           dispatch({
@@ -72,6 +72,7 @@ export function reducer(state, action) {
         ...state,
         sendCommentPending: false,
         sendCommentError: null,
+        commentsent: action.data,
       };
 
     case HOME_SEND_COMMENT_FAILURE:
