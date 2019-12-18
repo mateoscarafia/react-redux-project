@@ -123,8 +123,8 @@ export class News extends Component {
     let data = [];
     data.push(
       <div className="width-search-result-cont">
-        <p className="search-result-text">Resultados de busqueda</p>
-      </div>,
+        <p className="search-result-text"></p>
+      </div>
     );
     for (const prop in this.props.articles.data.main_feed) {
       data.push(
