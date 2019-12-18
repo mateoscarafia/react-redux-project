@@ -109,52 +109,56 @@ export class TextEditor extends Component {
 
   postArticle() {
     if (this.state.login && this.state.title && this.state.subtitle && this.state.keywords) {
-      document.getElementById('button-post-article').style.display = 'none';
-      document.getElementById('spinner-button-post-article').style.display = 'inline';
-      const data = new FormData();
-      data.append('file', this.state.file);
-      axios.post('http://' + VALUES.BD_ORIGIN + ':3000/file-upload', data, {}).then(res => {
-        const categoryObj = this.props.home.categories.data.find(
-          element => element.name === this.state.category,
-        );
-        let keywords = (
-          this.state.keywords +
-          ' ' +
-          this.state.title +
-          ' ' +
-          this.state.subtitle +
-          ' ' +
-          this.props.home.user.data[0].username
-        )
-          .toLowerCase()
-          .normalize('NFD')
-          .replace(/\"/g, '"')
-          .replace(/\'/g, '"')
-          .replace(/\`/g, '"')
-          .replace(/[\u0300-\u036f]/g, '')
-          .replace(/[^a-zA-Z0-9 ]/g, '')
-          .replace(/ /g, '-');
-        let data = {
-          token: localStorage.getItem('token-app-auth-current'),
-          title: this.state.title
+      try {
+        document.getElementById('button-post-article').style.display = 'none';
+        document.getElementById('spinner-button-post-article').style.display = 'inline';
+        const data = new FormData();
+        data.append('file', this.state.file);
+        axios.post('http://' + VALUES.BD_ORIGIN + ':3000/file-upload', data, {}).then(res => {
+          const categoryObj = this.props.home.categories.data.find(
+            element => element.name === this.state.category,
+          );
+          let keywords = (
+            this.state.keywords +
+            ' ' +
+            this.state.title +
+            ' ' +
+            this.state.subtitle +
+            ' ' +
+            this.props.home.user.data[0].username
+          )
+            .toLowerCase()
+            .normalize('NFD')
             .replace(/\"/g, '"')
             .replace(/\'/g, '"')
-            .replace(/\`/g, '"'),
-          subtitle: this.state.subtitle
-            .replace(/\"/g, '"')
-            .replace(/\'/g, '"')
-            .replace(/\`/g, '"'),
-          category_id: categoryObj.id,
-          img_url: res.data.filename,
-          content: draftToHtml(convertToRaw(this.state.editorState.getCurrentContent()))
-            .replace(/\"/g, '"')
-            .replace(/\'/g, '"')
-            .replace(/\`/g, '"'),
-          key_words: keywords,
-          user_id: this.props.home.user.data[0].id,
-        };
-        this.props.actions.postArticle(data);
-      });
+            .replace(/\`/g, '"')
+            .replace(/[\u0300-\u036f]/g, '')
+            .replace(/[^a-zA-Z0-9 ]/g, '')
+            .replace(/ /g, '-');
+          let data = {
+            token: localStorage.getItem('token-app-auth-current'),
+            title: this.state.title
+              .replace(/\"/g, '"')
+              .replace(/\'/g, '"')
+              .replace(/\`/g, '"'),
+            subtitle: this.state.subtitle
+              .replace(/\"/g, '"')
+              .replace(/\'/g, '"')
+              .replace(/\`/g, '"'),
+            category_id: categoryObj.id,
+            img_url: res.data.filename,
+            content: draftToHtml(convertToRaw(this.state.editorState.getCurrentContent()))
+              .replace(/\"/g, '"')
+              .replace(/\'/g, '"')
+              .replace(/\`/g, '"'),
+            key_words: keywords,
+            user_id: this.props.home.user.data[0].id,
+          };
+          this.props.actions.postArticle(data);
+        });
+      } catch (err) {
+        NotificationManager.warning('Algo salió mal, revisa el contenido');
+      }
     } else {
       NotificationManager.warning('Debes complear todos los campos');
     }
@@ -243,7 +247,10 @@ export class TextEditor extends Component {
                     id="keywords"
                     placeholder="Palabras claves para que otros usuarios puedan encontrar tú articulo. Ciudad, personajes, tema, etc..."
                   />
-                  <p className="key-words-detail-info">*Palabras claves relacionadas al contenido del artículo (Ciudad, personas, tema, etc..)</p>
+                  <p className="key-words-detail-info">
+                    *Palabras claves relacionadas al contenido del artículo (Ciudad, personas, tema,
+                    etc..)
+                  </p>
                 </div>
               </form>
               <form className="select-form">
@@ -268,12 +275,16 @@ export class TextEditor extends Component {
                       <input onChange={this._handleImageChange} type="file" />
                       Subir imagen
                     </label>
-                    <p className="key-words-detail-info">Imagenes de 10Mb max (.png .jpg .jpeg .gif)</p>
+                    <p className="key-words-detail-info">
+                      Imagenes de 10Mb max (.png .jpg .jpeg .gif)
+                    </p>
                   </form>
                   <div className="show-image-preview-text-editor">{$imagePreview}</div>
                 </div>
               </div>
-              <p className="content-warning-message">Contenido inapropiado será penalizado con la suspensión permanente de la cuenta</p>
+              <p className="content-warning-message">
+                Contenido inapropiado será penalizado con la suspensión permanente de la cuenta
+              </p>
             </div>
             <Editor
               editorState={editorState}

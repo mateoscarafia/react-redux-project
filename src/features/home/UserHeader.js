@@ -223,115 +223,119 @@ export class UserHeader extends Component {
       this.props.user.rotate_img_profile &&
       this.state.rotateImage &&
       this.rotateImageAfterLoading();
-    return (
-      <div className="home-user-header">
-        <div
-          style={{
-            backgroundImage: `url(${'http://' +
-              VALUES.BD_ORIGIN +
-              ':3000/network_images/' +
-              this.props.user.banner_img_url})`,
-          }}
-          className="user-pic-header-background-image"
-        ></div>
-        <div className="user-name-header-title">
-          <p
-            onClick={() => this.routerMethod('/profile/' + this.props.user.id)}
-            className="user-name-header-title-username"
-          >
-            {this.props.user.username}
-          </p>
-          <p className="user-name-header-title-profession">{this.props.user.profession}</p>
-        </div>
-        <div className="user-pic-header">
+    if (this.props.user) {
+      return (
+        <div className="home-user-header">
           <div
-            id="profile-image-user-on-header-profile-land"
-            onClick={() => this.routerMethod('/profile/' + this.props.user_id)}
             style={{
               backgroundImage: `url(${'http://' +
                 VALUES.BD_ORIGIN +
                 ':3000/network_images/' +
-                this.props.user.profile_img_url})`,
+                this.props.user.banner_img_url})`,
             }}
-            className="user-profile-picture"
+            className="user-pic-header-background-image"
           ></div>
-          {this.state.id && this.props.profileComp && this.props.user.id === this.state.id && (
-            <img
-              onClick={() => this.rotateprofileImg()}
-              alt="edit"
-              style={{ width: '25px' }}
-              className="edit-pen-user-profile-style float-right-rotate-img-func"
-              src={require('../../images/rotate.PNG')}
-            />
-          )}
-        </div>
-        {this.props.user.id !== this.state.id &&
-          this.props.home.isfollow &&
-          (this.props.home.isfollow.data[0] ? (
+          <div className="user-name-header-title">
             <p
-              onClick={() => this.stopFollowUser(this.props.user.id)}
-              className="follow-button-user-header"
+              onClick={() => this.routerMethod('/profile/' + this.props.user.id)}
+              className="user-name-header-title-username"
             >
-              Dejar de seguir
+              {this.props.user.username}
             </p>
-          ) : (
-            <p
-              onClick={() => this.followUser(this.props.user.id)}
-              className="follow-button-user-header"
-            >
-              Seguir
-            </p>
-          ))}
-        {this.state.id && this.props.user.id !== this.state.id && (
-          <p
-            alt="Enviar telegrama"
-            onClick={() => this.openMessenger()}
-            className="telegram-button-user-header"
-          >
-            <img
-              onClick={() => this.openMessenger()}
-              alt="edit"
-              style={{ width: '35px' }}
-              className="edit-pen-user-profile-style"
-              src={require('../../images/telegram.png')}
-            />
-          </p>
-        )}
-        {!this.props.isTextEditor && this.props.user.id === this.state.id && (
-          <p onClick={() => this.openMailBox()} className="mailbox-button-user-header">
-            <img
-              alt="edit"
-              style={{ width: '40px' }}
-              className="mailbox-pen-user-profile-style"
-              src={require('../../images/mailbox.png')}
-            />
-          </p>
-        )}
-        {this.state.openTelegram && (
-          <div className="telegram-div">
-            <textarea
-              rows="4"
-              className="form-control"
-              placeholder="Escribe mensaje..."
-              name="message"
-              onChange={this.handleChange}
-              id="message-input"
-            ></textarea>
-            <button
-              type="button"
-              onClick={() => this.sendMessage(this.props.user.id)}
-              className="btn btn-secondary comment-button"
-            >
-              Enviar telegrama
-            </button>
+            <p className="user-name-header-title-profession">{this.props.user.profession}</p>
           </div>
-        )}
-        {this.state.openMailBox && (
-          <div className="mailbox-div">{this.props.home.mymessages && this.buildMessages()}</div>
-        )}
-        <NotificationContainer />
-      </div>
-    );
+          <div className="user-pic-header">
+            <div
+              id="profile-image-user-on-header-profile-land"
+              onClick={() => this.routerMethod('/profile/' + this.props.user_id)}
+              style={{
+                backgroundImage: `url(${'http://' +
+                  VALUES.BD_ORIGIN +
+                  ':3000/network_images/' +
+                  this.props.user.profile_img_url})`,
+              }}
+              className="user-profile-picture"
+            ></div>
+            {this.state.id && this.props.profileComp && this.props.user.id === this.state.id && (
+              <img
+                onClick={() => this.rotateprofileImg()}
+                alt="edit"
+                style={{ width: '25px' }}
+                className="edit-pen-user-profile-style float-right-rotate-img-func"
+                src={require('../../images/rotate.PNG')}
+              />
+            )}
+          </div>
+          {this.props.user.id !== this.state.id &&
+            this.props.home.isfollow &&
+            (this.props.home.isfollow.data[0] ? (
+              <p
+                onClick={() => this.stopFollowUser(this.props.user.id)}
+                className="follow-button-user-header"
+              >
+                Dejar de seguir
+              </p>
+            ) : (
+              <p
+                onClick={() => this.followUser(this.props.user.id)}
+                className="follow-button-user-header"
+              >
+                Seguir
+              </p>
+            ))}
+          {this.state.id && this.props.user.id !== this.state.id && (
+            <p
+              alt="Enviar telegrama"
+              onClick={() => this.openMessenger()}
+              className="telegram-button-user-header"
+            >
+              <img
+                onClick={() => this.openMessenger()}
+                alt="edit"
+                style={{ width: '35px' }}
+                className="edit-pen-user-profile-style"
+                src={require('../../images/telegram.png')}
+              />
+            </p>
+          )}
+          {!this.props.isTextEditor && this.props.user.id === this.state.id && (
+            <p onClick={() => this.openMailBox()} className="mailbox-button-user-header">
+              <img
+                alt="edit"
+                style={{ width: '40px' }}
+                className="mailbox-pen-user-profile-style"
+                src={require('../../images/mailbox.png')}
+              />
+            </p>
+          )}
+          {this.state.openTelegram && (
+            <div className="telegram-div">
+              <textarea
+                rows="4"
+                className="form-control"
+                placeholder="Escribe mensaje..."
+                name="message"
+                onChange={this.handleChange}
+                id="message-input"
+              ></textarea>
+              <button
+                type="button"
+                onClick={() => this.sendMessage(this.props.user.id)}
+                className="btn btn-secondary comment-button"
+              >
+                Enviar telegrama
+              </button>
+            </div>
+          )}
+          {this.state.openMailBox && (
+            <div className="mailbox-div">{this.props.home.mymessages && this.buildMessages()}</div>
+          )}
+          <NotificationContainer />
+        </div>
+      );
+    } else {
+      return null;
+    }
   }
 }
 

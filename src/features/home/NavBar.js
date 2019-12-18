@@ -31,6 +31,7 @@ export class NavBar extends Component {
         param: 'main',
         id: this.props.user || null,
       }));
+    window.scrollTo(0, 0);
     this.props.history.push(destiny);
   };
 
