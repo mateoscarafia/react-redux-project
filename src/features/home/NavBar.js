@@ -19,7 +19,6 @@ export class NavBar extends Component {
   }
 
   routerMethod = async destiny => {
-    window.screen.width < 800 && document.getElementById('navbar-toggler-id-for-clicking').click();
     if (destiny.includes('profile')) {
       var user_destiny_id = destiny.split('/');
       await this.props.actions.getNews({ token: VALUES.DEEP_TOKEN, id: user_destiny_id[2] });

@@ -273,6 +273,7 @@ export class TextEditor extends Component {
                   <div className="show-image-preview-text-editor">{$imagePreview}</div>
                 </div>
               </div>
+              <p className="content-warning-message">Contenido inapropiado será penalizado con la suspensión permanente de la cuenta</p>
             </div>
             <Editor
               editorState={editorState}
