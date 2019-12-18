@@ -650,7 +650,6 @@ export class News extends Component {
         );
         contentNews.push(
           <div className="row margin-for-news">
-            <h1 className="h1-news-main-title-opinion">Análisis</h1>
             {this.buildOpinionNews('main', 18, 20)}
           </div>,
         );

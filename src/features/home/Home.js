@@ -102,10 +102,7 @@ export class Home extends Component {
   };
 
   render() {
-    if (this.props.home.getCategoriesError) {
-      this.goToErrorLanding();
-      return null;
-    } else if (
+   if (
       this.state.id &&
       !this.props.home.categories &&
       !this.props.home.user &&
