@@ -11,9 +11,25 @@
   width:300px;
   height: 300px;
   position: fixed;
-  right: 0px;
-  bottom: 0px;
-  background: linear-gradient(to right bottom, transparent 50%, #FDD700 50%);
+  right: -150px;
+  bottom: -13px;
+  background-color:#fdd700;
+  transform: rotate(135deg);
+  border: 2px solid #000;
+  transition: transform .8s ease-in-out;  
+
+  .company-email-hidden-box{
+    color:#000;
+    font-weight: bold;
+    margin-top: 5px;
+    font-size: 14px;
+    letter-spacing: 1px;
+    margin-left: 25px;
+  }
+}
+
+.floating-right-home-div:hover{
+  transform: rotate(-45deg);
 }
 
 .home-home {
