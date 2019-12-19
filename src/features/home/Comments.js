@@ -35,8 +35,8 @@ export class Comments extends Component {
       });
     }
     if (this.props.home.sendCommentPending && nextProps.home.commentsent) {
-      document.getElementById("spinner-comment-send-button").style.display = "none"
-      document.getElementById("comment-send-button").style.display = "inline"
+      document.getElementById('spinner-comment-send-button').style.display = 'none';
+      document.getElementById('comment-send-button').style.display = 'inline';
     }
     if (this.props.home.deleteCommentPending && nextProps.home.deletedcomment) {
       NotificationManager.info('Comentario eliminado');
@@ -92,11 +92,11 @@ export class Comments extends Component {
   };
 
   postComment = async () => {
-    document.getElementById("comment-send-button").style.display = "none"
-    document.getElementById("spinner-comment-send-button").style.display = "inline"
     !this.props.user_id && NotificationManager.warning('Debes loguearte para comentar');
     this.state.comment === '' && NotificationManager.warning('Escribe comentario');
     if (this.state.comment !== '') {
+      document.getElementById('comment-send-button').style.display = 'none';
+      document.getElementById('spinner-comment-send-button').style.display = 'inline';
       let data_comment = {
         news_id: this.props.news_id,
         comment_text: this.state.comment
