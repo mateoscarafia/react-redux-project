@@ -325,6 +325,7 @@ export class UserProfile extends Component {
                   {this.props.home.user.data[0].id === this.state.id && (
                     <img
                       alt="edit"
+                      title="Editar mi perfil"
                       width="30px"
                       onClick={() => this.handleModal(true)}
                       className="edit-pen-user-profile-style"

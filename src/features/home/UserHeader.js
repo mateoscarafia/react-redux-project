@@ -18,7 +18,12 @@ export class UserHeader extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { openTelegram: false, message: null, openMailBox: false, rotateImage: true };
+    this.state = {
+      openTelegram: false,
+      message: null,
+      openMailBox: false,
+      degrees: null,
+    };
   }
 
   async componentWillMount() {
@@ -42,14 +47,23 @@ export class UserHeader extends Component {
   }
 
   rotateprofileImg = async () => {
-    var degrees =
-      this.props.user && this.props.user.rotateprofileImg
-        ? this.props.user.rotateprofileImg + 90
-        : 90;
-    this.props.actions.rotateImg({
-      token: localStorage.getItem('token-app-auth-current'),
+    document.getElementById('float-right-rotate-img-func-id').style.display = 'none';
+    var degrees = this.state.degrees
+      ? this.state.degrees + 90
+      : parseInt(this.props.user.rotate_img_profile, 10) + 90;
+    this.setState({
       degrees: degrees,
     });
+    this.props.actions
+      .rotateImg({
+        token: localStorage.getItem('token-app-auth-current'),
+        degrees: degrees,
+      })
+      .then(res => {
+        document.getElementById('float-right-rotate-img-func-id').style.display = 'block';
+        document.getElementById('profile-image-user-on-header-profile-land').style.transform =
+          'rotate(' + res.data.res + 'deg)';
+      });
   };
 
   routerMethod = async (destiny, id) => {
@@ -91,13 +105,6 @@ export class UserHeader extends Component {
       token: localStorage.getItem('token-app-auth-current'),
       user_id_followed: id,
     });
-  };
-
-  rotateImageAfterLoading = () => {
-    if (document.getElementById('profile-image-user-on-header-profile-land')) {
-      document.getElementById('profile-image-user-on-header-profile-land').style.transform =
-        'rotate(' + this.props.user.rotate_img_profile + 'deg)';
-    }
   };
 
   openMessenger = () => {
@@ -217,12 +224,18 @@ export class UserHeader extends Component {
     );
   };
 
+  rotateImgWhenLoading(degrees) {
+    if (document.getElementById('profile-image-user-on-header-profile-land')) {
+      document.getElementById('profile-image-user-on-header-profile-land').style.transform =
+        'rotate(' + degrees + 'deg)';
+    }
+  }
+
   render() {
     this.props.user.id === this.state.id && this.state.openTelegram && this.openMessenger();
-    this.props.user &&
-      this.props.user.rotate_img_profile &&
-      this.state.rotateImage &&
-      this.rotateImageAfterLoading();
+    !this.state.degrees &&
+      this.props.user &&
+      this.rotateImgWhenLoading(this.props.user.rotate_img_profile);
     if (this.props.user) {
       return (
         <div className="home-user-header">
@@ -260,6 +273,8 @@ export class UserHeader extends Component {
               <img
                 onClick={() => this.rotateprofileImg()}
                 alt="edit"
+                title="Girar imagen"
+                id="float-right-rotate-img-func-id"
                 style={{ width: '25px' }}
                 className="edit-pen-user-profile-style float-right-rotate-img-func"
                 src={require('../../images/rotate.PNG')}
@@ -292,6 +307,7 @@ export class UserHeader extends Component {
               <img
                 onClick={() => this.openMessenger()}
                 alt="edit"
+                title="Escribir telegrama"
                 style={{ width: '35px' }}
                 className="edit-pen-user-profile-style"
                 src={require('../../images/telegram.png')}
@@ -302,6 +318,7 @@ export class UserHeader extends Component {
             <p onClick={() => this.openMailBox()} className="mailbox-button-user-header">
               <img
                 alt="edit"
+                title="Mis telegramas"
                 style={{ width: '40px' }}
                 className="mailbox-pen-user-profile-style"
                 src={require('../../images/mailbox.png')}
