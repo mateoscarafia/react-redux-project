@@ -96,20 +96,18 @@ export class Home extends Component {
     window.scrollTo(0, 0);
   };
 
-  goToErrorLanding = () => {
-    localStorage.removeItem('token-app-auth-current');
-    window.location.replace('http://' + VALUES.BD_ORIGIN + ':6075/errorlanding');
-  };
-
   render() {
-   if (
+    if (
       this.state.id &&
       !this.props.home.categories &&
       !this.props.home.user &&
       !this.props.home.articles
     ) {
       return (
-        <div id="spinner-div-for-news-id-container-home-waiting" className="spinner-div-for-news-home-when-no-content">
+        <div
+          id="spinner-div-for-news-id-container-home-waiting"
+          className="spinner-div-for-news-home-when-no-content"
+        >
           <img
             alt="edit"
             width="60"
@@ -120,7 +118,10 @@ export class Home extends Component {
       );
     } else if (!this.state.id && !this.props.home.categories && !this.props.home.articles) {
       return (
-        <div id="spinner-div-for-news-id-container-home-waiting" className="spinner-div-for-news-home-when-no-content">
+        <div
+          id="spinner-div-for-news-id-container-home-waiting"
+          className="spinner-div-for-news-home-when-no-content"
+        >
           <img
             alt="edit"
             width="60"
@@ -145,57 +146,53 @@ export class Home extends Component {
             <div className="row">
               {this.props.home.user && this.state.login && !this.state.userProfile && (
                 <div className="user-content">
-                  {typeof this.props.home.user !== 'undefined' && (
-                    <div className="user-content-index">
-                      <div
-                        onClick={() =>
-                          this.routerMethod('../../profile/' + this.props.home.user.data[0].id)
-                        }
-                        style={{
-                          backgroundImage: `url(${'http://' +
-                            VALUES.BD_ORIGIN +
-                            ':3000/network_images/' +
-                            this.props.home.user.data[0].profile_img_url})`,
-                        }}
-                        className="user-profile-picture"
-                      ></div>
-                      <p
-                        onClick={() =>
-                          this.routerMethod('../../profile/' + this.props.home.user.data[0].id)
-                        }
-                        className="user-profile-name"
-                      >
-                        {this.props.home.user.data[0].username}
-                      </p>
-                      <p className="user-profile-title">
-                        {this.props.home.user.data[0].profession}
-                      </p>
-                      <div className="user-profile-content-detail">
-                        <table>
-                          <tbody>
-                            <tr>
-                              <td>Seguidos</td>
-                              <td className="td-float-right">
-                                {this.props.home.user.data[0].following}
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>Seguidores</td>
-                              <td className="td-float-right">
-                                {this.props.home.user.data[0].followers}
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>Articulos</td>
-                              <td className="td-float-right">
-                                {this.props.home.user.data[0].num_articles}
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
+                  <div className="user-content-index">
+                    <div
+                      onClick={() =>
+                        this.routerMethod('../../profile/' + this.props.home.user.data[0].id)
+                      }
+                      style={{
+                        backgroundImage: `url(${'http://' +
+                          VALUES.BD_ORIGIN +
+                          ':3000/network_images/' +
+                          this.props.home.user.data[0].profile_img_url})`,
+                      }}
+                      className="user-profile-picture"
+                    ></div>
+                    <p
+                      onClick={() =>
+                        this.routerMethod('../../profile/' + this.props.home.user.data[0].id)
+                      }
+                      className="user-profile-name"
+                    >
+                      {this.props.home.user.data[0].username}
+                    </p>
+                    <p className="user-profile-title">{this.props.home.user.data[0].profession}</p>
+                    <div className="user-profile-content-detail">
+                      <table>
+                        <tbody>
+                          <tr>
+                            <td>Seguidos</td>
+                            <td className="td-float-right">
+                              {this.props.home.user.data[0].following}
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>Seguidores</td>
+                            <td className="td-float-right">
+                              {this.props.home.user.data[0].followers}
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>Articulos</td>
+                            <td className="td-float-right">
+                              {this.props.home.user.data[0].num_articles}
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
                     </div>
-                  )}
+                  </div>
                   {this.state.userProfile && (
                     <button
                       className="open-editor-button"

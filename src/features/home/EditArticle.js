@@ -130,64 +130,69 @@ export class EditArticle extends Component {
 
   editArticle() {
     if (this.state.login) {
-      try {
-        document.getElementById('edit-button-id').style.display = 'none';
-        document.getElementById('spinner-edit-button-id').style.display = 'inline';
-        const data = new FormData();
-        data.append('file', this.state.file);
-        axios.post('http://' + VALUES.BD_ORIGIN + ':3000/file-upload', data, {}).then(res => {
-          const categoryObj = this.props.home.categories.data.find(
-            element =>
-              element.name === (this.state.category || this.props.home.uniquearticle.data[0].name),
-          );
-          let keyword_content = (
-            (this.state.title || this.props.home.uniquearticle.data[0].title) +
-            ' ' +
-            (this.state.subtitle || this.props.home.uniquearticle.data[0].subtitle) +
-            ' ' +
-            this.props.home.user.data[0].username
-          )
-            .toLowerCase()
-            .normalize('NFD')
-            .replace(/\"/g, '\\"')
-            .replace(/\'/g, '\\"')
-            .replace(/\`/g, '\\"')
-            .replace(/[\u0300-\u036f]/g, '')
-            .replace(/[^a-zA-Z0-9 ]/g, '')
-            .replace(/ /g, '-');
-          let data = {
-            token: localStorage.getItem('token-app-auth-current'),
-            title: this.state.title
-              ? this.state.title
-                  .replace(/\"/g, '\\"')
-                  .replace(/\'/g, '\\"')
-                  .replace(/\`/g, '\\"')
-              : this.props.home.uniquearticle.data[0].title
-                  .replace(/\"/g, '\\"')
-                  .replace(/\'/g, '\\"')
-                  .replace(/\`/g, '\\"'),
-            subtitle: this.state.subtitle
-              ? this.state.subtitle
-                  .replace(/\"/g, '\\"')
-                  .replace(/\'/g, '\\"')
-                  .replace(/\`/g, '\\"')
-              : this.props.home.uniquearticle.data[0].subtitle
-                  .replace(/\"/g, '\\"')
-                  .replace(/\'/g, '\\"')
-                  .replace(/\`/g, '\\"'),
-            category_id: categoryObj.id,
-            img_url: res.data.filename || this.props.home.uniquearticle.data[0].img_url,
-            content: this.state.changedEditor
-              ? draftToHtml(convertToRaw(this.state.editorState.getCurrentContent()))
-              : this.props.home.uniquearticle.data[0].content,
-            key_words: this.props.home.uniquearticle.data[0].key_words + '-' + keyword_content,
-            id: this.props.match.params.id,
-            user_id: this.state.id,
-          };
-          this.props.actions.editArticle(data);
-        });
-      } catch (err) {
-        NotificationManager.warning('Algo salió mal, revise el contenido');
+      if (this.state.file !== '' && !this.state.file.type.includes('image')) {
+        NotificationManager.warning('El archivo no es una imagen');
+      } else {
+        try {
+          document.getElementById('edit-button-id').style.display = 'none';
+          document.getElementById('spinner-edit-button-id').style.display = 'inline';
+          const data = new FormData();
+          data.append('file', this.state.file);
+          axios.post('http://' + VALUES.BD_ORIGIN + ':3000/file-upload', data, {}).then(res => {
+            const categoryObj = this.props.home.categories.data.find(
+              element =>
+                element.name ===
+                (this.state.category || this.props.home.uniquearticle.data[0].name),
+            );
+            let keyword_content = (
+              (this.state.title || this.props.home.uniquearticle.data[0].title) +
+              ' ' +
+              (this.state.subtitle || this.props.home.uniquearticle.data[0].subtitle) +
+              ' ' +
+              this.props.home.user.data[0].username
+            )
+              .toLowerCase()
+              .normalize('NFD')
+              .replace(/\"/g, '\\"')
+              .replace(/\'/g, '\\"')
+              .replace(/\`/g, '\\"')
+              .replace(/[\u0300-\u036f]/g, '')
+              .replace(/[^a-zA-Z0-9 ]/g, '')
+              .replace(/ /g, '-');
+            let data = {
+              token: localStorage.getItem('token-app-auth-current'),
+              title: this.state.title
+                ? this.state.title
+                    .replace(/\"/g, '\\"')
+                    .replace(/\'/g, '\\"')
+                    .replace(/\`/g, '\\"')
+                : this.props.home.uniquearticle.data[0].title
+                    .replace(/\"/g, '\\"')
+                    .replace(/\'/g, '\\"')
+                    .replace(/\`/g, '\\"'),
+              subtitle: this.state.subtitle
+                ? this.state.subtitle
+                    .replace(/\"/g, '\\"')
+                    .replace(/\'/g, '\\"')
+                    .replace(/\`/g, '\\"')
+                : this.props.home.uniquearticle.data[0].subtitle
+                    .replace(/\"/g, '\\"')
+                    .replace(/\'/g, '\\"')
+                    .replace(/\`/g, '\\"'),
+              category_id: categoryObj.id,
+              img_url: res.data.filename || this.props.home.uniquearticle.data[0].img_url,
+              content: this.state.changedEditor
+                ? draftToHtml(convertToRaw(this.state.editorState.getCurrentContent()))
+                : this.props.home.uniquearticle.data[0].content,
+              key_words: this.props.home.uniquearticle.data[0].key_words + '-' + keyword_content,
+              id: this.props.match.params.id,
+              user_id: this.state.id,
+            };
+            this.props.actions.editArticle(data);
+          });
+        } catch (err) {
+          NotificationManager.warning('Algo salió mal, revise el contenido');
+        }
       }
     }
   }
