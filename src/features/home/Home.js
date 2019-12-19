@@ -240,6 +240,7 @@ export class Home extends Component {
               </div>
             </div>
           </div>
+          <div className="floating-right-home-div"></div>
           <Footer />
           <Modal
             visible={this.state.visible}
