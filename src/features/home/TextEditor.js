@@ -157,7 +157,7 @@ export class TextEditor extends Component {
               key_words: keywords,
               user_id: this.props.home.user.data[0].id,
             };
-            //this.props.actions.postArticle(data);
+            this.props.actions.postArticle(data);
           });
         } catch (err) {
           NotificationManager.warning('Algo salió mal, revise el contenido');
