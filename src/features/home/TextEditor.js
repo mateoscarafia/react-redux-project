@@ -157,7 +157,7 @@ export class TextEditor extends Component {
           this.props.actions.postArticle(data);
         });
       } catch (err) {
-        NotificationManager.warning('Algo salió mal, revisa el contenido');
+        NotificationManager.warning('Algo salió mal, revise el contenido');
       }
     } else {
       NotificationManager.warning('Debes complear todos los campos');
