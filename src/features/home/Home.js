@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import 'bootstrap-4-react';
 import * as actions from './redux/actions';
 import Modal from 'react-awesome-modal';
-import { NotificationContainer, NotificationManager } from 'react-notifications';
+import { NotificationContainer } from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
 import * as VALUES from '../../constants';
 
@@ -36,7 +36,6 @@ export class Home extends Component {
   }
 
   async componentWillMount() {
-    console.log(VALUES.API_KEY)
     if (localStorage.getItem('token-app-auth-current')) {
       try {
         var user = jwt.verify(localStorage.getItem('token-app-auth-current'), VALUES.API_KEY);

@@ -30,7 +30,6 @@ export class BannerMidd extends Component {
   };
 
   midText() {
-    var date = new Date();
     return window.screen.width > 877 ? 'ÚLTIMAS NOTICIAS |' : 'AHORA |';
   }
 

@@ -100,9 +100,9 @@ export class Comments extends Component {
       let data_comment = {
         news_id: this.props.news_id,
         comment_text: this.state.comment
-          .replace(/\"/g, '\\"')
-          .replace(/\'/g, '\\"')
-          .replace(/\`/g, '\\"'),
+          .replace(/"/g, '\\"')
+          .replace(/'/g, '\\"')
+          .replace(/`/g, '\\"'),
         token: localStorage.getItem('token-app-auth-current'),
       };
       await this.props.actions.sendComment(data_comment);

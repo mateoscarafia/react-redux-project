@@ -32,7 +32,7 @@ export class Login extends Component {
 
   loginForm() {
     if (
-      /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.state.email) &&
+      /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(this.state.email) &&
       this.state.password.length > 5
     ) {
       let data = { mail: this.state.email, pass: this.state.password, token: VALUES.DEEP_TOKEN };

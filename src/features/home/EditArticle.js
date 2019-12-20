@@ -3,11 +3,10 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import * as actions from './redux/actions';
-import { EditorState, convertToRaw, ContentState } from 'draft-js';
+import { EditorState, convertToRaw } from 'draft-js';
 import draftToHtml from 'draftjs-to-html';
 import { Editor } from 'react-draft-wysiwyg';
 import * as VALUES from '../../constants';
-import ReactHtmlParser from 'react-html-parser';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
 //import draftToHtml from 'draftjs-to-html';
@@ -19,7 +18,6 @@ import Footer from './Footer';
 
 const jwt = require('jsonwebtoken');
 const axios = require('axios');
-const htmlToText = require('html-to-text');
 const stateFromHTML = require('draft-js-import-html').stateFromHTML;
 
 export class EditArticle extends Component {
@@ -32,7 +30,7 @@ export class EditArticle extends Component {
     super(props);
     this.state = {
       editorState: EditorState.createEmpty(),
-      file: '',
+      file: null,
       imagePreviewUrl: null,
       login: false,
       title: null,
@@ -130,7 +128,7 @@ export class EditArticle extends Component {
 
   editArticle() {
     if (this.state.login) {
-      if (this.state.file !== '' && !this.state.file.type.includes('image')) {
+      if (this.state.file && !this.state.file.type.includes('image')) {
         NotificationManager.warning('El archivo no es una imagen');
       } else {
         try {
@@ -153,9 +151,9 @@ export class EditArticle extends Component {
             )
               .toLowerCase()
               .normalize('NFD')
-              .replace(/\"/g, '\\"')
-              .replace(/\'/g, '\\"')
-              .replace(/\`/g, '\\"')
+              .replace(/"/g, '\\"')
+              .replace(/'/g, '\\"')
+              .replace(/`/g, '\\"')
               .replace(/[\u0300-\u036f]/g, '')
               .replace(/[^a-zA-Z0-9 ]/g, '')
               .replace(/ /g, '-');
@@ -163,22 +161,22 @@ export class EditArticle extends Component {
               token: localStorage.getItem('token-app-auth-current'),
               title: this.state.title
                 ? this.state.title
-                    .replace(/\"/g, '\\"')
-                    .replace(/\'/g, '\\"')
-                    .replace(/\`/g, '\\"')
+                    .replace(/"/g, '\\"')
+                    .replace(/'/g, '\\"')
+                    .replace(/`/g, '\\"')
                 : this.props.home.uniquearticle.data[0].title
-                    .replace(/\"/g, '\\"')
-                    .replace(/\'/g, '\\"')
-                    .replace(/\`/g, '\\"'),
+                    .replace(/"/g, '\\"')
+                    .replace(/'/g, '\\"')
+                    .replace(/`/g, '\\"'),
               subtitle: this.state.subtitle
                 ? this.state.subtitle
-                    .replace(/\"/g, '\\"')
-                    .replace(/\'/g, '\\"')
-                    .replace(/\`/g, '\\"')
+                    .replace(/"/g, '\\"')
+                    .replace(/'/g, '\\"')
+                    .replace(/`/g, '\\"')
                 : this.props.home.uniquearticle.data[0].subtitle
-                    .replace(/\"/g, '\\"')
-                    .replace(/\'/g, '\\"')
-                    .replace(/\`/g, '\\"'),
+                    .replace(/"/g, '\\"')
+                    .replace(/'/g, '\\"')
+                    .replace(/`/g, '\\"'),
               category_id: categoryObj.id,
               img_url: res.data.filename || this.props.home.uniquearticle.data[0].img_url,
               content: this.state.changedEditor

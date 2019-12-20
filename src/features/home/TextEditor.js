@@ -29,7 +29,7 @@ export class TextEditor extends Component {
     super(props);
     this.state = {
       editorState: EditorState.createEmpty(),
-      file: '',
+      file: null,
       imagePreviewUrl: null,
       login: false,
       title: null,
@@ -109,7 +109,7 @@ export class TextEditor extends Component {
 
   postArticle() {
     if (this.state.login && this.state.title && this.state.subtitle && this.state.keywords) {
-      if (!this.state.file.type.includes('image')) {
+      if (this.state.file && !this.state.file.type.includes('image')) {
         NotificationManager.warning('El archivo no es una imagen');
       } else {
         try {
@@ -132,28 +132,28 @@ export class TextEditor extends Component {
             )
               .toLowerCase()
               .normalize('NFD')
-              .replace(/\"/g, '"')
-              .replace(/\'/g, '"')
-              .replace(/\`/g, '"')
+              .replace(/"/g, '\\"')
+              .replace(/'/g, '\\"')
+              .replace(/`/g, '\\"')
               .replace(/[\u0300-\u036f]/g, '')
               .replace(/[^a-zA-Z0-9 ]/g, '')
               .replace(/ /g, '-');
             let data = {
               token: localStorage.getItem('token-app-auth-current'),
               title: this.state.title
-                .replace(/\"/g, '"')
-                .replace(/\'/g, '"')
-                .replace(/\`/g, '"'),
+                .replace(/"/g, '\\"')
+                .replace(/'/g, '\\"')
+                .replace(/`/g, '\\"'),
               subtitle: this.state.subtitle
-                .replace(/\"/g, '"')
-                .replace(/\'/g, '"')
-                .replace(/\`/g, '"'),
+                .replace(/"/g, '\\"')
+                .replace(/'/g, '\\"')
+                .replace(/`/g, '\\"'),
               category_id: categoryObj.id,
               img_url: res.data.filename,
               content: draftToHtml(convertToRaw(this.state.editorState.getCurrentContent()))
-                .replace(/\"/g, '"')
-                .replace(/\'/g, '"')
-                .replace(/\`/g, '"'),
+                .replace(/"/g, '\\"')
+                .replace(/'/g, '\\"')
+                .replace(/`/g, '\\"'),
               key_words: keywords,
               user_id: this.props.home.user.data[0].id,
             };

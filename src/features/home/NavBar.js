@@ -3,7 +3,6 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import BannerMidd from './BannerMidd';
-import SearchEngine from './SearchEngine';
 import * as VALUES from '../../constants';
 
 export class NavBar extends Component {
@@ -84,7 +83,7 @@ export class NavBar extends Component {
         token: VALUES.DEEP_TOKEN,
         param: '-engine-' + searchword,
       });
-      this.openSearchEngine;
+      this.openSearchEngine();
       this.props.history.push('/feed/-engine-' + searchword);
     }
   };
@@ -233,7 +232,12 @@ export class NavBar extends Component {
                     }}
                     className="nav-link a-link search-article-navbar-button search-icon-button-nav"
                   >
-                    <img alt="edit" width="25" src={require('../../images/search.png')} />
+                    <img
+                      title="Buscar artículo"
+                      alt="edit"
+                      width="25"
+                      src={require('../../images/search.png')}
+                    />
                   </a>
                 </li>
               </ul>
@@ -246,7 +250,12 @@ export class NavBar extends Component {
                       }}
                       className="nav-link a-link search-article-navbar-button"
                     >
-                      <img alt="edit" width="25" src={require('../../images/write.png')} />
+                      <img
+                        title="Escribir artículo"
+                        alt="edit"
+                        width="25"
+                        src={require('../../images/write.png')}
+                      />
                     </a>
                   </li>
                   <li className="nav-item active">

@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
-import Modal from 'react-awesome-modal';
 import * as VALUES from '../../constants';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
@@ -181,17 +180,17 @@ export class UserProfile extends Component {
       profile_img_url: res.data.filename || this.props.home.user.data[0].profile_img_url,
       banner_img_url: resP.data.filename || this.props.home.user.data[0].banner_img_url,
       username: (this.state.username || this.props.home.user.data[0].username)
-        .replace(/\"/g, '\\"')
-        .replace(/\'/g, '\\"')
-        .replace(/\`/g, '\\"'),
+        .replace(/"/g, '\\"')
+        .replace(/'/g, '\\"')
+        .replace(/`/g, '\\"'),
       profession: (this.state.profession || this.props.home.user.data[0].profession)
-        .replace(/\"/g, '\\"')
-        .replace(/\'/g, '\\"')
-        .replace(/\`/g, '\\"'),
+        .replace(/"/g, '\\"')
+        .replace(/'/g, '\\"')
+        .replace(/`/g, '\\"'),
       aboutme: (this.state.about_me || this.props.home.user.data[0].about_me)
-        .replace(/\"/g, '\\"')
-        .replace(/\'/g, '\\"')
-        .replace(/\`/g, '\\"'),
+        .replace(/"/g, '\\"')
+        .replace(/'/g, '\\"')
+        .replace(/`/g, '\\"'),
     };
     this.props.actions.editUser(dataUpdate);
   };

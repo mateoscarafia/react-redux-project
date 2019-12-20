@@ -8,7 +8,7 @@ import Modal from 'react-awesome-modal';
 import 'react-notifications/lib/notifications.css';
 import ReactHtmlParser from 'react-html-parser';
 import * as VALUES from '../../constants';
-import {
+/*import {
   FacebookShareCount,
   GooglePlusShareCount,
   LinkedinShareCount,
@@ -17,7 +17,7 @@ import {
   OKShareCount,
   RedditShareCount,
   TumblrShareCount,
-} from 'react-share';
+} from 'react-share';*/
 
 
 //Components

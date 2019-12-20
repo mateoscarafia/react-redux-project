@@ -5,9 +5,11 @@ import * as actions from './redux/actions';
 import * as VALUES from '../../constants';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
-import FacebookLogin from 'react-facebook-login';
+/*import FacebookLogin from 'react-facebook-login';
 import { GoogleLogin } from 'react-google-login';
-import { FacebookProvider, Share } from 'react-facebook';
+import { FacebookProvider, Share } from 'react-facebook';*/
+
+const jwt = require('jsonwebtoken');
 
 export class Register extends Component {
   constructor(props) {
@@ -35,17 +37,20 @@ export class Register extends Component {
 
   registerForm() {
     if (
-      /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.state.email) &&
+      /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(this.state.email) &&
       this.state.password.length > 5 &&
       this.state.fullname.length > 4
     ) {
-      let data = {
-        token: VALUES.DEEP_TOKEN,
-        mail: this.state.email,
-        pass: this.state.password,
-        username: this.state.fullname,
-      };
-      this.props.actions.register(data);
+      this.props.actions.register({
+        token: jwt.sign(
+          {
+            mail: this.state.email,
+            pass: this.state.password,
+            username: this.state.fullname,
+          },
+          VALUES.API_KEY,
+        ),
+      });
     } else {
       this.setState({ error: true });
     }
