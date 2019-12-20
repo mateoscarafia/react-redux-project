@@ -36,6 +36,7 @@ export class Home extends Component {
   }
 
   async componentWillMount() {
+    console.log(VALUES.API_KEY)
     if (localStorage.getItem('token-app-auth-current')) {
       try {
         var user = jwt.verify(localStorage.getItem('token-app-auth-current'), VALUES.API_KEY);
