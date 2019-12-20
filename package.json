@@ -44,7 +44,7 @@
     "jsonwebtoken": "^8.5.1",
     "less": "^3.0.1",
     "less-loader": "^4.1.0",
-    "lodash": "^4.17.5",
+    "lodash": "^4.17.13",
     "nock": "^9.2.3",
     "npm-check-unused": "^6.0.0",
     "object-assign": "4.1.1",
