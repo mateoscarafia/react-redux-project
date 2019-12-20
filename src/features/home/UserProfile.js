@@ -142,8 +142,8 @@ export class UserProfile extends Component {
       }
     }
     //For every user
-    this.props.actions.getNews({ token: VALUES.DEEP_TOKEN, id: id });
-    this.props.actions.getUser({ token: VALUES.DEEP_TOKEN, id: id });
+    id && this.props.actions.getNews({ token: VALUES.DEEP_TOKEN, id: id });
+    id && this.props.actions.getUser({ token: VALUES.DEEP_TOKEN, id: id });
     this.props.actions.getCategories();
   }
 

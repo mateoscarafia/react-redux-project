@@ -19,7 +19,6 @@ import * as VALUES from '../../constants';
   TumblrShareCount,
 } from 'react-share';*/
 
-
 //Components
 import NavBar from './NavBar';
 import Comments from './Comments';
@@ -59,8 +58,10 @@ export class Article extends Component {
         });
       }
     }
-    this.props.actions.getArticle({ token: VALUES.DEEP_TOKEN, id: this.props.match.params.id });
-    this.props.actions.getRelated({ token: VALUES.DEEP_TOKEN, id: this.props.match.params.id });
+    this.props.match.params.id &&
+      this.props.actions.getArticle({ token: VALUES.DEEP_TOKEN, id: this.props.match.params.id });
+    this.props.match.params.id &&
+      this.props.actions.getRelated({ token: VALUES.DEEP_TOKEN, id: this.props.match.params.id });
     this.props.actions.getCategories();
   }
 
