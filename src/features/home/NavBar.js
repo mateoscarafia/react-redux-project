@@ -116,6 +116,7 @@ export class NavBar extends Component {
   render() {
     return (
       <div className="home-nav-bar sticky-top">
+        <BannerMidd />
         <nav className="navbar navbar-expand-lg navbar-light blue-background brand-link-nav">
           <a onClick={() => this.routerMethod('/feed/main')} className="navbar-brand a-link">
             <b>NEDDLY</b>
@@ -164,7 +165,7 @@ export class NavBar extends Component {
                   aria-haspopup="true"
                   aria-expanded="false"
                 >
-                  Más
+                  {}
                 </a>
                 <div className="dropdown-menu" aria-labelledby="navbarDropdown">
                   {this.buildList(1)}
@@ -227,19 +228,25 @@ export class NavBar extends Component {
             <form className="form-inline my-2 my-lg-0 disappear-on-mobile">
               <ul className="navbar-nav mr-auto">
                 <li className="nav-item active">
-                  <a
-                    onClick={() => {
-                      this.openSearchEngine();
-                    }}
-                    className="nav-link a-link search-article-navbar-button search-icon-button-nav"
-                  >
-                    <img
-                      title="Buscar artículo"
-                      alt="edit"
-                      width="25"
-                      src={require('../../images/search.png')}
-                    />
-                  </a>
+                  <div className="search-div-bar-floating" id="123456">
+                    <div className="row">
+                      <input
+                        type="text"
+                        name="searchwords"
+                        onChange={this.handleChange}
+                        placeholder="Buscar.."
+                        className="form-control"
+                        id="searchwords"
+                      />
+                      <img
+                        onClick={() => this.searchArticlesMotor()}
+                        title="Buscar artículo"
+                        alt="edit"
+                        width="25"
+                        src={require('../../images/search.png')}
+                      />
+                    </div>
+                  </div>
                 </li>
               </ul>
               {this.props.login ? (
@@ -254,6 +261,7 @@ export class NavBar extends Component {
                       <img
                         title="Escribir artículo"
                         alt="edit"
+                        style={{ opacity: 0.4 }}
                         width="25"
                         src={require('../../images/write.png')}
                       />
@@ -302,21 +310,6 @@ export class NavBar extends Component {
             </form>
           </div>
         </nav>
-        {this.state.searchEngine && this.props.categories && (
-          <div className="search-div-bar-floating" id="123456">
-            <div className="row">
-              <input
-                type="text"
-                name="searchwords"
-                onChange={this.handleChange}
-                placeholder="Palabras claves"
-                className="form-control"
-                id="searchwords"
-              />
-              <p onClick={() => this.searchArticlesMotor()}>BUSCAR</p>
-            </div>
-          </div>
-        )}
         {/*this.state.searchEngine && this.props.categories && (
           <SearchEngine
             categories={this.props.categories}
@@ -324,7 +317,6 @@ export class NavBar extends Component {
             history={this.props.history}
           />
         )*/}
-        <BannerMidd />
       </div>
     );
   }

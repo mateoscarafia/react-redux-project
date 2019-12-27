@@ -68,11 +68,10 @@ export class Login extends Component {
   }
 
   render() {
-    console.log(process.env.REACT_ENV)
     return (
       <div className="home-login">
         <form className="home-login-form">
-          <img alt="edit" width="100" src={require('../../images/logo.png')} />
+          <img alt="edit" width="50" src={require('../../images/logo.png')} />
           <div className="form-group">
             <input
               type="email"

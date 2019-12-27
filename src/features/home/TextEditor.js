@@ -76,7 +76,6 @@ export class TextEditor extends Component {
 
   componentWillMount() {
     const { id } = this.props.match.params;
-    //Is user logged user profile
     if (localStorage.getItem('token-app-auth-current')) {
       try {
         var user = jwt.verify(localStorage.getItem('token-app-auth-current'), VALUES.API_KEY);
@@ -92,8 +91,7 @@ export class TextEditor extends Component {
         });
       }
     }
-    //For every user
-    id && this.props.actions.getUser({ token: VALUES.DEEP_TOKEN, id: id });
+    this.props.actions.getUser({ token: VALUES.DEEP_TOKEN, id: id });
     this.props.actions.getCategories();
     window.scrollTo(0, 0);
   }

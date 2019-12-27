@@ -15,6 +15,8 @@ export class Footer extends Component {
       <div className="home-footer">
        <h4>NEEDLY</h4>
        <p>Tú eres el periodista</p>
+       <br/>
+       <img alt="edit" width="250" src={require('../../images/social-net.PNG')} />
       </div>
     );
   }

@@ -1,23 +1,22 @@
 @import '../../styles/mixins';
 
 .home-banner-midd {
-  background: linear-gradient(90deg, #ffd700 50%, transparent 50%);
+
   .midd-bann-text-slider-float-left {
     overflow: hidden;
     white-space: nowrap;
-    height: 40px;
+    height: 20px;
     width: 100%;
-    background-color: #000;
+    background-color: #fff;
     text-align: center;
     box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15), 0 2px 3px rgba(0, 0, 0, 0.2);
-    padding: 9px 5px 0px 1%;
+    padding: 9px 5px 20px 1%;
 
     .midd-bann-text-first {
       float: left;
       min-width: 10%;
     }
     .midd-bann-text-second {
-      margin-left: 1%;
       float: left;
       position: relative;
       width: 80%;
@@ -31,8 +30,8 @@
   }
 
   .midd-bann-p {
-    color: #ffd700 !important;
-    font-size: 14px;
+    color: #000 !important;
+    font-size: 10px;
     float: left;
     font-weight: bold;
     letter-spacing: 1px;
@@ -40,12 +39,10 @@
 
   @media (max-width: 800px) {
     .midd-bann-text-slider-float-left {
-      padding: 12px 5px 0px 2%;
-      -webkit-transform: skewY(-3deg);
-      -moz-transform: skewY(-3deg);
-      -ms-transform: skewY(-3deg);
-      -o-transform: skewY(-3deg);
-      transform: skewY(-3deg);
+      padding: 10px 5px 20px 2%;
+    }
+    #text-banner-id-for-movement{
+margin-left: 5px;
     }
     .midd-bann-text-first {
       min-width: 5%;

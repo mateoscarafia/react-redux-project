@@ -92,11 +92,17 @@ export class Comments extends Component {
   };
 
   postComment = async () => {
-    !this.props.user_id && NotificationManager.warning('Debes loguearte para comentar');
-    this.state.comment === '' && NotificationManager.warning('Escribe comentario');
+    if (!this.props.user_id) {
+      NotificationManager.warning('Debes loguearte para opinar');
+      document.getElementById('comment-send-button').style.display = 'inline';
+      document.getElementById('spinner-comment-send-button').style.display = 'none';
+    }
+    if (this.state.comment === '') {
+      NotificationManager.warning('Escribe opinión');
+      document.getElementById('comment-send-button').style.display = 'inline';
+      document.getElementById('spinner-comment-send-button').style.display = 'none';
+    }
     if (this.state.comment !== '') {
-      document.getElementById('comment-send-button').style.display = 'none';
-      document.getElementById('spinner-comment-send-button').style.display = 'inline';
       let data_comment = {
         news_id: this.props.news_id,
         comment_text: this.state.comment
@@ -120,15 +126,15 @@ export class Comments extends Component {
           <div className="col-lg-8 col-md-8 col-sm-12 col-xs-12 home-comments-list-div-history">
             {this.props.home.comments && this.buildCommentsList()}
             {this.props.home.comments && !this.props.home.comments.data[0] && (
-              <p style={{ fontSize: '14px' }}>Sin comentarios</p>
+              <p style={{ fontSize: '12px' }}>- Sin opiniones -</p>
             )}
           </div>
           <div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 home-comments-post-comments">
             <div className="form-group">
               <textarea
-                rows="5"
+                rows="7"
                 className="form-control"
-                placeholder="Escribir comentario..."
+                placeholder="Escribe opinión..."
                 name="comment"
                 onChange={this.handleChange}
                 id="comment-input"

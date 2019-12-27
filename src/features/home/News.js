@@ -41,39 +41,63 @@ export class News extends Component {
     window.scrollTo(0, 0);
   };
 
-  buildNews = (type, min, max) => {
+  articleDivInfoVisible = div => {
+    document.getElementById(div).style.opacity = 0.7;
+  };
+
+  articleDivInfoInvisible = div => {
+    document.getElementById(div).style.opacity = 0;
+  };
+
+  buildNews = (type, min, max, design) => {
     let data = [];
     if (type === 'main') {
       max = max === 'end' ? this.props.articles.data.main_feed.length : max;
       for (const prop in this.props.articles.data.main_feed) {
         if (prop >= min && prop < max) {
           data.push(
-            <div key={Math.random()} className="news-conts">
+            <div
+              key={Math.random()}
+              className={!this.props.id ? design : 'design-120-60-less-height'}
+              onMouseEnter={() =>
+                this.articleDivInfoVisible(
+                  'news-hover-' + this.props.articles.data.main_feed[prop].id,
+                )
+              }
+              onMouseLeave={() =>
+                this.articleDivInfoInvisible(
+                  'news-hover-' + this.props.articles.data.main_feed[prop].id,
+                )
+              }
+            >
               <div
                 className="img-div"
-                onClick={() =>
-                  this.routerMethod('news/' + this.props.articles.data.main_feed[prop].id)
-                }
                 style={{
                   backgroundImage: `url(${'http://' +
                     VALUES.BD_ORIGIN +
                     ':3000/network_images/' +
                     this.props.articles.data.main_feed[prop].img_url})`,
                 }}
+              ></div>
+              <div
+                className={
+                  !this.props.id ? 'wrapper-news-div-hover' : 'wrapper-news-div-hover-smaller'
+                }
+                onClick={() =>
+                  this.routerMethod('news/' + this.props.articles.data.main_feed[prop].id)
+                }
+                id={'news-hover-' + this.props.articles.data.main_feed[prop].id}
               >
-                <div className="img-div-news-category">
-                  {this.props.articles.data.main_feed[prop].name}
-                </div>
-              </div>
-              <div className="p-div">
-                <p
-                  className="p-div-title-text"
-                  onClick={() =>
-                    this.routerMethod('news/' + this.props.articles.data.main_feed[prop].id)
-                  }
-                >
-                  {this.props.articles.data.main_feed[prop].title}
+                <p>
+                  {this.props.articles.data.main_feed[prop].username +
+                    ' - ' +
+                    this.props.articles.data.main_feed[prop].name}
                 </p>
+                <h1>
+                  {this.props.articles.data.main_feed[prop].title.length > 100
+                    ? this.props.articles.data.main_feed[prop].title.substring(0, 100) + '...'
+                    : this.props.articles.data.main_feed[prop].title}
+                </h1>
               </div>
             </div>,
           );
@@ -96,21 +120,7 @@ export class News extends Component {
                     ':3000/network_images/' +
                     this.props.articles.data.backup_feed[prop].img_url})`,
                 }}
-              >
-                <div className="img-div-news-category">
-                  {this.props.articles.data.backup_feed[prop].name}
-                </div>
-              </div>
-              <div className="p-div">
-                <p
-                  className="p-div-title-text"
-                  onClick={() =>
-                    this.routerMethod('news/' + this.props.articles.data.backup_feed[prop].id)
-                  }
-                >
-                  {this.props.articles.data.backup_feed[prop].title}
-                </p>
-              </div>
+              ></div>
             </div>,
           );
         }
@@ -124,453 +134,52 @@ export class News extends Component {
     data.push(
       <div className="width-search-result-cont">
         <p className="search-result-text"></p>
-      </div>
+      </div>,
     );
     for (const prop in this.props.articles.data.main_feed) {
       data.push(
-        <div key={Math.random()} className="news-conts">
+        <div
+          key={Math.random()}
+          className={!this.props.id ? 'design-120-60' : 'design-120-60-less-height'}
+          onMouseEnter={() =>
+            this.articleDivInfoVisible('news-hover-' + this.props.articles.data.main_feed[prop].id)
+          }
+          onMouseLeave={() =>
+            this.articleDivInfoInvisible(
+              'news-hover-' + this.props.articles.data.main_feed[prop].id,
+            )
+          }
+        >
           <div
             className="img-div"
-            onClick={() => this.routerMethod('news/' + this.props.articles.data.main_feed[prop].id)}
             style={{
               backgroundImage: `url(${'http://' +
                 VALUES.BD_ORIGIN +
                 ':3000/network_images/' +
                 this.props.articles.data.main_feed[prop].img_url})`,
             }}
+          ></div>
+          <div
+            className={!this.props.id ? 'wrapper-news-div-hover' : 'wrapper-news-div-hover-smaller'}
+            onClick={() => this.routerMethod('news/' + this.props.articles.data.main_feed[prop].id)}
+            id={'news-hover-' + this.props.articles.data.main_feed[prop].id}
           >
-            <div className="img-div-news-category">
-              {this.props.articles.data.main_feed[prop].username}
-            </div>
-          </div>
-          <div className="p-div">
-            <p
-              className="p-div-title-text"
-              onClick={() =>
-                this.routerMethod('news/' + this.props.articles.data.main_feed[prop].id)
-              }
-            >
-              {this.props.articles.data.main_feed[prop].title}
+            <p>
+              {this.props.articles.data.main_feed[prop].username +
+                ' - ' +
+                this.props.articles.data.main_feed[prop].name}
             </p>
+            <h1>
+              {this.props.articles.data.main_feed[prop].title.length > 100
+                ? this.props.articles.data.main_feed[prop].title.substring(0, 100) + '...'
+                : this.props.articles.data.main_feed[prop].title}
+            </h1>
           </div>
         </div>,
       );
     }
-    return data;
+    return this.props.articles.data.main_feed[0] ? data : <h5 className="no-result-tag-title">{'Sin resultados'}</h5>;
   };
-
-  buildProfileNews = (type, min, max) => {
-    let data = [];
-    if (type === 'main') {
-      for (const prop in this.props.articles.data.main_feed) {
-        if (prop >= min && prop < max) {
-          data.push(
-            <div key={Math.random()} className="news-conts-secondary-news">
-              <div
-                className="img-div-secondary-news"
-                onClick={() =>
-                  this.routerMethod('news/' + this.props.articles.data.main_feed[prop].id)
-                }
-                style={{
-                  backgroundImage: `url(${'http://' +
-                    VALUES.BD_ORIGIN +
-                    ':3000/network_images/' +
-                    this.props.articles.data.main_feed[prop].img_url})`,
-                }}
-              >
-                <div className="img-div-news-category-secondary-news">
-                  {this.props.articles.data.main_feed[prop].username}
-                </div>
-              </div>
-              <div className="p-div-secondary-news">
-                <p
-                  className="p-div-title-text-secondary-news"
-                  onClick={() =>
-                    this.routerMethod('news/' + this.props.articles.data.main_feed[prop].id)
-                  }
-                >
-                  {this.props.articles.data.main_feed[prop].title}
-                </p>
-              </div>
-            </div>,
-          );
-        }
-      }
-    } else {
-      for (const prop in this.props.articles.data.backup_feed) {
-        if (prop >= min && prop < max) {
-          data.push(
-            <div key={Math.random()} className="news-conts-secondary-news">
-              <div
-                className="img-div-secondary-news"
-                onClick={() =>
-                  this.routerMethod('news/' + this.props.articles.data.backup_feed[prop].id)
-                }
-                style={{
-                  backgroundImage: `url(${'http://' +
-                    VALUES.BD_ORIGIN +
-                    ':3000/network_images/' +
-                    this.props.articles.data.backup_feed[prop].img_url})`,
-                }}
-              >
-                <div className="img-div-news-category-secondary-news">
-                  {this.props.articles.data.backup_feed[prop].username}
-                </div>
-              </div>
-              <div className="p-div-secondary-news">
-                <p
-                  className="p-div-title-text-secondary-news"
-                  onClick={() =>
-                    this.routerMethod('news/' + this.props.articles.data.backup_feed[prop].id)
-                  }
-                >
-                  {this.props.articles.data.backup_feed[prop].title}
-                </p>
-              </div>
-            </div>,
-          );
-        }
-      }
-    }
-    return data;
-  };
-
-  buildRecommendedNews = (type, min, max) => {
-    let data = [];
-    if (type === 'main') {
-      for (const prop in this.props.articles.data.main_feed) {
-        if (prop >= min && prop < max) {
-          data.push(
-            <div
-              key={this.props.articles.data.main_feed[prop].id + 'recommended'}
-              className="news-conts-recommended-news"
-            >
-              <div
-                className="img-div-recommended-news"
-                onClick={() =>
-                  this.routerMethod('news/' + this.props.articles.data.main_feed[prop].id)
-                }
-                style={{
-                  backgroundImage: `url(${'http://' +
-                    VALUES.BD_ORIGIN +
-                    ':3000/network_images/' +
-                    this.props.articles.data.main_feed[prop].img_url})`,
-                }}
-              >
-                <div className="img-div-news-category-recommended-news">
-                  <p
-                    onClick={() =>
-                      this.routerMethod('news/' + this.props.articles.data.main_feed[prop].id)
-                    }
-                    className="tit-news-category-recommended-news"
-                  >
-                    {this.props.articles.data.main_feed[prop].title}
-                  </p>
-                </div>
-              </div>
-            </div>,
-          );
-        }
-      }
-    } else {
-      for (const prop in this.props.articles.data.backup_feed) {
-        if (prop >= min && prop < max) {
-          data.push(
-            <div
-              key={this.props.articles.data.backup_feed[prop].id + 'recommended'}
-              className="news-conts-recommended-news"
-            >
-              <div
-                className="img-div-recommended-news"
-                onClick={() =>
-                  this.routerMethod('news/' + this.props.articles.data.backup_feed[prop].id)
-                }
-                style={{
-                  backgroundImage: `url(${'http://' +
-                    VALUES.BD_ORIGIN +
-                    ':3000/network_images/' +
-                    this.props.articles.data.backup_feed[prop].img_url})`,
-                }}
-              >
-                <div className="img-div-news-category-recommended-news">
-                  <p
-                    onClick={() =>
-                      this.routerMethod('news/' + this.props.articles.data.backup_feed[prop].id)
-                    }
-                    className="tit-news-category-recommended-news"
-                  >
-                    {this.props.articles.data.backup_feed[prop].title}
-                  </p>
-                </div>
-              </div>
-            </div>,
-          );
-        }
-      }
-    }
-    return data;
-  };
-
-  buildMostSeenNews = (style, min, max) => {
-    let data = [];
-    if (style === 'main') {
-      for (const prop in this.props.articles.data.main_feed) {
-        if (prop >= min && prop < max) {
-          data.push(
-            <div
-              key={this.props.articles.data.main_feed[prop].id + 'most-seen'}
-              className="news-conts-mostseen-news"
-            >
-              <div
-                className="img-div-mostseen-news"
-                onClick={() =>
-                  this.routerMethod('news/' + this.props.articles.data.main_feed[prop].id)
-                }
-                style={{
-                  backgroundImage: `url(${'http://' +
-                    VALUES.BD_ORIGIN +
-                    ':3000/network_images/' +
-                    this.props.articles.data.main_feed[prop].img_url})`,
-                }}
-              ></div>
-              <div className="p-div-mostseen-news">
-                <p
-                  className="p-div-title-text-mostseen-news"
-                  onClick={() =>
-                    this.routerMethod('news/' + this.props.articles.data.main_feed[prop].id)
-                  }
-                >
-                  {this.props.articles.data.main_feed[prop].title}
-                </p>
-                <p className="p-div-title-text-mostseen-news-username">
-                  Por {this.props.articles.data.main_feed[prop].username}
-                </p>
-              </div>
-            </div>,
-          );
-        }
-      }
-    } else {
-      for (const prop in this.props.articles.data.backup_feed) {
-        if (prop >= min && prop < max) {
-          data.push(
-            <div
-              key={this.props.articles.data.backup_feed[prop].id + 'most-seen'}
-              className="news-conts-mostseen-news"
-            >
-              <div
-                className="img-div-mostseen-news"
-                onClick={() =>
-                  this.routerMethod('news/' + this.props.articles.data.backup_feed[prop].id)
-                }
-                style={{
-                  backgroundImage: `url(${'http://' +
-                    VALUES.BD_ORIGIN +
-                    ':3000/network_images/' +
-                    this.props.articles.data.backup_feed[prop].img_url})`,
-                }}
-              ></div>
-              <div className="p-div-mostseen-news">
-                <p
-                  className="p-div-title-text-mostseen-news"
-                  onClick={() =>
-                    this.routerMethod('news/' + this.props.articles.data.backup_feed[prop].id)
-                  }
-                >
-                  {this.props.articles.data.backup_feed[prop].title}
-                </p>
-                <p className="p-div-title-text-mostseen-news-username">
-                  Por {this.props.articles.data.backup_feed[prop].username}
-                </p>
-              </div>
-            </div>,
-          );
-        }
-      }
-    }
-    return data;
-  };
-
-  buildOpinionNews = (type, min, max) => {
-    let data = [];
-    if (type === 'main') {
-      for (const prop in this.props.articles.data.main_feed) {
-        if (prop >= min && prop < max) {
-          data.push(
-            <div key={Math.random()} className="news-conts-opinion-news">
-              <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                <div className="row">
-                  <div className=" col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                    <div
-                      className="img-div-opinion-news"
-                      onClick={() =>
-                        this.routerMethod('news/' + this.props.articles.data.main_feed[prop].id)
-                      }
-                      style={{
-                        backgroundImage: `url(${'http://' +
-                          VALUES.BD_ORIGIN +
-                          ':3000/network_images/' +
-                          this.props.articles.data.main_feed[prop].profile_img_url})`,
-                      }}
-                    ></div>
-                  </div>
-
-                  <div className=" col-lg-8 col-md-8 col-sm-12 col-xs-12">
-                    <p
-                      className="p-title-text-opinion-news"
-                      onClick={() =>
-                        this.routerMethod('news/' + this.props.articles.data.main_feed[prop].id)
-                      }
-                    >
-                      {this.props.articles.data.main_feed[prop].title}
-                    </p>
-                    <p
-                      className="p-username-opinion-news"
-                      onClick={() =>
-                        this.routerMethod('news/' + this.props.articles.data.main_feed[prop].id)
-                      }
-                    >
-                      {this.props.articles.data.main_feed[prop].username}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>,
-          );
-        }
-      }
-    } else {
-      for (const prop in this.props.articles.data.backup_feed) {
-        if (prop >= min && prop < max) {
-          data.push(
-            <div key={Math.random()} className="news-conts-opinion-news">
-              <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                <div className="row">
-                  <div className=" col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                    <div
-                      className="img-div-opinion-news"
-                      onClick={() =>
-                        this.routerMethod('news/' + this.props.articles.data.backup_feed[prop].id)
-                      }
-                      style={{
-                        backgroundImage: `url(${'http://' +
-                          VALUES.BD_ORIGIN +
-                          ':3000/network_images/' +
-                          this.props.articles.data.backup_feed[prop].profile_img_url})`,
-                      }}
-                    ></div>
-                  </div>
-
-                  <div className=" col-lg-8 col-md-8 col-sm-12 col-xs-12">
-                    <p
-                      className="p-title-text-opinion-news"
-                      onClick={() =>
-                        this.routerMethod('news/' + this.props.articles.data.backup_feed[prop].id)
-                      }
-                    >
-                      {this.props.articles.data.backup_feed[prop].title}
-                    </p>
-                    <p
-                      className="p-username-opinion-news"
-                      onClick={() =>
-                        this.routerMethod('news/' + this.props.articles.data.backup_feed[prop].id)
-                      }
-                    >
-                      {this.props.articles.data.backup_feed[prop].username}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>,
-          );
-        }
-      }
-    }
-    return data;
-  };
-
-  buildMainNews = type => {
-    let data = [];
-    if (type === 'main') {
-      for (const prop in this.props.articles.data.main_feed) {
-        if (prop >= 0 && prop < 2) {
-          data.push(
-            <div key={Math.random()} className="news-conts-main-container">
-              <div
-                className="img-div"
-                onClick={() =>
-                  this.routerMethod('news/' + this.props.articles.data.main_feed[prop].id)
-                }
-                style={{
-                  backgroundImage: `url(${'http://' +
-                    VALUES.BD_ORIGIN +
-                    ':3000/network_images/' +
-                    this.props.articles.data.main_feed[prop].img_url})`,
-                }}
-              >
-                <div className="img-div-news-category-main-div-info">
-                  {this.props.articles.data.main_feed[prop].username}
-                </div>
-              </div>
-              <div className="p-div">
-                <p
-                  className="p-div-title-text-main-text"
-                  onClick={() =>
-                    this.routerMethod('news/' + this.props.articles.data.main_feed[prop].id)
-                  }
-                >
-                  {this.props.articles.data.main_feed[prop].title}
-                </p>
-              </div>
-            </div>,
-          );
-        }
-      }
-    } else {
-      for (const prop in this.props.articles.data.backup_feed) {
-        if (prop >= 0 && prop < 2) {
-          data.push(
-            <div key={Math.random()} className="news-conts-main-container">
-              <div
-                className="img-div"
-                onClick={() =>
-                  this.routerMethod('news/' + this.props.articles.data.backup_feed[prop].id)
-                }
-                style={{
-                  backgroundImage: `url(${'http://' +
-                    VALUES.BD_ORIGIN +
-                    ':3000/network_images/' +
-                    this.props.articles.data.backup_feed[prop].img_url})`,
-                }}
-              >
-                <div className="img-div-news-category-main-div-info">
-                  {this.props.articles.data.backup_feed[prop].username}
-                </div>
-              </div>
-              <div className="p-div">
-                <p
-                  className="p-div-title-text-main-text"
-                  onClick={() =>
-                    this.routerMethod('news/' + this.props.articles.data.backup_feed[prop].id)
-                  }
-                >
-                  {this.props.articles.data.backup_feed[prop].title}
-                </p>
-              </div>
-            </div>,
-          );
-        }
-      }
-    }
-    return data;
-  };
-
-  checkIfArrayContainsMain(max) {
-    return this.props.articles.data.main_feed[max] ? true : false;
-  }
-  checkIfArrayContainsBack(max) {
-    return this.props.articles.data.backup_feed[max] ? true : false;
-  }
 
   newsDistribution = () => {
     window.scrollTo(0, 0);
@@ -582,48 +191,9 @@ export class News extends Component {
       this.props.routeparams === 'main' &&
       this.props.id
     ) {
-      if (
-        this.props.articles.data.main_feed.length > 20 &&
-        this.props.articles.data.backup_feed.length > 10
-      ) {
-        contentNews.push(<div className="row margin-for-news">{this.buildMainNews('main')}</div>);
-        contentNews.push(
-          <div className="row margin-for-news">{this.buildNews('main', 2, 10)}</div>,
-        );
-        contentNews.push(
-          <div className="row margin-for-news super-container-div">
-            {this.buildProfileNews('main', 10, 13)}
-          </div>,
-        );
-        contentNews.push(
-          <div className="most-see-news-div margin-for-news">
-            <h1 className="h1-news-main-title-mostseen">Te puede interesar</h1>
-            {this.buildMostSeenNews('back', 0, 3)}
-          </div>,
-        );
-        contentNews.push(
-          <div className="row margin-for-news">{this.buildRecommendedNews('main', 13, 15)}</div>,
-        );
-        contentNews.push(
-          <div className="row margin-for-news">
-            <h1 className="h1-news-main-title-opinion">Populares</h1>
-            {this.buildOpinionNews('main', 15, 17)}
-          </div>,
-        );
-        contentNews.push(
-          <div className="row margin-for-news">
-            {this.buildNews('main', 17, 'end')}
-            {this.buildNews('back', 3, 'end')}
-          </div>,
-        );
-      } else {
-        contentNews.push(
-          <div className="row margin-for-news">
-            {this.buildNews('main', 0, 'end')}
-            {this.buildNews('back', 0, 'end')}
-          </div>,
-        );
-      }
+      contentNews.push(
+        <div className="row">{this.buildNews('main', 0, 'end', 'design-120-60')}</div>,
+      );
     } else if (
       this.props.articles &&
       this.props.articles.data.main_feed &&
@@ -631,34 +201,13 @@ export class News extends Component {
       !this.props.id
     ) {
       if (this.props.articles.data.main_feed.length > 25) {
-        contentNews.push(<div className="row margin-for-news">{this.buildMainNews('main')}</div>);
         contentNews.push(
-          <div className="row margin-for-news">{this.buildNews('main', 2, 10)}</div>,
+          <div className="row">{this.buildNews('main', 0, 'end', 'design-120-60')}</div>,
         );
-        contentNews.push(
-          <div className="row margin-for-news super-container-div">
-            {this.buildProfileNews('main', 10, 13)}
-          </div>,
-        );
-        contentNews.push(
-          <div className="row margin-for-news">{this.buildRecommendedNews('main', 15, 17)}</div>,
-        );
-        contentNews.push(
-          <div className="most-see-news-div margin-for-news">
-            {this.buildMostSeenNews('main', 13, 16)}
-          </div>,
-        );
-        contentNews.push(
-          <div className="row margin-for-news">
-            {this.buildOpinionNews('main', 18, 20)}
-          </div>,
-        );
-        contentNews.push(
-          <div className="row margin-for-news">{this.buildNews('main', 20, 'end')}</div>,
-        );
+        contentNews.push(<br />);
       } else {
         contentNews.push(
-          <div className="row margin-for-news">{this.buildNews('main', 0, 'end')}</div>,
+          <div className="row">{this.buildNews('main', 0, 'end', 'design-120-60')}</div>,
         );
       }
     }

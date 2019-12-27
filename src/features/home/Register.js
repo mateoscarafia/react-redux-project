@@ -82,7 +82,7 @@ export class Register extends Component {
     return (
       <div className="home-register">
         <form className="home-register-form">
-          <img alt="edit" width="100" src={require('../../images/logo.png')} />
+          <img alt="edit" width="50" src={require('../../images/logo.png')} />
           <div className="form-group">
             <input
               type="email"

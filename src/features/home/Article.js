@@ -128,11 +128,32 @@ export class Article extends Component {
     }
   };
 
+  articleDivInfoVisible = div => {
+    document.getElementById(div).style.opacity = 0.7;
+  };
+
+  articleDivInfoInvisible = div => {
+    document.getElementById(div).style.opacity = 0;
+  };
+
   buildNews = () => {
     return this.props.home.related.data.map(item => {
       if (item.id !== parseInt(this.props.match.params.id, 10)) {
         return (
-          <div key={item.title + '-' + item.id} className="news-conts">
+          <div
+            key={item.title + '-' + item.id}
+            className="design-120-60"
+            onMouseEnter={() =>
+              this.articleDivInfoVisible(
+                'news-hover-' + item.id,
+              )
+            }
+            onMouseLeave={() =>
+              this.articleDivInfoInvisible(
+                'news-hover-' + item.id,
+              )
+            }
+          >
             <div
               className="img-div"
               onClick={() => this.routerMethod('../news/' + item.id, item.id)}
@@ -142,16 +163,14 @@ export class Article extends Component {
                   ':3000/network_images/' +
                   item.img_url})`,
               }}
+            ></div>
+            <div
+              className="wrapper-news-div-hover"
+              onClick={() => this.routerMethod('../news/' + item.id, item.id)}
+              id={'news-hover-' + item.id}
             >
-              <div className="img-div-news-category">{item.username}</div>
-            </div>
-            <div className="p-div">
-              <p
-                className="p-div-title-text"
-                onClick={() => this.routerMethod('../news/' + item.id, item.id)}
-              >
-                {item.title}
-              </p>
+              <p>{item.username}</p>
+              <h1>{item.title.length > 80 ? item.title.substring(0, 80) + '...' : item.title}</h1>
             </div>
           </div>
         );
@@ -335,7 +354,7 @@ export class Article extends Component {
             />
           )}
           <div className="similar-articles-article">
-            <p>Relacionados</p>
+            <p style={{fontSize:'12px'}}>Relacionados</p>
             <div className="row">{this.props.home.related && this.buildNews()}</div>
           </div>
           <Footer />

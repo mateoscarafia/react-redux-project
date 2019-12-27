@@ -65,11 +65,11 @@ export class UserProfile extends Component {
   }
 
   openMyFollowers = async () => {
-    await this.props.actions.getFollowers({
-      token: localStorage.getItem('token-app-auth-current'),
-    });
     this.setState({
       openMyFollowers: !this.state.openMyFollowers,
+    });
+    await this.props.actions.getFollowers({
+      token: localStorage.getItem('token-app-auth-current'),
     });
   };
 
@@ -93,7 +93,7 @@ export class UserProfile extends Component {
             {item.username}
           </p>
           <p className="date-message">- {item.profession}</p>
-          <hr />
+          <hr className="hr-white-invisible" />
           <br />
         </div>
       );
@@ -223,31 +223,50 @@ export class UserProfile extends Component {
     }
   }
 
+  articleDivInfoVisible = div => {
+    document.getElementById(div).style.opacity = 0.7;
+  };
+
+  articleDivInfoInvisible = div => {
+    document.getElementById(div).style.opacity = 0;
+  };
+
+
   buildNews = () => {
     return this.props.home.userarticles.data.map(item => {
       return (
-        <div key={item.title + '-' + item.id} className="news-conts">
-          <div
-            className="img-div"
-            onClick={() => this.routerMethod('../news/' + item.id, null)}
-            style={{
-              backgroundImage: `url(${'http://' +
-                VALUES.BD_ORIGIN +
-                ':3000/network_images/' +
-                item.img_url})`,
-            }}
+        <div
+            key={item.title + '-' + item.id}
+            className="design-120-60"
+            onMouseEnter={() =>
+              this.articleDivInfoVisible(
+                'news-hover-' + item.id,
+              )
+            }
+            onMouseLeave={() =>
+              this.articleDivInfoInvisible(
+                'news-hover-' + item.id,
+              )
+            }
           >
-            <div className="img-div-news-category">{item.name}</div>
-          </div>
-          <div className="p-div">
-            <p
-              className="p-div-title-text"
-              onClick={() => this.routerMethod('../news/' + item.id, null)}
+            <div
+              className="img-div"
+              style={{
+                backgroundImage: `url(${'http://' +
+                  VALUES.BD_ORIGIN +
+                  ':3000/network_images/' +
+                  item.img_url})`,
+              }}
+            ></div>
+            <div
+              className="wrapper-news-div-hover"
+              onClick={() => this.routerMethod('../news/' + item.id, item.id)}
+              id={'news-hover-' + item.id}
             >
-              {item.title}
-            </p>
+              <p>{item.username}</p>
+              <h1>{item.title.length > 80 ? item.title.substring(0, 80) + '...' : item.title}</h1>
+            </div>
           </div>
-        </div>
       );
     });
   };
@@ -374,6 +393,7 @@ export class UserProfile extends Component {
                 </a>
                 <br />
               </div>
+              {this.props.home.getFollowersPending && 'Loading...'}
               {this.props.home.myfollowers && this.buildFollowers()}
             </div>
           )}

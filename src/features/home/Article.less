@@ -11,7 +11,54 @@
   width: 100%;
   min-height: 1000px;
   text-align: center;
-  background-color: #f5f5f5;
+  background-color: #fff;
+
+  .design-120-60 {
+    background-color: #fff;
+    width: 23%;
+    height: 200px;
+    margin: 0;
+    position: relative;
+    margin: 1%;
+    cursor: pointer;
+    .img-div {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position-y: center;
+      background-position-x: center;
+      position: relative;
+    }
+    .wrapper-news-div-hover {
+      position: absolute;
+      width: 100%;
+      z-index: 10000;
+      top: 0;
+      height: 100%;
+      background-color: #000;
+      opacity: 0;
+      transition: 0.5s;
+      padding:10px;
+      p{
+        position: absolute;
+        top:120px;
+        margin:0;
+        color:#fff;
+        font-size:12px;
+      }
+      h1{
+        position: absolute;
+        top:140px;
+        color:#fff;
+        width: 90%;
+        font-weight: bold;
+        font-size:13px;
+      }
+    }
+  }
+
 
   .img-div-news-category {
     position: absolute;
@@ -233,20 +280,16 @@
     width: 75%;
     min-height: 300px;
     margin-top: 20px;
-    border: 1px solid #f5f5f5;
     margin-left: auto;
     margin-right: auto;
     background-color: #fff;
     text-align: left;
     padding: 10px 0 2% 0;
-    -webkit-box-shadow: 1px 4px 4px #bdbdbd;
-    -moz-box-shadow: 1px 4px 4px #bdbdbd;
-    box-shadow: 1px 4px 4px #bdbdbd;
 
     .single-article-image-show-div {
       width: 100%;
       height: 400px;
-      background-color: #bdbdbd;
+      background-color: #f5f5f5;
       background-repeat: no-repeat;
       background-size: cover;
       background-position: center;
@@ -317,11 +360,10 @@
       margin: 10px 0 20px 0;
     }
     .date-article-font {
-      font-size: 14px;
+      font-size: 12px;
       background-color: #151515;
-      color: #FFD700; //yellow position
+      color: #fff; //yellow position
       letter-spacing: 1px;
-      font-weight: bold;
       margin: 0px 0 3px 5px;
       padding: 1px 2px 1px 3px;
       width: 87px;
@@ -410,6 +452,11 @@
       .home-comments-post-comments {
         margin-top: 20px;
       }
+    }
+
+    .design-120-60 {
+      width: 100%;
+      margin: 5px 0px 5px 0px;
     }
 
     .news-conts {

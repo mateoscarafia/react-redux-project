@@ -201,16 +201,6 @@ export class Home extends Component {
                       VOLVER
                     </button>
                   )}
-                  {this.props.home.user && (
-                    <button
-                      className="open-editor-button"
-                      onClick={() =>
-                        this.routerMethod('../editor/' + this.props.home.user.data[0].id)
-                      }
-                    >
-                      {'ESCRIBIR ARTICULO'}
-                    </button>
-                  )}
                 </div>
               )}
               <div
@@ -239,9 +229,6 @@ export class Home extends Component {
                 )}
               </div>
             </div>
-          </div>
-          <div className="floating-right-home-div">
-            <p className="company-email-hidden-box">needly@gmail.com</p>
           </div>
           <Footer />
           <Modal
