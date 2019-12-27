@@ -260,7 +260,7 @@ export class UserProfile extends Component {
             ></div>
             <div
               className="wrapper-news-div-hover"
-              onClick={() => this.routerMethod('../news/' + item.id, item.id)}
+              onClick={() => this.routerMethod('../news/' + item.id, item.user_id)}
               id={'news-hover-' + item.id}
             >
               <p>{item.username}</p>
