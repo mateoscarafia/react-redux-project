@@ -117,7 +117,7 @@ export class UserHeader extends Component {
     let data = {
       token: localStorage.getItem('token-app-auth-current'),
     };
-    await this.props.actions.getMessages(data);
+    this.props.actions.getMessages(data);
     this.setState({
       openMailBox: !this.state.openMailBox,
     });
@@ -349,7 +349,10 @@ export class UserHeader extends Component {
             </div>
           )}
           {this.state.openMailBox && (
-            <div className="mailbox-div">{this.props.home.mymessages && this.buildMessages()}</div>
+            <div className="mailbox-div">
+              {this.props.home.getMessagesPending && <p>Loading...</p>}
+              {this.props.home.mymessages && this.buildMessages()}
+            </div>
           )}
           <NotificationContainer />
         </div>

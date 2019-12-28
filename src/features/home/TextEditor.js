@@ -247,7 +247,7 @@ export class TextEditor extends Component {
                     name="keywords"
                     onChange={this.handleChange}
                     id="keywords"
-                    placeholder="Palabras claves para que otros usuarios puedan encontrar tú articulo. Ciudad, personajes, tema, etc..."
+                    placeholder="Palabras claves"
                   />
                   <p className="key-words-detail-info">
                     *Palabras claves relacionadas al contenido del artículo (Ciudad, personas, tema,

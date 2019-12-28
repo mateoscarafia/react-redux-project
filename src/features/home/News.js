@@ -57,7 +57,7 @@ export class News extends Component {
         if (prop >= min && prop < max) {
           data.push(
             <div
-              key={Math.random()}
+              key={this.props.articles.data.main_feed[prop].id}
               className={!this.props.id ? design : 'design-120-60-less-height'}
               onMouseEnter={() =>
                 this.articleDivInfoVisible(
@@ -108,12 +108,22 @@ export class News extends Component {
       for (const prop in this.props.articles.data.backup_feed) {
         if (prop >= min && prop < max) {
           data.push(
-            <div key={Math.random()} className="news-conts">
+            <div
+              key={this.props.articles.data.main_feed[prop].id}
+              className={!this.props.id ? design : 'design-120-60-less-height'}
+              onMouseEnter={() =>
+                this.articleDivInfoVisible(
+                  'news-hover-' + this.props.articles.data.backup_feed[prop].id,
+                )
+              }
+              onMouseLeave={() =>
+                this.articleDivInfoInvisible(
+                  'news-hover-' + this.props.articles.data.backup_feed[prop].id,
+                )
+              }
+            >
               <div
                 className="img-div"
-                onClick={() =>
-                  this.routerMethod('news/' + this.props.articles.data.backup_feed[prop].id)
-                }
                 style={{
                   backgroundImage: `url(${'http://' +
                     VALUES.BD_ORIGIN +
@@ -121,6 +131,26 @@ export class News extends Component {
                     this.props.articles.data.backup_feed[prop].img_url})`,
                 }}
               ></div>
+              <div
+                className={
+                  !this.props.id ? 'wrapper-news-div-hover' : 'wrapper-news-div-hover-smaller'
+                }
+                onClick={() =>
+                  this.routerMethod('news/' + this.props.articles.data.backup_feed[prop].id)
+                }
+                id={'news-hover-' + this.props.articles.data.backup_feed[prop].id}
+              >
+                <p>
+                  {this.props.articles.data.backup_feed[prop].username +
+                    ' - ' +
+                    this.props.articles.data.backup_feed[prop].name}
+                </p>
+                <h1>
+                  {this.props.articles.data.backup_feed[prop].title.length > 100
+                    ? this.props.articles.data.backup_feed[prop].title.substring(0, 100) + '...'
+                    : this.props.articles.data.backup_feed[prop].title}
+                </h1>
+              </div>
             </div>,
           );
         }
@@ -139,7 +169,7 @@ export class News extends Component {
     for (const prop in this.props.articles.data.main_feed) {
       data.push(
         <div
-          key={Math.random()}
+          key={this.props.articles.data.main_feed[prop].id}
           className={!this.props.id ? 'design-120-60' : 'design-120-60-less-height'}
           onMouseEnter={() =>
             this.articleDivInfoVisible('news-hover-' + this.props.articles.data.main_feed[prop].id)
@@ -164,11 +194,7 @@ export class News extends Component {
             onClick={() => this.routerMethod('news/' + this.props.articles.data.main_feed[prop].id)}
             id={'news-hover-' + this.props.articles.data.main_feed[prop].id}
           >
-            <p>
-              {this.props.articles.data.main_feed[prop].username +
-                ' - ' +
-                this.props.articles.data.main_feed[prop].name}
-            </p>
+            <p>{this.props.articles.data.main_feed[prop].username}</p>
             <h1>
               {this.props.articles.data.main_feed[prop].title.length > 100
                 ? this.props.articles.data.main_feed[prop].title.substring(0, 100) + '...'
@@ -178,7 +204,11 @@ export class News extends Component {
         </div>,
       );
     }
-    return this.props.articles.data.main_feed[0] ? data : <h5 className="no-result-tag-title">{'Sin resultados'}</h5>;
+    return this.props.articles.data.main_feed[0] ? (
+      data
+    ) : (
+      <h5 className="no-result-tag-title">{'Sin resultados'}</h5>
+    );
   };
 
   newsDistribution = () => {
@@ -192,7 +222,7 @@ export class News extends Component {
       this.props.id
     ) {
       contentNews.push(
-        <div className="row">{this.buildNews('main', 0, 'end', 'design-120-60')}</div>,
+        <div className="row" key={Math.random()}>{this.buildNews('main', 0, 'end', 'design-120-60')}{this.buildNews('back', 0, 'end', 'design-120-60')}</div>,
       );
     } else if (
       this.props.articles &&
@@ -200,16 +230,10 @@ export class News extends Component {
       this.props.routeparams === 'main' &&
       !this.props.id
     ) {
-      if (this.props.articles.data.main_feed.length > 25) {
-        contentNews.push(
-          <div className="row">{this.buildNews('main', 0, 'end', 'design-120-60')}</div>,
-        );
-        contentNews.push(<br />);
-      } else {
-        contentNews.push(
-          <div className="row">{this.buildNews('main', 0, 'end', 'design-120-60')}</div>,
-        );
-      }
+      contentNews.push(
+        <div className="row" key={Math.random()}>{this.buildNews('main', 0, 'end', 'design-120-60')}</div>,
+      );
+      contentNews.push(<br key={Math.random()} />);
     }
     return contentNews;
   };

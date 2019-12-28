@@ -5,6 +5,8 @@ import * as actions from './redux/actions';
 import BannerMidd from './BannerMidd';
 import * as VALUES from '../../constants';
 
+const jwt = require('jsonwebtoken');
+
 export class NavBar extends Component {
   constructor(props) {
     super(props);
@@ -18,20 +20,29 @@ export class NavBar extends Component {
   }
 
   routerMethod = async destiny => {
-    if (destiny.includes('profile')) {
-      var user_destiny_id = destiny.split('/');
-      await this.props.actions.getNews({ token: VALUES.DEEP_TOKEN, id: user_destiny_id[2] });
-      await this.props.actions.getUser({ token: VALUES.DEEP_TOKEN, id: user_destiny_id[2] });
+    if (!this.props.home.getArticlesPending) {
+      if (destiny.includes('profile')) {
+        try {
+          var user = await jwt.verify(
+            localStorage.getItem('token-app-auth-current'),
+            VALUES.API_KEY,
+          );
+          await this.props.actions.getNews({ token: VALUES.DEEP_TOKEN, id: user.id });
+          await this.props.actions.getUser({ token: VALUES.DEEP_TOKEN, id: user.id });
+          destiny = destiny + user.id;
+          console.log('DESTINY', destiny);
+        } catch (err) {}
+      }
+      destiny === '/feed/main' &&
+        window.location.href.includes('feed') &&
+        (await this.props.actions.getArticles({
+          token: VALUES.DEEP_TOKEN,
+          param: 'main',
+          id: this.props.user || null,
+        }));
+      window.scrollTo(0, 0);
+      this.props.history.push(destiny);
     }
-    destiny === '/feed/main' &&
-      window.location.href.includes('feed') &&
-      (await this.props.actions.getArticles({
-        token: VALUES.DEEP_TOKEN,
-        param: 'main',
-        id: this.props.user || null,
-      }));
-    window.scrollTo(0, 0);
-    this.props.history.push(destiny);
   };
 
   async handleNews(news_id, news_name) {
@@ -210,7 +221,7 @@ export class NavBar extends Component {
                   <li className="nav-item active diss-in-desktop">
                     <a
                       onClick={() => {
-                        this.routerMethod('/profile/' + this.props.user);
+                        this.routerMethod('/profile/');
                       }}
                       className="nav-link a-link"
                     >
@@ -270,7 +281,7 @@ export class NavBar extends Component {
                   <li className="nav-item active">
                     <a
                       onClick={() => {
-                        this.routerMethod('/profile/' + this.props.user);
+                        this.routerMethod('/profile/');
                       }}
                       className="nav-link a-link"
                     >

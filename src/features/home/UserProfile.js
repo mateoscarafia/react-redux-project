@@ -344,7 +344,8 @@ export class UserProfile extends Component {
                     <img
                       alt="edit"
                       title="Editar mi perfil"
-                      width="30px"
+                      width="25px"
+                      style={{opacity:0.8}}
                       onClick={() => this.handleModal(true)}
                       className="edit-pen-user-profile-style"
                       src={require('../../images/edit-pen.PNG')}

@@ -24,7 +24,7 @@ export class BannerMidd extends Component {
   createBanner = () => {
     let text = [];
     for (const prop in this.props.home.latestnews.data) {
-      text.push(<span>{this.props.home.latestnews.data[prop].title.toUpperCase()}</span>);
+      text.push(<span key={Math.random()}>{this.props.home.latestnews.data[prop].title.toUpperCase()}</span>);
     }
     return text.reverse();
   };
@@ -41,11 +41,11 @@ export class BannerMidd extends Component {
             <p className="midd-bann-p bold-text-for-banner">{this.midText()}</p>
           </div>
           <div className="midd-bann-text-second">
-            <p id="text-banner-id-for-movement" className="midd-bann-p">
+            <div id="text-banner-id-for-movement" className="midd-bann-p">
               {this.props.home.latestnews && (
                 <TextLoop interval={3000}>{this.createBanner()}</TextLoop>
               )}
-            </p>
+            </div>
           </div>
         </div>
         <div className="triangle-div-down-low"></div>
