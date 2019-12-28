@@ -102,15 +102,15 @@ export class UserProfile extends Component {
 
   _handleImageChangeP(e) {
     e.preventDefault();
-    let reader = new FileReader();
+    let readerP = new FileReader();
     let fileP = e.target.files[0];
-    reader.onloadend = () => {
+    readerP.onloadend = () => {
       this.setState({
         fileP: fileP,
-        imagePreviewUrlP: reader.result,
+        imagePreviewUrlP: readerP.result,
       });
     };
-    reader.readAsDataURL(fileP);
+    readerP.readAsDataURL(fileP);
   }
 
   handleModal = action => {
