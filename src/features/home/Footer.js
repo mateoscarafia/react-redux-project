@@ -13,7 +13,7 @@ export class Footer extends Component {
   render() {
     return (
       <div className="home-footer">
-       <h4>NEEDLY</h4>
+       <h4>WOORDI</h4>
        <p>Tú eres el periodista</p>
        <br/>
        <img alt="edit" width="200" src={require('../../images/social-net.PNG')} />

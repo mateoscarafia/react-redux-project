@@ -130,7 +130,7 @@ export class NavBar extends Component {
         <BannerMidd />
         <nav className="navbar navbar-expand-lg navbar-light blue-background brand-link-nav">
           <a onClick={() => this.routerMethod('/feed/main')} className="navbar-brand a-link">
-            <b>NEDDLY</b>
+            <b>WOORDI</b>
           </a>
           <button
             id="navbar-toggler-id-for-clicking"
