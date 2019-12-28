@@ -263,7 +263,7 @@ export class UserProfile extends Component {
               onClick={() => this.routerMethod('../news/' + item.id, item.user_id)}
               id={'news-hover-' + item.id}
             >
-              <p>{item.username}</p>
+              <p>{item.name}</p>
               <h1>{item.title.length > 80 ? item.title.substring(0, 80) + '...' : item.title}</h1>
             </div>
           </div>
