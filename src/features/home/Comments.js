@@ -56,7 +56,7 @@ export class Comments extends Component {
             <p onClick={() => this.deleteComment(item.id)} className="delete-comment-float-right">
               <img
                 alt="edit"
-                width="20"
+                width="15"
                 className="edit-pen-user-profile-style"
                 src={require('../../images/trash.png')}
               />
@@ -92,6 +92,8 @@ export class Comments extends Component {
   };
 
   postComment = async () => {
+    document.getElementById('spinner-comment-send-button').style.display = 'inline';
+    document.getElementById('comment-send-button').style.display = 'none';
     if (!this.props.user_id) {
       NotificationManager.warning('Debes loguearte para opinar');
       document.getElementById('comment-send-button').style.display = 'inline';
@@ -154,7 +156,7 @@ export class Comments extends Component {
               >
                 <img
                   alt="edit"
-                  width="28"
+                  width="24"
                   className="edit-pen-user-profile-style"
                   src={require('../../images/spinner.gif')}
                 />

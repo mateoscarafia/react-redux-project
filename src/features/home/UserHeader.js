@@ -27,6 +27,7 @@ export class UserHeader extends Component {
   }
 
   async componentWillMount() {
+    console.log(this.props.user_id)
     if (localStorage.getItem('token-app-auth-current')) {
       try {
         var user = jwt.verify(localStorage.getItem('token-app-auth-current'), VALUES.API_KEY);

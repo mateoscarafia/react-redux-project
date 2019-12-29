@@ -47,6 +47,11 @@ export class UserProfile extends Component {
     }
     id && (await this.props.actions.getUser({ token: VALUES.DEEP_TOKEN, id: id }));
     id &&
+      (await this.props.actions.isFollow({
+        token: localStorage.getItem('token-app-auth-current'),
+        user_id_followed: id,
+      }));
+    id &&
       this.setState({
         openMyFollowers: !this.state.openMyFollowers,
       });
