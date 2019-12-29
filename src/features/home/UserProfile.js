@@ -42,6 +42,9 @@ export class UserProfile extends Component {
   }
 
   routerMethod = async (destiny, id) => {
+    if (destiny.includes('profile')) {
+      this.props.actions.getNews({ token: VALUES.DEEP_TOKEN, id: id });
+    }
     id && (await this.props.actions.getUser({ token: VALUES.DEEP_TOKEN, id: id }));
     id &&
       this.setState({
@@ -75,7 +78,7 @@ export class UserProfile extends Component {
 
   buildFollowers = () => {
     if (!this.props.home.myfollowers.data[0]) {
-      return <p>No tienes seguidores</p>;
+      return <p className="smaller-meta-data">- No tienes seguidores -</p>;
     } else {
       return this.props.home.myfollowers.data.map(item => {
         return (
@@ -389,8 +392,12 @@ export class UserProfile extends Component {
                 </a>
                 <br />
               </div>
-              {this.props.home.getFollowersPending && 'Loading...'}
-              {this.props.home.myfollowers && !this.props.home.getFollowersPending && this.buildFollowers()}
+              {this.props.home.getFollowersPending && (
+                <p className="smaller-meta-data">Loading...</p>
+              )}
+              {this.props.home.myfollowers &&
+                !this.props.home.getFollowersPending &&
+                this.buildFollowers()}
             </div>
           )}
           {this.props.home.user &&

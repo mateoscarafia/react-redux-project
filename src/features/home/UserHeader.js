@@ -141,7 +141,7 @@ export class UserHeader extends Component {
 
   buildMessages = () => {
     if (!this.props.home.mymessages.data[0]) {
-      return <p>No tienes telegramas</p>
+      return <p className="smaller-meta-data">- No tienes telegramas -</p>;
     } else {
       return this.props.home.mymessages.data.map(item => {
         return (
@@ -354,8 +354,17 @@ export class UserHeader extends Component {
           )}
           {this.state.openMailBox && (
             <div className="mailbox-div">
-              {this.props.home.getMessagesPending && <p>Loading...</p>}
-              {this.props.home.mymessages && !this.props.home.getMessagesPending && this.buildMessages()}
+              <div className="telegrams-header-edit-user">
+                <a className="close-modal-header-edit-telegram" onClick={() => this.openMailBox()}>
+                  X
+                </a>
+              </div>
+              {this.props.home.getMessagesPending && (
+                <p className="smaller-meta-data">Loading...</p>
+              )}
+              {this.props.home.mymessages &&
+                !this.props.home.getMessagesPending &&
+                this.buildMessages()}
             </div>
           )}
           <NotificationContainer />
