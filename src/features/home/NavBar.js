@@ -36,7 +36,7 @@ export class NavBar extends Component {
       destiny === '/feed/main' &&
         window.location.href.includes('feed') &&
         (await this.props.actions.getArticles({
-          token: VALUES.DEEP_TOKEN,
+          token: localStorage.getItem('token-app-auth-current') || VALUES.DEEP_TOKEN,
           param: 'main',
           id: this.props.user || null,
         }));
