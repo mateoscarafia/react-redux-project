@@ -143,16 +143,8 @@ export class Article extends Component {
           <div
             key={item.title + '-' + item.id}
             className="design-120-60"
-            onMouseEnter={() =>
-              this.articleDivInfoVisible(
-                'news-hover-' + item.id,
-              )
-            }
-            onMouseLeave={() =>
-              this.articleDivInfoInvisible(
-                'news-hover-' + item.id,
-              )
-            }
+            onMouseEnter={() => this.articleDivInfoVisible('news-hover-' + item.id)}
+            onMouseLeave={() => this.articleDivInfoInvisible('news-hover-' + item.id)}
           >
             <div
               className="img-div"
@@ -217,7 +209,15 @@ export class Article extends Component {
     );
   };
 
+  rotateUserProfileImage = () => {
+    if (document.getElementById('img-div-article-news-header-id-rotation')) {
+      document.getElementById('img-div-article-news-header-id-rotation').style.transform =
+        'rotate(' + this.props.home.uniquearticle.rotate_img_profile + 'deg)';
+    }
+  };
+
   render() {
+    this.props.home.uniquearticle && this.rotateUserProfileImage();
     if (this.props.home.getArticleError || this.props.home.getCategoriesError) {
       this.goToErrorLanding();
       return null;
@@ -262,6 +262,7 @@ export class Article extends Component {
                 <div className="row">
                   <div className="col-lg-1 col-md-3 col-sm-6 col-xs-6">
                     <div
+                      id="img-div-article-news-header-id-rotation"
                       className="img-div-article-news-header"
                       onClick={() =>
                         this.routerMethod(
@@ -354,7 +355,7 @@ export class Article extends Component {
             />
           )}
           <div className="similar-articles-article">
-            <p style={{fontSize:'12px'}}>Relacionados</p>
+            <p style={{ fontSize: '12px' }}>Relacionados</p>
             <div className="row">{this.props.home.related && this.buildNews()}</div>
           </div>
           <Footer />

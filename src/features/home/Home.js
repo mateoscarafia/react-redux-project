@@ -96,8 +96,23 @@ export class Home extends Component {
     window.scrollTo(0, 0);
   };
 
+  rotateUserProfileImage = () => {
+    if (document.getElementById('img-div-article-news-header-id-rotation-home')) {
+      document.getElementById('img-div-article-news-header-id-rotation-home').style.transform =
+        'rotate(' + this.props.home.user.data[0].rotate_img_profile + 'deg)';
+    }
+  };
+
+  removeTokenAndKill = () => {
+    localStorage.removeItem('token-app-auth-current');
+    window.location.replace('http://' + VALUES.BD_ORIGIN + ':6075/feed/main');
+  };
+
   render() {
-    if (
+    this.props.home.user && this.props.home.user.data[0] && this.rotateUserProfileImage();
+    if (this.props.home.user && !this.props.home.user.data[0]) {
+      this.removeTokenAndKill();
+    } else if (
       this.state.id &&
       !this.props.home.categories &&
       !this.props.home.user &&
@@ -158,6 +173,7 @@ export class Home extends Component {
                           this.props.home.user.data[0].profile_img_url})`,
                       }}
                       className="user-profile-picture"
+                      id="img-div-article-news-header-id-rotation-home"
                     ></div>
                     <p
                       onClick={() =>
