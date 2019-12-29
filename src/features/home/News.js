@@ -109,7 +109,7 @@ export class News extends Component {
         if (prop >= min && prop < max) {
           data.push(
             <div
-              key={this.props.articles.data.main_feed[prop].id}
+              key={this.props.articles.data.backup_feed[prop].id}
               className={!this.props.id ? design : 'design-120-60-less-height'}
               onMouseEnter={() =>
                 this.articleDivInfoVisible(

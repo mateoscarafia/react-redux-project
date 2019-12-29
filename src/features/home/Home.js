@@ -47,7 +47,7 @@ export class Home extends Component {
         let data = { token: localStorage.getItem('token-app-auth-current'), id: user.id };
         await this.props.actions.getCategories();
         await this.props.actions.getArticles({
-          token: VALUES.DEEP_TOKEN,
+          token: localStorage.getItem('token-app-auth-current'),
           param: this.props.match.params.info,
           id: user.id,
         });

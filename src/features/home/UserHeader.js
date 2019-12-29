@@ -140,35 +140,39 @@ export class UserHeader extends Component {
   };
 
   buildMessages = () => {
-    return this.props.home.mymessages.data.map(item => {
-      return (
-        <div key={item.id} className="mailbox-inner-messages-div">
-          <div
-            style={{
-              backgroundImage: `url(${'http://' +
-                VALUES.BD_ORIGIN +
-                ':3000/network_images/' +
-                item.profile_img_url})`,
-            }}
-            className="mailbox-pic-header-background-image"
-          ></div>
-          <p
-            onClick={() =>
-              this.routerMethod('../profile/' + item.user_id_writer, item.user_id_writer)
-            }
-            className="username-name-message"
-          >
-            {item.username}
-          </p>
-          <p className="date-message">
-            - {this.convertDate(new Date(parseInt(item.created_at, 10)).toString())}
-          </p>
-          <br />
-          <p className="message-content">{item.message}</p>
-          <hr />
-        </div>
-      );
-    });
+    if (!this.props.home.mymessages.data[0]) {
+      return <p>No tienes telegramas</p>
+    } else {
+      return this.props.home.mymessages.data.map(item => {
+        return (
+          <div key={item.id} className="mailbox-inner-messages-div">
+            <div
+              style={{
+                backgroundImage: `url(${'http://' +
+                  VALUES.BD_ORIGIN +
+                  ':3000/network_images/' +
+                  item.profile_img_url})`,
+              }}
+              className="mailbox-pic-header-background-image"
+            ></div>
+            <p
+              onClick={() =>
+                this.routerMethod('../profile/' + item.user_id_writer, item.user_id_writer)
+              }
+              className="username-name-message"
+            >
+              {item.username}
+            </p>
+            <p className="date-message">
+              - {this.convertDate(new Date(parseInt(item.created_at, 10)).toString())}
+            </p>
+            <br />
+            <p className="message-content">{item.message}</p>
+            <hr />
+          </div>
+        );
+      });
+    }
   };
 
   componentWillReceiveProps(nextProps) {
@@ -351,7 +355,7 @@ export class UserHeader extends Component {
           {this.state.openMailBox && (
             <div className="mailbox-div">
               {this.props.home.getMessagesPending && <p>Loading...</p>}
-              {this.props.home.mymessages && this.buildMessages()}
+              {this.props.home.mymessages && !this.props.home.getMessagesPending && this.buildMessages()}
             </div>
           )}
           <NotificationContainer />

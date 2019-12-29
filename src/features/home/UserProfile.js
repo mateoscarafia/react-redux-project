@@ -74,30 +74,34 @@ export class UserProfile extends Component {
   };
 
   buildFollowers = () => {
-    return this.props.home.myfollowers.data.map(item => {
-      return (
-        <div key={item.id} className="mailbox-inner-messages-div">
-          <div
-            style={{
-              backgroundImage: `url(${'http://' +
-                VALUES.BD_ORIGIN +
-                ':3000/network_images/' +
-                item.profile_img_url})`,
-            }}
-            className="mailbox-pic-header-background-image"
-          ></div>
-          <p
-            onClick={() => this.routerMethod('../profile/' + item.id, item.id)}
-            className="username-name-message"
-          >
-            {item.username}
-          </p>
-          <p className="date-message">- {item.profession}</p>
-          <hr className="hr-white-invisible" />
-          <br />
-        </div>
-      );
-    });
+    if (!this.props.home.myfollowers.data[0]) {
+      return <p>No tienes seguidores</p>;
+    } else {
+      return this.props.home.myfollowers.data.map(item => {
+        return (
+          <div key={item.id} className="mailbox-inner-messages-div">
+            <div
+              style={{
+                backgroundImage: `url(${'http://' +
+                  VALUES.BD_ORIGIN +
+                  ':3000/network_images/' +
+                  item.profile_img_url})`,
+              }}
+              className="mailbox-pic-header-background-image"
+            ></div>
+            <p
+              onClick={() => this.routerMethod('../profile/' + item.id, item.id)}
+              className="username-name-message"
+            >
+              {item.username}
+            </p>
+            <p className="date-message">- {item.profession}</p>
+            <hr className="hr-white-invisible" />
+            <br />
+          </div>
+        );
+      });
+    }
   };
 
   _handleImageChangeP(e) {
@@ -231,42 +235,33 @@ export class UserProfile extends Component {
     document.getElementById(div).style.opacity = 0;
   };
 
-
   buildNews = () => {
     return this.props.home.userarticles.data.map(item => {
       return (
         <div
-            key={item.title + '-' + item.id}
-            className="design-120-60"
-            onMouseEnter={() =>
-              this.articleDivInfoVisible(
-                'news-hover-' + item.id,
-              )
-            }
-            onMouseLeave={() =>
-              this.articleDivInfoInvisible(
-                'news-hover-' + item.id,
-              )
-            }
+          key={item.title + '-' + item.id}
+          className="design-120-60"
+          onMouseEnter={() => this.articleDivInfoVisible('news-hover-' + item.id)}
+          onMouseLeave={() => this.articleDivInfoInvisible('news-hover-' + item.id)}
+        >
+          <div
+            className="img-div"
+            style={{
+              backgroundImage: `url(${'http://' +
+                VALUES.BD_ORIGIN +
+                ':3000/network_images/' +
+                item.img_url})`,
+            }}
+          ></div>
+          <div
+            className="wrapper-news-div-hover"
+            onClick={() => this.routerMethod('../news/' + item.id, item.user_id)}
+            id={'news-hover-' + item.id}
           >
-            <div
-              className="img-div"
-              style={{
-                backgroundImage: `url(${'http://' +
-                  VALUES.BD_ORIGIN +
-                  ':3000/network_images/' +
-                  item.img_url})`,
-              }}
-            ></div>
-            <div
-              className="wrapper-news-div-hover"
-              onClick={() => this.routerMethod('../news/' + item.id, item.user_id)}
-              id={'news-hover-' + item.id}
-            >
-              <p>{item.name}</p>
-              <h1>{item.title.length > 80 ? item.title.substring(0, 80) + '...' : item.title}</h1>
-            </div>
+            <p>{item.name}</p>
+            <h1>{item.title.length > 80 ? item.title.substring(0, 80) + '...' : item.title}</h1>
           </div>
+        </div>
       );
     });
   };
@@ -345,7 +340,7 @@ export class UserProfile extends Component {
                       alt="edit"
                       title="Editar mi perfil"
                       width="25px"
-                      style={{opacity:0.8}}
+                      style={{ opacity: 0.8 }}
                       onClick={() => this.handleModal(true)}
                       className="edit-pen-user-profile-style"
                       src={require('../../images/edit-pen.PNG')}
@@ -395,7 +390,7 @@ export class UserProfile extends Component {
                 <br />
               </div>
               {this.props.home.getFollowersPending && 'Loading...'}
-              {this.props.home.myfollowers && this.buildFollowers()}
+              {this.props.home.myfollowers && !this.props.home.getFollowersPending && this.buildFollowers()}
             </div>
           )}
           {this.props.home.user &&
