@@ -72,7 +72,7 @@ export function reducer(state, action) {
         ...state,
         getFollowingPending: false,
         getFollowingError: null,
-        following: action.data,
+        myfollowings: action.data,
       };
 
     case HOME_GET_FOLLOWING_FAILURE:

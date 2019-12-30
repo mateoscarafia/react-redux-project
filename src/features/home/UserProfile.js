@@ -36,6 +36,7 @@ export class UserProfile extends Component {
       password1: null,
       password2: null,
       openMyFollowers: false,
+      openMyFollowings: false,
     };
     this._handleImageChange = this._handleImageChange.bind(this);
     this._handleImageChangeP = this._handleImageChangeP.bind(this);
@@ -72,13 +73,36 @@ export class UserProfile extends Component {
     reader.readAsDataURL(file);
   }
 
-  openMyFollowers = async () => {
-    this.setState({
-      openMyFollowers: !this.state.openMyFollowers,
-    });
-    await this.props.actions.getFollowers({
-      token: localStorage.getItem('token-app-auth-current'),
-    });
+  openMyFollowers = async id => {
+    if (parseInt(this.props.match.params.id, 10) === id) {
+      this.setState({
+        openMyFollowers: !this.state.openMyFollowers,
+      });
+      !this.state.openMyFollowers &&
+        (await this.props.actions.getFollowers({
+          token: localStorage.getItem('token-app-auth-current'),
+        }));
+    }
+    !id &&
+      this.setState({
+        openMyFollowers: !this.state.openMyFollowers,
+      });
+  };
+
+  openMyFollowing = async id => {
+    if (parseInt(this.props.match.params.id, 10) === id) {
+      this.setState({
+        openMyFollowings: !this.state.openMyFollowings,
+      });
+      !this.state.openMyFollowings &&
+        (await this.props.actions.getFollowing({
+          token: localStorage.getItem('token-app-auth-current'),
+        }));
+    }
+    !id &&
+      this.setState({
+        openMyFollowings: !this.state.openMyFollowings,
+      });
   };
 
   buildFollowers = () => {
@@ -86,6 +110,37 @@ export class UserProfile extends Component {
       return <p className="smaller-meta-data">- No tienes seguidores -</p>;
     } else {
       return this.props.home.myfollowers.data.map(item => {
+        return (
+          <div key={item.id} className="mailbox-inner-messages-div">
+            <div
+              style={{
+                backgroundImage: `url(${'http://' +
+                  VALUES.BD_ORIGIN +
+                  ':3000/network_images/' +
+                  item.profile_img_url})`,
+              }}
+              className="mailbox-pic-header-background-image"
+            ></div>
+            <p
+              onClick={() => this.routerMethod('../profile/' + item.id, item.id)}
+              className="username-name-message"
+            >
+              {item.username}
+            </p>
+            <p className="date-message">- {item.profession}</p>
+            <hr className="hr-white-invisible" />
+            <br />
+          </div>
+        );
+      });
+    }
+  };
+
+  buildFollowings = () => {
+    if (!this.props.home.myfollowings.data[0]) {
+      return <p className="smaller-meta-data">- No sigues a nadie -</p>;
+    } else {
+      return this.props.home.myfollowings.data.map(item => {
         return (
           <div key={item.id} className="mailbox-inner-messages-div">
             <div
@@ -280,6 +335,7 @@ export class UserProfile extends Component {
 
   render() {
     try {
+      var userLogged = this.props.home.user && jwt.verify(localStorage.getItem('token-app-auth-current'), VALUES.API_KEY);
       var $imagePreview,
         $imagePreviewP = null;
       if (this.props.home.user) {
@@ -360,21 +416,25 @@ export class UserProfile extends Component {
                   )}
                 </h4>
                 <h5 className="country-city-user-profile">
-                  {'Seguidores: ' +
-                    this.props.home.user.data[0].followers +
-                    ' - Siguiendo: ' +
-                    this.props.home.user.data[0].following +
+                  <span
+                    className="span-hover-follows-inte"
+                    onClick={() => this.openMyFollowers(userLogged.id)}
+                  >
+                    {' '}
+                    Seguidores:{' '}
+                  </span>
+                  {this.props.home.user.data[0].followers + ' - '}
+                  <span
+                    className="span-hover-follows-inte"
+                    onClick={() => this.openMyFollowing(userLogged.id)}
+                  >
+                    {' '}
+                    Siguiendo:{' '}
+                  </span>
+                  {this.props.home.user.data[0].following +
                     ' - Artículos: ' +
                     this.props.home.user.data[0].num_articles}
                 </h5>
-                {this.props.home.user.data[0].id === this.state.id && (
-                  <h5
-                    onClick={() => this.openMyFollowers()}
-                    className="country-city-user-profile little-followers-text"
-                  >
-                    {this.state.openMyFollowers ? 'Esconder seguidores' : 'Ver mis seguidores'}
-                  </h5>
-                )}
                 <p>{this.props.home.user.data[0].about_me}</p>
               </div>
             )}
@@ -395,7 +455,7 @@ export class UserProfile extends Component {
               <div className="followers-header-edit-user">
                 <a
                   className="close-modal-header-edit-follower"
-                  onClick={() => this.openMyFollowers()}
+                  onClick={() => this.openMyFollowers(null)}
                 >
                   X
                 </a>
@@ -407,6 +467,25 @@ export class UserProfile extends Component {
               {this.props.home.myfollowers &&
                 !this.props.home.getFollowersPending &&
                 this.buildFollowers()}
+            </div>
+          )}
+          {this.state.openMyFollowings && (
+            <div className="followers-div">
+              <div className="followers-header-edit-user">
+                <a
+                  className="close-modal-header-edit-follower"
+                  onClick={() => this.openMyFollowing(null)}
+                >
+                  X
+                </a>
+                <br />
+              </div>
+              {this.props.home.getFollowingPending && (
+                <p className="smaller-meta-data">Loading...</p>
+              )}
+              {this.props.home.myfollowings &&
+                !this.props.home.getFollowingPending &&
+                this.buildFollowings()}
             </div>
           )}
           {this.props.home.user &&
