@@ -335,7 +335,11 @@ export class UserProfile extends Component {
 
   render() {
     try {
-      var userLogged = this.props.home.user && jwt.verify(localStorage.getItem('token-app-auth-current'), VALUES.API_KEY);
+      var userLogged = this.props.home.user
+        ? localStorage.getItem('token-app-auth-current')
+          ? jwt.verify(localStorage.getItem('token-app-auth-current'), VALUES.API_KEY)
+          : null
+        : null;
       var $imagePreview,
         $imagePreviewP = null;
       if (this.props.home.user) {
@@ -520,6 +524,7 @@ export class UserProfile extends Component {
                         placeholder="Nombre completo"
                       />
                     </div>
+                    <p> Imagenes de 10Mb max (.png .jpg .jpeg .gif)</p>
                     <div className="wrapper-image-form">
                       <div className="upload-image-form-editor">
                         <label className="custom-file-upload">
