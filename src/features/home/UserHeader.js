@@ -193,6 +193,7 @@ export class UserHeader extends Component {
     }
     if (this.props.home.postMessagePending && nextProps.home.sendmessage.data === 'ok') {
       NotificationManager.info('Telegrama enviado');
+      this.openMessenger();
     }
     if (this.props.home.postMessagePending && !nextProps.home.sendmessage.data) {
       NotificationManager.warning('Ups, algo fue mal');

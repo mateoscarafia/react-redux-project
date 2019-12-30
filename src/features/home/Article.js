@@ -335,6 +335,7 @@ export class Article extends Component {
                   >
                     <img
                       alt="edit"
+                      title="Me gusta"
                       style={{ width: '40px' }}
                       className="edit-pen-user-profile-style"
                       src={require('../../images/like.PNG')}
