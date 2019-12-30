@@ -422,7 +422,7 @@ export class UserProfile extends Component {
                 <h5 className="country-city-user-profile">
                   <span
                     className="span-hover-follows-inte"
-                    onClick={() => this.openMyFollowers(userLogged.id)}
+                    onClick={() => this.openMyFollowers(userLogged ? userLogged.id : null)}
                   >
                     {' '}
                     Seguidores:{' '}
