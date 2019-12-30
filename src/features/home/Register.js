@@ -113,7 +113,7 @@ export class Register extends Component {
             />
           </div>
           <button onClick={() => this.registerForm()} type="button" className="register-button">
-            Register
+            Registrarse
           </button>
           <p
             onClick={() =>

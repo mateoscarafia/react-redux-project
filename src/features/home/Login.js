@@ -87,10 +87,9 @@ export class Login extends Component {
               name="password"
               onChange={this.handleChange}
               id="password-input"
-              placeholder="Password"
+              placeholder="Contraseña"
             />
           </div>
-
           <p onClick={() => this.loginForm()} className="login-button">
             Login
           </p>
