@@ -561,7 +561,7 @@ export class UserProfile extends Component {
                       />
                     </div>
                     <div className="form-group">
-                      <label>Presentación</label>
+                      <label>Sobre mi</label>
                       <textarea
                         name="about_me"
                         type="text"
