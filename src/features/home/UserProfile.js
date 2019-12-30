@@ -275,31 +275,35 @@ export class UserProfile extends Component {
   };
 
   goToErrorLanding = () => {
-    window.location.replace('http://' + VALUES.BD_ORIGIN + ':6075/errorlanding');
+    window.location.replace('http://' + VALUES.BD_ORIGIN + ':6075/feed/main');
   };
 
   render() {
-    let $imagePreview,
-      $imagePreviewP = null;
-    if (this.props.home.user) {
-      let imagePreviewUrl =
-        this.state.imagePreviewUrl ||
-        'http://' +
-          VALUES.BD_ORIGIN +
-          ':3000/network_images/' +
-          this.props.home.user.data[0].profile_img_url;
-      let imagePreviewUrlP =
-        this.state.imagePreviewUrlP ||
-        'http://' +
-          VALUES.BD_ORIGIN +
-          ':3000/network_images/' +
-          this.props.home.user.data[0].banner_img_url;
-      if (imagePreviewUrl) {
-        $imagePreview = <img alt="img-preview" src={imagePreviewUrl} />;
+    try {
+      var $imagePreview,
+        $imagePreviewP = null;
+      if (this.props.home.user) {
+        var imagePreviewUrl =
+          this.state.imagePreviewUrl ||
+          'http://' +
+            VALUES.BD_ORIGIN +
+            ':3000/network_images/' +
+            this.props.home.user.data[0].profile_img_url;
+        var imagePreviewUrlP =
+          this.state.imagePreviewUrlP ||
+          'http://' +
+            VALUES.BD_ORIGIN +
+            ':3000/network_images/' +
+            this.props.home.user.data[0].banner_img_url;
+        if (imagePreviewUrl) {
+          $imagePreview = <img alt="img-preview" src={imagePreviewUrl} />;
+        }
+        if (imagePreviewUrlP) {
+          $imagePreviewP = <img alt="img-preview" src={imagePreviewUrlP} />;
+        }
       }
-      if (imagePreviewUrlP) {
-        $imagePreviewP = <img alt="img-preview" src={imagePreviewUrlP} />;
-      }
+    } catch (err) {
+      window.location.replace('http://' + VALUES.BD_ORIGIN + ':6075/feed/main');
     }
     if (this.props.home.getUserError || this.props.home.getCategoriesError) {
       this.goToErrorLanding();

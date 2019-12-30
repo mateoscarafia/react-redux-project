@@ -186,15 +186,19 @@ export class TextEditor extends Component {
   }
 
   goToErrorLanding = () => {
-    window.location.replace('http://' + VALUES.BD_ORIGIN + ':6075/errorlanding');
+    window.location.replace('http://' + VALUES.BD_ORIGIN + ':6075/feed/main');
   };
 
   render() {
-    const { editorState } = this.state;
-    let { imagePreviewUrl } = this.state;
-    let $imagePreview = null;
-    if (imagePreviewUrl) {
-      $imagePreview = <img alt="img-preview" src={imagePreviewUrl} />;
+    try {
+      var { editorState } = this.state;
+      var { imagePreviewUrl } = this.state;
+      var $imagePreview = null;
+      if (imagePreviewUrl) {
+        $imagePreview = <img alt="img-preview" src={imagePreviewUrl} />;
+      }
+    } catch (err) {
+      window.location.replace('http://' + VALUES.BD_ORIGIN + ':6075/feed/main');
     }
     if (this.props.home.getUserError) {
       this.goToErrorLanding();

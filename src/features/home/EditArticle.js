@@ -215,26 +215,30 @@ export class EditArticle extends Component {
   }
 
   goToErrorLanding = () => {
-    window.location.replace('http://' + VALUES.BD_ORIGIN + ':6075/errorlanding');
+    window.location.replace('http://' + VALUES.BD_ORIGIN + ':6075/feed/main');
   };
 
   render() {
-    let editorState = this.state.changedEditor && this.state.editorState;
-    if (this.props.home.uniquearticle && !this.state.changedEditor) {
-      editorState = EditorState.createWithContent(
-        stateFromHTML(this.props.home.uniquearticle.data[0].content),
-      );
-    }
-    let imagePreviewUrl =
-      this.state.imagePreviewUrl ||
-      (this.props.home.uniquearticle &&
-        'http://' +
-          VALUES.BD_ORIGIN +
-          ':3000/network_images/' +
-          this.props.home.uniquearticle.data[0].img_url);
-    let $imagePreview = null;
-    if (imagePreviewUrl) {
-      $imagePreview = <img alt="img-preview" src={imagePreviewUrl} />;
+    try {
+      var editorState = this.state.changedEditor && this.state.editorState;
+      if (this.props.home.uniquearticle && !this.state.changedEditor) {
+        editorState = EditorState.createWithContent(
+          stateFromHTML(this.props.home.uniquearticle.data[0].content),
+        );
+      }
+      var imagePreviewUrl =
+        this.state.imagePreviewUrl ||
+        (this.props.home.uniquearticle &&
+          'http://' +
+            VALUES.BD_ORIGIN +
+            ':3000/network_images/' +
+            this.props.home.uniquearticle.data[0].img_url);
+      var $imagePreview = null;
+      if (imagePreviewUrl) {
+        $imagePreview = <img alt="img-preview" src={imagePreviewUrl} />;
+      }
+    } catch (err) {
+      window.location.replace('http://' + VALUES.BD_ORIGIN + ':6075/feed/main');
     }
     if (this.props.home.getArticleError) {
       this.goToErrorLanding();

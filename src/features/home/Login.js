@@ -71,7 +71,7 @@ export class Login extends Component {
     return (
       <div className="home-login">
         <form className="home-login-form">
-          <img alt="edit" width="50" src={require('../../images/logo.png')} />
+          <img alt="edit" width="50" src={require('../../images/icon-logo.ico')} />
           <div className="form-group">
             <input
               type="email"

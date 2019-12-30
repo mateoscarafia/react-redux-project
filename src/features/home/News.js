@@ -240,7 +240,7 @@ export class News extends Component {
 
   goToErrorLanding = () => {
     localStorage.removeItem('token-app-auth-current');
-    window.location.replace('http://' + VALUES.BD_ORIGIN + ':6075/errorlanding');
+    window.location.replace('http://' + VALUES.BD_ORIGIN + ':6075/feed/main');
   };
 
   render() {

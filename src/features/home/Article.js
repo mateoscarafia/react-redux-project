@@ -173,7 +173,7 @@ export class Article extends Component {
   };
 
   goToErrorLanding = () => {
-    window.location.replace('http://' + VALUES.BD_ORIGIN + ':6075/errorlanding');
+    window.location.replace('http://' + VALUES.BD_ORIGIN + ':6075/feed/main');
   };
 
   convertDate = date => {

@@ -13,10 +13,11 @@ export class Footer extends Component {
   render() {
     return (
       <div className="home-footer">
-       <h4>WOORDI</h4>
-       <p>Tú eres el periodista</p>
-       <br/>
-       <img alt="edit" width="200" src={require('../../images/social-net.PNG')} />
+        <img style={{marginBottom:'5px'}} alt="edit" width="30" src={require('../../images/icon-logo.ico')} />
+        <h4>woordi</h4>
+        <p>Tú eres el periodista</p>
+        <br />
+        <img alt="edit" width="200" src={require('../../images/social-net.PNG')} />
       </div>
     );
   }
@@ -32,11 +33,8 @@ function mapStateToProps(state) {
 /* istanbul ignore next */
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({ ...actions }, dispatch)
+    actions: bindActionCreators({ ...actions }, dispatch),
   };
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Footer);
+export default connect(mapStateToProps, mapDispatchToProps)(Footer);
