@@ -212,7 +212,7 @@ export class Article extends Component {
   rotateUserProfileImage = () => {
     if (document.getElementById('img-div-article-news-header-id-rotation')) {
       document.getElementById('img-div-article-news-header-id-rotation').style.transform =
-        'rotate(' + this.props.home.uniquearticle.rotate_img_profile + 'deg)';
+        'rotate(' + this.props.home.uniquearticle.data[0].rotate_img_profile + 'deg)';
     }
   };
 
