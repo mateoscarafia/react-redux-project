@@ -189,6 +189,11 @@ export class TextEditor extends Component {
     window.location.replace('http://' + VALUES.BD_ORIGIN + ':6075/feed/main');
   };
 
+  removeTokenAndKill = () => {
+    localStorage.removeItem('token-app-auth-current');
+    window.location.replace('http://' + VALUES.BD_ORIGIN + ':6075/feed/main');
+  };
+
   render() {
     try {
       var { editorState } = this.state;
@@ -198,25 +203,32 @@ export class TextEditor extends Component {
         $imagePreview = <img alt="img-preview" src={imagePreviewUrl} />;
       }
     } catch (err) {
-      window.location.replace('http://' + VALUES.BD_ORIGIN + ':6075/feed/main');
+      this.goToErrorLanding();
+      return null;
     }
     if (this.props.home.getUserError) {
       this.goToErrorLanding();
       return null;
+    } else if (
+      this.props.home.user &&
+      this.props.home.user.data[0] &&
+      this.props.home.user.data[0].username === 'blocked-user-woordi-secure-integrity'
+    ) {
+      this.removeTokenAndKill();
+      return null;
     } else {
       return (
         <div className="home-text-editor-css-style">
-          {typeof this.props.home.categories !== 'undefined' &&
-            typeof this.props.home.user !== 'undefined' && (
-              <NavBar
-                login={this.state.login}
-                history={this.props.history}
-                categories={this.props.home.categories}
-                user={this.state.id}
-              />
-            )}
+          {this.props.home.categories && this.props.home.user && (
+            <NavBar
+              login={this.state.login}
+              history={this.props.history}
+              categories={this.props.home.categories}
+              user={this.state.id}
+            />
+          )}
           <div className="editor-wrapper">
-            {typeof this.props.home.user !== 'undefined' && (
+            {this.props.home.user && (
               <UserHeader
                 isTextEditor={true}
                 isProfile={this.state.isProfile}

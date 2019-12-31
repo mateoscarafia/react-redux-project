@@ -14,7 +14,12 @@
     cursor: pointer;
   }
 
-  .span-hover-follows-inte:hover {
+  .who-reads-my-news{
+    cursor: pointer;
+    width:100px;
+  }
+
+  .who-reads-my-news:hover{
     font-weight: bold;
   }
 
@@ -73,13 +78,17 @@
     width: 300px;
     left: 320px;
     top: 200px;
-    z-index: 10;
+    z-index: 10001;
     height: 400px;
     padding: 15px;
     overflow-y: scroll;
     background-color: #fff;
     border-radius: 5px;
     box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15), 0 2px 3px rgba(0, 0, 0, 0.2);
+
+    .title-for-popup{
+      font-size: 13px;
+    }
 
     .smaller-meta-data {
       font-size: 12px;
@@ -100,7 +109,7 @@
     }
     .username-name-message {
       float: left;
-      font-size: 13px;
+      font-size: 12px;
       margin: 20px 0px 10px 10px;
       font-weight: bold;
       cursor: pointer;
@@ -111,6 +120,22 @@
       .close-modal-header-edit-follower {
         text-align: right;
         cursor: pointer;
+      }
+    }
+    .my-readers{
+      border-radius: 10px;
+      margin-bottom: 10px;
+      height: 50px;
+      padding:0px;
+      .my-readers-title{
+        font-size: 12px;
+        margin: 0px;
+        font-weight: bold;
+      }
+      .my-readers-user{
+        font-size: 12px;
+        cursor:pointer;
+        margin: 0px;
       }
     }
   }

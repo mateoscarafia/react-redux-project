@@ -37,6 +37,7 @@ export class UserProfile extends Component {
       password2: null,
       openMyFollowers: false,
       openMyFollowings: false,
+      openMyReaders: false,
     };
     this._handleImageChange = this._handleImageChange.bind(this);
     this._handleImageChangeP = this._handleImageChangeP.bind(this);
@@ -46,16 +47,18 @@ export class UserProfile extends Component {
     if (destiny.includes('profile')) {
       this.props.actions.getNews({ token: VALUES.DEEP_TOKEN, id: id });
     }
+    id &&
+      this.setState({
+        openMyFollowers: false,
+        openMyFollowings: false,
+        openMyReaders: false,
+      });
     id && (await this.props.actions.getUser({ token: VALUES.DEEP_TOKEN, id: id }));
     id &&
       (await this.props.actions.isFollow({
         token: localStorage.getItem('token-app-auth-current'),
         user_id_followed: id,
       }));
-    id &&
-      this.setState({
-        openMyFollowers: !this.state.openMyFollowers,
-      });
     this.props.history.push(destiny);
     window.scrollTo(0, 0);
   };
@@ -77,6 +80,8 @@ export class UserProfile extends Component {
     if (parseInt(this.props.match.params.id, 10) === id) {
       this.setState({
         openMyFollowers: !this.state.openMyFollowers,
+        openMyFollowings: false,
+        openMyReaders: false,
       });
       !this.state.openMyFollowers &&
         (await this.props.actions.getFollowers({
@@ -93,6 +98,8 @@ export class UserProfile extends Component {
     if (parseInt(this.props.match.params.id, 10) === id) {
       this.setState({
         openMyFollowings: !this.state.openMyFollowings,
+        openMyReaders: false,
+        openMyFollowers: false,
       });
       !this.state.openMyFollowings &&
         (await this.props.actions.getFollowing({
@@ -103,6 +110,17 @@ export class UserProfile extends Component {
       this.setState({
         openMyFollowings: !this.state.openMyFollowings,
       });
+  };
+
+  openMyReaders = async () => {
+    this.setState({
+      openMyReaders: !this.state.openMyReaders,
+      openMyFollowings: false,
+      openMyFollowers: false,
+    });
+    await this.props.actions.getNewsVisits({
+      token: localStorage.getItem('token-app-auth-current'),
+    });
   };
 
   buildFollowers = () => {
@@ -165,6 +183,61 @@ export class UserProfile extends Component {
         );
       });
     }
+  };
+
+  buildReaders = () => {
+    if (!this.props.home.mynewsvisits.data[0]) {
+      return <p className="smaller-meta-data">- Sin lectores, por el momento. -</p>;
+    } else {
+      return this.props.home.mynewsvisits.data.map(item => {
+        return (
+          <div key={Math.random()} className="my-readers">
+            <p
+              className="my-readers-user"
+              onClick={() => this.routerMethod('../profile/' + item.id, item.id)}
+            >
+              {item.username + ' '}-
+              {' ' + this.convertDate(new Date(parseInt(item.created_at, 10)).toString())}
+            </p>
+            <p className="my-readers-title">{item.title.substring(0, 60) + '...'}</p>
+            <br />
+          </div>
+        );
+      });
+    }
+  };
+
+  convertDate = date => {
+    let newFormat = date.split(' ');
+    return (
+      newFormat[2] +
+      '/' +
+      (newFormat[1] === 'Jan'
+        ? '01'
+        : newFormat[1] === 'Feb'
+        ? '02'
+        : newFormat[1] === 'Mar'
+        ? '03'
+        : newFormat[1] === 'Abr'
+        ? '04'
+        : newFormat[1] === 'May'
+        ? '05'
+        : newFormat[1] === 'Jun'
+        ? '06'
+        : newFormat[1] === 'Jul'
+        ? '07'
+        : newFormat[1] === 'Aug'
+        ? '08'
+        : newFormat[1] === 'Sep'
+        ? '09'
+        : newFormat[1] === 'Oct'
+        ? '10'
+        : newFormat[1] === 'Nov'
+        ? '11'
+        : '12') +
+      '/' +
+      newFormat[3]
+    );
   };
 
   _handleImageChangeP(e) {
@@ -333,6 +406,11 @@ export class UserProfile extends Component {
     window.location.replace('http://' + VALUES.BD_ORIGIN + ':6075/feed/main');
   };
 
+  removeTokenAndKill = () => {
+    localStorage.removeItem('token-app-auth-current');
+    window.location.replace('http://' + VALUES.BD_ORIGIN + ':6075/feed/main');
+  };
+
   render() {
     try {
       var userLogged = this.props.home.user
@@ -363,10 +441,18 @@ export class UserProfile extends Component {
         }
       }
     } catch (err) {
-      window.location.replace('http://' + VALUES.BD_ORIGIN + ':6075/feed/main');
+      this.goToErrorLanding();
+      return null;
     }
     if (this.props.home.getUserError || this.props.home.getCategoriesError) {
       this.goToErrorLanding();
+      return null;
+    } else if (
+      this.props.home.user &&
+      this.props.home.user.data[0] &&
+      this.props.home.user.data[0].username === 'blocked-user-woordi-secure-integrity'
+    ) {
+      this.removeTokenAndKill();
       return null;
     } else {
       return (
@@ -422,7 +508,9 @@ export class UserProfile extends Component {
                 <h5 className="country-city-user-profile">
                   <span
                     className="span-hover-follows-inte"
-                    onClick={() => this.openMyFollowers(userLogged ? userLogged.id : 'nothing-here')}
+                    onClick={() =>
+                      this.openMyFollowers(userLogged ? userLogged.id : 'nothing-here')
+                    }
                   >
                     {' '}
                     Seguidores:{' '}
@@ -430,7 +518,9 @@ export class UserProfile extends Component {
                   {this.props.home.user.data[0].followers + ' - '}
                   <span
                     className="span-hover-follows-inte"
-                    onClick={() => this.openMyFollowing(userLogged ? userLogged.id : 'nothing-here')}
+                    onClick={() =>
+                      this.openMyFollowing(userLogged ? userLogged.id : 'nothing-here')
+                    }
                   >
                     {' '}
                     Siguiendo:{' '}
@@ -439,6 +529,11 @@ export class UserProfile extends Component {
                     ' - Artículos: ' +
                     this.props.home.user.data[0].num_articles}
                 </h5>
+                {this.props.home.user.data[0].id === this.state.id && (
+                  <p onClick={() => this.openMyReaders()} className="who-reads-my-news">
+                    Mis lectores
+                  </p>
+                )}
                 <p>{this.props.home.user.data[0].about_me}</p>
               </div>
             )}
@@ -465,6 +560,7 @@ export class UserProfile extends Component {
                 </a>
                 <br />
               </div>
+              <p className="title-for-popup">Seguidores</p>
               {this.props.home.getFollowersPending && (
                 <p className="smaller-meta-data">Loading...</p>
               )}
@@ -484,12 +580,33 @@ export class UserProfile extends Component {
                 </a>
                 <br />
               </div>
+              <p className="title-for-popup">Siguiendo</p>
               {this.props.home.getFollowingPending && (
                 <p className="smaller-meta-data">Loading...</p>
               )}
               {this.props.home.myfollowings &&
                 !this.props.home.getFollowingPending &&
                 this.buildFollowings()}
+            </div>
+          )}
+          {this.state.openMyReaders && (
+            <div className="followers-div">
+              <div className="followers-header-edit-user">
+                <a
+                  className="close-modal-header-edit-follower"
+                  onClick={() => this.openMyReaders()}
+                >
+                  X
+                </a>
+                <br />
+              </div>
+              <p className="title-for-popup">Mis lectores</p>
+              {this.props.home.getNewsVisitsPending && (
+                <p className="smaller-meta-data">Loading...</p>
+              )}
+              {this.props.home.mynewsvisits &&
+                !this.props.home.getNewsVisitsPending &&
+                this.buildReaders()}
             </div>
           )}
           {this.props.home.user &&
@@ -524,7 +641,7 @@ export class UserProfile extends Component {
                         placeholder="Nombre completo"
                       />
                     </div>
-                    <p> Imagenes de 10Mb max (.png .jpg .jpeg .gif)</p>
+                    <label> Imagenes de 10Mb max (.png .jpg .jpeg .gif)</label>
                     <div className="wrapper-image-form">
                       <div className="upload-image-form-editor">
                         <label className="custom-file-upload">

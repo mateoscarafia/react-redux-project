@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import 'bootstrap-4-react';
 import * as actions from './redux/actions';
-import Modal from 'react-awesome-modal';
 import { NotificationContainer } from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
 import * as VALUES from '../../constants';
@@ -113,6 +112,12 @@ export class Home extends Component {
     if (this.props.home.user && !this.props.home.user.data[0]) {
       this.removeTokenAndKill();
     } else if (
+      this.props.home.user &&
+      this.props.home.user.data[0] &&
+      this.props.home.user.data[0].username === 'blocked-user-woordi-secure-integrity'
+    ) {
+      this.removeTokenAndKill();
+    } else if (
       this.state.id &&
       !this.props.home.categories &&
       !this.props.home.user &&
@@ -149,7 +154,7 @@ export class Home extends Component {
       let params = this.props.match.params.info;
       return (
         <div className="home-home">
-          {typeof this.props.home.categories !== 'undefined' && (
+          {this.props.home.categories && (
             <NavBar
               login={this.state.login}
               history={this.props.history}
@@ -247,20 +252,6 @@ export class Home extends Component {
             </div>
           </div>
           <Footer />
-          <Modal
-            visible={this.state.visible}
-            width="50%"
-            height="50%"
-            borderRadius="0px"
-            effect="fadeInDown"
-            onClickAway={() => this.handleModal(false)}
-          >
-            <div className="modal-header">
-              <a className="close-modal-header" onClick={() => this.handleModal(false)}>
-                X
-              </a>
-            </div>
-          </Modal>
           <NotificationContainer />
         </div>
       );

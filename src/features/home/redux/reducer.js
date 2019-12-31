@@ -32,6 +32,7 @@ import { reducer as getMessagesReducer } from './getMessages';
 import { reducer as changePassReducer } from './changePass';
 import { reducer as getLatestNewsReducer } from './getLatestNews';
 import { reducer as rotateImgReducer } from './rotateImg';
+import { reducer as getNewsVisitsReducer } from './getNewsVisits';
 
 const reducers = [
   getNewsReducer,
@@ -67,6 +68,7 @@ const reducers = [
   changePassReducer,
   getLatestNewsReducer,
   rotateImgReducer,
+  getNewsVisitsReducer,
 ];
 
 export default function reducer(state = initialState, action) {

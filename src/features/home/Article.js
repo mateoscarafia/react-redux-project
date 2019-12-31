@@ -4,7 +4,6 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
-import Modal from 'react-awesome-modal';
 import 'react-notifications/lib/notifications.css';
 import ReactHtmlParser from 'react-html-parser';
 import * as VALUES from '../../constants';
@@ -55,18 +54,16 @@ export class Article extends Component {
           login: true,
           id: user.id,
           article_likes: null,
+          visited: false,
         });
+        this.postVisitReader(this.props.match.params.id);
       }
     }
-    this.props.match.params.id &&
+    if (this.props.match.params.id) {
       this.props.actions.getArticle({ token: VALUES.DEEP_TOKEN, id: this.props.match.params.id });
-    this.props.match.params.id &&
       this.props.actions.getRelated({ token: VALUES.DEEP_TOKEN, id: this.props.match.params.id });
+    }
     this.props.actions.getCategories();
-  }
-
-  componentDidMount() {
-    this.props.actions.postViews();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -82,6 +79,7 @@ export class Article extends Component {
   routerMethod = async (destiny, id) => {
     window.scrollTo(0, 0);
     if (id) {
+      localStorage.getItem('token-app-auth-current') && this.postVisitReader(id);
       await this.props.actions.getArticle({ token: VALUES.DEEP_TOKEN, id: id });
       await this.props.actions.getComments({ news_id: id, token: VALUES.DEEP_TOKEN });
     }
@@ -107,16 +105,7 @@ export class Article extends Component {
     }
   };
 
-  followUser = (id, action) => {
-    let data = {
-      idFollower: '122',
-      idFollowed: id,
-      do: action,
-    };
-    this.props.actions.followUser(data);
-  };
-
-  likeArticle = (id, action) => {
+  likeArticle = () => {
     if (this.state.id) {
       let data = {
         news_id: this.props.match.params.id,
@@ -216,15 +205,34 @@ export class Article extends Component {
     }
   };
 
+  removeTokenAndKill = () => {
+    localStorage.removeItem('token-app-auth-current');
+    window.location.replace('http://' + VALUES.BD_ORIGIN + ':6075/feed/main');
+  };
+
+  postVisitReader = id => {
+    this.props.actions.postVisit({
+      token: localStorage.getItem('token-app-auth-current'),
+      news_id: id,
+    });
+  };
+
   render() {
     this.props.home.uniquearticle && this.rotateUserProfileImage();
     if (this.props.home.getArticleError || this.props.home.getCategoriesError) {
       this.goToErrorLanding();
       return null;
+    } else if (
+      this.props.home.uniquearticle &&
+      this.props.home.uniquearticle.data[0] &&
+      this.props.home.uniquearticle.data[0].username === 'blocked-user-woordi-secure-integrity'
+    ) {
+      this.removeTokenAndKill();
+      return null;
     } else {
       return (
         <div className="home-article">
-          {typeof this.props.home.categories !== 'undefined' && (
+          {this.props.home.categories && (
             <NavBar
               login={this.state.login}
               history={this.props.history}
@@ -283,6 +291,7 @@ export class Article extends Component {
                       onClick={() =>
                         this.routerMethod(
                           '../profile/' + this.props.home.uniquearticle.data[0].user_id,
+                          null,
                         )
                       }
                       className="article-header-username-main"
@@ -329,10 +338,7 @@ export class Article extends Component {
                 </div>
                 <br />
                 <div className="review-article-user-div">
-                  <p
-                    onClick={() => this.likeArticle(this.props.match.params.id, true)}
-                    className="review-article-user"
-                  >
+                  <p onClick={() => this.likeArticle()} className="review-article-user">
                     <img
                       alt="edit"
                       title="Me gusta"
@@ -357,47 +363,12 @@ export class Article extends Component {
           )}
           <div className="similar-articles-article">
             <p style={{ fontSize: '12px' }}>Relacionados</p>
+            {this.props.home.getRelatedError && (
+              <p style={{ fontSize: '12px', marginTop: '15px' }}>Sin artículos relacionados.</p>
+            )}
             <div className="row">{this.props.home.related && this.buildNews()}</div>
           </div>
           <Footer />
-          <Modal
-            visible={this.state.visible}
-            width="300px"
-            height="300px"
-            borderRadius="0px"
-            effect="fadeInDown"
-            onClickAway={() => this.handleModal(false)}
-          >
-            <div className="user-popup-content">
-              <a className="close-modal-header" onClick={() => this.handleModal(false)}>
-                X
-              </a>
-              <div className="user-popup-header-img">
-                <div
-                  onClick={() => this.routerMethod('../profile/' + this.state.userid, null)}
-                  style={{
-                    backgroundImage: `url(${'http://' +
-                      VALUES.BD_ORIGIN +
-                      ':3000/network_images/' +
-                      this.state.profile_img_url})`,
-                  }}
-                  className="user-profile-picture-popup"
-                ></div>
-              </div>
-              <div className="user-data-header-popup">
-                <h4 onClick={() => this.routerMethod('../profile/' + this.state.userid, null)}>
-                  {this.state.username}
-                </h4>
-                <p>{this.state.profession}</p>
-                <p
-                  onClick={() => this.followUser(this.state.userid, true)}
-                  className="follow-button"
-                >
-                  Seguir
-                </p>
-              </div>
-            </div>
-          </Modal>
           <NotificationContainer />
         </div>
       );
