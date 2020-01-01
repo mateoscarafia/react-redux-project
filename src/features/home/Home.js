@@ -107,6 +107,10 @@ export class Home extends Component {
     window.location.replace('http://' + VALUES.BD_ORIGIN + ':6075/feed/main');
   };
 
+  goToErrorLanding = () => {
+    window.location.replace('http://' + VALUES.BD_ORIGIN + ':6075/errorlanding');
+  };
+
   render() {
     this.props.home.user && this.props.home.user.data[0] && this.rotateUserProfileImage();
     if (this.props.home.user && !this.props.home.user.data[0]) {
@@ -117,6 +121,12 @@ export class Home extends Component {
       this.props.home.user.data[0].username === 'blocked-user-woordi-secure-integrity'
     ) {
       this.removeTokenAndKill();
+    } else if (
+      this.props.home.getUserError ||
+      this.props.home.getArticlesError ||
+      this.props.home.getCategoriesError
+    ) {
+      this.goToErrorLanding();
     } else if (
       this.state.id &&
       !this.props.home.categories &&

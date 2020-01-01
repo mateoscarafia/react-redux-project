@@ -33,6 +33,7 @@ import { reducer as changePassReducer } from './changePass';
 import { reducer as getLatestNewsReducer } from './getLatestNews';
 import { reducer as rotateImgReducer } from './rotateImg';
 import { reducer as getNewsVisitsReducer } from './getNewsVisits';
+import { reducer as securityTokenReducer } from './securityToken';
 
 const reducers = [
   getNewsReducer,
@@ -69,6 +70,7 @@ const reducers = [
   getLatestNewsReducer,
   rotateImgReducer,
   getNewsVisitsReducer,
+  securityTokenReducer,
 ];
 
 export default function reducer(state = initialState, action) {

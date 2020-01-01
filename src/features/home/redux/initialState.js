@@ -67,6 +67,8 @@ const initialState = {
   rotateImgError: null,
   getNewsVisitsPending: false,
   getNewsVisitsError: null,
+  securityTokenPending: false,
+  securityTokenError: null,
 };
 
 export default initialState;

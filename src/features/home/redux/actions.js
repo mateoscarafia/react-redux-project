@@ -32,3 +32,4 @@ export { changePass, dismissChangePassError } from './changePass';
 export { getLatestNews, dismissGetLatestNewsError } from './getLatestNews';
 export { rotateImg, dismissRotateImgError } from './rotateImg';
 export { getNewsVisits, dismissGetNewsVisitsError } from './getNewsVisits';
+export { securityToken, dismissSecurityTokenError } from './securityToken';

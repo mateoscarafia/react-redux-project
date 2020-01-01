@@ -306,6 +306,16 @@ export class UserProfile extends Component {
     }
   };
 
+  safetyNet = async () => {
+    try {
+      let token = await this.props.actions.securityToken();
+      let data = jwt.verify(token.data.token, VALUES.API_KEY);
+      return data.id;
+    } catch (err) {
+      return null;
+    }
+  };
+
   sendUpdateUser = async () => {
     document.getElementById('cambiar-user-data-id').style.display = 'none';
     document.getElementById('cambiar-user-data-id-spinner').style.display = 'inline';
@@ -313,8 +323,18 @@ export class UserProfile extends Component {
     const dataP = new FormData();
     data.append('file', this.state.file);
     dataP.append('file', this.state.fileP);
-    let res = await axios.post('http://' + VALUES.BD_ORIGIN + ':3000/file-upload', data, {});
-    let resP = await axios.post('http://' + VALUES.BD_ORIGIN + ':3000/file-upload', dataP, {});
+    var secret_key = await this.safetyNet();
+    var secret_keyP = await this.safetyNet();
+    let res = await axios.post('http://' + VALUES.BD_ORIGIN + ':3000/file-upload', data, {
+      headers: {
+        secret_key: secret_key,
+      },
+    });
+    let resP = await axios.post('http://' + VALUES.BD_ORIGIN + ':3000/file-upload', dataP, {
+      headers: {
+        secret_key: secret_keyP,
+      },
+    });
     let dataUpdate = {
       token: localStorage.getItem('token-app-auth-current'),
       profile_img_url: res.data.filename || this.props.home.user.data[0].profile_img_url,

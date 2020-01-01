@@ -105,58 +105,75 @@ export class TextEditor extends Component {
     this.setState({ [event.target.name]: event.target.value });
   };
 
-  postArticle() {
+  safetyNet = async () => {
+    try {
+      let token = await this.props.actions.securityToken();
+      var data = jwt.verify(token.data.token, VALUES.API_KEY);
+      return data.id;
+    } catch (err) {
+      return null;
+    }
+  };
+
+  postArticle = async () => {
     if (this.state.login && this.state.title && this.state.subtitle && this.state.keywords) {
       if (this.state.file && !this.state.file.type.includes('image')) {
         NotificationManager.warning('El archivo no es una imagen');
       } else {
+        var secret_key = await this.safetyNet();
         try {
           document.getElementById('button-post-article').style.display = 'none';
           document.getElementById('spinner-button-post-article').style.display = 'inline';
           const data = new FormData();
           data.append('file', this.state.file);
-          axios.post('http://' + VALUES.BD_ORIGIN + ':3000/file-upload', data, {}).then(res => {
-            const categoryObj = this.props.home.categories.data.find(
-              element => element.name === this.state.category,
-            );
-            let keywords = (
-              this.state.keywords +
-              ' ' +
-              this.state.title +
-              ' ' +
-              this.state.subtitle +
-              ' ' +
-              this.props.home.user.data[0].username
-            )
-              .toLowerCase()
-              .normalize('NFD')
-              .replace(/"/g, '\\"')
-              .replace(/'/g, '\\"')
-              .replace(/`/g, '\\"')
-              .replace(/[\u0300-\u036f]/g, '')
-              .replace(/[^a-zA-Z0-9 ]/g, '')
-              .replace(/ /g, '-');
-            let data = {
-              token: localStorage.getItem('token-app-auth-current'),
-              title: this.state.title
+          axios
+            .post('http://' + VALUES.BD_ORIGIN + ':3000/file-upload', data, {
+              headers: {
+                secret_key: secret_key,
+              },
+            })
+            .then(res => {
+              const categoryObj = this.props.home.categories.data.find(
+                element => element.name === this.state.category,
+              );
+              let keywords = (
+                this.state.keywords +
+                ' ' +
+                this.state.title +
+                ' ' +
+                this.state.subtitle +
+                ' ' +
+                this.props.home.user.data[0].username
+              )
+                .toLowerCase()
+                .normalize('NFD')
                 .replace(/"/g, '\\"')
                 .replace(/'/g, '\\"')
-                .replace(/`/g, '\\"'),
-              subtitle: this.state.subtitle
-                .replace(/"/g, '\\"')
-                .replace(/'/g, '\\"')
-                .replace(/`/g, '\\"'),
-              category_id: categoryObj.id,
-              img_url: res.data.filename,
-              content: draftToHtml(convertToRaw(this.state.editorState.getCurrentContent()))
-                .replace(/"/g, '\\"')
-                .replace(/'/g, '\\"')
-                .replace(/`/g, '\\"'),
-              key_words: keywords,
-              user_id: this.props.home.user.data[0].id,
-            };
-            this.props.actions.postArticle(data);
-          });
+                .replace(/`/g, '\\"')
+                .replace(/[\u0300-\u036f]/g, '')
+                .replace(/[^a-zA-Z0-9 ]/g, '')
+                .replace(/ /g, '-');
+              let data = {
+                token: localStorage.getItem('token-app-auth-current'),
+                title: this.state.title
+                  .replace(/"/g, '\\"')
+                  .replace(/'/g, '\\"')
+                  .replace(/`/g, '\\"'),
+                subtitle: this.state.subtitle
+                  .replace(/"/g, '\\"')
+                  .replace(/'/g, '\\"')
+                  .replace(/`/g, '\\"'),
+                category_id: categoryObj.id,
+                img_url: res.data.filename,
+                content: draftToHtml(convertToRaw(this.state.editorState.getCurrentContent()))
+                  .replace(/"/g, '\\"')
+                  .replace(/'/g, '\\"')
+                  .replace(/`/g, '\\"'),
+                key_words: keywords,
+                user_id: this.props.home.user.data[0].id,
+              };
+              this.props.actions.postArticle(data);
+            });
         } catch (err) {
           NotificationManager.warning('Algo salió mal, revise el contenido');
         }
@@ -164,7 +181,7 @@ export class TextEditor extends Component {
     } else {
       NotificationManager.warning('Debes complear todos los campos');
     }
-  }
+  };
 
   buildCategories = () => {
     return this.props.home.categories.data.map(item => {
