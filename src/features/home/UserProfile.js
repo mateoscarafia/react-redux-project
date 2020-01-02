@@ -339,7 +339,7 @@ export class UserProfile extends Component {
       }));
     resP =
       this.state.fileP &&
-      (await axios.post('http://' + VALUES.BD_ORIGIN + ':3000/file-upload-banner', dataP, {
+      (await axios.post('http://' + VALUES.BD_ORIGIN + ':3000/file-upload', dataP, {
         headers: {
           secret_key: secret_keyP,
         },
