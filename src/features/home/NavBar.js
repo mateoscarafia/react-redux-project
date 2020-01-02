@@ -30,8 +30,12 @@ export class NavBar extends Component {
           await this.props.actions.getNews({ token: VALUES.DEEP_TOKEN, id: user.id });
           await this.props.actions.getUser({ token: VALUES.DEEP_TOKEN, id: user.id });
           destiny = destiny + user.id;
-          console.log('DESTINY', destiny);
         } catch (err) {}
+      }
+      if (destiny.includes('editor')) {
+        var user_edit = await jwt.verify(localStorage.getItem('token-app-auth-current'), VALUES.API_KEY);
+        await this.props.actions.getUser({ token: VALUES.DEEP_TOKEN, id: user_edit.id });
+        destiny = destiny + user_edit.id;
       }
       destiny === '/feed/main' &&
         window.location.href.includes('feed') &&
@@ -130,7 +134,7 @@ export class NavBar extends Component {
         <BannerMidd />
         <nav className="navbar navbar-expand-lg navbar-light blue-background brand-link-nav">
           <a onClick={() => this.routerMethod('/feed/main')} className="navbar-brand a-link">
-          <img alt="edit" width="30" src={require('../../images/icon-logo.ico')} />
+            <img alt="edit" width="30" src={require('../../images/icon-logo.ico')} />
           </a>
           <button
             id="navbar-toggler-id-for-clicking"
@@ -211,7 +215,7 @@ export class NavBar extends Component {
                   <li className="nav-item active border-top-white diss-in-desktop">
                     <a
                       onClick={() => {
-                        this.routerMethod('/editor/' + this.props.user);
+                        this.routerMethod('/editor/');
                       }}
                       className="nav-link a-link"
                     >
@@ -265,7 +269,7 @@ export class NavBar extends Component {
                   <li className="nav-item active">
                     <a
                       onClick={() => {
-                        this.routerMethod('/editor/' + this.props.user);
+                        this.routerMethod('/editor/');
                       }}
                       className="nav-link a-link search-article-navbar-button"
                     >
