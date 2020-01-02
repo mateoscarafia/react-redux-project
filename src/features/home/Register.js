@@ -24,6 +24,18 @@ export class Register extends Component {
   }
 
   handleChange(event) {
+    if (event.target.name === 'email') {
+      document.getElementById('email-input').style.borderColor = '#000';
+      document.getElementById('email-input').style.borderWidth = '1px';
+    }
+    if (event.target.name === 'password') {
+      document.getElementById('password-input').style.borderColor = '#000';
+      document.getElementById('password-input').style.borderWidth = '1px';
+    }
+    if (event.target.name === 'fullname') {
+      document.getElementById('fullname-input').style.borderColor = '#000';
+      document.getElementById('fullname-input').style.borderWidth = '1px';
+    }
     this.setState({ [event.target.name]: event.target.value, error: false });
   }
 
@@ -36,6 +48,24 @@ export class Register extends Component {
   };
 
   registerForm() {
+    if (!/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(this.state.email)) {
+      document.getElementById('email-input').style.transition = '0.3s';
+      document.getElementById('email-input').style.borderColor = 'white';
+      document.getElementById('email-input').style.borderBottomColor = 'red';
+      document.getElementById('email-input').style.borderWidth = '2px';
+    }
+    if (this.state.password.length < 6) {
+      document.getElementById('password-input').style.transition = '0.3s';
+      document.getElementById('password-input').style.borderColor = 'white';
+      document.getElementById('password-input').style.borderBottomColor = 'red';
+      document.getElementById('password-input').style.borderWidth = '2px';
+    }
+    if (this.state.fullname.length < 5) {
+      document.getElementById('fullname-input').style.transition = '0.3s';
+      document.getElementById('fullname-input').style.borderColor = 'white';
+      document.getElementById('fullname-input').style.borderBottomColor = 'red';
+      document.getElementById('fullname-input').style.borderWidth = '2px';
+    }
     if (
       /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(this.state.email) &&
       this.state.password.length > 5 &&
