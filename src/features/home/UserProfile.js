@@ -324,26 +324,28 @@ export class UserProfile extends Component {
     var res = { data: { filename: null } };
     var resP = { data: { filename: null } };
 
-    const data = this.state.file && new FormData();
-    const dataP = this.state.fileP && new FormData();
-    this.state.file && data.append('file', this.state.file);
-    this.state.fileP && dataP.append('file', this.state.fileP);
-    var secret_key = this.state.file && (await this.safetyNet());
-    var secret_keyP = this.state.fileP && (await this.safetyNet());
-    res =
-      this.state.file &&
-      (await axios.post('http://' + VALUES.BD_ORIGIN + ':3000/file-upload', data, {
+    if (this.state.file) {
+      const data = new FormData();
+      data.append('file', this.state.file);
+      var secret_key = await this.safetyNet();
+      res = await axios.post('http://' + VALUES.BD_ORIGIN + ':3000/file-upload', data, {
         headers: {
           secret_key: secret_key,
         },
-      }));
-    resP =
-      this.state.fileP &&
-      (await axios.post('http://' + VALUES.BD_ORIGIN + ':3000/file-upload', dataP, {
+      });
+    }
+
+    if (this.state.fileP) {
+      const dataP = new FormData();
+      dataP.append('file', this.state.fileP);
+      var secret_keyP = await this.safetyNet();
+      resP = await axios.post('http://' + VALUES.BD_ORIGIN + ':3000/file-upload', data, {
         headers: {
           secret_key: secret_keyP,
         },
-      }));
+      });
+    }
+
     let dataUpdate = {
       token: localStorage.getItem('token-app-auth-current'),
       profile_img_url: res.data.filename || this.props.home.user.data[0].profile_img_url,
