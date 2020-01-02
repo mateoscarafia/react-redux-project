@@ -38,6 +38,8 @@ export class UserProfile extends Component {
       openMyFollowers: false,
       openMyFollowings: false,
       openMyReaders: false,
+      file: null,
+      fileP: null,
     };
     this._handleImageChange = this._handleImageChange.bind(this);
     this._handleImageChangeP = this._handleImageChangeP.bind(this);
@@ -319,22 +321,29 @@ export class UserProfile extends Component {
   sendUpdateUser = async () => {
     document.getElementById('cambiar-user-data-id').style.display = 'none';
     document.getElementById('cambiar-user-data-id-spinner').style.display = 'inline';
-    const data = new FormData();
-    const dataP = new FormData();
-    data.append('file', this.state.file);
-    dataP.append('file', this.state.fileP);
-    var secret_key = await this.safetyNet();
-    var secret_keyP = await this.safetyNet();
-    let res = await axios.post('http://' + VALUES.BD_ORIGIN + ':3000/file-upload', data, {
-      headers: {
-        secret_key: secret_key,
-      },
-    });
-    let resP = await axios.post('http://' + VALUES.BD_ORIGIN + ':3000/file-upload', dataP, {
-      headers: {
-        secret_key: secret_keyP,
-      },
-    });
+    var res = { data: { filename: null } };
+    var resP = { data: { filename: null } };
+
+    const data = this.state.file && new FormData();
+    const dataP = this.state.fileP && new FormData();
+    this.state.file && data.append('file', this.state.file);
+    this.state.fileP && dataP.append('file', this.state.fileP);
+    var secret_key = this.state.file && (await this.safetyNet());
+    var secret_keyP = this.state.fileP && (await this.safetyNet());
+    res =
+      this.state.file &&
+      (await axios.post('http://' + VALUES.BD_ORIGIN + ':3000/file-upload', data, {
+        headers: {
+          secret_key: secret_key,
+        },
+      }));
+    resP =
+      this.state.fileP &&
+      (await axios.post('http://' + VALUES.BD_ORIGIN + ':3000/file-upload-banner', dataP, {
+        headers: {
+          secret_key: secret_keyP,
+        },
+      }));
     let dataUpdate = {
       token: localStorage.getItem('token-app-auth-current'),
       profile_img_url: res.data.filename || this.props.home.user.data[0].profile_img_url,
