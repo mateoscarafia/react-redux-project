@@ -364,6 +364,10 @@ export class UserProfile extends Component {
         .replace(/`/g, '\\"'),
     };
     this.props.actions.editUser(dataUpdate);
+    this.setState({
+      file: null,
+      fileP: null,
+    });
   };
 
   componentWillReceiveProps(nextProps) {
