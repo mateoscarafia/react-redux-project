@@ -339,7 +339,7 @@ export class UserProfile extends Component {
       const dataP = new FormData();
       dataP.append('file', this.state.fileP);
       var secret_keyP = await this.safetyNet();
-      resP = await axios.post('http://' + VALUES.BD_ORIGIN + ':3000/file-upload', data, {
+      resP = await axios.post('http://' + VALUES.BD_ORIGIN + ':3000/file-upload', dataP, {
         headers: {
           secret_key: secret_keyP,
         },
