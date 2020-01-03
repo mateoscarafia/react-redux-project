@@ -57,9 +57,7 @@ export class Login extends Component {
     ) {
       let data = { mail: this.state.email, pass: this.state.password, token: VALUES.DEEP_TOKEN };
       this.props.actions.login(data);
-    } else {
-      this.setState({ error: true });
-    }
+    } 
   }
 
   componentWillMount() {
