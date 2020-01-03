@@ -72,6 +72,9 @@ export class News extends Component {
             >
               <div
                 className="img-div"
+                onClick={() =>
+                  this.routerMethod('news/' + this.props.articles.data.main_feed[prop].id)
+                }
                 style={{
                   backgroundImage: `url(${'http://' +
                     VALUES.BD_ORIGIN +
@@ -123,6 +126,9 @@ export class News extends Component {
               }
             >
               <div
+                onClick={() =>
+                  this.routerMethod('news/' + this.props.articles.data.backup_feed[prop].id)
+                }
                 className="img-div"
                 style={{
                   backgroundImage: `url(${'http://' +
@@ -182,6 +188,9 @@ export class News extends Component {
         >
           <div
             className="img-div"
+            onClick={() =>
+              this.routerMethod('news/' + this.props.articles.data.main_feed[prop].id)
+            }
             style={{
               backgroundImage: `url(${'http://' +
                 VALUES.BD_ORIGIN +
@@ -222,7 +231,10 @@ export class News extends Component {
       this.props.id
     ) {
       contentNews.push(
-        <div className="row" key={Math.random()}>{this.buildNews('main', 0, 'end', 'design-120-60')}{this.buildNews('back', 0, 'end', 'design-120-60')}</div>,
+        <div className="row" key={Math.random()}>
+          {this.buildNews('main', 0, 'end', 'design-120-60')}
+          {this.buildNews('back', 0, 'end', 'design-120-60')}
+        </div>,
       );
     } else if (
       this.props.articles &&
@@ -231,7 +243,9 @@ export class News extends Component {
       !this.props.id
     ) {
       contentNews.push(
-        <div className="row" key={Math.random()}>{this.buildNews('main', 0, 'end', 'design-120-60')}</div>,
+        <div className="row" key={Math.random()}>
+          {this.buildNews('main', 0, 'end', 'design-120-60')}
+        </div>,
       );
       contentNews.push(<br key={Math.random()} />);
     }
