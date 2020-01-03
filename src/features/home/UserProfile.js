@@ -508,7 +508,7 @@ export class UserProfile extends Component {
               >
                 <img
                   alt="edit"
-                  width="60"
+                  width="40"
                   className="edit-pen-user-profile-style"
                   src={require('../../images/spinner.gif')}
                 />
