@@ -69,6 +69,10 @@ const initialState = {
   getNewsVisitsError: null,
   securityTokenPending: false,
   securityTokenError: null,
+  verifyUserPending: false,
+  verifyUserError: null,
+  verifyCodePending: false,
+  verifyCodeError: null,
 };
 
 export default initialState;

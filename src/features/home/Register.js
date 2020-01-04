@@ -19,6 +19,7 @@ export class Register extends Component {
       password: '',
       fullname: '',
       error: false,
+      showVerification: false,
     };
     this.handleChange = this.handleChange.bind(this);
   }
@@ -71,10 +72,10 @@ export class Register extends Component {
       this.state.password.length > 5 &&
       this.state.fullname.length > 4
     ) {
-      this.props.actions.register({
+      this.props.actions.verifyUser({
         token: jwt.sign(
           {
-            mail: this.state.email,
+            email: this.state.email,
             pass: this.state.password,
             username: this.state.fullname,
           },
@@ -86,23 +87,21 @@ export class Register extends Component {
     }
   }
 
+  verifyEmail = () => {
+    this.props.actions.verifyCode({
+      code: this.state.verifyCode,
+    });
+  };
+
   componentWillReceiveProps(nextProps) {
-    if (this.props.home.registerPending && nextProps.home.registerError) {
-      NotificationManager.warning('Ups, algo fue mal');
-      NotificationManager.warning('Revisa los datos ingresados');
-    } else if (this.props.home.registerPending && nextProps.home.registerdata) {
-      localStorage.setItem('token-app-auth-current', nextProps.home.registerdata.data.token);
+    if (this.props.home.verifyUserPending && nextProps.home.emailverifysent) {
+      this.setState({ showVerification: true });
+    }
+    if (this.props.home.verifyCodePending && nextProps.home.codeverified) {
+      localStorage.setItem('token-app-auth-current', nextProps.home.codeverified.data.token);
       window.location.replace('http://' + VALUES.BD_ORIGIN + ':6075/feed/main');
     }
   }
-
-  responseGoogle = response => {
-    console.log(response);
-  };
-
-  responseFacebook = response => {
-    console.log(response);
-  };
 
   componentWillMount() {
     window.scrollTo(0, 0);
@@ -111,78 +110,72 @@ export class Register extends Component {
   render() {
     return (
       <div className="home-register">
-        <form className="home-register-form">
-          <img alt="edit" width="50" src={require('../../images/icon-logo.ico')} />
-          <div className="form-group">
-            <input
-              type="email"
-              id="email-input"
-              name="email"
-              value={this.state.email}
-              onChange={this.handleChange}
-              placeholder="Email"
-            />
-          </div>
-          <div className="form-group">
-            <input
-              type="password"
-              name="password"
-              onChange={this.handleChange}
-              placeholder="Contraseña"
-              id="password-input"
-            />
-          </div>
-          <div className="form-group">
-            <input
-              type="text"
-              name="fullname"
-              value={this.state.fullname}
-              onChange={this.handleChange}
-              id="fullname-input"
-              placeholder="Nombre de usuario"
-            />
-          </div>
-          <button onClick={() => this.registerForm()} type="button" className="register-button">
-            Registrarse
-          </button>
-          <p
-            onClick={() =>
-              window.open('http://' + VALUES.BD_ORIGIN + ':6075/terminosycondiciones', '_blank')
-            }
-            className="terms-link-in-register-form"
-          >
-            Al registrarse usted acepta <b>Términos y Condiciones</b>
-          </p>
-          {/*<FacebookProvider appId="1525501467533850">
-            <Share href="https://www.google.com">
-              {({ handleClick, loading }) => (
-                <button type="button" disabled={loading} onClick={handleClick}>
-                  Share
-                </button>
-              )}
-              </Share>
-          </FacebookProvider>*/}
-          {/*<FacebookProvider appId="1525501467533850">
-            <LoginButton scope="email" onCompleted={this.handleResponse} onError={this.handleError}>
-              <button class="loginBtn loginBtn--facebook">Login with Facebook</button>
-            </LoginButton>
-          </FacebookProvider>
-          <FacebookLogin
-            appId="1525501467533850"
-            autoLoad={true}
-    fields="name,email,picture"
-    callback={this.responseFacebook}
-    cssClass="my-facebook-button-class"
-    icon="fa-facebook"
-          />
-          <GoogleLogin
-            clientId="signin-184520"
-            buttonText="Login"
-            onSuccess={this.responseGoogle}
-            onFailure={this.responseGoogle}
-            cookiePolicy={'single_host_origin'}
-          />*/}
-        </form>
+        {!this.state.showVerification && (
+          <form className="home-register-form">
+            <img alt="edit" width="50" src={require('../../images/icon-logo.ico')} />
+            <div className="form-group">
+              <input
+                type="email"
+                id="email-input"
+                name="email"
+                value={this.state.email}
+                onChange={this.handleChange}
+                placeholder="Email"
+              />
+            </div>
+            <div className="form-group">
+              <input
+                type="password"
+                name="password"
+                onChange={this.handleChange}
+                placeholder="Contraseña"
+                id="password-input"
+              />
+            </div>
+            <div className="form-group">
+              <input
+                type="text"
+                name="fullname"
+                value={this.state.fullname}
+                onChange={this.handleChange}
+                id="fullname-input"
+                placeholder="Nombre de usuario"
+              />
+            </div>
+            <button onClick={() => this.registerForm()} type="button" className="register-button">
+              Registrarse
+            </button>
+            <p
+              onClick={() =>
+                window.open('http://' + VALUES.BD_ORIGIN + ':6075/terminosycondiciones', '_blank')
+              }
+              className="terms-link-in-register-form"
+            >
+              Al registrarse usted acepta <b>Términos y Condiciones</b>
+            </p>
+          </form>
+        )}
+        {this.state.showVerification && (
+          <form className="home-register-form">
+            <img alt="edit" width="50" src={require('../../images/icon-logo.ico')} />
+            <div className="form-group">
+              <p className="terms-link-in-register-form">
+                <b>Ingresa código de verificación enviado a tu email</b>
+              </p>
+              <input
+                type="text"
+                name="verifyCode"
+                value={this.state.verifyCode}
+                onChange={this.handleChange}
+                id="verifyCode-input"
+                placeholder="Código de verificación"
+              />
+            </div>
+            <button onClick={() => this.verifyEmail()} type="button" className="register-button">
+              Verificar mi email
+            </button>
+          </form>
+        )}
         <NotificationContainer />
       </div>
     );

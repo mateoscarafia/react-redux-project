@@ -33,3 +33,5 @@ export { getLatestNews, dismissGetLatestNewsError } from './getLatestNews';
 export { rotateImg, dismissRotateImgError } from './rotateImg';
 export { getNewsVisits, dismissGetNewsVisitsError } from './getNewsVisits';
 export { securityToken, dismissSecurityTokenError } from './securityToken';
+export { verifyUser, dismissVerifyUserError } from './verifyUser';
+export { verifyCode, dismissVerifyCodeError } from './verifyCode';
