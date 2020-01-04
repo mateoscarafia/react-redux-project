@@ -360,6 +360,7 @@ export class UserHeader extends Component {
                   X
                 </a>
               </div>
+              <p className="title-for-popup">Mi buzón</p>
               {this.props.home.getMessagesPending && (
                 <p className="smaller-meta-data">Loading...</p>
               )}

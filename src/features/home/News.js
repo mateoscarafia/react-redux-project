@@ -188,9 +188,7 @@ export class News extends Component {
         >
           <div
             className="img-div"
-            onClick={() =>
-              this.routerMethod('news/' + this.props.articles.data.main_feed[prop].id)
-            }
+            onClick={() => this.routerMethod('news/' + this.props.articles.data.main_feed[prop].id)}
             style={{
               backgroundImage: `url(${'http://' +
                 VALUES.BD_ORIGIN +
@@ -213,8 +211,12 @@ export class News extends Component {
         </div>,
       );
     }
-    return this.props.articles.data.main_feed[0] ? (
-      data
+    return this.props.articles.data.main_feed ? (
+      this.props.articles.data.main_feed[0] ? (
+        data
+      ) : (
+        <h5 className="no-result-tag-title">{'Sin resultados'}</h5>
+      )
     ) : (
       <h5 className="no-result-tag-title">{'Sin resultados'}</h5>
     );
@@ -266,7 +268,7 @@ export class News extends Component {
         <div className="home-news">
           <div className="news-space">
             <div className="container news-container">
-              {this.props.routeparams !== 'main' && (
+              {this.props.routeparams !== 'main' && this.props.articles && (
                 <div className="row">{this.buildNewsSearch()}</div>
               )}
               {this.props.routeparams === 'main' && <div>{this.newsDistribution()}</div>}

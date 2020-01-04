@@ -189,7 +189,7 @@ export class UserProfile extends Component {
 
   buildReaders = () => {
     if (!this.props.home.mynewsvisits.data[0]) {
-      return <p className="smaller-meta-data">- Sin lectores, por el momento. -</p>;
+      return <p className="smaller-meta-data">- Sin lectores, por el momento -</p>;
     } else {
       return this.props.home.mynewsvisits.data.map(item => {
         return (
