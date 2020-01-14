@@ -160,7 +160,7 @@ export class Register extends Component {
             <img alt="edit" width="50" src={require('../../images/icon-logo.ico')} />
             <div className="form-group">
               <p className="terms-link-in-register-form">
-                <b>Ingresa código de verificación enviado a tu email</b>
+                <b>Ingresa código enviado a tú email</b>
               </p>
               <input
                 type="text"
