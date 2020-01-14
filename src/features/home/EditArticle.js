@@ -110,12 +110,17 @@ export class EditArticle extends Component {
   }
 
   deleteArticle = () => {
-    document.getElementById('delete-button-id').style.display = 'none';
+    document.getElementById('delete-button-id-confirmation').style.display = 'none';
     document.getElementById('spinner-delete-button-id-final').style.display = 'inline';
     this.props.actions.deleteArticle({
       token: localStorage.getItem('token-app-auth-current'),
       id: this.props.match.params.id,
     });
+  };
+
+  deleteArticleConfirmation = () => {
+    document.getElementById('delete-button-id').style.display = 'none';
+    document.getElementById('delete-button-id-confirmation').style.display = 'inline';
   };
 
   _handleSubmit(e) {
@@ -362,7 +367,7 @@ export class EditArticle extends Component {
               />
               <div className="send-article-div-control-edit-article">
                 <button
-                  onClick={() => this.deleteArticle()}
+                  onClick={() => this.deleteArticleConfirmation()}
                   type="button"
                   id="delete-button-id"
                   style={{ marginRight: '10px' }}
@@ -373,13 +378,21 @@ export class EditArticle extends Component {
                 <button
                   onClick={() => this.deleteArticle()}
                   type="button"
+                  id="delete-button-id-confirmation"
+                  style={{ marginRight: '10px' }}
+                  className="btn btn-danger btn-lg delete-button-confirmation"
+                >
+                  Si, borrar!
+                </button>
+                <button
+                  type="button"
                   style={{ marginRight: '10px' }}
                   id="spinner-delete-button-id-final"
                   className="btn btn-danger btn-lg spinner-delete-button"
                 >
                   <img
                     alt="edit"
-                    width="35"
+                    width="24"
                     className="edit-pen-user-profile-style"
                     src={require('../../images/spinner.gif')}
                   />
@@ -400,7 +413,7 @@ export class EditArticle extends Component {
                 >
                   <img
                     alt="edit"
-                    width="35"
+                    width="24"
                     className="edit-pen-user-profile-style"
                     src={require('../../images/spinner.gif')}
                   />

@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import * as VALUES from '../../constants';
-import { NotificationContainer, NotificationManager } from 'react-notifications';
+import { NotificationContainer, /*NotificationManager*/ } from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
 /*import FacebookLogin from 'react-facebook-login';
 import { GoogleLogin } from 'react-google-login';

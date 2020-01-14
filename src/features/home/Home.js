@@ -140,7 +140,7 @@ export class Home extends Component {
         >
           <img
             alt="edit"
-            width="40"
+            width="35"
             className="edit-pen-user-profile-style"
             src={require('../../images/spinner.gif')}
           />
@@ -154,7 +154,7 @@ export class Home extends Component {
         >
           <img
             alt="edit"
-            width="40"
+            width="35"
             className="edit-pen-user-profile-style"
             src={require('../../images/spinner.gif')}
           />
@@ -244,7 +244,7 @@ export class Home extends Component {
                   >
                     <img
                       alt="edit"
-                      width="40"
+                      width="35"
                       className="edit-pen-user-profile-style"
                       src={require('../../images/spinner.gif')}
                     />

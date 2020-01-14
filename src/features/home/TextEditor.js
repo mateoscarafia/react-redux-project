@@ -343,7 +343,7 @@ export class TextEditor extends Component {
               >
                 <img
                   alt="edit"
-                  width="25"
+                  width="24"
                   className="edit-pen-user-profile-style"
                   src={require('../../images/spinner.gif')}
                 />
