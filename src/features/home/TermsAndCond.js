@@ -18,7 +18,7 @@ export class TermsAndCond extends Component {
             style={{ marginBottom: '5px' }}
             alt="edit"
             width="20"
-            src={require('../../images/icon-logo.ico')}
+            src={require('../../images/logo.png')}
           />
           <h5>Woordi</h5>
           <br />

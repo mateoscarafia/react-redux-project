@@ -13,7 +13,7 @@ export class Footer extends Component {
   render() {
     return (
       <div className="home-footer">
-        <img style={{marginBottom:'5px'}} alt="edit" width="30" src={require('../../images/icon-logo.ico')} />
+        <img style={{marginBottom:'5px'}} alt="edit" width="30" src={require('../../images/logo.png')} />
         <h4>woordi</h4>
         <p>Tú eres el periodista</p>
         <br />

@@ -112,7 +112,7 @@ export class Register extends Component {
       <div className="home-register">
         {!this.state.showVerification && (
           <form className="home-register-form">
-            <img alt="edit" width="50" src={require('../../images/icon-logo.ico')} />
+            <img alt="edit" width="50" src={require('../../images/logo.png')} />
             <div className="form-group">
               <input
                 type="email"
@@ -157,7 +157,7 @@ export class Register extends Component {
         )}
         {this.state.showVerification && (
           <form className="home-register-form">
-            <img alt="edit" width="50" src={require('../../images/icon-logo.ico')} />
+            <img alt="edit" width="50" src={require('../../images/logo.png')} />
             <div className="form-group">
               <p className="terms-link-in-register-form">
                 <b>Ingresa código enviado a tú email</b>
