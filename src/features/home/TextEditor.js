@@ -116,14 +116,16 @@ export class TextEditor extends Component {
   };
 
   postArticle = async () => {
+    document.getElementById('button-post-article').style.display = 'none';
+    document.getElementById('spinner-button-post-article').style.display = 'inline';
     if (this.state.login && this.state.title && this.state.subtitle && this.state.keywords) {
       if (this.state.file && !this.state.file.type.includes('image')) {
         NotificationManager.warning('El archivo no es una imagen');
+        document.getElementById('button-post-article').style.display = 'inline';
+        document.getElementById('spinner-button-post-article').style.display = 'none';
       } else {
         var secret_key = await this.safetyNet();
         try {
-          document.getElementById('button-post-article').style.display = 'none';
-          document.getElementById('spinner-button-post-article').style.display = 'inline';
           const data = new FormData();
           data.append('file', this.state.file);
           axios
@@ -176,10 +178,14 @@ export class TextEditor extends Component {
             });
         } catch (err) {
           NotificationManager.warning('Algo salió mal, revise el contenido');
+          document.getElementById('button-post-article').style.display = 'inline';
+          document.getElementById('spinner-button-post-article').style.display = 'none';
         }
       }
     } else {
       NotificationManager.warning('Debes complear todos los campos');
+      document.getElementById('button-post-article').style.display = 'inline';
+      document.getElementById('spinner-button-post-article').style.display = 'none';
     }
   };
 

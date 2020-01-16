@@ -152,11 +152,11 @@ export class Comments extends Component {
               <button
                 type="button"
                 id="spinner-comment-send-button"
-                className="btn btn-secondary comment-button send-comment-button-articlejs"
+                className="btn btn-secondary comment-button send-comment-button-articlejs spinner-class"
               >
                 <img
                   alt="edit"
-                  width="24"
+                  width="17"
                   className="edit-pen-user-profile-style"
                   src={require('../../images/spinner.gif')}
                 />

@@ -750,7 +750,7 @@ export class UserProfile extends Component {
                       >
                         <img
                           alt="edit"
-                          width="24"
+                          width="17"
                           className="edit-pen-user-profile-style"
                           src={require('../../images/spinner.gif')}
                         />
@@ -794,7 +794,7 @@ export class UserProfile extends Component {
                       >
                         <img
                           alt="edit"
-                          width="24"
+                          width="17"
                           className="edit-pen-user-profile-style"
                           src={require('../../images/spinner.gif')}
                         />
