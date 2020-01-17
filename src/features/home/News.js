@@ -168,7 +168,7 @@ export class News extends Component {
   buildNewsSearch = () => {
     let data = [];
     data.push(
-      <div className="width-search-result-cont">
+      <div key={Math.random()} className="width-search-result-cont">
         <p className="search-result-text"></p>
       </div>,
     );
