@@ -67,15 +67,17 @@ export class UserHeader extends Component {
   };
 
   routerMethod = async (destiny, id) => {
-    await this.setState({
+    this.setState({
       openMailBox: false,
     });
-    id && (await this.props.actions.getUser({ token: VALUES.DEEP_TOKEN, id: id }));
-    id &&
-      (await this.props.actions.isFollow({
+    if (id) {
+      await this.props.actions.getUser({ token: VALUES.DEEP_TOKEN, id: id });
+      await this.props.actions.isFollow({
         token: localStorage.getItem('token-app-auth-current'),
         user_id_followed: id,
-      }));
+      });
+      this.props.actions.getNews({ token: VALUES.DEEP_TOKEN, id: id });
+    }
     history.push(destiny);
     window.scrollTo(0, 0);
   };
@@ -259,7 +261,7 @@ export class UserHeader extends Component {
           ></div>
           <div className="user-name-header-title">
             <p
-              onClick={() => this.routerMethod('/profile/' + this.props.user.id)}
+              onClick={() => this.routerMethod('/profile/' + this.props.user.id, null)}
               className="user-name-header-title-username"
             >
               {this.props.user.username}
@@ -269,7 +271,7 @@ export class UserHeader extends Component {
           <div className="user-pic-header">
             <div
               id="profile-image-user-on-header-profile-land"
-              onClick={() => this.routerMethod('/profile/' + this.props.user_id)}
+              onClick={() => this.routerMethod('/profile/' + this.props.user_id, null)}
               style={{
                 backgroundImage: `url(${'http://' +
                   VALUES.BD_ORIGIN +

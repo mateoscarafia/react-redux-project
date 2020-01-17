@@ -240,7 +240,7 @@ export class Article extends Component {
             >
               <img
                 alt="edit"
-                width="40"
+                width="30"
                 className="edit-pen-user-profile-style"
                 src={require('../../images/spinner.gif')}
               />
