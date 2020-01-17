@@ -239,6 +239,20 @@ export class TextEditor extends Component {
     ) {
       this.removeTokenAndKill();
       return null;
+    } else if (this.props.home.getUserPending || this.props.home.getCategoriesPending) {
+      return (
+        <div
+          id="spinner-div-for-news-id-texteditor-home-waiting"
+          className="spinner-div-for-news-texteditor-when-no-content"
+        >
+          <img
+            alt="edit"
+            width="30"
+            className="edit-pen-user-profile-style"
+            src={require('../../images/spinner.gif')}
+          />
+        </div>
+      );
     } else {
       return (
         <div className="home-text-editor-css-style">

@@ -278,6 +278,24 @@ export class EditArticle extends Component {
     ) {
       this.removeTokenAndKill();
       return null;
+    } else if (
+      this.props.home.getUserPending ||
+      this.props.home.getCategoriesPending ||
+      this.props.home.getArticlePending
+    ) {
+      return (
+        <div
+          id="spinner-div-for-news-id-editarticle-home-waiting"
+          className="spinner-div-for-news-editarticle-when-no-content"
+        >
+          <img
+            alt="edit"
+            width="30"
+            className="edit-pen-user-profile-style"
+            src={require('../../images/spinner.gif')}
+          />
+        </div>
+      );
     } else {
       return (
         <div className="home-text-editor-css-style">
