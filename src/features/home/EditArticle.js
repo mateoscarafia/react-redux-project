@@ -278,11 +278,7 @@ export class EditArticle extends Component {
     ) {
       this.removeTokenAndKill();
       return null;
-    } else if (
-      this.props.home.getUserPending ||
-      this.props.home.getCategoriesPending ||
-      this.props.home.getArticlePending
-    ) {
+    } else if (this.props.home.getUserPending || this.props.home.getCategoriesPending || this.props.home.getCategoriesPending) {
       return (
         <div
           id="spinner-div-for-news-id-editarticle-home-waiting"
@@ -398,7 +394,7 @@ export class EditArticle extends Component {
                   type="button"
                   id="delete-button-id-confirmation"
                   style={{ marginRight: '10px' }}
-                  className="btn btn-danger btn-lg delete-button-confirmation"
+                  className="btn btn-danger btn-lg delete-button-confirmation red-background-color"
                 >
                   Si, borrar!
                 </button>
