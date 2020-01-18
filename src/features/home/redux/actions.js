@@ -35,3 +35,4 @@ export { getNewsVisits, dismissGetNewsVisitsError } from './getNewsVisits';
 export { securityToken, dismissSecurityTokenError } from './securityToken';
 export { verifyUser, dismissVerifyUserError } from './verifyUser';
 export { verifyCode, dismissVerifyCodeError } from './verifyCode';
+export { forgotPassword, dismissForgotPasswordError } from './forgotPassword';
