@@ -127,6 +127,8 @@ export class Home extends Component {
       this.props.home.getCategoriesError
     ) {
       this.goToErrorLanding();
+    } else if (this.props.home.categories && !this.props.home.categories.data[0]) {
+      this.goToErrorLanding();
     } else if (
       this.state.id &&
       !this.props.home.categories &&

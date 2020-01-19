@@ -219,6 +219,8 @@ export class Article extends Component {
     ) {
       this.removeTokenAndKill();
       return null;
+    } else if (this.props.home.categories && !this.props.home.categories.data[0]) {
+      this.goToErrorLanding();
     } else if (this.props.home.uniquearticle && !this.props.home.uniquearticle.data[0]) {
       this.goToErrorLanding();
       return null;

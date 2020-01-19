@@ -483,6 +483,8 @@ export class UserProfile extends Component {
     if (this.props.home.getUserError || this.props.home.getCategoriesError) {
       this.goToErrorLanding();
       return null;
+    } else if (this.props.home.categories && !this.props.home.categories.data[0]) {
+      this.goToErrorLanding();
     } else if (
       this.props.home.user &&
       this.props.home.user.data[0] &&

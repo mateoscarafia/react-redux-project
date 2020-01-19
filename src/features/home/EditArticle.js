@@ -271,6 +271,8 @@ export class EditArticle extends Component {
     if (this.props.home.getArticleError) {
       this.goToErrorLanding();
       return null;
+    } else if (this.props.home.categories && !this.props.home.categories.data[0]) {
+      this.goToErrorLanding();
     } else if (
       this.props.home.user &&
       this.props.home.user.data[0] &&
@@ -278,7 +280,11 @@ export class EditArticle extends Component {
     ) {
       this.removeTokenAndKill();
       return null;
-    } else if (this.props.home.getUserPending || this.props.home.getCategoriesPending || this.props.home.getCategoriesPending) {
+    } else if (
+      this.props.home.getUserPending ||
+      this.props.home.getCategoriesPending ||
+      this.props.home.getCategoriesPending
+    ) {
       return (
         <div
           id="spinner-div-for-news-id-editarticle-home-waiting"

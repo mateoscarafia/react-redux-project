@@ -121,14 +121,14 @@ export class Login extends Component {
     if (
       this.props.home.forgotPasswordPending &&
       nextProps.home.forgotsuccess &&
-      nextProps.home.forgotsuccess.data.status === 1
+      nextProps.home.forgotsuccess.data[0].status === 1
     ) {
       this.setState({ showMessage: true });
     }
     if (
       this.props.home.forgotPasswordPending &&
       nextProps.home.forgotsuccess &&
-      nextProps.home.forgotsuccess.data.status === 2
+      nextProps.home.forgotsuccess.data[0].status === 2
     ) {
       NotificationManager.error('El mail no existe');
       document.getElementById('forgot-spinner-bottom').style.display = 'none';

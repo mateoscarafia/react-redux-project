@@ -232,6 +232,8 @@ export class TextEditor extends Component {
     if (this.props.home.getUserError) {
       this.goToErrorLanding();
       return null;
+    } else if (this.props.home.categories && !this.props.home.categories.data[0]) {
+      this.goToErrorLanding();
     } else if (
       this.props.home.user &&
       this.props.home.user.data[0] &&
