@@ -119,8 +119,17 @@ export class TextEditor extends Component {
     document.getElementById('button-post-article').style.display = 'none';
     document.getElementById('spinner-button-post-article').style.display = 'inline';
     if (this.state.login && this.state.title && this.state.subtitle && this.state.keywords) {
-      if (this.state.file && !this.state.file.type.includes('image')) {
-        NotificationManager.warning('El archivo no es una imagen');
+      console.log(this.state.file.type);
+      if (
+        this.state.file &&
+        !this.state.file.type.includes('image') &&
+        !this.state.file.type.includes('video')
+      ) {
+        NotificationManager.warning('El archivo no es una imagen/video');
+        document.getElementById('button-post-article').style.display = 'inline';
+        document.getElementById('spinner-button-post-article').style.display = 'none';
+      } else if (this.state.file && !this.state.file.size > 100388110) {
+        NotificationManager.warning('Lo sentimos, el archivo es muy grande');
         document.getElementById('button-post-article').style.display = 'inline';
         document.getElementById('spinner-button-post-article').style.display = 'none';
       } else {
@@ -173,6 +182,7 @@ export class TextEditor extends Component {
                   .replace(/`/g, '\\"'),
                 key_words: keywords,
                 user_id: this.props.home.user.data[0].id,
+                is_video: this.state.file ? (this.state.file.type.includes('video') ? 1 : 0) : 0,
               };
               this.props.actions.postArticle(data);
             });
@@ -330,13 +340,19 @@ export class TextEditor extends Component {
                   <form className="upload-image-form-editor" onSubmit={this._handleSubmit}>
                     <label className="custom-file-upload">
                       <input onChange={this._handleImageChange} type="file" />
-                      Subir imagen
+                      Subir imagen/video
                     </label>
                     <p className="key-words-detail-info">
-                      Imagenes de 10Mb max (.png .jpg .jpeg .gif)
+                      Videos de hasta 1 minuto máximo ( 100 Mb )
                     </p>
                   </form>
-                  <div className="show-image-preview-text-editor">{$imagePreview}</div>
+                  {this.state.file ? (
+                    this.state.file.type.includes('image') ? (
+                      <div className="show-image-preview-text-editor">{$imagePreview}</div>
+                    ) : (
+                      <label className="badge badge-info">Archivo cargado</label>
+                    )
+                  ) : null}
                 </div>
               </div>
               <p className="content-warning-message">

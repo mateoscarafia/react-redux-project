@@ -130,7 +130,7 @@ export class Login extends Component {
       nextProps.home.forgotsuccess &&
       nextProps.home.forgotsuccess.data.status === 2
     ) {
-      NotificationManager.error('El mail no existe');
+      NotificationManager.error('El email no existe');
       document.getElementById('forgot-spinner-bottom').style.display = 'none';
       document.getElementById('forgot-no-spinner-bottom').style.display = 'inline';
     }

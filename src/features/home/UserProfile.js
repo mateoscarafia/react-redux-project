@@ -679,7 +679,6 @@ export class UserProfile extends Component {
                         placeholder="Nombre completo"
                       />
                     </div>
-                    <label> Imagenes de 10Mb max (.png .jpg .jpeg .gif)</label>
                     <div className="wrapper-image-form">
                       <div className="upload-image-form-editor">
                         <label className="custom-file-upload">

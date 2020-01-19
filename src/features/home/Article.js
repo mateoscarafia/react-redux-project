@@ -7,6 +7,8 @@ import { NotificationContainer, NotificationManager } from 'react-notifications'
 import 'react-notifications/lib/notifications.css';
 import ReactHtmlParser from 'react-html-parser';
 import * as VALUES from '../../constants';
+import { Player } from 'video-react';
+import 'video-react/dist/video-react.css';
 
 //Components
 import NavBar from './NavBar';
@@ -322,6 +324,22 @@ export class Article extends Component {
                       new Date(this.props.home.uniquearticle.data[0].created_at).toString(),
                     )}
                 </h5>
+                <div
+                  style={{ width: '200px', height: '400px', margin: 'auto', overflow: 'hidden' }}
+                >
+                  {this.props.home.uniquearticle.data[0].is_video === 1 && (
+                    <Player>
+                      <source
+                        src={
+                          'http://' +
+                          VALUES.BD_ORIGIN +
+                          ':3000/network_images/' +
+                          this.props.home.uniquearticle.data[0].img_url
+                        }
+                      />
+                    </Player>
+                  )}
+                </div>
               </div>
               <div className="article-content-text-show-div">
                 <h1>{this.props.home.uniquearticle.data[0].title}</h1>
