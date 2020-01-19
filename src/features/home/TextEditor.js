@@ -343,7 +343,7 @@ export class TextEditor extends Component {
                       Subir imagen/video
                     </label>
                     <p className="key-words-detail-info">
-                      Videos de hasta 1 minuto máximo ( 100 Mb )
+                      Sólo videos de hasta 5 minutos aprox ( 100 Mb )
                     </p>
                   </form>
                   {this.state.file ? (

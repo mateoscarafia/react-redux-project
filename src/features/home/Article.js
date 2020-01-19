@@ -309,25 +309,17 @@ export class Article extends Component {
                   </div>
                 </div>
               </div>
-              <div
-                style={{
-                  backgroundImage: `url(${'http://' +
-                    VALUES.BD_ORIGIN +
-                    ':3000/network_images/' +
-                    this.props.home.uniquearticle.data[0].img_url})`,
-                }}
-                className="single-article-image-show-div"
-              >
-                <h5 className="date-article-font">
-                  {this.props.home.uniquearticle &&
-                    this.convertDate(
-                      new Date(this.props.home.uniquearticle.data[0].created_at).toString(),
-                    )}
-                </h5>
-                <div
-                  style={{ width: '200px', height: '400px', margin: 'auto', overflow: 'hidden' }}
-                >
-                  {this.props.home.uniquearticle.data[0].is_video === 1 && (
+              {this.props.home.uniquearticle.data[0].is_video === 1 ? (
+                <div className="single-article-image-show-div">
+                  <h5 className="date-article-font">
+                    {this.props.home.uniquearticle &&
+                      this.convertDate(
+                        new Date(this.props.home.uniquearticle.data[0].created_at).toString(),
+                      )}
+                  </h5>
+                  <div
+                    style={{ width: '200px', height: '400px', margin: 'auto', overflow: 'hidden' }}
+                  >
                     <Player>
                       <source
                         src={
@@ -338,9 +330,26 @@ export class Article extends Component {
                         }
                       />
                     </Player>
-                  )}
+                  </div>
                 </div>
-              </div>
+              ) : (
+                <div
+                  style={{
+                    backgroundImage: `url(${'http://' +
+                      VALUES.BD_ORIGIN +
+                      ':3000/network_images/' +
+                      this.props.home.uniquearticle.data[0].img_url})`,
+                  }}
+                  className="single-article-image-show-div"
+                >
+                  <h5 className="date-article-font">
+                    {this.props.home.uniquearticle &&
+                      this.convertDate(
+                        new Date(this.props.home.uniquearticle.data[0].created_at).toString(),
+                      )}
+                  </h5>
+                </div>
+              )}
               <div className="article-content-text-show-div">
                 <h1>{this.props.home.uniquearticle.data[0].title}</h1>
                 <h4 className="subtitle-article">
