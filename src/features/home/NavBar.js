@@ -243,7 +243,7 @@ export class NavBar extends Component {
                 </div>
               )}
             </ul>
-            <form className="form-inline my-2 my-lg-0 disappear-on-mobile">
+            <div className="form-inline my-2 my-lg-0 disappear-on-mobile">
               <ul className="navbar-nav mr-auto">
                 <li className="nav-item active">
                   <div className="search-div-bar-floating" id="123456">
@@ -325,7 +325,7 @@ export class NavBar extends Component {
                   </li>
                 </ul>
               )}
-            </form>
+            </div>
           </div>
         </nav>
         {/*this.state.searchEngine && this.props.categories && (
