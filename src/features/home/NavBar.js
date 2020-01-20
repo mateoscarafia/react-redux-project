@@ -33,7 +33,10 @@ export class NavBar extends Component {
         } catch (err) {}
       }
       if (destiny.includes('editor')) {
-        var user_edit = await jwt.verify(localStorage.getItem('token-app-auth-current'), VALUES.API_KEY);
+        var user_edit = await jwt.verify(
+          localStorage.getItem('token-app-auth-current'),
+          VALUES.API_KEY,
+        );
         await this.props.actions.getUser({ token: VALUES.DEEP_TOKEN, id: user_edit.id });
         destiny = destiny + user_edit.id;
       }
@@ -160,13 +163,13 @@ export class NavBar extends Component {
                     onChange={this.handleChange}
                     placeholder="Buscar.."
                   />
-                  <button
+                  <p
                     type="button"
                     className="width-button"
                     onClick={() => this.searchArticlesMotorFromNav()}
                   >
                     Buscar
-                  </button>
+                  </p>
                 </div>
               </li>
               {this.buildList(0)}

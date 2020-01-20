@@ -119,7 +119,6 @@ export class TextEditor extends Component {
     document.getElementById('button-post-article').style.display = 'none';
     document.getElementById('spinner-button-post-article').style.display = 'inline';
     if (this.state.login && this.state.title && this.state.subtitle && this.state.keywords) {
-      console.log(this.state.file.type);
       if (
         this.state.file &&
         !this.state.file.type.includes('image') &&
@@ -342,8 +341,8 @@ export class TextEditor extends Component {
                       <input onChange={this._handleImageChange} type="file" />
                       Subir imagen/video
                     </label>
-                    <p className="key-words-detail-info">
-                      Sólo videos de hasta 5 minutos aprox ( 100 Mb )
+                    <p className="content-warning-message">
+                      Videos de 5 minutos max (100 Mb)
                     </p>
                   </form>
                   {this.state.file ? (
@@ -355,9 +354,6 @@ export class TextEditor extends Component {
                   ) : null}
                 </div>
               </div>
-              <p className="content-warning-message">
-                Contenido inapropiado será penalizado con la suspensión permanente de la cuenta
-              </p>
             </div>
             <Editor
               editorState={editorState}
@@ -374,18 +370,17 @@ export class TextEditor extends Component {
               >
                 Publicar artículo
               </button>
-              <p
-                type="button"
+              <button
                 id="spinner-button-post-article"
                 className="send-article-button-articlejs"
               >
                 <img
                   alt="edit"
-                  width="24"
+                  width="20"
                   className="edit-pen-user-profile-style"
                   src={require('../../images/spinner.gif')}
                 />
-              </p>
+              </button>
             </div>
           </div>
           <Footer />

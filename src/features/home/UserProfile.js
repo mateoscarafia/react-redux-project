@@ -415,16 +415,44 @@ export class UserProfile extends Component {
           onMouseEnter={() => this.articleDivInfoVisible('news-hover-' + item.id)}
           onMouseLeave={() => this.articleDivInfoInvisible('news-hover-' + item.id)}
         >
-          <div
-            className="img-div"
-            onClick={() => this.routerMethod('../news/' + item.id, item.user_id)}
-            style={{
-              backgroundImage: `url(${'http://' +
-                VALUES.BD_ORIGIN +
-                ':3000/network_images/' +
-                item.img_url})`,
-            }}
-          ></div>
+          {item.is_video !== 1 ? (
+            <div
+              className="img-div"
+              onClick={() => this.routerMethod('../news/' + item.id, item.user_id)}
+              style={{
+                backgroundImage: `url(${'http://' +
+                  VALUES.BD_ORIGIN +
+                  ':3000/network_images/' +
+                  item.img_url})`,
+              }}
+            ></div>
+          ) : (
+            <div
+              className="img-div"
+              onClick={() => this.routerMethod('../news/' + item.id, item.user_id)}
+            >
+              <img
+                alt="video"
+                className="play-video-style-div"
+                src={require('../../images/play_video.png')}
+              />
+              <video width="100%" height="200" muted>
+                <source
+                  src={'http://' + VALUES.BD_ORIGIN + ':3000/network_images/' + item.img_url}
+                  type="video/mp4"
+                />
+                <source
+                  src={'http://' + VALUES.BD_ORIGIN + ':3000/network_images/' + item.img_url}
+                  type="video/webm"
+                />
+                <source
+                  src={'http://' + VALUES.BD_ORIGIN + ':3000/network_images/' + item.img_url}
+                  type="video/ogg"
+                />
+                Your browser does not support the video tag.
+              </video>
+            </div>
+          )}
           <div
             className="wrapper-news-div-hover"
             onClick={() => this.routerMethod('../news/' + item.id, item.user_id)}

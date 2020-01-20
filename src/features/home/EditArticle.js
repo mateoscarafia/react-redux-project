@@ -143,13 +143,23 @@ export class EditArticle extends Component {
 
   editArticle = async () => {
     if (this.state.login) {
-      if (this.state.file && !this.state.file.type.includes('image')) {
-        NotificationManager.warning('El archivo no es una imagen');
+      document.getElementById('edit-button-id').style.display = 'none';
+      document.getElementById('spinner-edit-button-id').style.display = 'inline';
+      if (
+        this.state.file &&
+        !this.state.file.type.includes('image') &&
+        !this.state.file.type.includes('video')
+      ) {
+        NotificationManager.warning('El archivo no es una imagen/video');
+        document.getElementById('edit-button-id').style.display = 'inline';
+        document.getElementById('spinner-edit-button-id').style.display = 'none';
+      } else if (this.state.file && !this.state.file.size > 100388110) {
+        NotificationManager.warning('Lo sentimos, el archivo es muy grande');
+        document.getElementById('edit-button-id').style.display = 'inline';
+        document.getElementById('spinner-edit-button-id').style.display = 'none';
       } else {
         var secret_key = await this.safetyNet();
         try {
-          document.getElementById('edit-button-id').style.display = 'none';
-          document.getElementById('spinner-edit-button-id').style.display = 'inline';
           const data = new FormData();
           data.append('file', this.state.file);
           axios
@@ -371,10 +381,15 @@ export class EditArticle extends Component {
                     <form className="upload-image-form-editor" onSubmit={this._handleSubmit}>
                       <label className="custom-file-upload">
                         <input onChange={this._handleImageChange} type="file" />
-                        Cambiar imagen
+                        Cambiar imagen/video
                       </label>
+                      <p className="key-words-detail-info">
+                        Sólo videos de hasta 5 minutos aprox ( 100 Mb )
+                      </p>
                     </form>
-                    <div className="show-image-preview-text-editor">{$imagePreview}</div>
+                    {this.props.home.uniquearticle.data[0].is_video !== 1 ? (
+                      <div className="show-image-preview-text-editor">{$imagePreview}</div>
+                    ) : null}
                   </div>
                 </div>
               </div>
@@ -426,7 +441,6 @@ export class EditArticle extends Component {
                   Guardar
                 </button>
                 <button
-                  onClick={() => this.editArticle()}
                   type="button"
                   id="spinner-edit-button-id"
                   className="btn btn-primary btn-lg spinner-edit-button"

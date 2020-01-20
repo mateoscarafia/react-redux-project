@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
-import Modal from 'react-awesome-modal';
 import history from '../../common/history';
 import * as VALUES from '../../constants';
 
@@ -70,18 +69,63 @@ export class News extends Component {
                 )
               }
             >
-              <div
-                className="img-div"
-                onClick={() =>
-                  this.routerMethod('news/' + this.props.articles.data.main_feed[prop].id)
-                }
-                style={{
-                  backgroundImage: `url(${'http://' +
-                    VALUES.BD_ORIGIN +
-                    ':3000/network_images/' +
-                    this.props.articles.data.main_feed[prop].img_url})`,
-                }}
-              ></div>
+              {this.props.articles.data.main_feed[prop].is_video === 1 ? (
+                <div
+                  className="img-div"
+                  onClick={() =>
+                    this.routerMethod('news/' + this.props.articles.data.main_feed[prop].id)
+                  }
+                >
+                  <img
+                    alt="video"
+                    className="play-video-style-div"
+                    src={require('../../images/play_video.png')}
+                  />
+                  <video width="100%" height={!this.props.id ? '250' : '200'} muted>
+                    <source
+                      src={
+                        'http://' +
+                        VALUES.BD_ORIGIN +
+                        ':3000/network_images/' +
+                        this.props.articles.data.main_feed[prop].img_url
+                      }
+                      type="video/mp4"
+                    />
+                    <source
+                      src={
+                        'http://' +
+                        VALUES.BD_ORIGIN +
+                        ':3000/network_images/' +
+                        this.props.articles.data.main_feed[prop].img_url
+                      }
+                      type="video/webm"
+                    />
+                    <source
+                      src={
+                        'http://' +
+                        VALUES.BD_ORIGIN +
+                        ':3000/network_images/' +
+                        this.props.articles.data.main_feed[prop].img_url
+                      }
+                      type="video/ogg"
+                    />
+                    Your browser does not support the video tag.
+                  </video>
+                </div>
+              ) : (
+                <div
+                  className="img-div"
+                  onClick={() =>
+                    this.routerMethod('news/' + this.props.articles.data.main_feed[prop].id)
+                  }
+                  style={{
+                    backgroundImage: `url(${'http://' +
+                      VALUES.BD_ORIGIN +
+                      ':3000/network_images/' +
+                      this.props.articles.data.main_feed[prop].img_url})`,
+                  }}
+                ></div>
+              )}
               <div
                 className={
                   !this.props.id ? 'wrapper-news-div-hover' : 'wrapper-news-div-hover-smaller'
@@ -92,9 +136,13 @@ export class News extends Component {
                 id={'news-hover-' + this.props.articles.data.main_feed[prop].id}
               >
                 <p>
-                  {this.props.articles.data.main_feed[prop].username +
-                    ' - ' +
-                    this.props.articles.data.main_feed[prop].name}
+                  {this.props.articles.data.main_feed[prop].username.length > 20
+                    ? this.props.articles.data.main_feed[prop].username.substring(0, 20) +
+                      '... - ' +
+                      this.props.articles.data.main_feed[prop].name
+                    : this.props.articles.data.main_feed[prop].username +
+                      ' - ' +
+                      this.props.articles.data.main_feed[prop].name}
                 </p>
                 <h1>
                   {this.props.articles.data.main_feed[prop].title.length > 100
@@ -125,18 +173,63 @@ export class News extends Component {
                 )
               }
             >
-              <div
-                onClick={() =>
-                  this.routerMethod('news/' + this.props.articles.data.backup_feed[prop].id)
-                }
-                className="img-div"
-                style={{
-                  backgroundImage: `url(${'http://' +
-                    VALUES.BD_ORIGIN +
-                    ':3000/network_images/' +
-                    this.props.articles.data.backup_feed[prop].img_url})`,
-                }}
-              ></div>
+              {this.props.articles.data.backup_feed[prop].is_video === 1 ? (
+                <div
+                  onClick={() =>
+                    this.routerMethod('news/' + this.props.articles.data.backup_feed[prop].id)
+                  }
+                  className="img-div"
+                >
+                  <img
+                    alt="video"
+                    className="play-video-style-div"
+                    src={require('../../images/play_video.png')}
+                  />
+                  <video width="100%" height={!this.props.id ? '250' : '200'} muted>
+                    <source
+                      src={
+                        'http://' +
+                        VALUES.BD_ORIGIN +
+                        ':3000/network_images/' +
+                        this.props.articles.data.backup_feed[prop].img_url
+                      }
+                      type="video/mp4"
+                    />
+                    <source
+                      src={
+                        'http://' +
+                        VALUES.BD_ORIGIN +
+                        ':3000/network_images/' +
+                        this.props.articles.data.backup_feed[prop].img_url
+                      }
+                      type="video/webm"
+                    />
+                    <source
+                      src={
+                        'http://' +
+                        VALUES.BD_ORIGIN +
+                        ':3000/network_images/' +
+                        this.props.articles.data.backup_feed[prop].img_url
+                      }
+                      type="video/ogg"
+                    />
+                    Your browser does not support the video tag.
+                  </video>
+                </div>
+              ) : (
+                <div
+                  onClick={() =>
+                    this.routerMethod('news/' + this.props.articles.data.backup_feed[prop].id)
+                  }
+                  className="img-div"
+                  style={{
+                    backgroundImage: `url(${'http://' +
+                      VALUES.BD_ORIGIN +
+                      ':3000/network_images/' +
+                      this.props.articles.data.backup_feed[prop].img_url})`,
+                  }}
+                ></div>
+              )}
               <div
                 className={
                   !this.props.id ? 'wrapper-news-div-hover' : 'wrapper-news-div-hover-smaller'
@@ -147,9 +240,13 @@ export class News extends Component {
                 id={'news-hover-' + this.props.articles.data.backup_feed[prop].id}
               >
                 <p>
-                  {this.props.articles.data.backup_feed[prop].username +
-                    ' - ' +
-                    this.props.articles.data.backup_feed[prop].name}
+                  {this.props.articles.data.backup_feed[prop].username.length > 20
+                    ? this.props.articles.data.backup_feed[prop].username.substring(0, 20) +
+                      '... - ' +
+                      this.props.articles.data.backup_feed[prop].name
+                    : this.props.articles.data.backup_feed[prop].username +
+                      ' - ' +
+                      this.props.articles.data.backup_feed[prop].name}
                 </p>
                 <h1>
                   {this.props.articles.data.backup_feed[prop].title.length > 100
@@ -186,22 +283,73 @@ export class News extends Component {
             )
           }
         >
-          <div
-            className="img-div"
-            onClick={() => this.routerMethod('news/' + this.props.articles.data.main_feed[prop].id)}
-            style={{
-              backgroundImage: `url(${'http://' +
-                VALUES.BD_ORIGIN +
-                ':3000/network_images/' +
-                this.props.articles.data.main_feed[prop].img_url})`,
-            }}
-          ></div>
+          {this.props.articles.data.main_feed[prop].is_video === 1 ? (
+            <div
+              className="img-div"
+              onClick={() =>
+                this.routerMethod('news/' + this.props.articles.data.main_feed[prop].id)
+              }
+            >
+              <img
+                alt="video"
+                className="play-video-style-div"
+                src={require('../../images/play_video.png')}
+              />
+              <video width="100%" height={!this.props.id ? '250' : '200'} muted>
+                <source
+                  src={
+                    'http://' +
+                    VALUES.BD_ORIGIN +
+                    ':3000/network_images/' +
+                    this.props.articles.data.main_feed[prop].img_url
+                  }
+                  type="video/mp4"
+                />
+                <source
+                  src={
+                    'http://' +
+                    VALUES.BD_ORIGIN +
+                    ':3000/network_images/' +
+                    this.props.articles.data.main_feed[prop].img_url
+                  }
+                  type="video/webm"
+                />
+                <source
+                  src={
+                    'http://' +
+                    VALUES.BD_ORIGIN +
+                    ':3000/network_images/' +
+                    this.props.articles.data.main_feed[prop].img_url
+                  }
+                  type="video/ogg"
+                />
+                Your browser does not support the video tag.
+              </video>
+            </div>
+          ) : (
+            <div
+              className="img-div"
+              onClick={() =>
+                this.routerMethod('news/' + this.props.articles.data.main_feed[prop].id)
+              }
+              style={{
+                backgroundImage: `url(${'http://' +
+                  VALUES.BD_ORIGIN +
+                  ':3000/network_images/' +
+                  this.props.articles.data.main_feed[prop].img_url})`,
+              }}
+            ></div>
+          )}
           <div
             className={!this.props.id ? 'wrapper-news-div-hover' : 'wrapper-news-div-hover-smaller'}
             onClick={() => this.routerMethod('news/' + this.props.articles.data.main_feed[prop].id)}
             id={'news-hover-' + this.props.articles.data.main_feed[prop].id}
           >
-            <p>{this.props.articles.data.main_feed[prop].username}</p>
+            <p>
+              {this.props.articles.data.main_feed[prop].username.length > 80
+                ? this.props.articles.data.main_feed[prop].username.substring(0, 80) + '...'
+                : this.props.articles.data.main_feed[prop].username}
+            </p>
             <h1>
               {this.props.articles.data.main_feed[prop].title.length > 100
                 ? this.props.articles.data.main_feed[prop].title.substring(0, 100) + '...'
@@ -274,52 +422,6 @@ export class News extends Component {
               {this.props.routeparams === 'main' && <div>{this.newsDistribution()}</div>}
             </div>
           </div>
-          <Modal
-            visible={this.state.visible}
-            width="300px"
-            height="300px"
-            borderRadius="0px"
-            effect="fadeInDown"
-            onClickAway={() => this.handleModal(false)}
-          >
-            {typeof this.props.home.writer !== 'undefined' && (
-              <div className="user-popup-content">
-                <a className="close-modal-header" onClick={() => this.handleModal(false)}>
-                  X
-                </a>
-                <div className="user-popup-header-img">
-                  <div
-                    onClick={() => this.routerMethod('profile/' + this.props.home.writer.data.id)}
-                    style={{
-                      backgroundImage: `url(${'http://' +
-                        VALUES.BD_ORIGIN +
-                        ':3000/network_images/' +
-                        this.props.home.writer.data.profile_img_url})`,
-                    }}
-                    className="user-profile-picture-popup"
-                  ></div>
-                </div>
-                <div className="user-data-header-popup">
-                  <h4
-                    onClick={() => this.routerMethod('profile/' + this.props.home.writer.data.id)}
-                  >
-                    {this.props.home.writer.data.username}
-                  </h4>
-                  <p>
-                    {this.props.home.writer.data.profession +
-                      ' - ' +
-                      this.props.home.writer.data.state.name}
-                  </p>
-                  <p
-                    onClick={() => this.followUser(this.props.articles.data[0].user.id, true)}
-                    className="follow-button"
-                  >
-                    Seguir
-                  </p>
-                </div>
-              </div>
-            )}
-          </Modal>
         </div>
       );
     }

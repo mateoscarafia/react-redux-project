@@ -7,8 +7,6 @@ import { NotificationContainer, NotificationManager } from 'react-notifications'
 import 'react-notifications/lib/notifications.css';
 import ReactHtmlParser from 'react-html-parser';
 import * as VALUES from '../../constants';
-import { Player } from 'video-react';
-import 'video-react/dist/video-react.css';
 
 //Components
 import NavBar from './NavBar';
@@ -127,22 +125,52 @@ export class Article extends Component {
             onMouseEnter={() => this.articleDivInfoVisible('news-hover-' + item.id)}
             onMouseLeave={() => this.articleDivInfoInvisible('news-hover-' + item.id)}
           >
-            <div
-              className="img-div"
-              onClick={() => this.routerMethod('../news/' + item.id, item.id)}
-              style={{
-                backgroundImage: `url(${'http://' +
-                  VALUES.BD_ORIGIN +
-                  ':3000/network_images/' +
-                  item.img_url})`,
-              }}
-            ></div>
+            {item.is_video !== 1 ? (
+              <div
+                className="img-div"
+                onClick={() => this.routerMethod('../news/' + item.id, item.id)}
+                style={{
+                  backgroundImage: `url(${'http://' +
+                    VALUES.BD_ORIGIN +
+                    ':3000/network_images/' +
+                    item.img_url})`,
+                }}
+              ></div>
+            ) : (
+              <div
+                className="img-div"
+                onClick={() => this.routerMethod('../news/' + item.id, item.id)}
+              >
+                <img
+                  alt="video"
+                  className="play-video-style-div"
+                  src={require('../../images/play_video.png')}
+                />
+                <video width="100%" height="200" muted>
+                  <source
+                    src={'http://' + VALUES.BD_ORIGIN + ':3000/network_images/' + item.img_url}
+                    type="video/mp4"
+                  />
+                  <source
+                    src={'http://' + VALUES.BD_ORIGIN + ':3000/network_images/' + item.img_url}
+                    type="video/webm"
+                  />
+                  <source
+                    src={'http://' + VALUES.BD_ORIGIN + ':3000/network_images/' + item.img_url}
+                    type="video/ogg"
+                  />
+                  Your browser does not support the video tag.
+                </video>
+              </div>
+            )}
             <div
               className="wrapper-news-div-hover"
               onClick={() => this.routerMethod('../news/' + item.id, item.id)}
               id={'news-hover-' + item.id}
             >
-              <p>{item.username}</p>
+              <p>
+                {item.username.length > 20 ? item.username.substring(0, 20) + '...' : item.username}
+              </p>
               <h1>{item.title.length > 80 ? item.title.substring(0, 80) + '...' : item.title}</h1>
             </div>
           </div>
@@ -317,10 +345,8 @@ export class Article extends Component {
                         new Date(this.props.home.uniquearticle.data[0].created_at).toString(),
                       )}
                   </h5>
-                  <div
-                    style={{ width: '200px', height: '400px', margin: 'auto', overflow: 'hidden' }}
-                  >
-                    <Player>
+                  <div>
+                    <video width="100%" height="400" controls>
                       <source
                         src={
                           'http://' +
@@ -328,8 +354,28 @@ export class Article extends Component {
                           ':3000/network_images/' +
                           this.props.home.uniquearticle.data[0].img_url
                         }
+                        type="video/mp4"
                       />
-                    </Player>
+                      <source
+                        src={
+                          'http://' +
+                          VALUES.BD_ORIGIN +
+                          ':3000/network_images/' +
+                          this.props.home.uniquearticle.data[0].img_url
+                        }
+                        type="video/webm"
+                      />
+                      <source
+                        src={
+                          'http://' +
+                          VALUES.BD_ORIGIN +
+                          ':3000/network_images/' +
+                          this.props.home.uniquearticle.data[0].img_url
+                        }
+                        type="video/ogg"
+                      />
+                      Your browser does not support the video tag.
+                    </video>
                   </div>
                 </div>
               ) : (
