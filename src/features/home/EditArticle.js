@@ -9,7 +9,7 @@ import { Editor } from 'react-draft-wysiwyg';
 import * as VALUES from '../../constants';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
-//import draftToHtml from 'draftjs-to-html';
+import Select from 'react-select';
 
 //Components
 import NavBar from './NavBar';
@@ -179,7 +179,9 @@ export class EditArticle extends Component {
                 ' ' +
                 (this.state.subtitle || this.props.home.uniquearticle.data[0].subtitle) +
                 ' ' +
-                this.props.home.user.data[0].username
+                this.props.home.user.data[0].username +
+                '' +
+                this.state.category
               )
                 .toLowerCase()
                 .normalize('NFD')
@@ -214,7 +216,7 @@ export class EditArticle extends Component {
                 content: this.state.changedEditor
                   ? draftToHtml(convertToRaw(this.state.editorState.getCurrentContent()))
                   : this.props.home.uniquearticle.data[0].content,
-                key_words: this.props.home.uniquearticle.data[0].key_words + '-' + keyword_content,
+                key_words: keyword_content,
                 id: this.props.match.params.id,
                 user_id: this.state.id,
               };
@@ -228,9 +230,16 @@ export class EditArticle extends Component {
   };
 
   buildCategories = () => {
-    return this.props.home.categories.data.map(item => {
-      return <option>{item.name}</option>;
+    let cats = [];
+    this.props.home.categories.data.map(function(item) {
+      cats.push({ value: item.name, label: item.name });
+      return null;
     });
+    return cats;
+  };
+
+  handleChangeSelect = selectedOption => {
+    this.setState({ category: selectedOption.value });
   };
 
   _handleImageChange(e) {
@@ -256,6 +265,8 @@ export class EditArticle extends Component {
   };
 
   render() {
+    const categoriesList =
+      this.props.home.categories && this.props.home.categories.data[0] && this.buildCategories();
     try {
       var editorState = this.state.changedEditor && this.state.editorState;
       if (this.props.home.uniquearticle && !this.state.changedEditor) {
@@ -283,6 +294,7 @@ export class EditArticle extends Component {
       return null;
     } else if (this.props.home.categories && !this.props.home.categories.data[0]) {
       this.goToErrorLanding();
+      return null;
     } else if (
       this.props.home.user &&
       this.props.home.user.data[0] &&
@@ -290,24 +302,6 @@ export class EditArticle extends Component {
     ) {
       this.removeTokenAndKill();
       return null;
-    } else if (
-      this.props.home.getUserPending ||
-      this.props.home.getCategoriesPending ||
-      this.props.home.getCategoriesPending
-    ) {
-      return (
-        <div
-          id="spinner-div-for-news-id-editarticle-home-waiting"
-          className="spinner-div-for-news-editarticle-when-no-content"
-        >
-          <img
-            alt="edit"
-            width="30"
-            className="edit-pen-user-profile-style"
-            src={require('../../images/spinner.gif')}
-          />
-        </div>
-      );
     } else {
       return (
         <div className="home-text-editor-css-style">
@@ -319,7 +313,20 @@ export class EditArticle extends Component {
               user={this.state.id}
             />
           )}
-          {this.props.home.uniquearticle && (
+          {this.props.home.getUserPending && (
+            <div
+              id="spinner-div-for-news-id-editarticle-home-waiting"
+              className="spinner-div-for-news-editarticle-when-no-content"
+            >
+              <img
+                alt="edit"
+                width="30"
+                className="edit-pen-user-profile-style"
+                src={require('../../images/spinner.gif')}
+              />
+            </div>
+          )}
+          {!this.props.home.getUserPending && this.props.home.uniquearticle && (
             <div className="editor-wrapper">
               {this.props.home.user && (
                 <UserHeader
@@ -364,15 +371,18 @@ export class EditArticle extends Component {
                 <form className="select-form">
                   <div className="row">
                     <div className="col">
-                      <select
-                        name="category"
-                        onChange={this.handleChange}
-                        className="form-control"
-                        id="category"
-                      >
-                        <option>{this.props.home.uniquearticle.data[0].name}</option>
-                        {this.props.home.categories && this.buildCategories()}
-                      </select>
+                      <Select
+                        value={{
+                          value: this.state.category
+                            ? this.state.category
+                            : this.props.home.uniquearticle.data[0].name,
+                          label: this.state.category
+                            ? this.state.category
+                            : this.props.home.uniquearticle.data[0].name,
+                        }}
+                        onChange={this.handleChangeSelect}
+                        options={categoriesList}
+                      />
                     </div>
                   </div>
                 </form>
@@ -383,12 +393,50 @@ export class EditArticle extends Component {
                         <input onChange={this._handleImageChange} type="file" />
                         Cambiar imagen/video
                       </label>
-                      <p className="key-words-detail-info">
-                        Sólo videos de hasta 5 minutos aprox ( 100 Mb )
+                      <p className="content-warning-message-edit-file">
+                        Videos de 1 minutos max (20 Mb)
                       </p>
                     </form>
-                    {this.props.home.uniquearticle.data[0].is_video !== 1 ? (
+                    {!this.state.file && this.props.home.uniquearticle.data[0].is_video !== 1 ? (
                       <div className="show-image-preview-text-editor">{$imagePreview}</div>
+                    ) : (
+                      <video width="200" controls>
+                        <source
+                          src={
+                            'http://' +
+                            VALUES.BD_ORIGIN +
+                            ':3000/network_images/' +
+                            this.props.home.uniquearticle.data[0].img_url
+                          }
+                          type="video/mp4"
+                        />
+                        <source
+                          src={
+                            'http://' +
+                            VALUES.BD_ORIGIN +
+                            ':3000/network_images/' +
+                            this.props.home.uniquearticle.data[0].img_url
+                          }
+                          type="video/webm"
+                        />
+                        <source
+                          src={
+                            'http://' +
+                            VALUES.BD_ORIGIN +
+                            ':3000/network_images/' +
+                            this.props.home.uniquearticle.data[0].img_url
+                          }
+                          type="video/ogg"
+                        />
+                        Your browser does not support the video tag.
+                      </video>
+                    )}
+                    {this.state.file ? (
+                      this.state.file.type.includes('image') ? (
+                        <div className="show-image-preview-text-editor">{$imagePreview}</div>
+                      ) : (
+                        <label className="badge badge-info">Archivo cargado</label>
+                      )
                     ) : null}
                   </div>
                 </div>

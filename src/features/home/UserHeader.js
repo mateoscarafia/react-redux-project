@@ -163,7 +163,7 @@ export class UserHeader extends Component {
               }
               className="username-name-message"
             >
-              {item.username}
+              {item.username.length > 20 ? item.username.substring(0, 20) + '...' : item.username}
             </p>
             <p className="date-message">
               - {this.convertDate(new Date(parseInt(item.created_at, 10)).toString())}

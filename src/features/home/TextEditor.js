@@ -9,6 +9,7 @@ import { Editor } from 'react-draft-wysiwyg';
 import * as VALUES from '../../constants';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
+import Select from 'react-select';
 //import draftToHtml from 'draftjs-to-html';
 
 //Components
@@ -153,7 +154,9 @@ export class TextEditor extends Component {
                 ' ' +
                 this.state.subtitle +
                 ' ' +
-                this.props.home.user.data[0].username
+                this.props.home.user.data[0].username +
+                '' +
+                this.state.category
               )
                 .toLowerCase()
                 .normalize('NFD')
@@ -199,9 +202,12 @@ export class TextEditor extends Component {
   };
 
   buildCategories = () => {
-    return this.props.home.categories.data.map(item => {
-      return <option key={item.id}>{item.name}</option>;
+    let cats = [];
+    this.props.home.categories.data.map(function(item) {
+      cats.push({ value: item.name, label: item.name });
+      return null;
     });
+    return cats;
   };
 
   _handleImageChange(e) {
@@ -226,7 +232,13 @@ export class TextEditor extends Component {
     window.location.replace('http://' + VALUES.BD_ORIGIN + ':6075/feed/main');
   };
 
+  handleChangeSelect = selectedOption => {
+    this.setState({ category: selectedOption.value });
+  };
+
   render() {
+    const categoriesList =
+      this.props.home.categories && this.props.home.categories.data[0] && this.buildCategories();
     try {
       var { editorState } = this.state;
       var { imagePreviewUrl } = this.state;
@@ -243,6 +255,7 @@ export class TextEditor extends Component {
       return null;
     } else if (this.props.home.categories && !this.props.home.categories.data[0]) {
       this.goToErrorLanding();
+      return null;
     } else if (
       this.props.home.user &&
       this.props.home.user.data[0] &&
@@ -250,20 +263,6 @@ export class TextEditor extends Component {
     ) {
       this.removeTokenAndKill();
       return null;
-    } else if (this.props.home.getUserPending || this.props.home.getCategoriesPending) {
-      return (
-        <div
-          id="spinner-div-for-news-id-texteditor-home-waiting"
-          className="spinner-div-for-news-texteditor-when-no-content"
-        >
-          <img
-            alt="edit"
-            width="30"
-            className="edit-pen-user-profile-style"
-            src={require('../../images/spinner.gif')}
-          />
-        </div>
-      );
     } else {
       return (
         <div className="home-text-editor-css-style">
@@ -275,114 +274,120 @@ export class TextEditor extends Component {
               user={this.state.id}
             />
           )}
-          <div className="editor-wrapper">
-            {this.props.home.user && (
-              <UserHeader
-                isTextEditor={true}
-                isProfile={this.state.isProfile}
-                user={this.props.home.user.data[0]}
-                user_id={this.props.home.user.data[0].id}
+          {this.props.home.getUserPending && (
+            <div
+              id="spinner-div-for-news-id-texteditor-home-waiting"
+              className="spinner-div-for-news-texteditor-when-no-content"
+            >
+              <img
+                alt="edit"
+                width="30"
+                className="edit-pen-user-profile-style"
+                src={require('../../images/spinner.gif')}
               />
-            )}
-            <div className="editor-header">
-              <h4>Nuevo artículo</h4>
-              <form className="home-editor-form">
-                <div className="form-group">
-                  <input
-                    type="text"
-                    id="title"
-                    name="title"
-                    onChange={this.handleChange}
-                    placeholder="Título"
-                  />
-                </div>
-                <div className="form-group">
-                  <input
-                    type="text"
-                    name="subtitle"
-                    onChange={this.handleChange}
-                    id="subtitle"
-                    placeholder="Subtítulo"
-                  />
-                </div>
-                <div className="form-group">
-                  <input
-                    type="text"
-                    name="keywords"
-                    onChange={this.handleChange}
-                    id="keywords"
-                    placeholder="Palabras claves"
-                  />
-                  <p className="key-words-detail-info">
-                    *Palabras claves relacionadas al contenido del artículo (Ciudad, personas, tema,
-                    etc..)
-                  </p>
-                </div>
-              </form>
-              <form className="select-form">
-                <div className="row">
-                  <div className="col">
-                    <select
-                      name="category"
+            </div>
+          )}
+          {!this.props.home.getUserPending && (
+            <div className="editor-wrapper">
+              {this.props.home.user && (
+                <UserHeader
+                  isTextEditor={true}
+                  isProfile={this.state.isProfile}
+                  user={this.props.home.user.data[0]}
+                  user_id={this.props.home.user.data[0].id}
+                />
+              )}
+              <div className="editor-header">
+                <h4>Nuevo artículo</h4>
+                <form className="home-editor-form">
+                  <div className="form-group">
+                    <input
+                      type="text"
+                      id="title"
+                      name="title"
                       onChange={this.handleChange}
-                      className="form-control"
-                      id="category"
-                    >
-                      <option>Categorias</option>
-                      {this.props.home.categories && this.buildCategories()}
-                    </select>
+                      placeholder="Título"
+                    />
+                  </div>
+                  <div className="form-group">
+                    <input
+                      type="text"
+                      name="subtitle"
+                      onChange={this.handleChange}
+                      id="subtitle"
+                      placeholder="Subtítulo"
+                    />
+                  </div>
+                  <div className="form-group">
+                    <input
+                      type="text"
+                      name="keywords"
+                      onChange={this.handleChange}
+                      id="keywords"
+                      placeholder="Palabras claves"
+                    />
+                    <p className="key-words-detail-info">
+                      *Palabras claves relacionadas al contenido del artículo (Ciudad, personas,
+                      tema, etc..)
+                    </p>
+                  </div>
+                </form>
+                <form className="select-form">
+                  <div className="row">
+                    <div className="col">
+                      <Select
+                        value={{ value: this.state.category, label: this.state.category }}
+                        onChange={this.handleChangeSelect}
+                        options={categoriesList}
+                      />
+                    </div>
+                  </div>
+                </form>
+                <div className="form-group">
+                  <div>
+                    <form className="upload-image-form-editor" onSubmit={this._handleSubmit}>
+                      <label className="custom-file-upload">
+                        <input onChange={this._handleImageChange} type="file" />
+                        Subir imagen/video
+                      </label>
+                      <p className="content-warning-message">Videos de 1 minutos max (20 Mb)</p>
+                    </form>
+                    {this.state.file ? (
+                      this.state.file.type.includes('image') ? (
+                        <div className="show-image-preview-text-editor">{$imagePreview}</div>
+                      ) : (
+                        <label className="badge badge-info">Archivo cargado</label>
+                      )
+                    ) : null}
                   </div>
                 </div>
-              </form>
-              <div className="form-group">
-                <div>
-                  <form className="upload-image-form-editor" onSubmit={this._handleSubmit}>
-                    <label className="custom-file-upload">
-                      <input onChange={this._handleImageChange} type="file" />
-                      Subir imagen/video
-                    </label>
-                    <p className="content-warning-message">
-                      Videos de 5 minutos max (100 Mb)
-                    </p>
-                  </form>
-                  {this.state.file ? (
-                    this.state.file.type.includes('image') ? (
-                      <div className="show-image-preview-text-editor">{$imagePreview}</div>
-                    ) : (
-                      <label className="badge badge-info">Archivo cargado</label>
-                    )
-                  ) : null}
-                </div>
+              </div>
+              <Editor
+                editorState={editorState}
+                wrapperClassName="wrapper-class"
+                editorClassName="rdw-editor-toolbar"
+                toolbarClassName="toolbar-class"
+                onEditorStateChange={this.onEditorStateChange}
+              />
+              <div className="send-article-div-control">
+                <button
+                  onClick={() => this.postArticle()}
+                  id="button-post-article"
+                  className="send-article-button-articlejs"
+                >
+                  Publicar artículo
+                </button>
+                <button id="spinner-button-post-article" className="send-article-button-articlejs">
+                  <img
+                    alt="edit"
+                    width="20"
+                    className="edit-pen-user-profile-style"
+                    src={require('../../images/spinner.gif')}
+                  />
+                </button>
               </div>
             </div>
-            <Editor
-              editorState={editorState}
-              wrapperClassName="wrapper-class"
-              editorClassName="rdw-editor-toolbar"
-              toolbarClassName="toolbar-class"
-              onEditorStateChange={this.onEditorStateChange}
-            />
-            <div className="send-article-div-control">
-              <button
-                onClick={() => this.postArticle()}
-                id="button-post-article"
-                className="send-article-button-articlejs"
-              >
-                Publicar artículo
-              </button>
-              <button
-                id="spinner-button-post-article"
-                className="send-article-button-articlejs"
-              >
-                <img
-                  alt="edit"
-                  width="20"
-                  className="edit-pen-user-profile-style"
-                  src={require('../../images/spinner.gif')}
-                />
-              </button>
-            </div>
-          </div>
+          )}
           <Footer />
           <NotificationContainer />
         </div>

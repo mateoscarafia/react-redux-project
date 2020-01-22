@@ -145,7 +145,7 @@ export class UserProfile extends Component {
               onClick={() => this.routerMethod('../profile/' + item.id, item.id)}
               className="username-name-message"
             >
-              {item.username}
+              {item.username.length > 20 ? item.username.substring(0, 20) + '...' : item.username}
             </p>
             <p className="date-message">- {item.profession}</p>
             <hr className="hr-white-invisible" />
@@ -176,7 +176,7 @@ export class UserProfile extends Component {
               onClick={() => this.routerMethod('../profile/' + item.id, item.id)}
               className="username-name-message"
             >
-              {item.username}
+              {item.username.length > 20 ? item.username.substring(0, 20) + '...' : item.username}
             </p>
             <p className="date-message">- {item.profession}</p>
             <hr className="hr-white-invisible" />
@@ -198,10 +198,14 @@ export class UserProfile extends Component {
               className="my-readers-user"
               onClick={() => this.routerMethod('../profile/' + item.id, item.id)}
             >
-              {item.username + ' '}-
-              {' ' + this.convertDate(new Date(parseInt(item.created_at, 10)).toString())}
+              {item.username.length > 20
+                ? item.username.substring(0, 20) + '... '
+                : item.username + ' '}
+              -{this.convertDate(new Date(parseInt(item.created_at, 10)).toString())}
             </p>
-            <p className="my-readers-title">{item.title.substring(0, 60) + '...'}</p>
+            <p className="my-readers-title">
+              {item.title.length > 80 ? item.title.substring(0, 80) + '...' : item.title}
+            </p>
             <br />
           </div>
         );
@@ -539,7 +543,7 @@ export class UserProfile extends Component {
               >
                 <img
                   alt="edit"
-                  width="40"
+                  width="30"
                   className="edit-pen-user-profile-style"
                   src={require('../../images/spinner.gif')}
                 />
@@ -600,7 +604,9 @@ export class UserProfile extends Component {
                     Mis lectores
                   </p>
                 )}
-                <p>{this.props.home.user.data[0].about_me}</p>
+                <p className="my-description-user-profile-div-p">
+                  {this.props.home.user.data[0].about_me}
+                </p>
               </div>
             )}
             <div className="user-profile-wrapper-content">

@@ -4,7 +4,6 @@ export { default as Home } from './Home';
 export { default as NavBar } from './NavBar';
 export { default as BannerMidd } from './BannerMidd';
 export { default as News } from './News';
-export { default as BigNews } from './BigNews';
 export { default as Login } from './Login';
 export { default as Article } from './Article';
 export { default as Register } from './Register';

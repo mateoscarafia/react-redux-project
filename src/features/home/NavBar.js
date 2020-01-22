@@ -97,6 +97,7 @@ export class NavBar extends Component {
         .replace(/[\u0300-\u036f]/g, '')
         .replace(/[^a-zA-Z0-9 ]/g, '')
         .replace(/ /g, '-');
+      searchword = searchword === '' ? 'empty' : searchword;
       window.scrollTo(0, 0);
       await this.props.actions.getArticles({
         token: VALUES.DEEP_TOKEN,
@@ -115,6 +116,7 @@ export class NavBar extends Component {
         .replace(/[\u0300-\u036f]/g, '')
         .replace(/[^a-zA-Z0-9 ]/g, '')
         .replace(/ /g, '-');
+      search = search === '' ? 'empty' : search;
       window.scrollTo(0, 0);
       document.getElementById('navbar-toggler-id-for-clicking').click();
       await this.props.actions.getArticles({
@@ -163,11 +165,7 @@ export class NavBar extends Component {
                     onChange={this.handleChange}
                     placeholder="Buscar.."
                   />
-                  <p
-                    type="button"
-                    className="width-button"
-                    onClick={() => this.searchArticlesMotorFromNav()}
-                  >
+                  <p className="width-button" onClick={() => this.searchArticlesMotorFromNav()}>
                     Buscar
                   </p>
                 </div>
