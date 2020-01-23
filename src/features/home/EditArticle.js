@@ -153,7 +153,7 @@ export class EditArticle extends Component {
         NotificationManager.warning('El archivo no es una imagen/video');
         document.getElementById('edit-button-id').style.display = 'inline';
         document.getElementById('spinner-edit-button-id').style.display = 'none';
-      } else if (this.state.file && !this.state.file.size > 163840) {
+      } else if (this.state.file && this.state.file.size > 163840) {
         NotificationManager.warning('Lo sentimos, el archivo es muy grande');
         document.getElementById('edit-button-id').style.display = 'inline';
         document.getElementById('spinner-edit-button-id').style.display = 'none';
