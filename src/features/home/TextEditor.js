@@ -117,6 +117,7 @@ export class TextEditor extends Component {
   };
 
   postArticle = async () => {
+    this.state.file && console.log(this.state.file.size)
     document.getElementById('button-post-article').style.display = 'none';
     document.getElementById('spinner-button-post-article').style.display = 'inline';
     if (this.state.login && this.state.title && this.state.subtitle && this.state.keywords) {
@@ -128,7 +129,7 @@ export class TextEditor extends Component {
         NotificationManager.warning('El archivo no es una imagen/video');
         document.getElementById('button-post-article').style.display = 'inline';
         document.getElementById('spinner-button-post-article').style.display = 'none';
-      } else if (this.state.file && this.state.file.size > 163840) {
+      } else if (this.state.file && this.state.file.size > 20000000) {
         NotificationManager.warning('Lo sentimos, el archivo es muy grande');
         document.getElementById('button-post-article').style.display = 'inline';
         document.getElementById('spinner-button-post-article').style.display = 'none';
