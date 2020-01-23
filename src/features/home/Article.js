@@ -146,26 +146,44 @@ export class Article extends Component {
                   className="play-video-style-div"
                   src={require('../../images/play_video.png')}
                 />
-                <video
-                  width="100%"
-                  poster={'http://' + VALUES.BD_ORIGIN + ':3000/network_images/' + item.img_url}
-                  height="200"
-                  muted
-                >
-                  <source
-                    src={'http://' + VALUES.BD_ORIGIN + ':3000/network_images/' + item.img_url}
-                    type="video/mp4"
-                  />
-                  <source
-                    src={'http://' + VALUES.BD_ORIGIN + ':3000/network_images/' + item.img_url}
-                    type="video/webm"
-                  />
-                  <source
-                    src={'http://' + VALUES.BD_ORIGIN + ':3000/network_images/' + item.img_url}
-                    type="video/ogg"
-                  />
-                  Your browser does not support the video tag.
-                </video>
+                {window.screen.width < 800 ? (
+                  <video
+                    width="100%"
+                    poster={'http://' + VALUES.BD_ORIGIN + ':3000/network_images/' + item.img_url}
+                    height="200"
+                    muted
+                  >
+                    <source
+                      src={'http://' + VALUES.BD_ORIGIN + ':3000/network_images/' + item.img_url}
+                      type="video/mp4"
+                    />
+                    <source
+                      src={'http://' + VALUES.BD_ORIGIN + ':3000/network_images/' + item.img_url}
+                      type="video/webm"
+                    />
+                    <source
+                      src={'http://' + VALUES.BD_ORIGIN + ':3000/network_images/' + item.img_url}
+                      type="video/ogg"
+                    />
+                    Your browser does not support the video tag.
+                  </video>
+                ) : (
+                  <video width="100%" height="200" muted>
+                    <source
+                      src={'http://' + VALUES.BD_ORIGIN + ':3000/network_images/' + item.img_url}
+                      type="video/mp4"
+                    />
+                    <source
+                      src={'http://' + VALUES.BD_ORIGIN + ':3000/network_images/' + item.img_url}
+                      type="video/webm"
+                    />
+                    <source
+                      src={'http://' + VALUES.BD_ORIGIN + ':3000/network_images/' + item.img_url}
+                      type="video/ogg"
+                    />
+                    Your browser does not support the video tag.
+                  </video>
+                )}
               </div>
             )}
             <div
@@ -351,46 +369,79 @@ export class Article extends Component {
                       )}
                   </h5>
                   <div>
-                    <video
-                      width="100%"
-                      poster={
-                        'http://' +
-                        VALUES.BD_ORIGIN +
-                        ':3000/network_images/' +
-                        this.props.home.uniquearticle.data[0].img_url
-                      }
-                      height="400"
-                      controls
-                    >
-                      <source
-                        src={
+                    {window.screen.width < 800 ? (
+                      <video
+                        width="100%"
+                        poster={
                           'http://' +
                           VALUES.BD_ORIGIN +
                           ':3000/network_images/' +
                           this.props.home.uniquearticle.data[0].img_url
                         }
-                        type="video/mp4"
-                      />
-                      <source
-                        src={
-                          'http://' +
-                          VALUES.BD_ORIGIN +
-                          ':3000/network_images/' +
-                          this.props.home.uniquearticle.data[0].img_url
-                        }
-                        type="video/webm"
-                      />
-                      <source
-                        src={
-                          'http://' +
-                          VALUES.BD_ORIGIN +
-                          ':3000/network_images/' +
-                          this.props.home.uniquearticle.data[0].img_url
-                        }
-                        type="video/ogg"
-                      />
-                      Your browser does not support the video tag.
-                    </video>
+                        height="400"
+                        controls
+                      >
+                        <source
+                          src={
+                            'http://' +
+                            VALUES.BD_ORIGIN +
+                            ':3000/network_images/' +
+                            this.props.home.uniquearticle.data[0].img_url
+                          }
+                          type="video/mp4"
+                        />
+                        <source
+                          src={
+                            'http://' +
+                            VALUES.BD_ORIGIN +
+                            ':3000/network_images/' +
+                            this.props.home.uniquearticle.data[0].img_url
+                          }
+                          type="video/webm"
+                        />
+                        <source
+                          src={
+                            'http://' +
+                            VALUES.BD_ORIGIN +
+                            ':3000/network_images/' +
+                            this.props.home.uniquearticle.data[0].img_url
+                          }
+                          type="video/ogg"
+                        />
+                        Your browser does not support the video tag.
+                      </video>
+                    ) : (
+                      <video width="100%" height="400" controls>
+                        <source
+                          src={
+                            'http://' +
+                            VALUES.BD_ORIGIN +
+                            ':3000/network_images/' +
+                            this.props.home.uniquearticle.data[0].img_url
+                          }
+                          type="video/mp4"
+                        />
+                        <source
+                          src={
+                            'http://' +
+                            VALUES.BD_ORIGIN +
+                            ':3000/network_images/' +
+                            this.props.home.uniquearticle.data[0].img_url
+                          }
+                          type="video/webm"
+                        />
+                        <source
+                          src={
+                            'http://' +
+                            VALUES.BD_ORIGIN +
+                            ':3000/network_images/' +
+                            this.props.home.uniquearticle.data[0].img_url
+                          }
+                          type="video/ogg"
+                        />
+                        Your browser does not support the video tag.
+                      </video>
+                    )}
                   </div>
                 </div>
               ) : (

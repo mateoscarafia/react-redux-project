@@ -405,7 +405,7 @@ export class EditArticle extends Component {
                     {!this.state.file ? (
                       this.props.home.uniquearticle.data[0].is_video !== 1 ? (
                         <div className="show-image-preview-text-editor">{$imagePreview}</div>
-                      ) : (
+                      ) : window.screen.width < 800 ? (
                         <video
                           poster={
                             'http://' +
@@ -414,8 +414,40 @@ export class EditArticle extends Component {
                             this.props.home.uniquearticle.data[0].img_url
                           }
                           width="200"
+                          height="200"
                           controls
                         >
+                          <source
+                            src={
+                              'http://' +
+                              VALUES.BD_ORIGIN +
+                              ':3000/network_images/' +
+                              this.props.home.uniquearticle.data[0].img_url
+                            }
+                            type="video/mp4"
+                          />
+                          <source
+                            src={
+                              'http://' +
+                              VALUES.BD_ORIGIN +
+                              ':3000/network_images/' +
+                              this.props.home.uniquearticle.data[0].img_url
+                            }
+                            type="video/webm"
+                          />
+                          <source
+                            src={
+                              'http://' +
+                              VALUES.BD_ORIGIN +
+                              ':3000/network_images/' +
+                              this.props.home.uniquearticle.data[0].img_url
+                            }
+                            type="video/ogg"
+                          />
+                          Your browser does not support the video tag.
+                        </video>
+                      ) : (
+                        <video width="200" height="200" controls>
                           <source
                             src={
                               'http://' +

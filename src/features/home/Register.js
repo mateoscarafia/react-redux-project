@@ -106,23 +106,38 @@ export class Register extends Component {
   };
 
   componentWillReceiveProps(nextProps) {
+    nextProps.home.codeverified && console.log(nextProps.home.codeverified.data.token);
     if (this.props.home.verifyUserPending && nextProps.home.emailverifysent) {
       this.setState({ showVerification: true });
     }
     if (
       this.props.home.verifyCodePending &&
       nextProps.home.codeverified &&
-      nextProps.home.codeverified.token !== 'token-died'
+      nextProps.home.codeverified.data.token !== 'token-died'
     ) {
       localStorage.setItem('token-app-auth-current', nextProps.home.codeverified.data.token);
-      window.location.replace('http://' + VALUES.BD_ORIGIN + ':6075/feed/main');
+      //window.location.replace('http://' + VALUES.BD_ORIGIN + ':6075/feed/main');
     }
     if (
       this.props.home.verifyCodePending &&
       nextProps.home.codeverified &&
-      nextProps.home.codeverified.token === 'token-died'
+      nextProps.home.codeverified.data.token === 'token-died'
     ) {
-      NotificationManager.error('Ups, algo fue mal');
+      NotificationManager.info('Código incorrecto');
+      document.getElementById('verify-spinner-bottom').style.display = 'none';
+      document.getElementById('verify-no-spinner-bottom').style.display = 'inline';
+    }
+    if (
+      this.props.home.verifyCodePending &&
+      nextProps.home.codeverified &&
+      nextProps.home.codeverified.data.token === 'email-exists'
+    ) {
+      NotificationManager.info('El email ya esta registrado');
+      document.getElementById('verify-spinner-bottom').style.display = 'none';
+      document.getElementById('verify-no-spinner-bottom').style.display = 'inline';
+    }
+    if (this.props.home.verifyCodePending && nextProps.home.verifyCodeError) {
+      NotificationManager.info('Ups, ocurrió un error');
       document.getElementById('verify-spinner-bottom').style.display = 'none';
       document.getElementById('verify-no-spinner-bottom').style.display = 'inline';
     }
