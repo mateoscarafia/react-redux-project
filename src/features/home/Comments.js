@@ -95,12 +95,12 @@ export class Comments extends Component {
     document.getElementById('spinner-comment-send-button').style.display = 'inline';
     document.getElementById('comment-send-button').style.display = 'none';
     if (!this.props.user_id) {
-      NotificationManager.warning('Debes loguearte para opinar');
+      NotificationManager.info('Debes loguearte para opinar');
       document.getElementById('comment-send-button').style.display = 'inline';
       document.getElementById('spinner-comment-send-button').style.display = 'none';
     }
     if (this.state.comment === '') {
-      NotificationManager.warning('Escribe opinión');
+      NotificationManager.info('Escribe opinión');
       document.getElementById('comment-send-button').style.display = 'inline';
       document.getElementById('spinner-comment-send-button').style.display = 'none';
     }

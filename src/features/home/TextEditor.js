@@ -65,7 +65,7 @@ export class TextEditor extends Component {
         document.getElementById('button-post-article').style.display = 'inline';
         document.getElementById('spinner-button-post-article').style.display = 'none';
       }, 1000);
-      NotificationManager.warning('Ups, algo fue mal');
+      NotificationManager.info('Ups, algo fue mal');
     }
   }
 
@@ -126,11 +126,11 @@ export class TextEditor extends Component {
         !this.state.file.type.includes('image') &&
         !this.state.file.type.includes('video')
       ) {
-        NotificationManager.warning('El archivo no es una imagen/video');
+        NotificationManager.info('El archivo no es una imagen/video');
         document.getElementById('button-post-article').style.display = 'inline';
         document.getElementById('spinner-button-post-article').style.display = 'none';
       } else if (this.state.file && this.state.file.size > 20000000) {
-        NotificationManager.warning('Lo sentimos, el archivo es muy grande');
+        NotificationManager.info('Lo sentimos, el archivo es muy grande');
         document.getElementById('button-post-article').style.display = 'inline';
         document.getElementById('spinner-button-post-article').style.display = 'none';
       } else {
@@ -190,13 +190,13 @@ export class TextEditor extends Component {
               this.props.actions.postArticle(data);
             });
         } catch (err) {
-          NotificationManager.warning('Algo salió mal, revise el contenido');
+          NotificationManager.info('Algo salió mal, revise el contenido');
           document.getElementById('button-post-article').style.display = 'inline';
           document.getElementById('spinner-button-post-article').style.display = 'none';
         }
       }
     } else {
-      NotificationManager.warning('Debes complear todos los campos');
+      NotificationManager.info('Debes complear todos los campos');
       document.getElementById('button-post-article').style.display = 'inline';
       document.getElementById('spinner-button-post-article').style.display = 'none';
     }

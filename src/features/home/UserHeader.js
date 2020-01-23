@@ -84,7 +84,7 @@ export class UserHeader extends Component {
 
   sendMessage = async id => {
     if (this.state.message === null || this.state.message === '') {
-      NotificationManager.warning('Telegrama vacío');
+      NotificationManager.info('Telegrama vacío');
     } else {
       await this.props.actions.postMessage({
         token: localStorage.getItem('token-app-auth-current'),
@@ -182,13 +182,13 @@ export class UserHeader extends Component {
       NotificationManager.info('Sigues al usuario');
     }
     if (this.props.home.followUserPending && !nextProps.home.follow) {
-      NotificationManager.warning('Ups, algo fue mal');
+      NotificationManager.info('Ups, algo fue mal');
     }
     if (this.props.home.stopFollowPending && nextProps.home.stopfollow) {
       NotificationManager.info('No sigues al usuario');
     }
     if (this.props.home.stopFollowPending && !nextProps.home.stopfollow) {
-      NotificationManager.warning('Ups, algo fue mal');
+      NotificationManager.info('Ups, algo fue mal');
     }
     if (this.props.home.postMessagePending && nextProps.home.sendmessage.data === 'un dia') {
       NotificationManager.info('Solo un Telegrama por día');
@@ -198,7 +198,7 @@ export class UserHeader extends Component {
       this.openMessenger();
     }
     if (this.props.home.postMessagePending && !nextProps.home.sendmessage.data) {
-      NotificationManager.warning('Ups, algo fue mal');
+      NotificationManager.info('Ups, algo fue mal');
     }
   }
 

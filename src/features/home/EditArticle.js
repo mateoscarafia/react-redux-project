@@ -58,7 +58,7 @@ export class EditArticle extends Component {
         document.getElementById('edit-button-id').style.display = 'inline';
         document.getElementById('spinner-edit-button-id').style.display = 'none';
       }, 1000);
-      NotificationManager.warning('Ups, algo fue mal');
+      NotificationManager.info('Ups, algo fue mal');
     }
     if (this.props.home.deleteArticlePending && nextProps.home.deletearticle) {
       NotificationManager.info('Articulo eliminado');
@@ -71,7 +71,7 @@ export class EditArticle extends Component {
         document.getElementById('delete-button-id').style.display = 'inline';
         document.getElementById('spinner-delete-button-id-final').style.display = 'none';
       }, 1000);
-      NotificationManager.warning('Ups, algo fue mal');
+      NotificationManager.info('Ups, algo fue mal');
     }
   }
 
@@ -150,11 +150,11 @@ export class EditArticle extends Component {
         !this.state.file.type.includes('image') &&
         !this.state.file.type.includes('video')
       ) {
-        NotificationManager.warning('El archivo no es una imagen/video');
+        NotificationManager.info('El archivo no es una imagen/video');
         document.getElementById('edit-button-id').style.display = 'inline';
         document.getElementById('spinner-edit-button-id').style.display = 'none';
       } else if (this.state.file && this.state.file.size > 20000000) {
-        NotificationManager.warning('Lo sentimos, el archivo es muy grande');
+        NotificationManager.info('Lo sentimos, el archivo es muy grande');
         document.getElementById('edit-button-id').style.display = 'inline';
         document.getElementById('spinner-edit-button-id').style.display = 'none';
       } else {
@@ -228,7 +228,7 @@ export class EditArticle extends Component {
               this.props.actions.editArticle(data);
             });
         } catch (err) {
-          NotificationManager.warning('Algo salió mal, revise el contenido');
+          NotificationManager.info('Algo salió mal, revise el contenido');
         }
       }
     }

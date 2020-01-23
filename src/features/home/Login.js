@@ -111,7 +111,7 @@ export class Login extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (this.props.home.loginPending && nextProps.home.loginError) {
-      NotificationManager.error('Ups, algo fue mal');
+      NotificationManager.info('Ups, algo fue mal');
       document.getElementById('login-spinner-bottom').style.display = 'none';
       document.getElementById('login-no-spinner-bottom').style.display = 'inline';
     } else if (this.props.home.loginPending && nextProps.home.logindata) {
@@ -130,7 +130,7 @@ export class Login extends Component {
       nextProps.home.forgotsuccess &&
       nextProps.home.forgotsuccess.data.status === 2
     ) {
-      NotificationManager.error('El email no existe');
+      NotificationManager.info('El email no existe');
       document.getElementById('forgot-spinner-bottom').style.display = 'none';
       document.getElementById('forgot-no-spinner-bottom').style.display = 'inline';
     }
