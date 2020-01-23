@@ -81,7 +81,17 @@ export class News extends Component {
                     className="play-video-style-div"
                     src={require('../../images/play_video.png')}
                   />
-                  <video width="100%" height={!this.props.id ? '250' : '200'} muted>
+                  <video
+                    poster={
+                      'http://' +
+                      VALUES.BD_ORIGIN +
+                      ':3000/network_images/' +
+                      this.props.articles.data.main_feed[prop].img_url
+                    }
+                    width="100%"
+                    height={!this.props.id ? '250' : '200'}
+                    muted
+                  >
                     <source
                       src={
                         'http://' +
@@ -185,7 +195,17 @@ export class News extends Component {
                     className="play-video-style-div"
                     src={require('../../images/play_video.png')}
                   />
-                  <video width="100%" height={!this.props.id ? '250' : '200'} muted>
+                  <video
+                    poster={
+                      'http://' +
+                      VALUES.BD_ORIGIN +
+                      ':3000/network_images/' +
+                      this.props.articles.data.backup_feed[prop].img_url
+                    }
+                    width="100%"
+                    height={!this.props.id ? '250' : '200'}
+                    muted
+                  >
                     <source
                       src={
                         'http://' +
@@ -295,7 +315,17 @@ export class News extends Component {
                 className="play-video-style-div"
                 src={require('../../images/play_video.png')}
               />
-              <video width="100%" height={!this.props.id ? '250' : '200'} muted>
+              <video
+                poster={
+                  'http://' +
+                  VALUES.BD_ORIGIN +
+                  ':3000/network_images/' +
+                  this.props.articles.data.main_feed[prop].img_url
+                }
+                width="100%"
+                height={!this.props.id ? '250' : '200'}
+                muted
+              >
                 <source
                   src={
                     'http://' +

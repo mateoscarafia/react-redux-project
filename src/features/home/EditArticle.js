@@ -406,7 +406,16 @@ export class EditArticle extends Component {
                       this.props.home.uniquearticle.data[0].is_video !== 1 ? (
                         <div className="show-image-preview-text-editor">{$imagePreview}</div>
                       ) : (
-                        <video width="200" controls>
+                        <video
+                          poster={
+                            'http://' +
+                            VALUES.BD_ORIGIN +
+                            ':3000/network_images/' +
+                            this.props.home.uniquearticle.data[0].img_url
+                          }
+                          width="200"
+                          controls
+                        >
                           <source
                             src={
                               'http://' +

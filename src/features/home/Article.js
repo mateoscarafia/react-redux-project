@@ -146,7 +146,12 @@ export class Article extends Component {
                   className="play-video-style-div"
                   src={require('../../images/play_video.png')}
                 />
-                <video width="100%" height="200" muted>
+                <video
+                  width="100%"
+                  poster={'http://' + VALUES.BD_ORIGIN + ':3000/network_images/' + item.img_url}
+                  height="200"
+                  muted
+                >
                   <source
                     src={'http://' + VALUES.BD_ORIGIN + ':3000/network_images/' + item.img_url}
                     type="video/mp4"
@@ -346,7 +351,17 @@ export class Article extends Component {
                       )}
                   </h5>
                   <div>
-                    <video width="100%" height="400" controls>
+                    <video
+                      width="100%"
+                      poster={
+                        'http://' +
+                        VALUES.BD_ORIGIN +
+                        ':3000/network_images/' +
+                        this.props.home.uniquearticle.data[0].img_url
+                      }
+                      height="400"
+                      controls
+                    >
                       <source
                         src={
                           'http://' +
