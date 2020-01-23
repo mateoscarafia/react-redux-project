@@ -128,7 +128,7 @@ export class TextEditor extends Component {
         NotificationManager.warning('El archivo no es una imagen/video');
         document.getElementById('button-post-article').style.display = 'inline';
         document.getElementById('spinner-button-post-article').style.display = 'none';
-      } else if (this.state.file && !this.state.file.size > 100388110) {
+      } else if (this.state.file && !this.state.file.size > 163840) {
         NotificationManager.warning('Lo sentimos, el archivo es muy grande');
         document.getElementById('button-post-article').style.display = 'inline';
         document.getElementById('spinner-button-post-article').style.display = 'none';
