@@ -218,6 +218,11 @@ export class EditArticle extends Component {
                   : this.props.home.uniquearticle.data[0].content,
                 key_words: keyword_content,
                 id: this.props.match.params.id,
+                is_video: this.state.file
+                  ? this.state.file.type.includes('video')
+                    ? 1
+                    : 0
+                  : this.props.home.uniquearticle.data[0].is_video,
                 user_id: this.state.id,
               };
               this.props.actions.editArticle(data);
@@ -397,40 +402,42 @@ export class EditArticle extends Component {
                         Videos de 1 minutos max (20 Mb)
                       </p>
                     </form>
-                    {!this.state.file && this.props.home.uniquearticle.data[0].is_video !== 1 ? (
-                      <div className="show-image-preview-text-editor">{$imagePreview}</div>
-                    ) : (
-                      <video width="200" controls>
-                        <source
-                          src={
-                            'http://' +
-                            VALUES.BD_ORIGIN +
-                            ':3000/network_images/' +
-                            this.props.home.uniquearticle.data[0].img_url
-                          }
-                          type="video/mp4"
-                        />
-                        <source
-                          src={
-                            'http://' +
-                            VALUES.BD_ORIGIN +
-                            ':3000/network_images/' +
-                            this.props.home.uniquearticle.data[0].img_url
-                          }
-                          type="video/webm"
-                        />
-                        <source
-                          src={
-                            'http://' +
-                            VALUES.BD_ORIGIN +
-                            ':3000/network_images/' +
-                            this.props.home.uniquearticle.data[0].img_url
-                          }
-                          type="video/ogg"
-                        />
-                        Your browser does not support the video tag.
-                      </video>
-                    )}
+                    {!this.state.file ? (
+                      this.props.home.uniquearticle.data[0].is_video !== 1 ? (
+                        <div className="show-image-preview-text-editor">{$imagePreview}</div>
+                      ) : (
+                        <video width="200" controls>
+                          <source
+                            src={
+                              'http://' +
+                              VALUES.BD_ORIGIN +
+                              ':3000/network_images/' +
+                              this.props.home.uniquearticle.data[0].img_url
+                            }
+                            type="video/mp4"
+                          />
+                          <source
+                            src={
+                              'http://' +
+                              VALUES.BD_ORIGIN +
+                              ':3000/network_images/' +
+                              this.props.home.uniquearticle.data[0].img_url
+                            }
+                            type="video/webm"
+                          />
+                          <source
+                            src={
+                              'http://' +
+                              VALUES.BD_ORIGIN +
+                              ':3000/network_images/' +
+                              this.props.home.uniquearticle.data[0].img_url
+                            }
+                            type="video/ogg"
+                          />
+                          Your browser does not support the video tag.
+                        </video>
+                      )
+                    ) : null}
                     {this.state.file ? (
                       this.state.file.type.includes('image') ? (
                         <div className="show-image-preview-text-editor">{$imagePreview}</div>

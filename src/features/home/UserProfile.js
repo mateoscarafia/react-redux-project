@@ -440,7 +440,12 @@ export class UserProfile extends Component {
                 className="play-video-style-div"
                 src={require('../../images/play_video.png')}
               />
-              <video width="100%" height="200" muted>
+              <video
+                width="100%"
+                height="200"
+                poster={'http://' + VALUES.BD_ORIGIN + ':3000/network_images/' + item.img_url}
+                muted
+              >
                 <source
                   src={'http://' + VALUES.BD_ORIGIN + ':3000/network_images/' + item.img_url}
                   type="video/mp4"
