@@ -116,7 +116,7 @@ export class Register extends Component {
       nextProps.home.codeverified.data.token !== 'token-died'
     ) {
       localStorage.setItem('token-app-auth-current', nextProps.home.codeverified.data.token);
-      //window.location.replace('http://' + VALUES.BD_ORIGIN + ':6075/feed/main');
+      window.location.replace('http://' + VALUES.BD_ORIGIN + ':6075/feed/main');
     }
     if (
       this.props.home.verifyCodePending &&
