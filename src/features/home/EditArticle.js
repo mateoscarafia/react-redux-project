@@ -421,7 +421,7 @@ export class EditArticle extends Component {
                     <form className="upload-image-form-editor" onSubmit={this._handleSubmit}>
                       <label className="custom-file-upload mobile-design-button-edit">
                         <input onChange={this._handleImageChange} type="file" />
-                        Cambiar imagen/video
+                        Cambiar imagen / video
                       </label>
                       <p className="content-warning-message-edit-file">
                         Videos de 1 minuto max (20 Mb)
