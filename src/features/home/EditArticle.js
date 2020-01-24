@@ -142,6 +142,11 @@ export class EditArticle extends Component {
   };
 
   editArticle = async () => {
+    if (!this.state.login) {
+      NotificationManager.info('Debes estar logueado');
+      document.getElementById('spinner-edit-button-id').style.display = 'none';
+      document.getElementById('edit-button-id').style.display = 'inline';
+    }
     if (this.state.login) {
       document.getElementById('edit-button-id').style.display = 'none';
       document.getElementById('spinner-edit-button-id').style.display = 'inline';

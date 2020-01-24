@@ -119,6 +119,11 @@ export class TextEditor extends Component {
   postArticle = async () => {
     document.getElementById('button-post-article').style.display = 'none';
     document.getElementById('spinner-button-post-article').style.display = 'inline';
+    if (!this.state.login) {
+      NotificationManager.info('Debes estar logueado');
+      document.getElementById('button-post-article').style.display = 'inline';
+      document.getElementById('spinner-button-post-article').style.display = 'none';
+    }
     if (this.state.login && this.state.title && this.state.subtitle && this.state.keywords) {
       var content_final = draftToHtml(convertToRaw(this.state.editorState.getCurrentContent()))
         .replace(/"/g, '\\"')
