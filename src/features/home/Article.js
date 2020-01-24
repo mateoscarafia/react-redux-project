@@ -31,7 +31,6 @@ export class Article extends Component {
   }
 
   componentWillMount() {
-    //If user is logged
     if (localStorage.getItem('token-app-auth-current')) {
       try {
         var user = jwt.verify(localStorage.getItem('token-app-auth-current'), VALUES.API_KEY);
@@ -500,7 +499,9 @@ export class Article extends Component {
             {this.props.home.getRelatedError && (
               <p style={{ fontSize: '12px', marginTop: '15px' }}>Sin artículos relacionados.</p>
             )}
-            <div className="row">{this.props.home.related && this.buildNews()}</div>
+            <div className="row">
+              {this.props.home.related && this.props.home.related.data[0] && this.buildNews()}
+            </div>
           </div>
           <Footer />
           <NotificationContainer />

@@ -540,6 +540,9 @@ export class UserProfile extends Component {
       return null;
     } else if (this.props.home.categories && !this.props.home.categories.data[0]) {
       this.goToErrorLanding();
+    } else if (this.props.home.user && !this.props.home.user.data[0]) {
+      this.goToErrorLanding();
+      return null;
     } else if (
       this.props.home.user &&
       this.props.home.user.data[0] &&
@@ -640,7 +643,11 @@ export class UserProfile extends Component {
                   'Artículos de ' + this.props.home.user.data[0].username}
                 {this.state.isProfile && 'Tus artículos'}
               </p>
-              <div className="row">{this.props.home.userarticles && this.buildNews()}</div>
+              <div className="row">
+                {this.props.home.userarticles &&
+                  this.props.home.userarticles.data[0] &&
+                  this.buildNews()}
+              </div>
             </div>
           </div>
           <Footer />

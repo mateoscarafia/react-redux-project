@@ -319,7 +319,7 @@ export class UserHeader extends Component {
                 onClick={() => this.openMessenger()}
                 alt="edit"
                 title="Escribir telegrama"
-                style={{ width: '35px' }}
+                style={{ width: '25px' }}
                 className="edit-pen-user-profile-style"
                 src={require('../../images/telegram.png')}
               />
@@ -330,7 +330,7 @@ export class UserHeader extends Component {
               <img
                 alt="edit"
                 title="Mis telegramas"
-                style={{ width: '40px' }}
+                style={{ width: '25px' }}
                 className="mailbox-pen-user-profile-style"
                 src={require('../../images/mailbox.png')}
               />

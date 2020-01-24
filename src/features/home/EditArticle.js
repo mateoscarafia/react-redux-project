@@ -145,7 +145,19 @@ export class EditArticle extends Component {
     if (this.state.login) {
       document.getElementById('edit-button-id').style.display = 'none';
       document.getElementById('spinner-edit-button-id').style.display = 'inline';
+      var content_final = this.state.changedEditor
+        ? draftToHtml(convertToRaw(this.state.editorState.getCurrentContent()))
+        : this.props.home.uniquearticle.data[0].content;
       if (
+        this.state.changedEditor &&
+        (content_final.includes('font-family:') ||
+          content_final.includes('font-size:') ||
+          content_final.includes('background-color:'))
+      ) {
+        NotificationManager.info('No puedes agregar HTML al contenido');
+        document.getElementById('edit-button-id').style.display = 'inline';
+        document.getElementById('spinner-edit-button-id').style.display = 'none';
+      } else if (
         this.state.file &&
         !this.state.file.type.includes('image') &&
         !this.state.file.type.includes('video')
@@ -180,8 +192,8 @@ export class EditArticle extends Component {
                 (this.state.subtitle || this.props.home.uniquearticle.data[0].subtitle) +
                 ' ' +
                 this.props.home.user.data[0].username +
-                '' +
-                this.state.category
+                ' ' +
+                (this.state.category || this.props.home.uniquearticle.data[0].name)
               )
                 .toLowerCase()
                 .normalize('NFD')
@@ -213,9 +225,7 @@ export class EditArticle extends Component {
                       .replace(/`/g, '\\"'),
                 category_id: categoryObj.id,
                 img_url: res.data.filename || this.props.home.uniquearticle.data[0].img_url,
-                content: this.state.changedEditor
-                  ? draftToHtml(convertToRaw(this.state.editorState.getCurrentContent()))
-                  : this.props.home.uniquearticle.data[0].content,
+                content: content_final,
                 key_words: keyword_content,
                 id: this.props.match.params.id,
                 is_video: this.state.file
@@ -294,10 +304,20 @@ export class EditArticle extends Component {
       this.goToErrorLanding();
       return null;
     }
-    if (this.props.home.getArticleError) {
+    if (
+      this.props.home.getArticleError ||
+      this.props.home.getUserError ||
+      this.props.home.getCategoriesError
+    ) {
       this.goToErrorLanding();
       return null;
     } else if (this.props.home.categories && !this.props.home.categories.data[0]) {
+      this.goToErrorLanding();
+      return null;
+    } else if (this.props.home.uniquearticle && !this.props.home.uniquearticle.data[0]) {
+      this.goToErrorLanding();
+      return null;
+    } else if (this.props.home.user && !this.props.home.user.data[0]) {
       this.goToErrorLanding();
       return null;
     } else if (
@@ -394,12 +414,12 @@ export class EditArticle extends Component {
                 <div className="form-group">
                   <div>
                     <form className="upload-image-form-editor" onSubmit={this._handleSubmit}>
-                      <label className="custom-file-upload">
+                      <label className="custom-file-upload mobile-design-button-edit">
                         <input onChange={this._handleImageChange} type="file" />
                         Cambiar imagen/video
                       </label>
                       <p className="content-warning-message-edit-file">
-                        Videos de 1 minutos max (20 Mb)
+                        Videos de 1 minuto max (20 Mb)
                       </p>
                     </form>
                     {!this.state.file ? (

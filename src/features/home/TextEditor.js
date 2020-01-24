@@ -117,11 +117,22 @@ export class TextEditor extends Component {
   };
 
   postArticle = async () => {
-    this.state.file && console.log(this.state.file.size)
     document.getElementById('button-post-article').style.display = 'none';
     document.getElementById('spinner-button-post-article').style.display = 'inline';
     if (this.state.login && this.state.title && this.state.subtitle && this.state.keywords) {
+      var content_final = draftToHtml(convertToRaw(this.state.editorState.getCurrentContent()))
+        .replace(/"/g, '\\"')
+        .replace(/'/g, '\\"')
+        .replace(/`/g, '\\"');
       if (
+        content_final.includes('font-family:') ||
+        content_final.includes('font-size:') ||
+        content_final.includes('background-color:')
+      ) {
+        NotificationManager.info('No puedes agregar HTML al contenido');
+        document.getElementById('button-post-article').style.display = 'inline';
+        document.getElementById('spinner-button-post-article').style.display = 'none';
+      } else if (
         this.state.file &&
         !this.state.file.type.includes('image') &&
         !this.state.file.type.includes('video')
@@ -156,7 +167,7 @@ export class TextEditor extends Component {
                 this.state.subtitle +
                 ' ' +
                 this.props.home.user.data[0].username +
-                '' +
+                ' ' +
                 this.state.category
               )
                 .toLowerCase()
@@ -179,10 +190,7 @@ export class TextEditor extends Component {
                   .replace(/`/g, '\\"'),
                 category_id: categoryObj.id,
                 img_url: res.data.filename,
-                content: draftToHtml(convertToRaw(this.state.editorState.getCurrentContent()))
-                  .replace(/"/g, '\\"')
-                  .replace(/'/g, '\\"')
-                  .replace(/`/g, '\\"'),
+                content: content_final,
                 key_words: keywords,
                 user_id: this.props.home.user.data[0].id,
                 is_video: this.state.file ? (this.state.file.type.includes('video') ? 1 : 0) : 0,
@@ -251,10 +259,13 @@ export class TextEditor extends Component {
       this.goToErrorLanding();
       return null;
     }
-    if (this.props.home.getUserError) {
+    if (this.props.home.getUserError || this.props.home.getCategoriesError) {
       this.goToErrorLanding();
       return null;
     } else if (this.props.home.categories && !this.props.home.categories.data[0]) {
+      this.goToErrorLanding();
+      return null;
+    } else if (this.props.home.user && !this.props.home.user.data[0]) {
       this.goToErrorLanding();
       return null;
     } else if (
@@ -347,11 +358,11 @@ export class TextEditor extends Component {
                 <div className="form-group">
                   <div>
                     <form className="upload-image-form-editor" onSubmit={this._handleSubmit}>
-                      <label className="custom-file-upload">
+                      <label className="custom-file-upload mobile-design-button">
                         <input onChange={this._handleImageChange} type="file" />
-                        Subir imagen/video
+                        Subir imagen / video
                       </label>
-                      <p className="content-warning-message">Videos de 1 minutos max (20 Mb)</p>
+                      <p className="content-warning-message">Videos de 1 minuto max (20 Mb)</p>
                     </form>
                     {this.state.file ? (
                       this.state.file.type.includes('image') ? (
