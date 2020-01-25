@@ -97,7 +97,7 @@ export class NavBar extends Component {
         .replace(/[\u0300-\u036f]/g, '')
         .replace(/[^a-zA-Z0-9 ]/g, '')
         .replace(/ /g, '-');
-      searchword = searchword === '' ? 'empty' : searchword;
+      searchword = searchword === '' ? 'M4T30' : searchword;
       window.scrollTo(0, 0);
       await this.props.actions.getArticles({
         token: VALUES.DEEP_TOKEN,
