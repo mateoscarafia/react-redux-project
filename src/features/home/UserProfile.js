@@ -325,53 +325,64 @@ export class UserProfile extends Component {
   sendUpdateUser = async () => {
     document.getElementById('cambiar-user-data-id').style.display = 'none';
     document.getElementById('cambiar-user-data-id-spinner').style.display = 'inline';
-    var res = { data: { filename: null } };
-    var resP = { data: { filename: null } };
 
-    if (this.state.file) {
-      const data = new FormData();
-      data.append('file', this.state.file);
-      var secret_key = await this.safetyNet();
-      res = await axios.post('http://' + VALUES.BD_ORIGIN + ':3000/file-upload', data, {
-        headers: {
-          secret_key: secret_key,
-        },
+    if (this.state.file && this.state.file.size > 20000000) {
+      NotificationManager.info('Lo sentimos, la foto de perfil es muy pesada (20 mb max)');
+      document.getElementById('cambiar-user-data-id').style.display = 'inline';
+      document.getElementById('cambiar-user-data-id-spinner').style.display = 'none';
+    } else if (this.state.fileP && this.state.fileP.size > 20000000) {
+      NotificationManager.info('Lo sentimos, la foto de portada es muy pesada (20 mb max)');
+      document.getElementById('cambiar-user-data-id').style.display = 'inline';
+      document.getElementById('cambiar-user-data-id-spinner').style.display = 'none';
+    } else {
+      var res = { data: { filename: null } };
+      var resP = { data: { filename: null } };
+
+      if (this.state.file) {
+        const data = new FormData();
+        data.append('file', this.state.file);
+        var secret_key = await this.safetyNet();
+        res = await axios.post('http://' + VALUES.BD_ORIGIN + ':3000/file-upload', data, {
+          headers: {
+            secret_key: secret_key,
+          },
+        });
+      }
+
+      if (this.state.fileP) {
+        const dataP = new FormData();
+        dataP.append('file', this.state.fileP);
+        var secret_keyP = await this.safetyNet();
+        resP = await axios.post('http://' + VALUES.BD_ORIGIN + ':3000/file-upload', dataP, {
+          headers: {
+            secret_key: secret_keyP,
+          },
+        });
+      }
+
+      let dataUpdate = {
+        token: localStorage.getItem('token-app-auth-current'),
+        profile_img_url: res.data.filename || this.props.home.user.data[0].profile_img_url,
+        banner_img_url: resP.data.filename || this.props.home.user.data[0].banner_img_url,
+        username: (this.state.username || this.props.home.user.data[0].username)
+          .replace(/"/g, '\\"')
+          .replace(/'/g, '\\"')
+          .replace(/`/g, '\\"'),
+        profession: (this.state.profession || this.props.home.user.data[0].profession)
+          .replace(/"/g, '\\"')
+          .replace(/'/g, '\\"')
+          .replace(/`/g, '\\"'),
+        aboutme: (this.state.about_me || this.props.home.user.data[0].about_me)
+          .replace(/"/g, '\\"')
+          .replace(/'/g, '\\"')
+          .replace(/`/g, '\\"'),
+      };
+      this.props.actions.editUser(dataUpdate);
+      this.setState({
+        file: null,
+        fileP: null,
       });
     }
-
-    if (this.state.fileP) {
-      const dataP = new FormData();
-      dataP.append('file', this.state.fileP);
-      var secret_keyP = await this.safetyNet();
-      resP = await axios.post('http://' + VALUES.BD_ORIGIN + ':3000/file-upload', dataP, {
-        headers: {
-          secret_key: secret_keyP,
-        },
-      });
-    }
-
-    let dataUpdate = {
-      token: localStorage.getItem('token-app-auth-current'),
-      profile_img_url: res.data.filename || this.props.home.user.data[0].profile_img_url,
-      banner_img_url: resP.data.filename || this.props.home.user.data[0].banner_img_url,
-      username: (this.state.username || this.props.home.user.data[0].username)
-        .replace(/"/g, '\\"')
-        .replace(/'/g, '\\"')
-        .replace(/`/g, '\\"'),
-      profession: (this.state.profession || this.props.home.user.data[0].profession)
-        .replace(/"/g, '\\"')
-        .replace(/'/g, '\\"')
-        .replace(/`/g, '\\"'),
-      aboutme: (this.state.about_me || this.props.home.user.data[0].about_me)
-        .replace(/"/g, '\\"')
-        .replace(/'/g, '\\"')
-        .replace(/`/g, '\\"'),
-    };
-    this.props.actions.editUser(dataUpdate);
-    this.setState({
-      file: null,
-      fileP: null,
-    });
   };
 
   componentWillReceiveProps(nextProps) {
