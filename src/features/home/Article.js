@@ -484,7 +484,11 @@ export class Article extends Component {
                 </div>
               )}
               <div className="article-content-text-show-div">
-                <h1>{this.props.home.uniquearticle.data[0].title}</h1>
+                <h1>
+                  {this.props.home.uniquearticle.data[0].name +
+                    ' | ' +
+                    this.props.home.uniquearticle.data[0].title}
+                </h1>
                 <h4 className="subtitle-article">
                   {this.props.home.uniquearticle.data[0].subtitle}
                 </h4>
