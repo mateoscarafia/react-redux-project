@@ -315,25 +315,23 @@ export class Article extends Component {
                   </button>
                 )}
                 <div className="row">
-                  <div className="col-lg-1 col-md-3 col-sm-6 col-xs-6">
-                    <div
-                      id="img-div-article-news-header-id-rotation"
-                      className="img-div-article-news-header"
-                      onClick={() =>
-                        this.routerMethod(
-                          '../profile/' + this.props.home.uniquearticle.data[0].user_id,
-                          null,
-                        )
-                      }
-                      style={{
-                        backgroundImage: `url(${'http://' +
-                          VALUES.BD_ORIGIN +
-                          ':3000/network_images/' +
-                          this.props.home.uniquearticle.data[0].profile_img_url})`,
-                      }}
-                    ></div>
-                  </div>
-                  <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                  <div
+                    id="img-div-article-news-header-id-rotation"
+                    className="img-div-article-news-header"
+                    onClick={() =>
+                      this.routerMethod(
+                        '../profile/' + this.props.home.uniquearticle.data[0].user_id,
+                        null,
+                      )
+                    }
+                    style={{
+                      backgroundImage: `url(${'http://' +
+                        VALUES.BD_ORIGIN +
+                        ':3000/network_images/' +
+                        this.props.home.uniquearticle.data[0].profile_img_url})`,
+                    }}
+                  ></div>
+                  <div style={{ marginLeft: '20px' }}>
                     <p
                       onClick={() =>
                         this.routerMethod(
