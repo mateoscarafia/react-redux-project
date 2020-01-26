@@ -354,7 +354,31 @@ export class Article extends Component {
                       }
                       className="article-header-username-main-subdata"
                     >
-                      {this.props.home.uniquearticle.data[0].profession}
+                      <img
+                        alt="Popularidad"
+                        title="Popularidad"
+                        width="80px"
+                        style={{ marginTop: '0px', marginBottom: '10px' }}
+                        src={
+                          this.props.home.uniquearticle.data[0].followers < 1
+                            ? require('../../images/0-star.JPG')
+                            : this.props.home.uniquearticle.data[0].followers > 0 &&
+                              this.props.home.uniquearticle.data[0].followers <= 10
+                            ? require('../../images/1-star.JPG')
+                            : this.props.home.uniquearticle.data[0].followers > 10 &&
+                              this.props.home.uniquearticle.data[0].followers <= 30
+                            ? require('../../images/2-star.JPG')
+                            : this.props.home.uniquearticle.data[0].followers > 30 &&
+                              this.props.home.uniquearticle.data[0].followers <= 150
+                            ? require('../../images/3-star.JPG')
+                            : this.props.home.uniquearticle.data[0].followers > 150 &&
+                              this.props.home.uniquearticle.data[0].followers <= 300
+                            ? require('../../images/4-star.JPG')
+                            : this.props.home.uniquearticle.data[0].followers > 300
+                            ? require('../../images/5-star.JPG')
+                            : null
+                        }
+                      />
                     </p>
                   </div>
                 </div>
