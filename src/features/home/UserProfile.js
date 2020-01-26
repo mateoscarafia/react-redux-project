@@ -598,7 +598,7 @@ export class UserProfile extends Component {
           <div className="profile-wrapper-content">
             {!this.props.home.getUserPending && this.props.home.user && (
               <div className="about-me-user-profile">
-                <h4>
+                <h4 style={{ margin: '0' }}>
                   {this.props.home.user.data[0].username}
                   {this.props.home.user.data[0].id === this.state.id && (
                     <img
@@ -612,6 +612,31 @@ export class UserProfile extends Component {
                     />
                   )}
                 </h4>
+                <img
+                  alt="Popularidad"
+                  title="Popularidad"
+                  width="100px"
+                  style={{ marginTop: '0px', marginBottom: '10px' }}
+                  src={
+                    this.props.home.user.data[0].followers < 1
+                      ? require('../../images/0-star.JPG')
+                      : this.props.home.user.data[0].followers > 0 &&
+                        this.props.home.user.data[0].followers <= 10
+                      ? require('../../images/1-star.JPG')
+                      : this.props.home.user.data[0].followers > 10 &&
+                        this.props.home.user.data[0].followers <= 30
+                      ? require('../../images/2-star.JPG')
+                      : this.props.home.user.data[0].followers > 30 &&
+                        this.props.home.user.data[0].followers <= 150
+                      ? require('../../images/3-star.JPG')
+                      : this.props.home.user.data[0].followers > 150 &&
+                        this.props.home.user.data[0].followers <= 300
+                      ? require('../../images/4-star.JPG')
+                      : this.props.home.user.data[0].followers > 300
+                      ? require('../../images/5-star.JPG')
+                      : null
+                  }
+                />
                 <h5 className="country-city-user-profile">
                   <span
                     className="span-hover-follows-inte"
