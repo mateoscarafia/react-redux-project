@@ -84,9 +84,7 @@ export class News extends Component {
                   {window.screen.width < 800 ? (
                     <video
                       poster={
-                        'http://' +
-                        VALUES.BD_ORIGIN +
-                        ':3000/network_images/' +
+                        VALUES.STORAGE_URL +
                         this.props.articles.data.main_feed[prop].img_url
                       }
                       width="100%"
@@ -95,27 +93,21 @@ export class News extends Component {
                     >
                       <source
                         src={
-                          'http://' +
-                          VALUES.BD_ORIGIN +
-                          ':3000/network_images/' +
+                          VALUES.STORAGE_URL +
                           this.props.articles.data.main_feed[prop].img_url
                         }
                         type="video/mp4"
                       />
                       <source
                         src={
-                          'http://' +
-                          VALUES.BD_ORIGIN +
-                          ':3000/network_images/' +
+                          VALUES.STORAGE_URL +
                           this.props.articles.data.main_feed[prop].img_url
                         }
                         type="video/webm"
                       />
                       <source
                         src={
-                          'http://' +
-                          VALUES.BD_ORIGIN +
-                          ':3000/network_images/' +
+                          VALUES.STORAGE_URL +
                           this.props.articles.data.main_feed[prop].img_url
                         }
                         type="video/ogg"
@@ -126,27 +118,21 @@ export class News extends Component {
                     <video width="100%" height={!this.props.id ? '250' : '200'} muted>
                       <source
                         src={
-                          'http://' +
-                          VALUES.BD_ORIGIN +
-                          ':3000/network_images/' +
+                          VALUES.STORAGE_URL +
                           this.props.articles.data.main_feed[prop].img_url
                         }
                         type="video/mp4"
                       />
                       <source
                         src={
-                          'http://' +
-                          VALUES.BD_ORIGIN +
-                          ':3000/network_images/' +
+                          VALUES.STORAGE_URL +
                           this.props.articles.data.main_feed[prop].img_url
                         }
                         type="video/webm"
                       />
                       <source
                         src={
-                          'http://' +
-                          VALUES.BD_ORIGIN +
-                          ':3000/network_images/' +
+                          VALUES.STORAGE_URL +
                           this.props.articles.data.main_feed[prop].img_url
                         }
                         type="video/ogg"
@@ -162,9 +148,7 @@ export class News extends Component {
                     this.routerMethod('news/' + this.props.articles.data.main_feed[prop].id)
                   }
                   style={{
-                    backgroundImage: `url(${'http://' +
-                      VALUES.BD_ORIGIN +
-                      ':3000/network_images/' +
+                    backgroundImage: `url(${VALUES.STORAGE_URL +
                       this.props.articles.data.main_feed[prop].img_url})`,
                   }}
                 ></div>
@@ -231,9 +215,7 @@ export class News extends Component {
                   {window.screen.width < 800 ? (
                     <video
                       poster={
-                        'http://' +
-                        VALUES.BD_ORIGIN +
-                        ':3000/network_images/' +
+                        VALUES.STORAGE_URL +
                         this.props.articles.data.backup_feed[prop].img_url
                       }
                       width="100%"
@@ -242,27 +224,21 @@ export class News extends Component {
                     >
                       <source
                         src={
-                          'http://' +
-                          VALUES.BD_ORIGIN +
-                          ':3000/network_images/' +
+                          VALUES.STORAGE_URL +
                           this.props.articles.data.backup_feed[prop].img_url
                         }
                         type="video/mp4"
                       />
                       <source
                         src={
-                          'http://' +
-                          VALUES.BD_ORIGIN +
-                          ':3000/network_images/' +
+                          VALUES.STORAGE_URL +
                           this.props.articles.data.backup_feed[prop].img_url
                         }
                         type="video/webm"
                       />
                       <source
                         src={
-                          'http://' +
-                          VALUES.BD_ORIGIN +
-                          ':3000/network_images/' +
+                          VALUES.STORAGE_URL +
                           this.props.articles.data.backup_feed[prop].img_url
                         }
                         type="video/ogg"
@@ -273,27 +249,21 @@ export class News extends Component {
                     <video width="100%" height={!this.props.id ? '250' : '200'} muted>
                       <source
                         src={
-                          'http://' +
-                          VALUES.BD_ORIGIN +
-                          ':3000/network_images/' +
+                          VALUES.STORAGE_URL +
                           this.props.articles.data.backup_feed[prop].img_url
                         }
                         type="video/mp4"
                       />
                       <source
                         src={
-                          'http://' +
-                          VALUES.BD_ORIGIN +
-                          ':3000/network_images/' +
+                          VALUES.STORAGE_URL +
                           this.props.articles.data.backup_feed[prop].img_url
                         }
                         type="video/webm"
                       />
                       <source
                         src={
-                          'http://' +
-                          VALUES.BD_ORIGIN +
-                          ':3000/network_images/' +
+                          VALUES.STORAGE_URL +
                           this.props.articles.data.backup_feed[prop].img_url
                         }
                         type="video/ogg"
@@ -309,9 +279,7 @@ export class News extends Component {
                   }
                   className="img-div"
                   style={{
-                    backgroundImage: `url(${'http://' +
-                      VALUES.BD_ORIGIN +
-                      ':3000/network_images/' +
+                    backgroundImage: `url(${VALUES.STORAGE_URL +
                       this.props.articles.data.backup_feed[prop].img_url})`,
                   }}
                 ></div>
@@ -384,9 +352,7 @@ export class News extends Component {
               {window.screen.width < 800 ? (
                 <video
                   poster={
-                    'http://' +
-                    VALUES.BD_ORIGIN +
-                    ':3000/network_images/' +
+                    VALUES.STORAGE_URL +
                     this.props.articles.data.main_feed[prop].img_url
                   }
                   width="100%"
@@ -395,27 +361,21 @@ export class News extends Component {
                 >
                   <source
                     src={
-                      'http://' +
-                      VALUES.BD_ORIGIN +
-                      ':3000/network_images/' +
+                      VALUES.STORAGE_URL +
                       this.props.articles.data.main_feed[prop].img_url
                     }
                     type="video/mp4"
                   />
                   <source
                     src={
-                      'http://' +
-                      VALUES.BD_ORIGIN +
-                      ':3000/network_images/' +
+                      VALUES.STORAGE_URL +
                       this.props.articles.data.main_feed[prop].img_url
                     }
                     type="video/webm"
                   />
                   <source
                     src={
-                      'http://' +
-                      VALUES.BD_ORIGIN +
-                      ':3000/network_images/' +
+                      VALUES.STORAGE_URL +
                       this.props.articles.data.main_feed[prop].img_url
                     }
                     type="video/ogg"
@@ -426,27 +386,21 @@ export class News extends Component {
                 <video width="100%" height={!this.props.id ? '250' : '200'} muted>
                   <source
                     src={
-                      'http://' +
-                      VALUES.BD_ORIGIN +
-                      ':3000/network_images/' +
+                      VALUES.STORAGE_URL +
                       this.props.articles.data.main_feed[prop].img_url
                     }
                     type="video/mp4"
                   />
                   <source
                     src={
-                      'http://' +
-                      VALUES.BD_ORIGIN +
-                      ':3000/network_images/' +
+                      VALUES.STORAGE_URL +
                       this.props.articles.data.main_feed[prop].img_url
                     }
                     type="video/webm"
                   />
                   <source
                     src={
-                      'http://' +
-                      VALUES.BD_ORIGIN +
-                      ':3000/network_images/' +
+                      VALUES.STORAGE_URL +
                       this.props.articles.data.main_feed[prop].img_url
                     }
                     type="video/ogg"
@@ -462,9 +416,7 @@ export class News extends Component {
                 this.routerMethod('news/' + this.props.articles.data.main_feed[prop].id)
               }
               style={{
-                backgroundImage: `url(${'http://' +
-                  VALUES.BD_ORIGIN +
-                  ':3000/network_images/' +
+                backgroundImage: `url(${VALUES.STORAGE_URL +
                   this.props.articles.data.main_feed[prop].img_url})`,
               }}
             ></div>
@@ -533,7 +485,7 @@ export class News extends Component {
 
   goToErrorLanding = () => {
     localStorage.removeItem('token-app-auth-current');
-    window.location.replace('http://' + VALUES.BD_ORIGIN + ':6075/feed/main');
+    window.location.replace(VALUES.FRONTEND_URL + 'feed/main');
   };
 
   render() {

@@ -49,7 +49,7 @@ export class EditArticle extends Component {
       NotificationManager.info('Articulo guardado');
       setTimeout(() => {
         window.location.replace(
-          'http://' + VALUES.BD_ORIGIN + ':6075/news/' + this.props.match.params.id,
+          VALUES.FRONTEND_URL + 'news/' + this.props.match.params.id,
         );
       }, 1000);
     }
@@ -63,7 +63,7 @@ export class EditArticle extends Component {
     if (this.props.home.deleteArticlePending && nextProps.home.deletearticle) {
       NotificationManager.info('Articulo eliminado');
       setTimeout(() => {
-        window.location.replace('http://' + VALUES.BD_ORIGIN + ':6075/feed/main');
+        window.location.replace(VALUES.FRONTEND_URL + 'feed/main');
       }, 1000);
     }
     if (this.props.home.deleteArticlePending && nextProps.home.deleteArticleError) {
@@ -89,7 +89,7 @@ export class EditArticle extends Component {
         var user = jwt.verify(localStorage.getItem('token-app-auth-current'), VALUES.API_KEY);
       } catch (err) {
         localStorage.removeItem('token-app-auth-current');
-        window.location.replace('http://' + VALUES.BD_ORIGIN + ':6075/feed/main');
+        window.location.replace(VALUES.FRONTEND_URL + 'feed/main');
       }
       if (user) {
         this.setState({
@@ -105,7 +105,7 @@ export class EditArticle extends Component {
         window.scrollTo(0, 0);
       }
     } else {
-      window.location.replace('http://' + VALUES.BD_ORIGIN + ':6075/feed/main');
+      window.location.replace(VALUES.FRONTEND_URL + 'feed/main');
     }
   }
 
@@ -180,7 +180,7 @@ export class EditArticle extends Component {
           const data = new FormData();
           data.append('file', this.state.file);
           axios
-            .post('http://' + VALUES.BD_ORIGIN + ':3000/file-upload', data, {
+            .post(VALUES.BACKEND_URL + 'file-upload', data, {
               headers: {
                 secret_key: secret_key,
               },
@@ -276,12 +276,12 @@ export class EditArticle extends Component {
   }
 
   goToErrorLanding = () => {
-    window.location.replace('http://' + VALUES.BD_ORIGIN + ':6075/feed/main');
+    window.location.replace(VALUES.FRONTEND_URL + 'feed/main');
   };
 
   removeTokenAndKill = () => {
     localStorage.removeItem('token-app-auth-current');
-    window.location.replace('http://' + VALUES.BD_ORIGIN + ':6075/feed/main');
+    window.location.replace(VALUES.FRONTEND_URL + 'feed/main');
   };
 
   render() {
@@ -297,9 +297,7 @@ export class EditArticle extends Component {
       var imagePreviewUrl =
         this.state.imagePreviewUrl ||
         (this.props.home.uniquearticle &&
-          'http://' +
-            VALUES.BD_ORIGIN +
-            ':3000/network_images/' +
+          VALUES.STORAGE_URL +
             this.props.home.uniquearticle.data[0].img_url);
       var $imagePreview = null;
       if (imagePreviewUrl) {
@@ -433,9 +431,7 @@ export class EditArticle extends Component {
                       ) : window.screen.width < 800 ? (
                         <video
                           poster={
-                            'http://' +
-                            VALUES.BD_ORIGIN +
-                            ':3000/network_images/' +
+                            VALUES.STORAGE_URL +
                             this.props.home.uniquearticle.data[0].img_url
                           }
                           width="200"
@@ -444,27 +440,21 @@ export class EditArticle extends Component {
                         >
                           <source
                             src={
-                              'http://' +
-                              VALUES.BD_ORIGIN +
-                              ':3000/network_images/' +
+                              VALUES.STORAGE_URL +
                               this.props.home.uniquearticle.data[0].img_url
                             }
                             type="video/mp4"
                           />
                           <source
                             src={
-                              'http://' +
-                              VALUES.BD_ORIGIN +
-                              ':3000/network_images/' +
+                              VALUES.STORAGE_URL +
                               this.props.home.uniquearticle.data[0].img_url
                             }
                             type="video/webm"
                           />
                           <source
                             src={
-                              'http://' +
-                              VALUES.BD_ORIGIN +
-                              ':3000/network_images/' +
+                              VALUES.STORAGE_URL +
                               this.props.home.uniquearticle.data[0].img_url
                             }
                             type="video/ogg"
@@ -475,27 +465,21 @@ export class EditArticle extends Component {
                         <video width="200" height="200" controls>
                           <source
                             src={
-                              'http://' +
-                              VALUES.BD_ORIGIN +
-                              ':3000/network_images/' +
+                              VALUES.STORAGE_URL +
                               this.props.home.uniquearticle.data[0].img_url
                             }
                             type="video/mp4"
                           />
                           <source
                             src={
-                              'http://' +
-                              VALUES.BD_ORIGIN +
-                              ':3000/network_images/' +
+                              VALUES.STORAGE_URL +
                               this.props.home.uniquearticle.data[0].img_url
                             }
                             type="video/webm"
                           />
                           <source
                             src={
-                              'http://' +
-                              VALUES.BD_ORIGIN +
-                              ':3000/network_images/' +
+                              VALUES.STORAGE_URL +
                               this.props.home.uniquearticle.data[0].img_url
                             }
                             type="video/ogg"

@@ -82,7 +82,7 @@ export class NavBar extends Component {
 
   logoutUser = () => {
     localStorage.removeItem('token-app-auth-current');
-    window.location.replace('http://' + VALUES.BD_ORIGIN + ':6075/feed/main');
+    window.location.replace(VALUES.FRONTEND_URL + 'feed/main');
   };
 
   handleChange = event => {

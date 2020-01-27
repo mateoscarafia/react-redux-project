@@ -32,7 +32,7 @@ export class UserHeader extends Component {
         var user = jwt.verify(localStorage.getItem('token-app-auth-current'), VALUES.API_KEY);
       } catch (err) {
         localStorage.removeItem('token-app-auth-current');
-        window.location.replace('http://' + VALUES.BD_ORIGIN + ':6075/feed/main');
+        window.location.replace(VALUES.FRONTEND_URL + 'feed/main');
       }
       if (user) {
         this.setState({
@@ -150,9 +150,7 @@ export class UserHeader extends Component {
           <div key={item.id} className="mailbox-inner-messages-div">
             <div
               style={{
-                backgroundImage: `url(${'http://' +
-                  VALUES.BD_ORIGIN +
-                  ':3000/network_images/' +
+                backgroundImage: `url(${VALUES.STORAGE_URL +
                   item.profile_img_url})`,
               }}
               className="mailbox-pic-header-background-image"
@@ -252,9 +250,7 @@ export class UserHeader extends Component {
         <div className="home-user-header">
           <div
             style={{
-              backgroundImage: `url(${'http://' +
-                VALUES.BD_ORIGIN +
-                ':3000/network_images/' +
+              backgroundImage: `url(${VALUES.STORAGE_URL +
                 this.props.user.banner_img_url})`,
             }}
             className="user-pic-header-background-image"
@@ -273,9 +269,7 @@ export class UserHeader extends Component {
               id="profile-image-user-on-header-profile-land"
               onClick={() => this.routerMethod('/profile/' + this.props.user_id, null)}
               style={{
-                backgroundImage: `url(${'http://' +
-                  VALUES.BD_ORIGIN +
-                  ':3000/network_images/' +
+                backgroundImage: `url(${VALUES.STORAGE_URL +
                   this.props.user.profile_img_url})`,
               }}
               className="user-profile-picture"

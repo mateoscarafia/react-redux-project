@@ -116,7 +116,7 @@ export class Register extends Component {
       nextProps.home.codeverified.data.token !== 'token-died'
     ) {
       localStorage.setItem('token-app-auth-current', nextProps.home.codeverified.data.token);
-      window.location.replace('http://' + VALUES.BD_ORIGIN + ':6075/feed/main');
+      window.location.replace(VALUES.FRONTEND_URL + 'feed/main');
     }
     if (
       this.props.home.verifyCodePending &&
@@ -196,7 +196,7 @@ export class Register extends Component {
               </button>
               <p
                 onClick={() =>
-                  window.open('http://' + VALUES.BD_ORIGIN + ':6075/terminosycondiciones', '_blank')
+                  window.open(VALUES.FRONTEND_URL + 'terminosycondiciones', '_blank')
                 }
                 className="terms-link-in-register-form"
               >

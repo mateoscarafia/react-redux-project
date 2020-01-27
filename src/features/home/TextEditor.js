@@ -56,7 +56,7 @@ export class TextEditor extends Component {
       NotificationManager.info('Articulo guardado');
       setTimeout(() => {
         window.location.replace(
-          'http://' + VALUES.BD_ORIGIN + ':6075/news/' + nextProps.home.postarticle.data.id,
+          VALUES.FRONTEND_URL + 'news/' + nextProps.home.postarticle.data.id,
         );
       }, 1000);
     }
@@ -82,7 +82,7 @@ export class TextEditor extends Component {
         var user = jwt.verify(localStorage.getItem('token-app-auth-current'), VALUES.API_KEY);
       } catch (err) {
         localStorage.removeItem('token-app-auth-current');
-        window.location.replace('http://' + VALUES.BD_ORIGIN + ':6075/feed/main');
+        window.location.replace(VALUES.FRONTEND_URL + 'feed/main');
       }
       if (user) {
         this.setState({
@@ -155,7 +155,7 @@ export class TextEditor extends Component {
           const data = new FormData();
           data.append('file', this.state.file);
           axios
-            .post('http://' + VALUES.BD_ORIGIN + ':3000/file-upload', data, {
+            .post(VALUES.BACKEND_URL + 'file-upload', data, {
               headers: {
                 secret_key: secret_key,
               },
@@ -238,12 +238,12 @@ export class TextEditor extends Component {
   }
 
   goToErrorLanding = () => {
-    window.location.replace('http://' + VALUES.BD_ORIGIN + ':6075/feed/main');
+    window.location.replace(VALUES.FRONTEND_URL + 'feed/main');
   };
 
   removeTokenAndKill = () => {
     localStorage.removeItem('token-app-auth-current');
-    window.location.replace('http://' + VALUES.BD_ORIGIN + ':6075/feed/main');
+    window.location.replace(VALUES.FRONTEND_URL + 'feed/main');
   };
 
   handleChangeSelect = selectedOption => {

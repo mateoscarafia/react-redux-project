@@ -23,7 +23,7 @@ export function isAuth(args = {}) {
       // doRequest is a placeholder Promise. You should replace it with your own logic.
       // See the real-word example at:  https://github.com/supnate/rekit/blob/master/src/features/home/redux/fetchRedditReactjsList.js
       // args.error here is only for test coverage purpose.
-      const doRequest = axios.post('http://'+VALUES.BD_ORIGIN+':3000/isauth', args)
+      const doRequest = axios.post(VALUES.BACKEND_URL+'isauth', args)
       doRequest.then(
         (res) => {
           dispatch({

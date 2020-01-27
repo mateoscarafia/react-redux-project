@@ -12,7 +12,7 @@ export class DefaultPage extends Component {
   };
 
   goToMainHome = () => {
-    window.location.replace('http://' + VALUES.BD_ORIGIN + ':6075/feed/main');
+    window.location.replace(VALUES.FRONTEND_URL + 'feed/main');
   };
 
   render() {

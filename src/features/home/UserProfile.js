@@ -134,10 +134,7 @@ export class UserProfile extends Component {
           <div key={item.id} className="mailbox-inner-messages-div">
             <div
               style={{
-                backgroundImage: `url(${'http://' +
-                  VALUES.BD_ORIGIN +
-                  ':3000/network_images/' +
-                  item.profile_img_url})`,
+                backgroundImage: `url(${VALUES.STORAGE_URL + item.profile_img_url})`,
               }}
               className="mailbox-pic-header-background-image"
             ></div>
@@ -165,10 +162,7 @@ export class UserProfile extends Component {
           <div key={item.id} className="mailbox-inner-messages-div">
             <div
               style={{
-                backgroundImage: `url(${'http://' +
-                  VALUES.BD_ORIGIN +
-                  ':3000/network_images/' +
-                  item.profile_img_url})`,
+                backgroundImage: `url(${VALUES.STORAGE_URL + item.profile_img_url})`,
               }}
               className="mailbox-pic-header-background-image"
             ></div>
@@ -273,7 +267,7 @@ export class UserProfile extends Component {
         var user = jwt.verify(localStorage.getItem('token-app-auth-current'), VALUES.API_KEY);
       } catch (err) {
         localStorage.removeItem('token-app-auth-current');
-        window.location.replace('http://' + VALUES.BD_ORIGIN + ':6075/feed/main');
+        window.location.replace(VALUES.FRONTEND_URL + 'feed/main');
       }
       if (user) {
         this.setState({
@@ -342,7 +336,7 @@ export class UserProfile extends Component {
         const data = new FormData();
         data.append('file', this.state.file);
         var secret_key = await this.safetyNet();
-        res = await axios.post('http://' + VALUES.BD_ORIGIN + ':3000/file-upload', data, {
+        res = await axios.post(VALUES.BACKEND_URL + 'file-upload', data, {
           headers: {
             secret_key: secret_key,
           },
@@ -353,7 +347,7 @@ export class UserProfile extends Component {
         const dataP = new FormData();
         dataP.append('file', this.state.fileP);
         var secret_keyP = await this.safetyNet();
-        resP = await axios.post('http://' + VALUES.BD_ORIGIN + ':3000/file-upload', dataP, {
+        resP = await axios.post(VALUES.BACKEND_URL + 'file-upload', dataP, {
           headers: {
             secret_key: secret_keyP,
           },
@@ -435,10 +429,7 @@ export class UserProfile extends Component {
               className="img-div"
               onClick={() => this.routerMethod('../news/' + item.id, item.user_id)}
               style={{
-                backgroundImage: `url(${'http://' +
-                  VALUES.BD_ORIGIN +
-                  ':3000/network_images/' +
-                  item.img_url})`,
+                backgroundImage: `url(${VALUES.STORAGE_URL + item.img_url})`,
               }}
             ></div>
           ) : (
@@ -452,40 +443,17 @@ export class UserProfile extends Component {
                 src={require('../../images/play_video.png')}
               />
               {window.screen.width < 800 ? (
-                <video
-                  width="100%"
-                  height="200"
-                  poster={'http://' + VALUES.BD_ORIGIN + ':3000/network_images/' + item.img_url}
-                  muted
-                >
-                  <source
-                    src={'http://' + VALUES.BD_ORIGIN + ':3000/network_images/' + item.img_url}
-                    type="video/mp4"
-                  />
-                  <source
-                    src={'http://' + VALUES.BD_ORIGIN + ':3000/network_images/' + item.img_url}
-                    type="video/webm"
-                  />
-                  <source
-                    src={'http://' + VALUES.BD_ORIGIN + ':3000/network_images/' + item.img_url}
-                    type="video/ogg"
-                  />
+                <video width="100%" height="200" poster={VALUES.STORAGE_URL + item.img_url} muted>
+                  <source src={VALUES.STORAGE_URL + item.img_url} type="video/mp4" />
+                  <source src={VALUES.STORAGE_URL + item.img_url} type="video/webm" />
+                  <source src={VALUES.STORAGE_URL + item.img_url} type="video/ogg" />
                   Your browser does not support the video tag.
                 </video>
               ) : (
                 <video width="100%" height="200" muted>
-                  <source
-                    src={'http://' + VALUES.BD_ORIGIN + ':3000/network_images/' + item.img_url}
-                    type="video/mp4"
-                  />
-                  <source
-                    src={'http://' + VALUES.BD_ORIGIN + ':3000/network_images/' + item.img_url}
-                    type="video/webm"
-                  />
-                  <source
-                    src={'http://' + VALUES.BD_ORIGIN + ':3000/network_images/' + item.img_url}
-                    type="video/ogg"
-                  />
+                  <source src={VALUES.STORAGE_URL + item.img_url} type="video/mp4" />
+                  <source src={VALUES.STORAGE_URL + item.img_url} type="video/webm" />
+                  <source src={VALUES.STORAGE_URL + item.img_url} type="video/ogg" />
                   Your browser does not support the video tag.
                 </video>
               )}
@@ -505,12 +473,12 @@ export class UserProfile extends Component {
   };
 
   goToErrorLanding = () => {
-    window.location.replace('http://' + VALUES.BD_ORIGIN + ':6075/feed/main');
+    window.location.replace(VALUES.FRONTEND_URL + 'feed/main');
   };
 
   removeTokenAndKill = () => {
     localStorage.removeItem('token-app-auth-current');
-    window.location.replace('http://' + VALUES.BD_ORIGIN + ':6075/feed/main');
+    window.location.replace(VALUES.FRONTEND_URL + 'feed/main');
   };
 
   render() {
@@ -524,17 +492,9 @@ export class UserProfile extends Component {
         $imagePreviewP = null;
       if (this.props.home.user) {
         var imagePreviewUrl =
-          this.state.imagePreviewUrl ||
-          'http://' +
-            VALUES.BD_ORIGIN +
-            ':3000/network_images/' +
-            this.props.home.user.data[0].profile_img_url;
+          this.state.imagePreviewUrl || VALUES.STORAGE_URL + this.props.home.user.data[0].profile_img_url;
         var imagePreviewUrlP =
-          this.state.imagePreviewUrlP ||
-          'http://' +
-            VALUES.BD_ORIGIN +
-            ':3000/network_images/' +
-            this.props.home.user.data[0].banner_img_url;
+          this.state.imagePreviewUrlP || VALUES.STORAGE_URL + this.props.home.user.data[0].banner_img_url;
         if (imagePreviewUrl) {
           $imagePreview = <img alt="img-preview" src={imagePreviewUrl} />;
         }

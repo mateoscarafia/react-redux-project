@@ -40,7 +40,7 @@ export class Home extends Component {
         var user = jwt.verify(localStorage.getItem('token-app-auth-current'), VALUES.API_KEY);
       } catch (err) {
         localStorage.removeItem('token-app-auth-current');
-        window.location.replace('http://' + VALUES.BD_ORIGIN + ':6075/feed/main');
+        window.location.replace(VALUES.FRONTEND_URL + 'feed/main');
       }
       if (user) {
         let data = { token: localStorage.getItem('token-app-auth-current'), id: user.id };
@@ -104,11 +104,11 @@ export class Home extends Component {
 
   removeTokenAndKill = () => {
     localStorage.removeItem('token-app-auth-current');
-    window.location.replace('http://' + VALUES.BD_ORIGIN + ':6075/feed/main');
+    window.location.replace(VALUES.FRONTEND_URL + 'feed/main');
   };
 
   goToErrorLanding = () => {
-    window.location.replace('http://' + VALUES.BD_ORIGIN + ':6075/errorlanding');
+    window.location.replace(VALUES.FRONTEND_URL + 'errorlanding');
   };
 
   render() {
@@ -188,9 +188,7 @@ export class Home extends Component {
                         this.routerMethod('../../profile/' + this.props.home.user.data[0].id)
                       }
                       style={{
-                        backgroundImage: `url(${'http://' +
-                          VALUES.BD_ORIGIN +
-                          ':3000/network_images/' +
+                        backgroundImage: `url(${VALUES.STORAGE_URL +
                           this.props.home.user.data[0].profile_img_url})`,
                       }}
                       className="user-profile-picture"

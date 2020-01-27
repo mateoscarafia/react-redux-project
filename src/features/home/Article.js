@@ -36,7 +36,7 @@ export class Article extends Component {
         var user = jwt.verify(localStorage.getItem('token-app-auth-current'), VALUES.API_KEY);
       } catch (err) {
         localStorage.removeItem('token-app-auth-current');
-        window.location.replace('http://' + VALUES.BD_ORIGIN + ':6075/feed/main');
+        window.location.replace(VALUES.FRONTEND_URL + 'feed/main');
       }
       if (user) {
         this.setState({
@@ -129,10 +129,7 @@ export class Article extends Component {
                 className="img-div"
                 onClick={() => this.routerMethod('../news/' + item.id, item.id)}
                 style={{
-                  backgroundImage: `url(${'http://' +
-                    VALUES.BD_ORIGIN +
-                    ':3000/network_images/' +
-                    item.img_url})`,
+                  backgroundImage: `url(${VALUES.STORAGE_URL + item.img_url})`,
                 }}
               ></div>
             ) : (
@@ -146,40 +143,17 @@ export class Article extends Component {
                   src={require('../../images/play_video.png')}
                 />
                 {window.screen.width < 800 ? (
-                  <video
-                    width="100%"
-                    poster={'http://' + VALUES.BD_ORIGIN + ':3000/network_images/' + item.img_url}
-                    height="200"
-                    muted
-                  >
-                    <source
-                      src={'http://' + VALUES.BD_ORIGIN + ':3000/network_images/' + item.img_url}
-                      type="video/mp4"
-                    />
-                    <source
-                      src={'http://' + VALUES.BD_ORIGIN + ':3000/network_images/' + item.img_url}
-                      type="video/webm"
-                    />
-                    <source
-                      src={'http://' + VALUES.BD_ORIGIN + ':3000/network_images/' + item.img_url}
-                      type="video/ogg"
-                    />
+                  <video width="100%" poster={VALUES.STORAGE_URL + item.img_url} height="200" muted>
+                    <source src={VALUES.STORAGE_URL + item.img_url} type="video/mp4" />
+                    <source src={VALUES.STORAGE_URL + item.img_url} type="video/webm" />
+                    <source src={VALUES.STORAGE_URL + item.img_url} type="video/ogg" />
                     Your browser does not support the video tag.
                   </video>
                 ) : (
                   <video width="100%" height="200" muted>
-                    <source
-                      src={'http://' + VALUES.BD_ORIGIN + ':3000/network_images/' + item.img_url}
-                      type="video/mp4"
-                    />
-                    <source
-                      src={'http://' + VALUES.BD_ORIGIN + ':3000/network_images/' + item.img_url}
-                      type="video/webm"
-                    />
-                    <source
-                      src={'http://' + VALUES.BD_ORIGIN + ':3000/network_images/' + item.img_url}
-                      type="video/ogg"
-                    />
+                    <source src={VALUES.STORAGE_URL + item.img_url} type="video/mp4" />
+                    <source src={VALUES.STORAGE_URL + item.img_url} type="video/webm" />
+                    <source src={VALUES.STORAGE_URL + item.img_url} type="video/ogg" />
                     Your browser does not support the video tag.
                   </video>
                 )}
@@ -204,7 +178,7 @@ export class Article extends Component {
   };
 
   goToErrorLanding = () => {
-    window.location.replace('http://' + VALUES.BD_ORIGIN + ':6075/feed/main');
+    window.location.replace(VALUES.FRONTEND_URL + 'feed/main');
   };
 
   convertDate = date => {
@@ -249,7 +223,7 @@ export class Article extends Component {
 
   removeTokenAndKill = () => {
     localStorage.removeItem('token-app-auth-current');
-    window.location.replace('http://' + VALUES.BD_ORIGIN + ':6075/feed/main');
+    window.location.replace(VALUES.FRONTEND_URL + 'feed/main');
   };
 
   postVisitReader = id => {
@@ -325,9 +299,7 @@ export class Article extends Component {
                       )
                     }
                     style={{
-                      backgroundImage: `url(${'http://' +
-                        VALUES.BD_ORIGIN +
-                        ':3000/network_images/' +
+                      backgroundImage: `url(${VALUES.STORAGE_URL +
                         this.props.home.uniquearticle.data[0].profile_img_url})`,
                     }}
                   ></div>
@@ -394,9 +366,7 @@ export class Article extends Component {
                       <video
                         width="100%"
                         poster={
-                          'http://' +
-                          VALUES.BD_ORIGIN +
-                          ':3000/network_images/' +
+                          VALUES.STORAGE_URL +
                           this.props.home.uniquearticle.data[0].img_url
                         }
                         height="400"
@@ -404,27 +374,21 @@ export class Article extends Component {
                       >
                         <source
                           src={
-                            'http://' +
-                            VALUES.BD_ORIGIN +
-                            ':3000/network_images/' +
+                            VALUES.STORAGE_URL +
                             this.props.home.uniquearticle.data[0].img_url
                           }
                           type="video/mp4"
                         />
                         <source
                           src={
-                            'http://' +
-                            VALUES.BD_ORIGIN +
-                            ':3000/network_images/' +
+                            VALUES.STORAGE_URL +
                             this.props.home.uniquearticle.data[0].img_url
                           }
                           type="video/webm"
                         />
                         <source
                           src={
-                            'http://' +
-                            VALUES.BD_ORIGIN +
-                            ':3000/network_images/' +
+                            VALUES.STORAGE_URL +
                             this.props.home.uniquearticle.data[0].img_url
                           }
                           type="video/ogg"
@@ -435,27 +399,21 @@ export class Article extends Component {
                       <video width="100%" height="400" controls>
                         <source
                           src={
-                            'http://' +
-                            VALUES.BD_ORIGIN +
-                            ':3000/network_images/' +
+                            VALUES.STORAGE_URL +
                             this.props.home.uniquearticle.data[0].img_url
                           }
                           type="video/mp4"
                         />
                         <source
                           src={
-                            'http://' +
-                            VALUES.BD_ORIGIN +
-                            ':3000/network_images/' +
+                            VALUES.STORAGE_URL +
                             this.props.home.uniquearticle.data[0].img_url
                           }
                           type="video/webm"
                         />
                         <source
                           src={
-                            'http://' +
-                            VALUES.BD_ORIGIN +
-                            ':3000/network_images/' +
+                            VALUES.STORAGE_URL +
                             this.props.home.uniquearticle.data[0].img_url
                           }
                           type="video/ogg"
@@ -468,9 +426,7 @@ export class Article extends Component {
               ) : (
                 <div
                   style={{
-                    backgroundImage: `url(${'http://' +
-                      VALUES.BD_ORIGIN +
-                      ':3000/network_images/' +
+                    backgroundImage: `url(${VALUES.STORAGE_URL +
                       this.props.home.uniquearticle.data[0].img_url})`,
                   }}
                   className="single-article-image-show-div"

@@ -25,7 +25,7 @@ export function forgotPassword(args = {}) {
       // See the real-word example at:  https://github.com/supnate/rekit/blob/master/src/features/home/redux/fetchRedditReactjsList.js
       // args.error here is only for test coverage purpose.
       const doRequest = axios.post(
-        'http://' + VALUES.BD_ORIGIN + ':3000/forgotpassword',
+        VALUES.BACKEND_URL + 'forgotpassword',
         { email: args.email },
         {
           headers: {
