@@ -45,6 +45,27 @@ export class UserProfile extends Component {
     this._handleImageChangeP = this._handleImageChangeP.bind(this);
   }
 
+
+  rotate = () => {
+    let articles = [];
+    if (
+      this.props.home.userarticles &&
+      this.props.home.userarticles.data &&
+      this.props.home.userarticles.data[0]
+    ) {
+      articles = [...this.props.home.userarticles.data];
+    }
+    for (const prop in articles) {
+      if (
+        document.getElementById('id-article-unique-key-' + articles[prop].id) &&
+        articles[prop].rotate_img
+      ) {
+        document.getElementById('id-article-unique-key-' + articles[prop].id).style.transform =
+          'rotate(' + articles[prop].rotate_img + 'deg)';
+      }
+    }
+  };
+
   routerMethod = async (destiny, id) => {
     if (destiny.includes('profile')) {
       this.props.actions.getNews({ token: VALUES.DEEP_TOKEN, id: id });
@@ -426,6 +447,7 @@ export class UserProfile extends Component {
         >
           {item.is_video !== 1 ? (
             <div
+              id={'id-article-unique-key-' + item.id}
               className="img-div"
               onClick={() => this.routerMethod('../news/' + item.id, item.user_id)}
               style={{
@@ -492,9 +514,11 @@ export class UserProfile extends Component {
         $imagePreviewP = null;
       if (this.props.home.user) {
         var imagePreviewUrl =
-          this.state.imagePreviewUrl || VALUES.STORAGE_URL + this.props.home.user.data[0].profile_img_url;
+          this.state.imagePreviewUrl ||
+          VALUES.STORAGE_URL + this.props.home.user.data[0].profile_img_url;
         var imagePreviewUrlP =
-          this.state.imagePreviewUrlP || VALUES.STORAGE_URL + this.props.home.user.data[0].banner_img_url;
+          this.state.imagePreviewUrlP ||
+          VALUES.STORAGE_URL + this.props.home.user.data[0].banner_img_url;
         if (imagePreviewUrl) {
           $imagePreview = <img alt="img-preview" src={imagePreviewUrl} />;
         }
@@ -866,6 +890,7 @@ export class UserProfile extends Component {
                 </div>
               </div>
             )}
+          {this.rotate()}
           <NotificationContainer />
         </div>
       );

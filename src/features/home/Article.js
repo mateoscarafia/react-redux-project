@@ -30,6 +30,15 @@ export class Article extends Component {
     };
   }
 
+  componentDidMount() {}
+
+  rotateImg = () => {
+    if (document.getElementById('article-div-for-rotate-img')) {
+      document.getElementById('article-div-for-rotate-img').style.transform =
+        'rotate(' + this.props.home.uniquearticle.data[0].rotate_img + 'deg)';
+    }
+  };
+
   componentWillMount() {
     if (localStorage.getItem('token-app-auth-current')) {
       try {
@@ -114,6 +123,27 @@ export class Article extends Component {
     document.getElementById(div).style.opacity = 0;
   };
 
+  rotateRelated = () => {
+    let articles = [];
+    if (
+      this.props.home.related &&
+      this.props.home.related.data &&
+      this.props.home.related.data[0]
+    ) {
+      articles = [...this.props.home.related.data];
+    }
+    for (const prop in articles) {
+      if (
+        document.getElementById('id-article-unique-key-related-article-' + articles[prop].id) &&
+        articles[prop].rotate_img
+      ) {
+        document.getElementById(
+          'id-article-unique-key-related-article-' + articles[prop].id,
+        ).style.transform = 'rotate(' + articles[prop].rotate_img + 'deg)';
+      }
+    }
+  };
+
   buildNews = () => {
     return this.props.home.related.data.map(item => {
       if (item.id !== parseInt(this.props.match.params.id, 10)) {
@@ -126,6 +156,7 @@ export class Article extends Component {
           >
             {item.is_video !== 1 ? (
               <div
+                id={'id-article-unique-key-related-article-' + item.id}
                 className="img-div"
                 onClick={() => this.routerMethod('../news/' + item.id, item.id)}
                 style={{
@@ -365,32 +396,20 @@ export class Article extends Component {
                     {window.screen.width < 800 ? (
                       <video
                         width="100%"
-                        poster={
-                          VALUES.STORAGE_URL +
-                          this.props.home.uniquearticle.data[0].img_url
-                        }
+                        poster={VALUES.STORAGE_URL + this.props.home.uniquearticle.data[0].img_url}
                         height="400"
                         controls
                       >
                         <source
-                          src={
-                            VALUES.STORAGE_URL +
-                            this.props.home.uniquearticle.data[0].img_url
-                          }
+                          src={VALUES.STORAGE_URL + this.props.home.uniquearticle.data[0].img_url}
                           type="video/mp4"
                         />
                         <source
-                          src={
-                            VALUES.STORAGE_URL +
-                            this.props.home.uniquearticle.data[0].img_url
-                          }
+                          src={VALUES.STORAGE_URL + this.props.home.uniquearticle.data[0].img_url}
                           type="video/webm"
                         />
                         <source
-                          src={
-                            VALUES.STORAGE_URL +
-                            this.props.home.uniquearticle.data[0].img_url
-                          }
+                          src={VALUES.STORAGE_URL + this.props.home.uniquearticle.data[0].img_url}
                           type="video/ogg"
                         />
                         Your browser does not support the video tag.
@@ -398,24 +417,15 @@ export class Article extends Component {
                     ) : (
                       <video width="100%" height="400" controls>
                         <source
-                          src={
-                            VALUES.STORAGE_URL +
-                            this.props.home.uniquearticle.data[0].img_url
-                          }
+                          src={VALUES.STORAGE_URL + this.props.home.uniquearticle.data[0].img_url}
                           type="video/mp4"
                         />
                         <source
-                          src={
-                            VALUES.STORAGE_URL +
-                            this.props.home.uniquearticle.data[0].img_url
-                          }
+                          src={VALUES.STORAGE_URL + this.props.home.uniquearticle.data[0].img_url}
                           type="video/webm"
                         />
                         <source
-                          src={
-                            VALUES.STORAGE_URL +
-                            this.props.home.uniquearticle.data[0].img_url
-                          }
+                          src={VALUES.STORAGE_URL + this.props.home.uniquearticle.data[0].img_url}
                           type="video/ogg"
                         />
                         Your browser does not support the video tag.
@@ -424,19 +434,21 @@ export class Article extends Component {
                   </div>
                 </div>
               ) : (
-                <div
-                  style={{
-                    backgroundImage: `url(${VALUES.STORAGE_URL +
-                      this.props.home.uniquearticle.data[0].img_url})`,
-                  }}
-                  className="single-article-image-show-div"
-                >
+                <div className="single-article-image-show-div-main">
                   <h5 className="date-article-font">
                     {this.props.home.uniquearticle &&
                       this.convertDate(
                         new Date(this.props.home.uniquearticle.data[0].created_at).toString(),
                       )}
                   </h5>
+                  <div
+                    id="article-div-for-rotate-img"
+                    style={{
+                      backgroundImage: `url(${VALUES.STORAGE_URL +
+                        this.props.home.uniquearticle.data[0].img_url})`,
+                    }}
+                    className="single-article-image-show-div"
+                  ></div>
                 </div>
               )}
               <div className="article-content-text-show-div">
@@ -485,6 +497,8 @@ export class Article extends Component {
               {this.props.home.related && this.props.home.related.data[0] && this.buildNews()}
             </div>
           </div>
+          {this.rotateImg()}
+          {this.rotateRelated()}
           <Footer />
           <NotificationContainer />
         </div>

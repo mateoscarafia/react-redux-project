@@ -38,6 +38,7 @@ export class TextEditor extends Component {
       id: null,
       subtitle: null,
       keywords: null,
+      rotateAngle: 'no-value',
     };
     this._handleImageChange = this._handleImageChange.bind(this);
     this._handleSubmit = this._handleSubmit.bind(this);
@@ -55,9 +56,7 @@ export class TextEditor extends Component {
     ) {
       NotificationManager.info('Articulo guardado');
       setTimeout(() => {
-        window.location.replace(
-          VALUES.FRONTEND_URL + 'news/' + nextProps.home.postarticle.data.id,
-        );
+        window.location.replace(VALUES.FRONTEND_URL + 'news/' + nextProps.home.postarticle.data.id);
       }, 1000);
     }
     if (this.props.home.postArticlePending && !nextProps.home.postarticle.data.id) {
@@ -104,6 +103,10 @@ export class TextEditor extends Component {
 
   handleChange = event => {
     this.setState({ [event.target.name]: event.target.value });
+    if (event.target.name === 'rotateAngle') {
+      document.getElementById('img-div-create-article-id-for-rotating-img').style.transform =
+        'rotate(' + event.target.value + 'deg)';
+    }
   };
 
   safetyNet = async () => {
@@ -198,6 +201,7 @@ export class TextEditor extends Component {
                 content: content_final,
                 key_words: keywords,
                 user_id: this.props.home.user.data[0].id,
+                rotate_img: this.state.rotateAngle !== 'no-value' ? this.state.rotateAngle : 0,
                 is_video: this.state.file ? (this.state.file.type.includes('video') ? 1 : 0) : 0,
               };
               this.props.actions.postArticle(data);
@@ -251,6 +255,7 @@ export class TextEditor extends Component {
   };
 
   render() {
+    console.log(this.state);
     const categoriesList =
       this.props.home.categories && this.props.home.categories.data[0] && this.buildCategories();
     try {
@@ -258,7 +263,7 @@ export class TextEditor extends Component {
       var { imagePreviewUrl } = this.state;
       var $imagePreview = null;
       if (imagePreviewUrl) {
-        $imagePreview = <img alt="img-preview" src={imagePreviewUrl} />;
+        $imagePreview = imagePreviewUrl;
       }
     } catch (err) {
       this.goToErrorLanding();
@@ -371,7 +376,27 @@ export class TextEditor extends Component {
                     </form>
                     {this.state.file ? (
                       this.state.file.type.includes('image') ? (
-                        <div className="show-image-preview-text-editor">{$imagePreview}</div>
+                        <div>
+                          <select
+                            className="form-control"
+                            onChange={this.handleChange}
+                            style={{ width: '200px', marginBottom: '10px' }}
+                            name="rotateAngle"
+                          >
+                            <option value="no-value">Rotar Imagen</option>
+                            <option value={0}>0º</option>
+                            <option value={90}>90º</option>
+                            <option value={180}>180º</option>
+                            <option value={270}>270º</option>
+                          </select>
+                          <div
+                            className="img-div-create-article"
+                            id="img-div-create-article-id-for-rotating-img"
+                            style={{
+                              backgroundImage: `url(${$imagePreview})`,
+                            }}
+                          ></div>
+                        </div>
                       ) : (
                         <label className="badge badge-info">Archivo cargado</label>
                       )

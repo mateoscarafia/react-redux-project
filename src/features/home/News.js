@@ -83,33 +83,21 @@ export class News extends Component {
                   />
                   {window.screen.width < 800 ? (
                     <video
-                      poster={
-                        VALUES.STORAGE_URL +
-                        this.props.articles.data.main_feed[prop].img_url
-                      }
+                      poster={VALUES.STORAGE_URL + this.props.articles.data.main_feed[prop].img_url}
                       width="100%"
                       height={!this.props.id ? '250' : '200'}
                       muted
                     >
                       <source
-                        src={
-                          VALUES.STORAGE_URL +
-                          this.props.articles.data.main_feed[prop].img_url
-                        }
+                        src={VALUES.STORAGE_URL + this.props.articles.data.main_feed[prop].img_url}
                         type="video/mp4"
                       />
                       <source
-                        src={
-                          VALUES.STORAGE_URL +
-                          this.props.articles.data.main_feed[prop].img_url
-                        }
+                        src={VALUES.STORAGE_URL + this.props.articles.data.main_feed[prop].img_url}
                         type="video/webm"
                       />
                       <source
-                        src={
-                          VALUES.STORAGE_URL +
-                          this.props.articles.data.main_feed[prop].img_url
-                        }
+                        src={VALUES.STORAGE_URL + this.props.articles.data.main_feed[prop].img_url}
                         type="video/ogg"
                       />
                       Your browser does not support the video tag.
@@ -117,24 +105,15 @@ export class News extends Component {
                   ) : (
                     <video width="100%" height={!this.props.id ? '250' : '200'} muted>
                       <source
-                        src={
-                          VALUES.STORAGE_URL +
-                          this.props.articles.data.main_feed[prop].img_url
-                        }
+                        src={VALUES.STORAGE_URL + this.props.articles.data.main_feed[prop].img_url}
                         type="video/mp4"
                       />
                       <source
-                        src={
-                          VALUES.STORAGE_URL +
-                          this.props.articles.data.main_feed[prop].img_url
-                        }
+                        src={VALUES.STORAGE_URL + this.props.articles.data.main_feed[prop].img_url}
                         type="video/webm"
                       />
                       <source
-                        src={
-                          VALUES.STORAGE_URL +
-                          this.props.articles.data.main_feed[prop].img_url
-                        }
+                        src={VALUES.STORAGE_URL + this.props.articles.data.main_feed[prop].img_url}
                         type="video/ogg"
                       />
                       Your browser does not support the video tag.
@@ -143,6 +122,7 @@ export class News extends Component {
                 </div>
               ) : (
                 <div
+                  id={'id-article-unique-key-' + this.props.articles.data.main_feed[prop].id}
                   className="img-div"
                   onClick={() =>
                     this.routerMethod('news/' + this.props.articles.data.main_feed[prop].id)
@@ -215,8 +195,7 @@ export class News extends Component {
                   {window.screen.width < 800 ? (
                     <video
                       poster={
-                        VALUES.STORAGE_URL +
-                        this.props.articles.data.backup_feed[prop].img_url
+                        VALUES.STORAGE_URL + this.props.articles.data.backup_feed[prop].img_url
                       }
                       width="100%"
                       height={!this.props.id ? '250' : '200'}
@@ -224,22 +203,19 @@ export class News extends Component {
                     >
                       <source
                         src={
-                          VALUES.STORAGE_URL +
-                          this.props.articles.data.backup_feed[prop].img_url
+                          VALUES.STORAGE_URL + this.props.articles.data.backup_feed[prop].img_url
                         }
                         type="video/mp4"
                       />
                       <source
                         src={
-                          VALUES.STORAGE_URL +
-                          this.props.articles.data.backup_feed[prop].img_url
+                          VALUES.STORAGE_URL + this.props.articles.data.backup_feed[prop].img_url
                         }
                         type="video/webm"
                       />
                       <source
                         src={
-                          VALUES.STORAGE_URL +
-                          this.props.articles.data.backup_feed[prop].img_url
+                          VALUES.STORAGE_URL + this.props.articles.data.backup_feed[prop].img_url
                         }
                         type="video/ogg"
                       />
@@ -249,22 +225,19 @@ export class News extends Component {
                     <video width="100%" height={!this.props.id ? '250' : '200'} muted>
                       <source
                         src={
-                          VALUES.STORAGE_URL +
-                          this.props.articles.data.backup_feed[prop].img_url
+                          VALUES.STORAGE_URL + this.props.articles.data.backup_feed[prop].img_url
                         }
                         type="video/mp4"
                       />
                       <source
                         src={
-                          VALUES.STORAGE_URL +
-                          this.props.articles.data.backup_feed[prop].img_url
+                          VALUES.STORAGE_URL + this.props.articles.data.backup_feed[prop].img_url
                         }
                         type="video/webm"
                       />
                       <source
                         src={
-                          VALUES.STORAGE_URL +
-                          this.props.articles.data.backup_feed[prop].img_url
+                          VALUES.STORAGE_URL + this.props.articles.data.backup_feed[prop].img_url
                         }
                         type="video/ogg"
                       />
@@ -274,6 +247,7 @@ export class News extends Component {
                 </div>
               ) : (
                 <div
+                  id={'id-article-unique-key-' + this.props.articles.data.backup_feed[prop].id}
                   onClick={() =>
                     this.routerMethod('news/' + this.props.articles.data.backup_feed[prop].id)
                   }
@@ -316,6 +290,10 @@ export class News extends Component {
     return data;
   };
 
+  componentDidMount() {
+    this.rotate();
+  }
+
   buildNewsSearch = () => {
     let data = [];
     data.push(
@@ -351,33 +329,21 @@ export class News extends Component {
               />
               {window.screen.width < 800 ? (
                 <video
-                  poster={
-                    VALUES.STORAGE_URL +
-                    this.props.articles.data.main_feed[prop].img_url
-                  }
+                  poster={VALUES.STORAGE_URL + this.props.articles.data.main_feed[prop].img_url}
                   width="100%"
                   height={!this.props.id ? '250' : '200'}
                   muted
                 >
                   <source
-                    src={
-                      VALUES.STORAGE_URL +
-                      this.props.articles.data.main_feed[prop].img_url
-                    }
+                    src={VALUES.STORAGE_URL + this.props.articles.data.main_feed[prop].img_url}
                     type="video/mp4"
                   />
                   <source
-                    src={
-                      VALUES.STORAGE_URL +
-                      this.props.articles.data.main_feed[prop].img_url
-                    }
+                    src={VALUES.STORAGE_URL + this.props.articles.data.main_feed[prop].img_url}
                     type="video/webm"
                   />
                   <source
-                    src={
-                      VALUES.STORAGE_URL +
-                      this.props.articles.data.main_feed[prop].img_url
-                    }
+                    src={VALUES.STORAGE_URL + this.props.articles.data.main_feed[prop].img_url}
                     type="video/ogg"
                   />
                   Your browser does not support the video tag.
@@ -385,24 +351,15 @@ export class News extends Component {
               ) : (
                 <video width="100%" height={!this.props.id ? '250' : '200'} muted>
                   <source
-                    src={
-                      VALUES.STORAGE_URL +
-                      this.props.articles.data.main_feed[prop].img_url
-                    }
+                    src={VALUES.STORAGE_URL + this.props.articles.data.main_feed[prop].img_url}
                     type="video/mp4"
                   />
                   <source
-                    src={
-                      VALUES.STORAGE_URL +
-                      this.props.articles.data.main_feed[prop].img_url
-                    }
+                    src={VALUES.STORAGE_URL + this.props.articles.data.main_feed[prop].img_url}
                     type="video/webm"
                   />
                   <source
-                    src={
-                      VALUES.STORAGE_URL +
-                      this.props.articles.data.main_feed[prop].img_url
-                    }
+                    src={VALUES.STORAGE_URL + this.props.articles.data.main_feed[prop].img_url}
                     type="video/ogg"
                   />
                   Your browser does not support the video tag.
@@ -486,6 +443,26 @@ export class News extends Component {
   goToErrorLanding = () => {
     localStorage.removeItem('token-app-auth-current');
     window.location.replace(VALUES.FRONTEND_URL + 'feed/main');
+  };
+
+  rotate = () => {
+    let articles = [];
+    if (this.props.articles.data.backup_feed && this.props.articles.data.backup_feed[0]) {
+      articles = [...this.props.articles.data.backup_feed];
+    }
+    if (this.props.articles.data.main_feed && this.props.articles.data.main_feed[0]) {
+      articles = [articles, ...this.props.articles.data.main_feed];
+    }
+    console.log(articles);
+    for (const prop in articles) {
+      if (
+        document.getElementById('id-article-unique-key-' + articles[prop].id) &&
+        articles[prop].rotate_img
+      ) {
+        document.getElementById('id-article-unique-key-' + articles[prop].id).style.transform =
+          'rotate('+articles[prop].rotate_img+'deg)';
+      }
+    }
   };
 
   render() {

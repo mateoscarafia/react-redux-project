@@ -39,6 +39,7 @@ export class EditArticle extends Component {
       subtitle: null,
       keywords: null,
       changedEditor: false,
+      rotateAngle: null,
     };
     this._handleImageChange = this._handleImageChange.bind(this);
     this._handleSubmit = this._handleSubmit.bind(this);
@@ -48,9 +49,7 @@ export class EditArticle extends Component {
     if (this.props.home.editArticlePending && nextProps.home.editarticle) {
       NotificationManager.info('Articulo guardado');
       setTimeout(() => {
-        window.location.replace(
-          VALUES.FRONTEND_URL + 'news/' + this.props.match.params.id,
-        );
+        window.location.replace(VALUES.FRONTEND_URL + 'news/' + this.props.match.params.id);
       }, 1000);
     }
     if (this.props.home.editArticlePending && nextProps.home.editArticleError) {
@@ -129,6 +128,22 @@ export class EditArticle extends Component {
 
   handleChange = event => {
     this.setState({ [event.target.name]: event.target.value });
+    if (event.target.name === 'rotateAngle') {
+      document.getElementById('img-div-create-article-id-for-rotating-img').style.transform =
+        'rotate(' + event.target.value + 'deg)';
+    }
+  };
+
+  rotateImg = () => {
+    if (
+      document.getElementById('img-div-create-article-id-for-rotating-img') &&
+      this.props.home.uniquearticle &&
+      this.props.home.uniquearticle.data[0].rotate_img &&
+      !this.state.rotateAngle
+    ) {
+      document.getElementById('img-div-create-article-id-for-rotating-img').style.transform =
+        'rotate(' + this.props.home.uniquearticle.data[0].rotate_img + 'deg)';
+    }
   };
 
   safetyNet = async () => {
@@ -192,6 +207,8 @@ export class EditArticle extends Component {
                   (this.state.category || this.props.home.uniquearticle.data[0].name),
               );
               let keyword_content = (
+                this.props.home.uniquearticle.data[0].keywords +
+                ' ' +
                 (this.state.title || this.props.home.uniquearticle.data[0].title) +
                 ' ' +
                 (this.state.subtitle || this.props.home.uniquearticle.data[0].subtitle) +
@@ -232,6 +249,9 @@ export class EditArticle extends Component {
                 img_url: res.data.filename || this.props.home.uniquearticle.data[0].img_url,
                 content: content_final,
                 key_words: keyword_content,
+                rotate_img: this.state.rotateAngle
+                  ? this.state.rotateAngle
+                  : this.props.home.uniquearticle.data[0].rotate_img,
                 id: this.props.match.params.id,
                 is_video: this.state.file
                   ? this.state.file.type.includes('video')
@@ -297,11 +317,10 @@ export class EditArticle extends Component {
       var imagePreviewUrl =
         this.state.imagePreviewUrl ||
         (this.props.home.uniquearticle &&
-          VALUES.STORAGE_URL +
-            this.props.home.uniquearticle.data[0].img_url);
+          VALUES.STORAGE_URL + this.props.home.uniquearticle.data[0].img_url);
       var $imagePreview = null;
       if (imagePreviewUrl) {
-        $imagePreview = <img alt="img-preview" src={imagePreviewUrl} />;
+        $imagePreview = imagePreviewUrl;
       }
     } catch (err) {
       this.goToErrorLanding();
@@ -427,36 +446,46 @@ export class EditArticle extends Component {
                     </form>
                     {!this.state.file ? (
                       this.props.home.uniquearticle.data[0].is_video !== 1 ? (
-                        <div className="show-image-preview-text-editor">{$imagePreview}</div>
+                        <div>
+                          <select
+                            className="form-control"
+                            onChange={this.handleChange}
+                            style={{ width: '200px', marginBottom: '10px' }}
+                            name="rotateAngle"
+                          >
+                            <option value="no-value">Rotar Imagen</option>
+                            <option value={0}>0º</option>
+                            <option value={90}>90º</option>
+                            <option value={180}>180º</option>
+                            <option value={270}>270º</option>
+                          </select>
+                          <div
+                            className="img-div-create-article"
+                            id="img-div-create-article-id-for-rotating-img"
+                            style={{
+                              backgroundImage: `url(${$imagePreview})`,
+                            }}
+                          ></div>
+                        </div>
                       ) : window.screen.width < 800 ? (
                         <video
                           poster={
-                            VALUES.STORAGE_URL +
-                            this.props.home.uniquearticle.data[0].img_url
+                            VALUES.STORAGE_URL + this.props.home.uniquearticle.data[0].img_url
                           }
                           width="200"
                           height="200"
                           controls
                         >
                           <source
-                            src={
-                              VALUES.STORAGE_URL +
-                              this.props.home.uniquearticle.data[0].img_url
-                            }
+                            src={VALUES.STORAGE_URL + this.props.home.uniquearticle.data[0].img_url}
                             type="video/mp4"
                           />
                           <source
-                            src={
-                              VALUES.STORAGE_URL +
-                              this.props.home.uniquearticle.data[0].img_url
-                            }
+                            src={VALUES.STORAGE_URL + this.props.home.uniquearticle.data[0].img_url}
                             type="video/webm"
                           />
                           <source
-                            src={
-                              VALUES.STORAGE_URL +
-                              this.props.home.uniquearticle.data[0].img_url
-                            }
+                            src={VALUES.STORAGE_URL + this.props.home.uniquearticle.data[0].img_url}
                             type="video/ogg"
                           />
                           Your browser does not support the video tag.
@@ -464,24 +493,15 @@ export class EditArticle extends Component {
                       ) : (
                         <video width="200" height="200" controls>
                           <source
-                            src={
-                              VALUES.STORAGE_URL +
-                              this.props.home.uniquearticle.data[0].img_url
-                            }
+                            src={VALUES.STORAGE_URL + this.props.home.uniquearticle.data[0].img_url}
                             type="video/mp4"
                           />
                           <source
-                            src={
-                              VALUES.STORAGE_URL +
-                              this.props.home.uniquearticle.data[0].img_url
-                            }
+                            src={VALUES.STORAGE_URL + this.props.home.uniquearticle.data[0].img_url}
                             type="video/webm"
                           />
                           <source
-                            src={
-                              VALUES.STORAGE_URL +
-                              this.props.home.uniquearticle.data[0].img_url
-                            }
+                            src={VALUES.STORAGE_URL + this.props.home.uniquearticle.data[0].img_url}
                             type="video/ogg"
                           />
                           Your browser does not support the video tag.
@@ -490,7 +510,27 @@ export class EditArticle extends Component {
                     ) : null}
                     {this.state.file ? (
                       this.state.file.type.includes('image') ? (
-                        <div className="show-image-preview-text-editor">{$imagePreview}</div>
+                        <div>
+                          <select
+                            className="form-control"
+                            onChange={this.handleChange}
+                            style={{ width: '200px', marginBottom: '10px' }}
+                            name="rotateAngle"
+                          >
+                            <option value="no-value">Rotar Imagen</option>
+                            <option value={0}>0º</option>
+                            <option value={90}>90º</option>
+                            <option value={180}>180º</option>
+                            <option value={270}>270º</option>
+                          </select>
+                          <div
+                            className="img-div-create-article"
+                            id="img-div-create-article-id-for-rotating-img"
+                            style={{
+                              backgroundImage: `url(${$imagePreview})`,
+                            }}
+                          ></div>
+                        </div>
                       ) : (
                         <label className="badge badge-info">Archivo cargado</label>
                       )
@@ -560,6 +600,7 @@ export class EditArticle extends Component {
               </div>
             </div>
           )}
+          {this.rotateImg()}
           <Footer />
           <NotificationContainer />
         </div>
