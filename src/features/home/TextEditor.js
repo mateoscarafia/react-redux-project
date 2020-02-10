@@ -255,7 +255,6 @@ export class TextEditor extends Component {
   };
 
   render() {
-    console.log(this.state);
     const categoriesList =
       this.props.home.categories && this.props.home.categories.data[0] && this.buildCategories();
     try {

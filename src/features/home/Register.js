@@ -106,7 +106,6 @@ export class Register extends Component {
   };
 
   componentWillReceiveProps(nextProps) {
-    nextProps.home.codeverified && console.log(nextProps.home.codeverified.data.token);
     if (this.props.home.verifyUserPending && nextProps.home.emailverifysent) {
       this.setState({ showVerification: true });
     }
@@ -208,7 +207,7 @@ export class Register extends Component {
             <div>
               <div className="form-group">
                 <p className="terms-link-in-register-form">
-                  <b>Ingresa código enviado a tú email</b>
+                  <b>Ingresa código enviado a tú correo</b>
                 </p>
                 <input
                   type="text"

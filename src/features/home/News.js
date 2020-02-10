@@ -453,7 +453,6 @@ export class News extends Component {
     if (this.props.articles.data.main_feed && this.props.articles.data.main_feed[0]) {
       articles = [articles, ...this.props.articles.data.main_feed];
     }
-    console.log(articles);
     for (const prop in articles) {
       if (
         document.getElementById('id-article-unique-key-' + articles[prop].id) &&
