@@ -186,7 +186,7 @@ export class EditArticle extends Component {
         document.getElementById('edit-button-id').style.display = 'inline';
         document.getElementById('spinner-edit-button-id').style.display = 'none';
       } else if (this.state.file && this.state.file.size > 20000000) {
-        NotificationManager.info('Lo sentimos, el archivo es muy grande');
+        NotificationManager.info('Lo sentimos, el archivo es muy pesado (20 mb max)');
         document.getElementById('edit-button-id').style.display = 'inline';
         document.getElementById('spinner-edit-button-id').style.display = 'none';
       } else {

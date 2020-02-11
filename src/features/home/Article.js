@@ -65,13 +65,15 @@ export class Article extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    this.props.home.userLikePending && NotificationManager.info('Te gusta el articulo');
-    this.props.home.userLikePending &&
-      !nextProps.home.userLikeError &&
+    if (this.props.home.userLikePending && !nextProps.home.userLikeError) {
       this.setState({
         article_likes: this.props.home.uniquearticle.data[0].total_likes + 1,
       });
-    this.props.home.reportArticlePending && NotificationManager.info('Denunciaste el articulo');
+      NotificationManager.info('Te gusta el articulo');
+    }
+    if (this.props.home.reportArticlePending && !nextProps.home.reportArticleError) {
+      NotificationManager.info('Denunciaste el articulo');
+    }
   }
 
   routerMethod = async (destiny, id) => {

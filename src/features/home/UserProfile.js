@@ -296,7 +296,7 @@ export class UserProfile extends Component {
           id: user.id,
           isProfile: user.id === parseInt(id, 10),
         });
-        user.id !== parseInt(id, 10) && this.props.actions.postVisit(id);
+        //user.id !== parseInt(id, 10) && this.props.actions.postVisit(id);
         this.props.actions.getFollowing({ token: localStorage.getItem('token-app-auth-current') });
         this.props.actions.getFollowers({ token: localStorage.getItem('token-app-auth-current') });
         this.props.actions.searchUsers({ token: localStorage.getItem('token-app-auth-current') });

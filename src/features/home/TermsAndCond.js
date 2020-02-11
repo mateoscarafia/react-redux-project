@@ -17,7 +17,7 @@ export class TermsAndCond extends Component {
           <img
             style={{ marginBottom: '5px' }}
             alt="edit"
-            width="20"
+            width="40"
             src={require('../../images/logo.png')}
           />
           <h5>Woordi</h5>
@@ -27,29 +27,22 @@ export class TermsAndCond extends Component {
           <br />
           <p>
             ¡Te damos la bienvenida a Woordi! Woordi desarrolla tecnologías y servicios que permiten
-            a las personas conectarse entre sí, establecer comunidades y hacer crecer sus empresas.
+            a las personas conectarse entre sí, establecer comunidades y hacer conocer sus ideales.
             Estas Condiciones rigen el uso de Woordi y los productos, las funcionalidades, las
             aplicaciones, los servicios, las tecnologías y el software que ofrecemos (los Productos
             de Woordi o Productos), excepto cuando indiquemos expresamente que se aplican otras
-            condiciones distintas de estas. Woordi Ireland Limited es quien te proporciona estos
-            Productos. No te cobramos por el uso de Woordi ni del resto de los productos y servicios
+            condiciones distintas de estas. No te cobramos por el uso de Woordi ni del resto de los productos y servicios
             que se incluyen en estas Condiciones. En su lugar, las empresas y organizaciones nos
             pagan por mostrarte publicidad sobre sus productos o servicios. Al usar nuestros
             Productos, aceptas que te mostremos anuncios que consideremos relevantes para ti y tus
-            intereses. Para determinar estos anuncios, usamos tus datos personales. No vendemos tus
+            intereses. Para determinar estos anuncios, usamos los datos que describen tu actividad en la plataforma. No vendemos tus
             datos personales a los anunciantes ni compartimos ningún tipo de información que te
             identifique (como tu nombre, dirección de correo electrónico u otros datos de contacto)
             con ellos, a menos que nos des permiso específico. En su lugar, los anunciantes nos
             proporcionan información, como el tipo de audiencia a la que quieren llegar con sus
             anuncios, y nosotros los mostramos a las personas que puedan estar interesadas en ellos.
             Asimismo, ofrecemos a los anunciantes informes sobre el rendimiento de su publicidad a
-            fin de que sepan de qué manera interactúan las personas con su contenido. Consulta la
-            Sección 2 a continuación para obtener más información al respecto. En nuestra Política
-            de datos se detalla cómo recopilamos y usamos tus datos personales para determinar
-            algunos de los anuncios que ves y ofrecer el resto de los servicios que se describen a
-            continuación. En la configuración, también puedes revisar cuando quieras las opciones de
-            privacidad de que dispones para determinar el uso que hacemos de tus datos. Volver
-            arriba 1. Los servicios que ofrecemos Nuestro objetivo es dar a las personas la
+            fin de que sepan de qué manera interactúan las personas con su contenido. Nuestro objetivo es dar a las personas la
             posibilidad de crear comunidades y hacer del mundo un lugar más conectado y, para ello,
             ponemos a tu disposición los Productos y servicios que se describen a continuación: Te
             proporcionamos una experiencia personalizada: tus experiencias en Woordi son distintas
@@ -99,7 +92,7 @@ export class TermsAndCond extends Component {
             Productos de manera segura, independientemente de su capacidad física o la región
             geográfica donde se encuentre. Por ejemplo, este tipo de tecnología indica a las
             personas con problemas de visión qué elemento o persona aparece en las fotos o los
-            vídeos que se comparten en Woordi o Instagram. También creamos una red sofisticada y
+            vídeos que se comparten en Woordi. También creamos una red sofisticada y
             desarrollamos tecnología de comunicación para que las personas en áreas con acceso
             limitado a internet puedan conectarse. Asimismo, desarrollamos sistemas automatizados
             destinados a mejorar nuestra capacidad de detectar y eliminar actividades abusivas o
@@ -116,10 +109,7 @@ export class TermsAndCond extends Component {
             grupos, empresas, organizaciones y otras entidades que son importantes para ti, y
             contribuyen a conectarte con ellos. Diseñamos nuestros sistemas para que tu experiencia
             sea coherente y fluida en los distintos Productos de las empresas de Woordi que usas.
-            Por ejemplo, usamos los datos de las personas con las que interactúas en Woordi para que
-            te resulte más fácil conectarte con ellas en Messenger o Instagram, y ponemos Messenger
-            a tu disposición para que te comuniques con las empresas que sigues en Woordi. Ofrecemos
-            acceso a nuestros servicios desde cualquier lugar del mundo: para operar nuestro
+            Ofrecemos acceso a nuestros servicios desde cualquier lugar del mundo: para operar nuestro
             servicio internacional, debemos almacenar y distribuir contenido y datos en nuestros
             centros de datos y sistemas de todo el mundo, incluidas regiones fuera de tu país de
             residencia. Estas infraestructuras pueden estar dirigidas o gestionadas por Woordi,
@@ -502,7 +492,7 @@ export class TermsAndCond extends Component {
             y políticas, así como erradicar comportamientos dañinos y engañosos. Utilizamos toda la
             información de que disponemos, incluida la tuya, para proteger nuestra plataforma.
             Asimismo, es posible que compartamos información sobre usos incorrectos o contenido
-            dañino con otras empresas de Facebook o las autoridades policiales. Obtén más
+            dañino con otras empresas de Woordi o las autoridades policiales. Obtén más
             información en la Política de datos. Desarrollar y utilizar tecnologías que nos ayuden a
             ofrecer servicios de forma continua a nuestra comunidad en constante crecimiento. Para
             ofrecer nuestro Servicio en condiciones óptimas, es fundamental organizar y analizar la
@@ -513,20 +503,20 @@ export class TermsAndCond extends Component {
             automático nos permiten aplicar procesos complejos a todos nuestros Servicios. Estas
             tecnologías automatizadas también posibilitan que podamos garantizar la funcionalidad e
             integridad de dicho Servicio. Proporcionar experiencias coherentes y fluidas en los
-            distintos Productos de las empresas de Facebook. Woordi forma parte de las empresas de
-            Facebook, entre las que se comparten tecnologías, sistemas, estadísticas e información
+            distintos Productos de las empresas de Woordi. Woordi forma parte de las empresas de
+            Woordi, entre las que se comparten tecnologías, sistemas, estadísticas e información
             (incluidos datos que poseemos sobre ti; consulta la Política de datos para obtener más
             información) a fin de proporcionar servicios mejores y más seguros. También
-            proporcionamos formas de interactuar con los Productos de las empresas de Facebook que
+            proporcionamos formas de interactuar con los Productos de las empresas de Woordi que
             utilizas, y disponemos de sistemas diseñados para ofrecer una experiencia coherente y
             fluida entre dichos productos. Garantizar una infraestructura internacional estable para
             proporcionar nuestro Servicio. A fin de ofrecer un Servicio internacional, debemos
             almacenar datos en nuestros sistemas de todo el mundo, así como transferir información
             entre ellos, incluidos sistemas que no se encuentran en tu país de residencia. Esta
-            infraestructura puede ser propiedad de Facebook, Inc., Facebook Ireland Limited o sus
+            infraestructura puede ser propiedad de Woordi, Inc., Woordi Ireland Limited o sus
             filiales, o estar dirigida por ellas. Conectarte con marcas, productos y servicios de
             formas que te resulten relevantes. Utilizamos datos de Woordi y de otros Productos de
-            las empresas de Facebook, así como de socios externos, para mostrarte anuncios, ofertas
+            las empresas de Woordi, así como de socios externos, para mostrarte anuncios, ofertas
             y otro contenido patrocinado que creemos que te puede interesar. Intentamos que este
             contenido te resulte tan relevante como el resto de las experiencias en Woordi.
             Investigar e innovar. Usamos la información de que disponemos para estudiar nuestro
@@ -534,7 +524,7 @@ export class TermsAndCond extends Component {
             permitan mejorar dicho servicio y contribuir al bienestar de nuestra comunidad. Política
             de datos Para proporcionar nuestro Servicio, debemos recopilar y usar tu información. En
             la Política de datos se explica cómo recopilamos, usamos y compartimos información en
-            los Productos de Facebook. También se detallan las formas en que puedes controlar tu
+            los Productos de Woordi. También se detallan las formas en que puedes controlar tu
             información, por ejemplo, desde la configuración de seguridad y privacidad de Woordi.
             Compromisos que asumes Nosotros te proporcionamos el Servicio a cambio de que asumas los
             siguientes compromisos. Quién puede usar Woordi. Queremos que nuestro Servicio sea lo
@@ -590,7 +580,7 @@ export class TermsAndCond extends Component {
             mostrar tu nombre de usuario, tu foto del perfil e información sobre las acciones que
             realizas (como los “Me gusta”) o tus relaciones (como los seguidores) junto a cuentas,
             anuncios, ofertas y otro contenido patrocinado (o en relación con ellos) que sigues o
-            con los que interactúas y que se muestran en los Productos de Facebook, sin obtener
+            con los que interactúas y que se muestran en los Productos de Woordi, sin obtener
             compensación alguna a cambio. Por ejemplo, podemos mostrar que te gusta una publicación
             patrocinada creada por una marca que nos ha pagado para que mostremos sus anuncios en
             Woordi. Del mismo modo que ocurre con los seguidores de otras cuentas y las acciones
