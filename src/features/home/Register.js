@@ -121,7 +121,7 @@ export class Register extends Component {
     if (
       this.props.home.verifyCodePending &&
       nextProps.home.codeverified &&
-      nextProps.home.codeverified.data.token === 'email-exists'
+      nextProps.home.codeverified.data.token === 'email-exist'
     ) {
       NotificationManager.info('El email ya esta registrado');
       document.getElementById('verify-spinner-bottom').style.display = 'none';
@@ -136,10 +136,10 @@ export class Register extends Component {
       this.props.home.verifyCodePending &&
       nextProps.home.codeverified &&
       nextProps.home.codeverified.data.token !== 'token-died' &&
-      nextProps.home.codeverified.data.token !== 'email-exists'
+      nextProps.home.codeverified.data.token !== 'email-exist'
     ) {
       localStorage.setItem('token-app-auth-current', nextProps.home.codeverified.data.token);
-      //window.location.replace(VALUES.FRONTEND_URL + 'feed/main');
+      window.location.replace(VALUES.FRONTEND_URL + 'feed/main');
     }
   }
 
