@@ -112,15 +112,6 @@ export class Register extends Component {
     if (
       this.props.home.verifyCodePending &&
       nextProps.home.codeverified &&
-      nextProps.home.codeverified.data.token !== 'token-died' &&
-      nextProps.home.codeverified.data.token !== 'email-exists'
-    ) {
-      localStorage.setItem('token-app-auth-current', nextProps.home.codeverified.data.token);
-      window.location.replace(VALUES.FRONTEND_URL + 'feed/main');
-    }
-    if (
-      this.props.home.verifyCodePending &&
-      nextProps.home.codeverified &&
       nextProps.home.codeverified.data.token === 'token-died'
     ) {
       NotificationManager.info('Código incorrecto');
@@ -140,6 +131,15 @@ export class Register extends Component {
       NotificationManager.info('Ups, ocurrió un error');
       document.getElementById('verify-spinner-bottom').style.display = 'none';
       document.getElementById('verify-no-spinner-bottom').style.display = 'inline';
+    }
+    if (
+      this.props.home.verifyCodePending &&
+      nextProps.home.codeverified &&
+      nextProps.home.codeverified.data.token !== 'token-died' &&
+      nextProps.home.codeverified.data.token !== 'email-exists'
+    ) {
+      localStorage.setItem('token-app-auth-current', nextProps.home.codeverified.data.token);
+      //window.location.replace(VALUES.FRONTEND_URL + 'feed/main');
     }
   }
 
