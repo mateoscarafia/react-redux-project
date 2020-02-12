@@ -112,7 +112,8 @@ export class Register extends Component {
     if (
       this.props.home.verifyCodePending &&
       nextProps.home.codeverified &&
-      nextProps.home.codeverified.data.token !== 'token-died'
+      nextProps.home.codeverified.data.token !== 'token-died' &&
+      nextProps.home.codeverified.data.token !== 'email-exists'
     ) {
       localStorage.setItem('token-app-auth-current', nextProps.home.codeverified.data.token);
       window.location.replace(VALUES.FRONTEND_URL + 'feed/main');
@@ -194,9 +195,7 @@ export class Register extends Component {
                 <img alt="edit" width="15" src={require('../../images/spinner.gif')} />
               </button>
               <p
-                onClick={() =>
-                  window.open(VALUES.FRONTEND_URL + 'terminosycondiciones', '_blank')
-                }
+                onClick={() => window.open(VALUES.FRONTEND_URL + 'terminosycondiciones', '_blank')}
                 className="terms-link-in-register-form"
               >
                 Al registrarse usted acepta <b>Términos y Condiciones</b>
