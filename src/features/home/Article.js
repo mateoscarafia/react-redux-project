@@ -318,7 +318,7 @@ export class Article extends Component {
                     }
                     className="btn btn-primary button-absolute-top-right"
                   >
-                    Editar articulo
+                    Editar
                   </button>
                 )}
                 <div className="row">

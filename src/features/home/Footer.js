@@ -15,7 +15,7 @@ export class Footer extends Component {
       <div className="home-footer">
         <img style={{marginBottom:'5px'}} alt="edit" width="30" src={require('../../images/logo.png')} />
         <h4>woordi</h4>
-        <p>Tú eres el periodista</p>
+        <p>Vos sos el periodista</p>
         <br />
         <img alt="edit" width="200" src={require('../../images/social-net.PNG')} />
       </div>
