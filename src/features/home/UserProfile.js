@@ -165,7 +165,6 @@ export class UserProfile extends Component {
             >
               {item.username.length > 20 ? item.username.substring(0, 20) + '...' : item.username}
             </p>
-            <p className="date-message">- {item.profession}</p>
             <hr className="hr-white-invisible" />
             <br />
           </div>
@@ -193,7 +192,6 @@ export class UserProfile extends Component {
             >
               {item.username.length > 20 ? item.username.substring(0, 20) + '...' : item.username}
             </p>
-            <p className="date-message">- {item.profession}</p>
             <hr className="hr-white-invisible" />
             <br />
           </div>
