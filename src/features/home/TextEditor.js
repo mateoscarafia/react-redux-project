@@ -131,16 +131,11 @@ export class TextEditor extends Component {
       var content_final = draftToHtml(convertToRaw(this.state.editorState.getCurrentContent()))
         .replace(/"/g, '\\"')
         .replace(/'/g, '\\"')
-        .replace(/`/g, '\\"');
+        .replace(/`/g, '\\"')
+        .replace(/font-family:/g, 'font-familyie:')
+        .replace(/font-size:/g, 'font-sizeie:')
+        .replace(/background-color:/g, 'background-colorie:');
       if (
-        content_final.includes('font-family:') ||
-        content_final.includes('font-size:') ||
-        content_final.includes('background-color:')
-      ) {
-        NotificationManager.info('No puedes agregar HTML al contenido');
-        document.getElementById('button-post-article').style.display = 'inline';
-        document.getElementById('spinner-button-post-article').style.display = 'none';
-      } else if (
         this.state.file &&
         !this.state.file.type.includes('image') &&
         !this.state.file.type.includes('video')
