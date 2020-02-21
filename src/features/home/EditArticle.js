@@ -169,15 +169,6 @@ export class EditArticle extends Component {
         ? draftToHtml(convertToRaw(this.state.editorState.getCurrentContent()))
         : this.props.home.uniquearticle.data[0].content;
       if (
-        this.state.changedEditor &&
-        (content_final.includes('font-family:') ||
-          content_final.includes('font-size:') ||
-          content_final.includes('background-color:'))
-      ) {
-        NotificationManager.info('No puedes agregar HTML al contenido');
-        document.getElementById('edit-button-id').style.display = 'inline';
-        document.getElementById('spinner-edit-button-id').style.display = 'none';
-      } else if (
         this.state.file &&
         !this.state.file.type.includes('image') &&
         !this.state.file.type.includes('video')
