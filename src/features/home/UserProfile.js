@@ -595,8 +595,8 @@ export class UserProfile extends Component {
                   )}
                 </h4>
                 <img
-                  alt="Popularidad"
-                  title="Popularidad"
+                  alt="Popularidad, según cantidad de seguidores."
+                  title="Popularidad, según cantidad de seguidores."
                   width="100px"
                   style={{ marginTop: '0px', marginBottom: '10px' }}
                   src={
