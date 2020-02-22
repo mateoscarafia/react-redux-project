@@ -40,13 +40,14 @@ export class NavBar extends Component {
         await this.props.actions.getUser({ token: VALUES.DEEP_TOKEN, id: user_edit.id });
         destiny = destiny + user_edit.id;
       }
-      destiny === '/feed/main' &&
-        window.location.href.includes('feed') &&
-        (await this.props.actions.getArticles({
+      if (destiny === '/feed/main' && window.location.href.includes('feed')) {
+        try{this.props.home.getArticlesPending = true}catch(err){}
+        await this.props.actions.getArticles({
           token: localStorage.getItem('token-app-auth-current') || VALUES.DEEP_TOKEN,
           param: 'main',
           id: this.props.user || null,
-        }));
+        });
+      }
       window.scrollTo(0, 0);
       this.props.history.push(destiny);
     }
