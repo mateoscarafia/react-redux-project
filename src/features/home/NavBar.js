@@ -41,7 +41,6 @@ export class NavBar extends Component {
         destiny = destiny + user_edit.id;
       }
       if (destiny === '/feed/main' && window.location.href.includes('feed')) {
-        try{this.props.home.getArticlesPending = true}catch(err){}
         await this.props.actions.getArticles({
           token: localStorage.getItem('token-app-auth-current') || VALUES.DEEP_TOKEN,
           param: 'main',
