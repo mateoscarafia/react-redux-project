@@ -430,8 +430,9 @@ export class EditArticle extends Component {
                       <label className="custom-file-upload mobile-design-button-edit">
                         <input onChange={this._handleImageChange} type="file" />
                         <img
-                          alt="video"
+                          alt="imagen/video"
                           width="90px"
+                          title="Subir imagen/video"
                           style={{ opacity: '0.8' }}
                           className="play-video-style-div"
                           src={require('../../images/img-vid.png')}

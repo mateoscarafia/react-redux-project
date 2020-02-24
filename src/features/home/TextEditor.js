@@ -365,8 +365,9 @@ export class TextEditor extends Component {
                       <label className="custom-file-upload mobile-design-button">
                         <input onChange={this._handleImageChange} type="file" />
                         <img
-                          alt="video"
+                          alt="imagen/video"
                           width="90px"
+                          title="Subir imagen/video"
                           className="play-video-style-div"
                           style={{ opacity: '0.8' }}
                           src={require('../../images/img-vid.png')}
