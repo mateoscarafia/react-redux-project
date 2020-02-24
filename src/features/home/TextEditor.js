@@ -364,7 +364,13 @@ export class TextEditor extends Component {
                     <form className="upload-image-form-editor" onSubmit={this._handleSubmit}>
                       <label className="custom-file-upload mobile-design-button">
                         <input onChange={this._handleImageChange} type="file" />
-                        Subir imagen / video
+                        <img
+                          alt="video"
+                          width="90px"
+                          className="play-video-style-div"
+                          style={{ opacity: '0.8' }}
+                          src={require('../../images/img-vid.png')}
+                        />
                       </label>
                       <p className="content-warning-message">Videos de 1 minuto max (20 Mb)</p>
                     </form>
