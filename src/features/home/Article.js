@@ -152,7 +152,7 @@ export class Article extends Component {
         return (
           <div
             key={item.title + '-' + item.id}
-            className="design-120-60"
+            className="design-120-60-related-news"
             onMouseEnter={() => this.articleDivInfoVisible('news-hover-' + item.id)}
             onMouseLeave={() => this.articleDivInfoInvisible('news-hover-' + item.id)}
           >
