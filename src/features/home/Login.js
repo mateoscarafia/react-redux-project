@@ -172,7 +172,7 @@ export class Login extends Component {
                 <img alt="edit" width="15" src={require('../../images/spinner.gif')} />
               </button>
               <p onClick={() => this.forgotPassword()} className="forgot-link-in-login-form">
-                Olvide mi contraseña
+                Olvidé mi contraseña
               </p>
               <p onClick={() => this.goToRegister()} className="register-link-in-login-form">
                 ¿No tienes cuenta? <b> Registrate </b>
