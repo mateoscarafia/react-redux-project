@@ -439,7 +439,7 @@ export class EditArticle extends Component {
                         />
                       </label>
                       <p className="content-warning-message-edit-file">
-                        Videos de 1 minuto max (20 Mb)
+                        Videos de 2 minutos (20 Mb)
                       </p>
                     </form>
                     {!this.state.file ? (

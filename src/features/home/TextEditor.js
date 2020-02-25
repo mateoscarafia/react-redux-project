@@ -373,7 +373,7 @@ export class TextEditor extends Component {
                           src={require('../../images/img-vid.png')}
                         />
                       </label>
-                      <p className="content-warning-message">Videos de 1 minuto max (20 Mb)</p>
+                      <p className="content-warning-message">Videos de 2 minutos (20 Mb)</p>
                     </form>
                     {this.state.file ? (
                       this.state.file.type.includes('image') ? (
