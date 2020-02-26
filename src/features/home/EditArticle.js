@@ -437,10 +437,8 @@ export class EditArticle extends Component {
                           className="play-video-style-div"
                           src={require('../../images/img-vid.png')}
                         />
+                        <p className="content-warning-message-edit-file">Videos de 5 minutos</p>
                       </label>
-                      <p className="content-warning-message-edit-file">
-                        Videos de 5 minutos
-                      </p>
                     </form>
                     {!this.state.file ? (
                       this.props.home.uniquearticle.data[0].is_video !== 1 ? (

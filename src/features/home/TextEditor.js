@@ -372,8 +372,8 @@ export class TextEditor extends Component {
                           style={{ opacity: '0.8' }}
                           src={require('../../images/img-vid.png')}
                         />
+                         <p className="content-warning-message">Videos de 5 minutos</p>
                       </label>
-                      <p className="content-warning-message">Videos de 5 minutos</p>
                     </form>
                     {this.state.file ? (
                       this.state.file.type.includes('image') ? (
