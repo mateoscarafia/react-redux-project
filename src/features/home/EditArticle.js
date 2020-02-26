@@ -176,7 +176,7 @@ export class EditArticle extends Component {
         NotificationManager.info('El archivo no es una imagen/video');
         document.getElementById('edit-button-id').style.display = 'inline';
         document.getElementById('spinner-edit-button-id').style.display = 'none';
-      } else if (this.state.file && this.state.file.size > 20000000) {
+      } else if (this.state.file && this.state.file.size > 50000000) {
         NotificationManager.info('Lo sentimos, el archivo es muy pesado (20 mb max)');
         document.getElementById('edit-button-id').style.display = 'inline';
         document.getElementById('spinner-edit-button-id').style.display = 'none';
@@ -439,7 +439,7 @@ export class EditArticle extends Component {
                         />
                       </label>
                       <p className="content-warning-message-edit-file">
-                        Videos de 2 minutos (20 Mb)
+                        Videos de 5 minutos
                       </p>
                     </form>
                     {!this.state.file ? (

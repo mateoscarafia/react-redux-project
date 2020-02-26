@@ -143,7 +143,7 @@ export class TextEditor extends Component {
         NotificationManager.info('El archivo no es una imagen/video');
         document.getElementById('button-post-article').style.display = 'inline';
         document.getElementById('spinner-button-post-article').style.display = 'none';
-      } else if (this.state.file && this.state.file.size > 20000000) {
+      } else if (this.state.file && this.state.file.size > 50000000) {
         NotificationManager.info('Lo sentimos, el archivo es muy grande');
         document.getElementById('button-post-article').style.display = 'inline';
         document.getElementById('spinner-button-post-article').style.display = 'none';
@@ -373,7 +373,7 @@ export class TextEditor extends Component {
                           src={require('../../images/img-vid.png')}
                         />
                       </label>
-                      <p className="content-warning-message">Videos de 2 minutos (20 Mb)</p>
+                      <p className="content-warning-message">Videos de 5 minutos</p>
                     </form>
                     {this.state.file ? (
                       this.state.file.type.includes('image') ? (
