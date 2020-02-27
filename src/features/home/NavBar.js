@@ -170,8 +170,11 @@ export class NavBar extends Component {
                   </p>
                 </div>
               </li>
-              <li className="nav-item active diss-in-desktop search-input-menu">
-                <b>Top categorias</b>
+              <li
+                style={{ padding: '0px' }}
+                className="nav-item active diss-in-desktop search-input-menu"
+              >
+                <b>TOP categorias</b>
               </li>
               {this.buildList(0)}
               <li className="nav-item dropdown diss-mobile-menu-dropdown">
