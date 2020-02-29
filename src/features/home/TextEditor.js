@@ -148,6 +148,7 @@ export class TextEditor extends Component {
         document.getElementById('button-post-article').style.display = 'inline';
         document.getElementById('spinner-button-post-article').style.display = 'none';
       } else {
+        NotificationManager.info('Esto puede tardar unos segundos, por favor aguarde');
         var secret_key = await this.safetyNet();
         try {
           const data = new FormData();
