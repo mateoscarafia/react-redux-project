@@ -31,6 +31,7 @@ export class Home extends Component {
       id: null,
       notification: false,
       notMessage: '',
+      spinner: true,
     };
   }
 
@@ -66,6 +67,14 @@ export class Home extends Component {
         id: null,
       });
     }
+  }
+
+  componentDidMount() {
+    setTimeout(() => {
+      this.setState({
+        spinner: false,
+      });
+    }, 1000);
   }
 
   handleModal = action => {
@@ -115,24 +124,24 @@ export class Home extends Component {
     this.props.home.user && this.props.home.user.data[0] && this.rotateUserProfileImage();
     if (this.props.home.user && !this.props.home.user.data[0]) {
       this.removeTokenAndKill();
-      return null
+      return null;
     } else if (
       this.props.home.user &&
       this.props.home.user.data[0] &&
       this.props.home.user.data[0].username === 'blocked-user-woordi-secure-integrity'
     ) {
       this.removeTokenAndKill();
-      return null
+      return null;
     } else if (
       this.props.home.getUserError ||
       this.props.home.getArticlesError ||
       this.props.home.getCategoriesError
     ) {
       this.goToErrorLanding();
-      return null
+      return null;
     } else if (this.props.home.categories && !this.props.home.categories.data[0]) {
       this.goToErrorLanding();
-      return null
+      return null;
     } else if (
       this.state.id &&
       !this.props.home.categories &&
@@ -241,7 +250,7 @@ export class Home extends Component {
               <div
                 className={this.state.login ? 'news-content-index' : 'news-content-index-fullwidth'}
               >
-                {this.props.home.getArticlesPending && (
+                {(this.state.spinner || this.props.home.getArticlesPending) && (
                   <div
                     id="spinner-div-for-news-id-container-home-waiting"
                     className="spinner-div-for-news"
@@ -254,19 +263,22 @@ export class Home extends Component {
                     />
                   </div>
                 )}
-                {!this.props.home.getArticlesPending && this.props.home.articles && (
-                  <News
-                    routeparams={params}
-                    id={this.state.id}
-                    articles={this.props.home.articles}
-                    isSimilar={false}
-                  />
-                )}
+                {!this.state.spinner &&
+                  !this.props.home.getArticlesPending &&
+                  this.props.home.articles && (
+                    <News
+                      routeparams={params}
+                      id={this.state.id}
+                      articles={this.props.home.articles}
+                      isSimilar={false}
+                    />
+                  )}
               </div>
             </div>
           </div>
           <Footer />
           <NotificationContainer />
+          {/*<div className="publicity-pop-up"></div>*/}
         </div>
       );
     }
