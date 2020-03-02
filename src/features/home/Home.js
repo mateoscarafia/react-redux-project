@@ -7,6 +7,7 @@ import * as actions from './redux/actions';
 import { NotificationContainer } from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
 import * as VALUES from '../../constants';
+import ReactGA from 'react-ga';
 
 //Components
 import NavBar from './NavBar';
@@ -75,6 +76,8 @@ export class Home extends Component {
         spinner: false,
       });
     }, 1000);
+    ReactGA.initialize('UA-85876206-2');
+    ReactGA.pageview(window.location.href);
   }
 
   handleModal = action => {
