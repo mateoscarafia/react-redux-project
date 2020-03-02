@@ -40,6 +40,7 @@ export class EditArticle extends Component {
       keywords: null,
       changedEditor: false,
       rotateAngle: null,
+      spinner: true,
     };
     this._handleImageChange = this._handleImageChange.bind(this);
     this._handleSubmit = this._handleSubmit.bind(this);
@@ -72,6 +73,14 @@ export class EditArticle extends Component {
       }, 1000);
       NotificationManager.info('Ups, algo fue mal');
     }
+  }
+
+  componentDidMount() {
+    setTimeout(() => {
+      this.setState({
+        spinner: false,
+      });
+    }, 1000);
   }
 
   onEditorStateChange = editorState => {
@@ -352,7 +361,7 @@ export class EditArticle extends Component {
               user={this.state.id}
             />
           )}
-          {this.props.home.getUserPending && (
+          {(this.state.spinner || this.props.home.getUserPending) && (
             <div
               id="spinner-div-for-news-id-editarticle-home-waiting"
               className="spinner-div-for-news-editarticle-when-no-content"
