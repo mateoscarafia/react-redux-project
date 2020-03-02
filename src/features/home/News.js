@@ -459,7 +459,7 @@ export class News extends Component {
         articles[prop].rotate_img
       ) {
         document.getElementById('id-article-unique-key-' + articles[prop].id).style.transform =
-          'rotate('+articles[prop].rotate_img+'deg)';
+          'rotate(' + articles[prop].rotate_img + 'deg)';
       }
     }
   };
@@ -476,7 +476,12 @@ export class News extends Component {
               {this.props.routeparams !== 'main' && this.props.articles && (
                 <div className="row">{this.buildNewsSearch()}</div>
               )}
-              {this.props.routeparams === 'main' && <div>{this.newsDistribution()}</div>}
+              {this.props.routeparams === 'main' && (
+                <div>
+                  <h5 className="no-result-tag-title-article-tit">{'Artículos recientes'}</h5>
+                  {this.newsDistribution()}
+                </div>
+              )}
             </div>
           </div>
         </div>
