@@ -491,7 +491,7 @@ export class Article extends Component {
             />
           )}
           <div className="similar-articles-article">
-            <p style={{ fontSize: '12px' }}>Relacionados</p>
+            <p style={{ fontSize: '12px' }}>Relacionados recientes</p>
             {this.props.home.getRelatedError && (
               <p style={{ fontSize: '12px', marginTop: '15px' }}>Sin artículos relacionados.</p>
             )}
