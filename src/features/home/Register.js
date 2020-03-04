@@ -214,7 +214,7 @@ export class Register extends Component {
                   value={this.state.verifyCode}
                   onChange={this.handleChange}
                   id="verifyCode-input"
-                  placeholder="Código de verificación"
+                  placeholder="Ingresa código aquí..."
                 />
               </div>
               <button
@@ -223,7 +223,7 @@ export class Register extends Component {
                 type="button"
                 className="register-button"
               >
-                Verificar mi email
+                Verificar código
               </button>
               <button id="verify-spinner-bottom" className="register-button spinner-register">
                 <img alt="edit" width="15" src={require('../../images/spinner.gif')} />
