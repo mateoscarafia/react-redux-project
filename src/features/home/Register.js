@@ -191,6 +191,15 @@ export class Register extends Component {
               >
                 Registrarse
               </button>
+              <hr/>
+              <button
+                id="register-no-spinner-bottom-code-veri"
+                onClick={() => this.setState({ showVerification: true })}
+                type="button"
+                className="register-button-code-veri"
+              >
+                Ya recibí mi código
+              </button>
               <button id="register-spinner-bottom" className="register-button spinner-register">
                 <img alt="edit" width="15" src={require('../../images/spinner.gif')} />
               </button>
