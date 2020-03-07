@@ -29,6 +29,7 @@ export class UserProfile extends Component {
       id: null,
       imagePreviewUrl: null,
       imagePreviewUrlP: null,
+      imagePreviewUrlPublicity: null,
       editUser: false,
       username: null,
       profession: null,
@@ -40,11 +41,16 @@ export class UserProfile extends Component {
       openMyReaders: false,
       file: null,
       fileP: null,
+      filePublicity: null,
+      myPublicity: false,
+      publicity_active: null,
+      publicity_link: null,
+      publicity_img: null,
     };
     this._handleImageChange = this._handleImageChange.bind(this);
     this._handleImageChangeP = this._handleImageChangeP.bind(this);
+    this._handleImageChangePublicity = this._handleImageChangePublicity.bind(this);
   }
-
 
   rotate = () => {
     let articles = [];
@@ -116,6 +122,10 @@ export class UserProfile extends Component {
         openMyFollowers: !this.state.openMyFollowers,
       });
   };
+
+  goAway = () => {
+    window.location.replace(this.props.home.user.data[0].publicity_link, '_blank')
+  }
 
   openMyFollowing = async id => {
     if (parseInt(this.props.match.params.id, 10) === id) {
@@ -259,6 +269,19 @@ export class UserProfile extends Component {
     );
   };
 
+  _handleImageChangePublicity(e) {
+    e.preventDefault();
+    let readerPublicity = new FileReader();
+    let filePublicity = e.target.files[0];
+    readerPublicity.onloadend = () => {
+      this.setState({
+        filePublicity: filePublicity,
+        imagePreviewUrlPublicity: readerPublicity.result,
+      });
+    };
+    readerPublicity.readAsDataURL(filePublicity);
+  }
+
   _handleImageChangeP(e) {
     e.preventDefault();
     let readerP = new FileReader();
@@ -275,6 +298,12 @@ export class UserProfile extends Component {
   handleModal = action => {
     this.setState({
       editUser: action,
+    });
+  };
+
+  handleModalPublicity = action => {
+    this.setState({
+      myPublicity: action,
     });
   };
 
@@ -398,6 +427,43 @@ export class UserProfile extends Component {
     }
   };
 
+  sendPublicity = async () => {
+    document.getElementById('cambiar-user-data-id-publicity').style.display = 'none';
+    document.getElementById('cambiar-user-data-id-spinner-publicity').style.display = 'inline';
+    if (this.state.filePublicity && this.state.filePublicity.size > 20000000) {
+      NotificationManager.info('Lo sentimos, la foto es muy pesada (20 mb max)');
+      document.getElementById('cambiar-user-data-id-publicity').style.display = 'inline';
+      document.getElementById('cambiar-user-data-id-spinner-publicity').style.display = 'none';
+    } else {
+      var res = { data: { filename: null } };
+      if (this.state.filePublicity) {
+        const data = new FormData();
+        data.append('file', this.state.filePublicity);
+        var secret_key = await this.safetyNet();
+        res = await axios.post(VALUES.BACKEND_URL + 'file-upload', data, {
+          headers: {
+            secret_key: secret_key,
+          },
+        });
+      }
+      let dataUpdate = {
+        token: localStorage.getItem('token-app-auth-current'),
+        publicity_img: res.data.filename || this.props.home.user.data[0].publicity_img,
+        publicity_link: this.state.publicity_link || this.props.home.user.data[0].publicity_link,
+        publicity_active:
+          this.state.publicity_active === '1'
+            ? 1
+            : this.state.publicity_active === '0'
+            ? 0
+            : this.props.home.user.data[0].publicity_active,
+      };
+      this.props.actions.addPublicity(dataUpdate);
+      this.setState({
+        filePublicity: null,
+      });
+    }
+  };
+
   componentWillReceiveProps(nextProps) {
     if (this.props.home.editUserPending && nextProps.home.editeduser) {
       NotificationManager.info('Datos guardados');
@@ -413,6 +479,18 @@ export class UserProfile extends Component {
         password1: '',
         password2: '',
       });
+    }
+    if (this.props.home.addPublicityPending && nextProps.home.publicity) {
+      NotificationManager.info('Datos guardados');
+      this.props.actions.getUser({ token: VALUES.DEEP_TOKEN, id: this.state.id });
+      this.setState({
+        myPublicity: false,
+      });
+    }
+    if (this.props.home.addPublicityPending && nextProps.home.addPublicityError) {
+      document.getElementById('cambiar-user-data-id-spinner-publicity').style.display = 'none';
+      document.getElementById('cambiar-user-data-id-publicity').style.display = 'inline';
+      NotificationManager.info('Ups, algo fue mal.');
     }
     if (this.props.home.editUserPending && nextProps.home.editUserError) {
       document.getElementById('cambiar-user-data-id-spinner').style.display = 'none';
@@ -502,6 +580,7 @@ export class UserProfile extends Component {
   };
 
   render() {
+    console.log(this.state);
     try {
       var userLogged = this.props.home.user
         ? localStorage.getItem('token-app-auth-current')
@@ -509,7 +588,8 @@ export class UserProfile extends Component {
           : null
         : null;
       var $imagePreview,
-        $imagePreviewP = null;
+        $imagePreviewP,
+        $imagePreviewPublicity = null;
       if (this.props.home.user) {
         var imagePreviewUrl =
           this.state.imagePreviewUrl ||
@@ -517,11 +597,17 @@ export class UserProfile extends Component {
         var imagePreviewUrlP =
           this.state.imagePreviewUrlP ||
           VALUES.STORAGE_URL + this.props.home.user.data[0].banner_img_url;
+        var imagePreviewUrlPublicity =
+          this.state.imagePreviewUrlPublicity ||
+          VALUES.STORAGE_URL + this.props.home.user.data[0].publicity_img;
         if (imagePreviewUrl) {
           $imagePreview = <img alt="img-preview" src={imagePreviewUrl} />;
         }
         if (imagePreviewUrlP) {
           $imagePreviewP = <img alt="img-preview" src={imagePreviewUrlP} />;
+        }
+        if (imagePreviewUrlPublicity) {
+          $imagePreviewPublicity = <img alt="img-preview" src={imagePreviewUrlPublicity} />;
         }
       }
     } catch (err) {
@@ -586,11 +672,22 @@ export class UserProfile extends Component {
                     <img
                       alt="edit"
                       title="Editar mi perfil"
-                      width="25px"
+                      width="22px"
                       style={{ opacity: 0.8 }}
                       onClick={() => this.handleModal(true)}
                       className="edit-pen-user-profile-style"
                       src={require('../../images/edit-pen.PNG')}
+                    />
+                  )}
+                  {this.props.home.user.data[0].id === this.state.id && (
+                    <img
+                      alt="Publicidad"
+                      title="Mi publicidad"
+                      width="22px"
+                      style={{ opacity: 0.8 }}
+                      onClick={() => this.handleModalPublicity(true)}
+                      className="edit-pen-user-profile-style"
+                      src={require('../../images/money.png')}
                     />
                   )}
                 </h4>
@@ -729,6 +826,107 @@ export class UserProfile extends Component {
                 this.buildReaders()}
             </div>
           )}
+          {this.props.home.user &&
+            this.state.myPublicity &&
+            this.props.home.user.data[0].id === this.state.id && (
+              <div className="edit-user-modal-absolute">
+                <div className="modal-header-edit-user">
+                  <a
+                    className="close-modal-header-edit-user"
+                    onClick={() => this.handleModalPublicity(false)}
+                  >
+                    X
+                  </a>
+                </div>
+                <div className="form-modal-edit-user">
+                  <h4>Mi publicidad</h4>
+                  <hr />
+                  <label>¡En Woordi podes gestionar tu propia publicidad!</label>
+                  <label>
+                    Vos manejas el contenido de tu perfil y ahora tambien su publicidad. La
+                    publicidad consiste en un Banner que se mostrará
+                    <b> sólo en tus artículos y en tu perfil.</b> Vos generas el contenido, vos te
+                    llevas las ganancias de su tráfico.
+                  </label>
+                  <label>
+                    <b>¡Empeza ya!</b> Contáctate con algún negocio, empresa o comercio que le
+                    interesa publicitar sus productos junto a tu contenido. Subi la imagen para el
+                    banner. Definí el link del sitio publicitado y ¡listo!
+                  </label>
+                  <hr />
+                  <form>
+                    <div style={{ width: '100%' }} className="upload-image-form-editor">
+                      <label className="custom-file-upload">
+                        <input
+                          onChange={this._handleImageChangePublicity}
+                          type="file"
+                          className="inputfile"
+                        />
+                        Cambiar foto publicidad
+                      </label>
+                      <div style={{ width: '100%' }} className="show-image-preview-text-editor">
+                        {$imagePreviewPublicity}
+                      </div>
+                    </div>
+                    <div className="form-group">
+                      <label>Link publicidad</label>
+                      <input
+                        type="text"
+                        name="publicity_link"
+                        value={
+                          this.state.publicity_link !== null
+                            ? this.state.publicity_link
+                            : this.props.home.user.data[0].publicity_link
+                        }
+                        className="form-control"
+                        onChange={this.handleChange}
+                        id="publicity_link"
+                        placeholder="Link de sitio publicitado"
+                      />
+                    </div>
+                    <div className="form-group">
+                      <select
+                        className="form-control"
+                        onChange={this.handleChange}
+                        style={{ width: '200px', marginBottom: '10px', fontSize: '12px' }}
+                        name="publicity_active"
+                        value={
+                          this.state.publicity_active ||
+                          this.props.home.user.data[0].publicity_active
+                        }
+                      >
+                        <option value={'Act'}>Activación</option>
+                        <option value={1}>SI</option>
+                        <option value={0}>NO</option>
+                      </select>
+                    </div>
+                    <div className="div-edit-user-button-save-change">
+                      <button
+                        onClick={() => this.sendPublicity()}
+                        type="button"
+                        id="cambiar-user-data-id-publicity"
+                        className="btn btn-success edit-user-button-form"
+                      >
+                        Guardar cambios
+                      </button>
+                      <button
+                        type="button"
+                        id="cambiar-user-data-id-spinner-publicity"
+                        className="btn btn-success edit-user-button-form spinner"
+                      >
+                        <img
+                          alt="edit"
+                          width="15"
+                          className="edit-pen-user-profile-style"
+                          src={require('../../images/spinner.gif')}
+                        />
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            )}
+
           {this.props.home.user &&
             this.state.editUser &&
             this.props.home.user.data[0].id === this.state.id && (
@@ -887,6 +1085,19 @@ export class UserProfile extends Component {
                   </form>
                 </div>
               </div>
+            )}
+          {!this.props.home.getUserPending &&
+            this.props.home.user &&
+            this.props.home.user.data[0] &&
+            this.props.home.user.data[0].publicity_active && (
+              <div
+                onClick={() => this.goAway()}
+                style={{
+                  backgroundImage: `url(${VALUES.STORAGE_URL +
+                    this.props.home.user.data[0].publicity_img})`,
+                }}
+                className="publicity-pop-up"
+              ></div>
             )}
           {this.rotate()}
           <NotificationContainer />

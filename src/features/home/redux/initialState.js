@@ -75,6 +75,8 @@ const initialState = {
   verifyCodeError: null,
   forgotPasswordPending: false,
   forgotPasswordError: null,
+  addPublicityPending: false,
+  addPublicityError: null,
 };
 
 export default initialState;

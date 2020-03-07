@@ -75,6 +75,7 @@ export class Register extends Component {
     ) {
       document.getElementById('register-spinner-bottom').style.display = 'inline';
       document.getElementById('register-no-spinner-bottom').style.display = 'none';
+      document.getElementById('register-no-spinner-bottom-code-veri').style.display = 'none';
       this.props.actions.verifyUser({
         token: jwt.sign(
           {

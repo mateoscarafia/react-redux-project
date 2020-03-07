@@ -281,7 +281,6 @@ export class Home extends Component {
           </div>
           <Footer />
           <NotificationContainer />
-          {/*<div className="publicity-pop-up"></div>*/}
         </div>
       );
     }

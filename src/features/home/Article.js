@@ -501,6 +501,21 @@ export class Article extends Component {
           </div>
           {this.rotateImg()}
           {this.rotateRelated()}
+          {!this.props.home.getArticlePending &&
+            this.props.home.uniquearticle &&
+            this.props.home.uniquearticle.data[0] &&
+            this.props.home.uniquearticle.data[0].publicity_active && (
+              <div
+                onClick={() =>
+                  window.location.replace(this.props.home.uniquearticle.data[0].publicity_link, '_blank')
+                }
+                style={{
+                  backgroundImage: `url(${VALUES.STORAGE_URL +
+                    this.props.home.uniquearticle.data[0].publicity_img})`,
+                }}
+                className="publicity-pop-up"
+              ></div>
+            )}
           <Footer />
           <NotificationContainer />
         </div>

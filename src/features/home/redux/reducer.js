@@ -37,6 +37,7 @@ import { reducer as securityTokenReducer } from './securityToken';
 import { reducer as verifyUserReducer } from './verifyUser';
 import { reducer as verifyCodeReducer } from './verifyCode';
 import { reducer as forgotPasswordReducer } from './forgotPassword';
+import { reducer as addPublicityReducer } from './addPublicity';
 
 const reducers = [
   getNewsReducer,
@@ -77,6 +78,7 @@ const reducers = [
   verifyUserReducer,
   verifyCodeReducer,
   forgotPasswordReducer,
+  addPublicityReducer,
 ];
 
 export default function reducer(state = initialState, action) {
