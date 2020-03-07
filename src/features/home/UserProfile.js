@@ -881,7 +881,7 @@ export class UserProfile extends Component {
                         className="form-control"
                         onChange={this.handleChange}
                         id="publicity_link"
-                        placeholder="Link de sitio publicitado"
+                        placeholder="Ej: https://www.google.com"
                       />
                     </div>
                     <div className="form-group">
