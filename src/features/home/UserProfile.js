@@ -46,6 +46,7 @@ export class UserProfile extends Component {
       publicity_active: null,
       publicity_link: null,
       publicity_img: null,
+      show_publicity_banner: true,
     };
     this._handleImageChange = this._handleImageChange.bind(this);
     this._handleImageChangeP = this._handleImageChangeP.bind(this);
@@ -124,8 +125,10 @@ export class UserProfile extends Component {
   };
 
   goAway = () => {
-    window.location.replace(this.props.home.user.data[0].publicity_link, '_blank')
-  }
+    if (this.props.home.user.data[0].publicity_link) {
+      window.open(this.props.home.user.data[0].publicity_link, '_blank');
+    }
+  };
 
   openMyFollowing = async id => {
     if (parseInt(this.props.match.params.id, 10) === id) {
@@ -850,7 +853,7 @@ export class UserProfile extends Component {
                   </label>
                   <label>
                     <b>¡Empeza ya!</b> Contáctate con algún negocio, empresa o comercio que le
-                    interesa publicitar sus productos junto a tu contenido. Subi la imagen para el
+                    interese publicitar sus productos junto a tu contenido. Subi la imagen para el
                     banner. Definí el link del sitio publicitado y ¡listo!
                   </label>
                   <hr />
@@ -877,6 +880,8 @@ export class UserProfile extends Component {
                           this.state.publicity_link !== null
                             ? this.state.publicity_link
                             : this.props.home.user.data[0].publicity_link
+                            ? this.props.home.user.data[0].publicity_link
+                            : ''
                         }
                         className="form-control"
                         onChange={this.handleChange}
@@ -885,6 +890,7 @@ export class UserProfile extends Component {
                       />
                     </div>
                     <div className="form-group">
+                      <label>Activar publicidad</label>
                       <select
                         className="form-control"
                         onChange={this.handleChange}
@@ -895,7 +901,6 @@ export class UserProfile extends Component {
                           this.props.home.user.data[0].publicity_active
                         }
                       >
-                        <option value={'Act'}>Activación</option>
                         <option value={1}>SI</option>
                         <option value={0}>NO</option>
                       </select>
@@ -1089,15 +1094,27 @@ export class UserProfile extends Component {
           {!this.props.home.getUserPending &&
             this.props.home.user &&
             this.props.home.user.data[0] &&
-            this.props.home.user.data[0].publicity_active && (
+            this.props.home.user.data[0].publicity_active &&
+            this.state.show_publicity_banner && (
               <div
-                onClick={() => this.goAway()}
                 style={{
+                  backgroundColor: '#f5f5f5',
                   backgroundImage: `url(${VALUES.STORAGE_URL +
                     this.props.home.user.data[0].publicity_img})`,
                 }}
                 className="publicity-pop-up"
-              ></div>
+              >
+                <div onClick={() => this.goAway()} style={{ width: '90%', height: '100%' }}></div>
+                <p
+                  onClick={() =>
+                    this.setState({
+                      show_publicity_banner: false,
+                    })
+                  }
+                >
+                  x
+                </p>
+              </div>
             )}
           {this.rotate()}
           <NotificationContainer />

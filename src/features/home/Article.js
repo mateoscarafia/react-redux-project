@@ -27,6 +27,7 @@ export class Article extends Component {
       visible: false,
       login: false,
       id: null,
+      show_publicity_banner: true,
     };
   }
 
@@ -264,6 +265,12 @@ export class Article extends Component {
       token: localStorage.getItem('token-app-auth-current'),
       news_id: id,
     });
+  };
+
+  goAway = () => {
+    if (this.props.home.uniquearticle.data[0].publicity_link) {
+      window.open(this.props.home.uniquearticle.data[0].publicity_link, '_blank');
+    }
   };
 
   render() {
@@ -504,17 +511,26 @@ export class Article extends Component {
           {!this.props.home.getArticlePending &&
             this.props.home.uniquearticle &&
             this.props.home.uniquearticle.data[0] &&
-            this.props.home.uniquearticle.data[0].publicity_active && (
+            this.props.home.uniquearticle.data[0].publicity_active &&
+            this.state.show_publicity_banner && (
               <div
-                onClick={() =>
-                  window.location.replace(this.props.home.uniquearticle.data[0].publicity_link, '_blank')
-                }
                 style={{
                   backgroundImage: `url(${VALUES.STORAGE_URL +
                     this.props.home.uniquearticle.data[0].publicity_img})`,
                 }}
                 className="publicity-pop-up"
-              ></div>
+              >
+                <div onClick={() => this.goAway()} style={{ width: '90%', height: '100%' }}></div>
+                <p
+                  onClick={() =>
+                    this.setState({
+                      show_publicity_banner: false,
+                    })
+                  }
+                >
+                  x
+                </p>
+              </div>
             )}
           <Footer />
           <NotificationContainer />
