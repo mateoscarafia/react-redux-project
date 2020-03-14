@@ -856,7 +856,7 @@ export class UserProfile extends Component {
                   <label>
                     <b>¡Empeza ya!</b> Contáctate con algún negocio, empresa o comercio que le
                     interese publicitar sus productos junto a tu contenido. Subi la imagen para el
-                    banner. Definí el link del sitio publicitado y ¡listo!
+                    banner, definí el link del sitio publicitado y ¡listo!
                   </label>
                   <hr />
                   <form>
