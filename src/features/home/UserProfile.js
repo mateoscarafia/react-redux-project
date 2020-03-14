@@ -583,7 +583,6 @@ export class UserProfile extends Component {
   };
 
   render() {
-    console.log(this.state);
     try {
       var userLogged = this.props.home.user
         ? localStorage.getItem('token-app-auth-current')
@@ -602,7 +601,10 @@ export class UserProfile extends Component {
           VALUES.STORAGE_URL + this.props.home.user.data[0].banner_img_url;
         var imagePreviewUrlPublicity =
           this.state.imagePreviewUrlPublicity ||
-          VALUES.STORAGE_URL + this.props.home.user.data[0].publicity_img;
+          VALUES.STORAGE_URL +
+            (this.props.home.user.data[0].publicity_img !== 'null'
+              ? this.props.home.user.data[0].publicity_img
+              : 'default-user-banner.PNG');
         if (imagePreviewUrl) {
           $imagePreview = <img alt="img-preview" src={imagePreviewUrl} />;
         }
@@ -879,7 +881,7 @@ export class UserProfile extends Component {
                         value={
                           this.state.publicity_link !== null
                             ? this.state.publicity_link
-                            : this.props.home.user.data[0].publicity_link
+                            : this.props.home.user.data[0].publicity_link !== 'null'
                             ? this.props.home.user.data[0].publicity_link
                             : ''
                         }
