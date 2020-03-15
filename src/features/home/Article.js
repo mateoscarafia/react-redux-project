@@ -509,29 +509,29 @@ export class Article extends Component {
           {this.rotateImg()}
           {this.rotateRelated()}
           {!this.props.home.getArticlePending &&
-            this.props.home.uniquearticle &&
-            this.props.home.uniquearticle.data[0] &&
-            this.props.home.uniquearticle.data[0].publicity_active &&
-            this.state.show_publicity_banner && (
-              <div
-                style={{
-                  backgroundImage: `url(${VALUES.STORAGE_URL +
-                    this.props.home.uniquearticle.data[0].publicity_img})`,
-                }}
-                className="publicity-pop-up"
+          this.props.home.uniquearticle &&
+          this.props.home.uniquearticle.data[0] &&
+          this.props.home.uniquearticle.data[0].publicity_active &&
+          this.state.show_publicity_banner ? (
+            <div
+              style={{
+                backgroundImage: `url(${VALUES.STORAGE_URL +
+                  this.props.home.uniquearticle.data[0].publicity_img})`,
+              }}
+              className="publicity-pop-up"
+            >
+              <div onClick={() => this.goAway()} style={{ width: '90%', height: '100%' }}></div>
+              <p
+                onClick={() =>
+                  this.setState({
+                    show_publicity_banner: false,
+                  })
+                }
               >
-                <div onClick={() => this.goAway()} style={{ width: '90%', height: '100%' }}></div>
-                <p
-                  onClick={() =>
-                    this.setState({
-                      show_publicity_banner: false,
-                    })
-                  }
-                >
-                  x
-                </p>
-              </div>
-            )}
+                x
+              </p>
+            </div>
+          ) : null}
           <Footer />
           <NotificationContainer />
         </div>

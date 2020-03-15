@@ -1094,30 +1094,30 @@ export class UserProfile extends Component {
               </div>
             )}
           {!this.props.home.getUserPending &&
-            this.props.home.user &&
-            this.props.home.user.data[0] &&
-            this.props.home.user.data[0].publicity_active &&
-            this.state.show_publicity_banner && (
-              <div
-                style={{
-                  backgroundColor: '#f5f5f5',
-                  backgroundImage: `url(${VALUES.STORAGE_URL +
-                    this.props.home.user.data[0].publicity_img})`,
-                }}
-                className="publicity-pop-up"
+          this.props.home.user &&
+          this.props.home.user.data[0] &&
+          this.props.home.user.data[0].publicity_active &&
+          this.state.show_publicity_banner ? (
+            <div
+              style={{
+                backgroundColor: '#f5f5f5',
+                backgroundImage: `url(${VALUES.STORAGE_URL +
+                  this.props.home.user.data[0].publicity_img})`,
+              }}
+              className="publicity-pop-up"
+            >
+              <div onClick={() => this.goAway()} style={{ width: '90%', height: '100%' }}></div>
+              <p
+                onClick={() =>
+                  this.setState({
+                    show_publicity_banner: false,
+                  })
+                }
               >
-                <div onClick={() => this.goAway()} style={{ width: '90%', height: '100%' }}></div>
-                <p
-                  onClick={() =>
-                    this.setState({
-                      show_publicity_banner: false,
-                    })
-                  }
-                >
-                  x
-                </p>
-              </div>
-            )}
+                x
+              </p>
+            </div>
+          ) : null}
           {this.rotate()}
           <NotificationContainer />
         </div>
