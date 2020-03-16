@@ -31,7 +31,19 @@ export class Article extends Component {
     };
   }
 
-  componentDidMount() {}
+  componentDidMount() {
+    /*if (document.getElementById('pop-up-id-publicity')) {
+      document.getElementById('pop-up-id-publicity').style.visibility = 'visible';
+    }*/
+  }
+
+  publicityVisible = () => {
+    setTimeout(() => {
+      if (document.getElementById('pop-up-id-publicity')) {
+        document.getElementById('pop-up-id-publicity').style.opacity = 1;
+      }
+    }, 2000);
+  };
 
   rotateImg = () => {
     if (document.getElementById('article-div-for-rotate-img')) {
@@ -519,6 +531,7 @@ export class Article extends Component {
                   this.props.home.uniquearticle.data[0].publicity_img})`,
               }}
               className="publicity-pop-up"
+              id="pop-up-id-publicity"
             >
               <div onClick={() => this.goAway()} style={{ width: '90%', height: '100%' }}></div>
               <p
@@ -530,6 +543,7 @@ export class Article extends Component {
               >
                 x
               </p>
+              {this.publicityVisible()}
             </div>
           ) : null}
           <Footer />

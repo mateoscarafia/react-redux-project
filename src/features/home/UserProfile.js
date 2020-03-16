@@ -159,6 +159,14 @@ export class UserProfile extends Component {
     });
   };
 
+  publicityVisible = () => {
+    setTimeout(() => {
+      if (document.getElementById('pop-up-id-publicity')) {
+        document.getElementById('pop-up-id-publicity').style.opacity = 1;
+      }
+    }, 2000);
+  };
+
   buildFollowers = () => {
     if (!this.props.home.myfollowers.data[0]) {
       return <p className="smaller-meta-data">- No tienes seguidores -</p>;
@@ -1104,6 +1112,7 @@ export class UserProfile extends Component {
                 backgroundImage: `url(${VALUES.STORAGE_URL +
                   this.props.home.user.data[0].publicity_img})`,
               }}
+              id="pop-up-id-publicity"
               className="publicity-pop-up"
             >
               <div onClick={() => this.goAway()} style={{ width: '90%', height: '100%' }}></div>
@@ -1116,6 +1125,7 @@ export class UserProfile extends Component {
               >
                 x
               </p>
+              {this.publicityVisible()}
             </div>
           ) : null}
           {this.rotate()}
