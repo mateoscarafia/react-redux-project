@@ -867,7 +867,7 @@ export class UserProfile extends Component {
                     banner, definí el link del sitio publicitado y ¡listo!
                   </label>
                   <label>
-                    Para tu Banner, te recomendamos usar una imagen de 900x300!
+                    Para tu Banner, te recomendamos usar una imagen de 600x200!
                   </label>
                   <hr />
                   <form>
