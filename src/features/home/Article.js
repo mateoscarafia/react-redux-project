@@ -280,7 +280,7 @@ export class Article extends Component {
   };
 
   goAway = () => {
-    if (this.props.home.uniquearticle.data[0].publicity_link) {
+    if (this.props.home.uniquearticle.data[0].publicity_link !== 'null') {
       window.open(this.props.home.uniquearticle.data[0].publicity_link, '_blank');
     }
   };

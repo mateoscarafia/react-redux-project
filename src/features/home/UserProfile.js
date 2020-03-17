@@ -125,7 +125,7 @@ export class UserProfile extends Component {
   };
 
   goAway = () => {
-    if (this.props.home.user.data[0].publicity_link) {
+    if (this.props.home.uniquearticle.data[0].publicity_link !== 'null') {
       window.open(this.props.home.user.data[0].publicity_link, '_blank');
     }
   };
