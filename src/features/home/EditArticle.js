@@ -359,6 +359,7 @@ export class EditArticle extends Component {
               history={this.props.history}
               categories={this.props.home.categories}
               user={this.state.id}
+              username={null}
             />
           )}
           {(this.state.spinner || this.props.home.getUserPending) && (

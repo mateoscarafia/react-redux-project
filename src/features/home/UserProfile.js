@@ -651,6 +651,7 @@ export class UserProfile extends Component {
               history={this.props.history}
               categories={this.props.home.categories}
               user={this.state.id}
+              username={null}
             />
           )}
           <div className="user-profile-wrapper">
@@ -866,9 +867,7 @@ export class UserProfile extends Component {
                     interese publicitar sus productos junto a tu contenido. Subi la imagen para el
                     banner, definí el link del sitio publicitado y ¡listo!
                   </label>
-                  <label>
-                    Para tu Banner, te recomendamos usar una imagen de 600x200!
-                  </label>
+                  <label>Para tu Banner, te recomendamos usar una imagen de 600x200!</label>
                   <hr />
                   <form>
                     <div style={{ width: '100%' }} className="upload-image-form-editor">
@@ -884,9 +883,13 @@ export class UserProfile extends Component {
                         {$imagePreviewPublicity}
                       </div>
                     </div>
-                    <br/>
+                    <br />
                     <div className="form-group">
-                      <label>Link publicidad<br/>Sitio a donde será re-dirigido el usuario al hacer click en la publicidad</label>
+                      <label>
+                        Link publicidad
+                        <br />
+                        Sitio a donde será re-dirigido el usuario al hacer click en la publicidad
+                      </label>
                       <input
                         type="text"
                         name="publicity_link"

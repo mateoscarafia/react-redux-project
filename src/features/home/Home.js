@@ -188,11 +188,12 @@ export class Home extends Component {
               history={this.props.history}
               categories={this.props.home.categories}
               user={this.state.id}
+              username={null}
             />
           )}
           <div className="container margin-top-cont">
             <div className="row">
-              {this.props.home.user && this.state.login && !this.state.userProfile && (
+              {/*this.props.home.user && this.state.login && !this.state.userProfile && (
                 <div className="user-content">
                   <div className="user-content-index">
                     <div
@@ -249,9 +250,11 @@ export class Home extends Component {
                     </button>
                   )}
                 </div>
-              )}
+                  )*/}
               <div
-                className={this.state.login ? 'news-content-index' : 'news-content-index-fullwidth'}
+                className={
+                  this.state.login ? 'news-content-index-fullwidth' : 'news-content-index-fullwidth'
+                }
               >
                 {(this.state.spinner || this.props.home.getArticlesPending) && (
                   <div

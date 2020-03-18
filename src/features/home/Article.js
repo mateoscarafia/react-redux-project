@@ -311,6 +311,7 @@ export class Article extends Component {
               history={this.props.history}
               categories={this.props.home.categories}
               user={this.state.id}
+              username={null}
             />
           )}
           {(this.props.home.getArticlePending || !this.props.home.uniquearticle) && (

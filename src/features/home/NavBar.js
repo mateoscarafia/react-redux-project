@@ -236,7 +236,7 @@ export class NavBar extends Component {
                       }}
                       className="nav-link a-link"
                     >
-                      Mi perfil
+                      {this.props.username ? this.props.username : 'Mi perfil'}
                     </a>
                   </li>
                   <li className="nav-item active diss-in-desktop">
@@ -296,7 +296,7 @@ export class NavBar extends Component {
                       }}
                       className="nav-link a-link"
                     >
-                      Mi perfil
+                     {this.props.username ? this.props.username : 'Mi perfil'}
                     </a>
                   </li>
                   <li className="nav-item active">

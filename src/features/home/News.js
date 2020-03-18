@@ -57,7 +57,7 @@ export class News extends Component {
           data.push(
             <div
               key={this.props.articles.data.main_feed[prop].id}
-              className={!this.props.id ? design : 'design-120-60-less-height'}
+              className={design}
               onMouseEnter={() =>
                 this.articleDivInfoVisible(
                   'news-hover-' + this.props.articles.data.main_feed[prop].id,
@@ -85,7 +85,6 @@ export class News extends Component {
                     <video
                       poster={VALUES.STORAGE_URL + this.props.articles.data.main_feed[prop].img_url}
                       width="100%"
-                      height={!this.props.id ? '250' : '200'}
                       muted
                     >
                       <source
@@ -103,7 +102,7 @@ export class News extends Component {
                       Your browser does not support the video tag.
                     </video>
                   ) : (
-                    <video width="100%" height={!this.props.id ? '250' : '200'} muted>
+                    <video width="100%" muted>
                       <source
                         src={VALUES.STORAGE_URL + this.props.articles.data.main_feed[prop].img_url}
                         type="video/mp4"
@@ -135,7 +134,7 @@ export class News extends Component {
               )}
               <div
                 className={
-                  !this.props.id ? 'wrapper-news-div-hover' : 'wrapper-news-div-hover-smaller'
+                  !this.props.id ? 'wrapper-news-div-hover' : 'wrapper-news-div-hover'
                 }
                 onClick={() =>
                   this.routerMethod('news/' + this.props.articles.data.main_feed[prop].id)
@@ -168,7 +167,7 @@ export class News extends Component {
           data.push(
             <div
               key={this.props.articles.data.backup_feed[prop].id}
-              className={!this.props.id ? design : 'design-120-60-less-height'}
+              className={design}
               onMouseEnter={() =>
                 this.articleDivInfoVisible(
                   'news-hover-' + this.props.articles.data.backup_feed[prop].id,
@@ -198,7 +197,6 @@ export class News extends Component {
                         VALUES.STORAGE_URL + this.props.articles.data.backup_feed[prop].img_url
                       }
                       width="100%"
-                      height={!this.props.id ? '250' : '200'}
                       muted
                     >
                       <source
@@ -222,7 +220,7 @@ export class News extends Component {
                       Your browser does not support the video tag.
                     </video>
                   ) : (
-                    <video width="100%" height={!this.props.id ? '250' : '200'} muted>
+                    <video width="100%" muted>
                       <source
                         src={
                           VALUES.STORAGE_URL + this.props.articles.data.backup_feed[prop].img_url
@@ -260,7 +258,7 @@ export class News extends Component {
               )}
               <div
                 className={
-                  !this.props.id ? 'wrapper-news-div-hover' : 'wrapper-news-div-hover-smaller'
+                  !this.props.id ? 'wrapper-news-div-hover' : 'wrapper-news-div-hover'
                 }
                 onClick={() =>
                   this.routerMethod('news/' + this.props.articles.data.backup_feed[prop].id)
@@ -305,7 +303,7 @@ export class News extends Component {
       data.push(
         <div
           key={this.props.articles.data.main_feed[prop].id}
-          className={!this.props.id ? 'design-120-60' : 'design-120-60-less-height'}
+          className={'design-120-60'}
           onMouseEnter={() =>
             this.articleDivInfoVisible('news-hover-' + this.props.articles.data.main_feed[prop].id)
           }
@@ -331,7 +329,6 @@ export class News extends Component {
                 <video
                   poster={VALUES.STORAGE_URL + this.props.articles.data.main_feed[prop].img_url}
                   width="100%"
-                  height={!this.props.id ? '250' : '200'}
                   muted
                 >
                   <source
@@ -349,7 +346,7 @@ export class News extends Component {
                   Your browser does not support the video tag.
                 </video>
               ) : (
-                <video width="100%" height={!this.props.id ? '250' : '200'} muted>
+                <video width="100%" muted>
                   <source
                     src={VALUES.STORAGE_URL + this.props.articles.data.main_feed[prop].img_url}
                     type="video/mp4"
@@ -379,7 +376,7 @@ export class News extends Component {
             ></div>
           )}
           <div
-            className={!this.props.id ? 'wrapper-news-div-hover' : 'wrapper-news-div-hover-smaller'}
+            className={!this.props.id ? 'wrapper-news-div-hover' : 'wrapper-news-div-hover'}
             onClick={() => this.routerMethod('news/' + this.props.articles.data.main_feed[prop].id)}
             id={'news-hover-' + this.props.articles.data.main_feed[prop].id}
           >

@@ -283,12 +283,13 @@ export class TextEditor extends Component {
     } else {
       return (
         <div className="home-text-editor-css-style">
-          {this.props.home.categories && this.props.home.user && (
+          {this.props.home.categories && (
             <NavBar
               login={this.state.login}
               history={this.props.history}
               categories={this.props.home.categories}
               user={this.state.id}
+              username={null}
             />
           )}
           {this.props.home.getUserPending && (
