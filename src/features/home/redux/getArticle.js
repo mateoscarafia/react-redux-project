@@ -24,7 +24,16 @@ export function getArticle(args = {}) {
       // doRequest is a placeholder Promise. You should replace it with your own logic.
       // See the real-word example at:  https://github.com/supnate/rekit/blob/master/src/features/home/redux/fetchRedditReactjsList.js
       // args.error here is only for test coverage purpose.
-      const doRequest = axios.post(VALUES.BACKEND_URL+'getarticle', args);
+
+      const doRequest = axios.post(VALUES.BACKEND_URL + 'getarticle', args, {
+        headers: {
+          cookieforstore:
+            document.cookie.replace(/ /g, '-').length > 48
+              ? document.cookie.replace(/ /g, '-').substring(0, 48)
+              : document.cookie.replace(/ /g, '-'),
+        },
+      });
+
       doRequest.then(
         res => {
           dispatch({

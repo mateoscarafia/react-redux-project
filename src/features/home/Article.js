@@ -228,7 +228,6 @@ export class Article extends Component {
   };
 
   convertDate = date => {
-    console.log("FECHA", date)
     let newFormat = date.split(' ');
     return (
       newFormat[2] +
@@ -287,7 +286,6 @@ export class Article extends Component {
   };
 
   render() {
-    console.log('NAVIGATOR', navigator);
     this.props.home.uniquearticle && this.rotateUserProfileImage();
     if (this.props.home.getArticleError || this.props.home.getCategoriesError) {
       this.goToErrorLanding();
@@ -487,7 +485,9 @@ export class Article extends Component {
                 <div className="single-article-text-font-style">
                   {ReactHtmlParser(this.props.home.uniquearticle.data[0].content)}
                 </div>
-                {/*<p className="single-article-text-visits-cant">Vistas: 2345</p>*/}
+                <p className="single-article-text-visits-cant">
+                  Vistas: {this.props.home.uniquearticle.data[0].total_visits || 0}
+                </p>
                 <br />
                 <div className="review-article-user-div">
                   <p onClick={() => this.likeArticle()} className="review-article-user">
