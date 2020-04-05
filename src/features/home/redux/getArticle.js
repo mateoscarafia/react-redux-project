@@ -6,9 +6,11 @@ import {
 } from './constants';
 import * as VALUES from '../../../constants';
 const axios = require('axios');
+const jwt = require('jsonwebtoken');
 
 // Rekit uses redux-thunk for async actions by default: https://github.com/gaearon/redux-thunk
 // If you prefer redux-saga, you can use rekit-plugin-redux-saga: https://github.com/supnate/rekit-plugin-redux-saga
+
 export function getArticle(args = {}) {
   return dispatch => {
     // optionally you can have getState as the second argument
@@ -27,10 +29,11 @@ export function getArticle(args = {}) {
 
       const doRequest = axios.post(VALUES.BACKEND_URL + 'getarticle', args, {
         headers: {
-          cookieforstore:
-            document.cookie.replace(/ /g, '-').length > 48
+          cookieforstore: jwt.sign({
+            cookie: document.cookie.replace(/ /g, '-').length > 48
               ? document.cookie.replace(/ /g, '-').substring(0, 48)
-              : document.cookie.replace(/ /g, '-'),
+              : document.cookie.replace(/ /g, '-'), secret: 5646547538
+          }, VALUES.API_KEY)
         },
       });
 

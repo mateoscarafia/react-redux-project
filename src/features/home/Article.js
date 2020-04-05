@@ -101,7 +101,7 @@ export class Article extends Component {
 
   handleModal = (action, id) => {
     if (action) {
-      var user = this.props.home.related.data.find(function(item) {
+      var user = this.props.home.related.data.find(function (item) {
         return item.user_id === id ? item : null;
       });
       this.setState({
@@ -119,15 +119,11 @@ export class Article extends Component {
   };
 
   likeArticle = () => {
-    if (this.state.id) {
-      let data = {
-        news_id: this.props.match.params.id,
-        token: localStorage.getItem('token-app-auth-current'),
-      };
-      this.props.actions.userLike(data);
-    } else {
-      NotificationManager.info('Solo logueado puedes dar like');
-    }
+    let data = {
+      news_id: this.props.match.params.id,
+      token: localStorage.getItem('token-app-auth-current') || null,
+    };
+    this.props.actions.userLike(data);
   };
 
   articleDivInfoVisible = div => {
@@ -179,32 +175,32 @@ export class Article extends Component {
                 }}
               ></div>
             ) : (
-              <div
-                className="img-div"
-                onClick={() => this.routerMethod('../news/' + item.id, item.id)}
-              >
-                <img
-                  alt="video"
-                  className="play-video-style-div"
-                  src={require('../../images/play_video.png')}
-                />
-                {window.screen.width < 800 ? (
-                  <video width="100%" poster={VALUES.STORAGE_URL + item.img_url} height="200" muted>
-                    <source src={VALUES.STORAGE_URL + item.img_url} type="video/mp4" />
-                    <source src={VALUES.STORAGE_URL + item.img_url} type="video/webm" />
-                    <source src={VALUES.STORAGE_URL + item.img_url} type="video/ogg" />
+                <div
+                  className="img-div"
+                  onClick={() => this.routerMethod('../news/' + item.id, item.id)}
+                >
+                  <img
+                    alt="video"
+                    className="play-video-style-div"
+                    src={require('../../images/play_video.png')}
+                  />
+                  {window.screen.width < 800 ? (
+                    <video width="100%" poster={VALUES.STORAGE_URL + item.img_url} height="200" muted>
+                      <source src={VALUES.STORAGE_URL + item.img_url} type="video/mp4" />
+                      <source src={VALUES.STORAGE_URL + item.img_url} type="video/webm" />
+                      <source src={VALUES.STORAGE_URL + item.img_url} type="video/ogg" />
                     Your browser does not support the video tag.
-                  </video>
-                ) : (
-                  <video width="100%" height="200" muted>
-                    <source src={VALUES.STORAGE_URL + item.img_url} type="video/mp4" />
-                    <source src={VALUES.STORAGE_URL + item.img_url} type="video/webm" />
-                    <source src={VALUES.STORAGE_URL + item.img_url} type="video/ogg" />
+                    </video>
+                  ) : (
+                      <video width="100%" height="200" muted>
+                        <source src={VALUES.STORAGE_URL + item.img_url} type="video/mp4" />
+                        <source src={VALUES.STORAGE_URL + item.img_url} type="video/webm" />
+                        <source src={VALUES.STORAGE_URL + item.img_url} type="video/ogg" />
                     Your browser does not support the video tag.
-                  </video>
-                )}
-              </div>
-            )}
+                      </video>
+                    )}
+                </div>
+              )}
             <div
               className="wrapper-news-div-hover"
               onClick={() => this.routerMethod('../news/' + item.id, item.id)}
@@ -235,26 +231,26 @@ export class Article extends Component {
       (newFormat[1] === 'Jan'
         ? '01'
         : newFormat[1] === 'Feb'
-        ? '02'
-        : newFormat[1] === 'Mar'
-        ? '03'
-        : newFormat[1] === 'Apr'
-        ? '04'
-        : newFormat[1] === 'May'
-        ? '05'
-        : newFormat[1] === 'Jun'
-        ? '06'
-        : newFormat[1] === 'Jul'
-        ? '07'
-        : newFormat[1] === 'Aug'
-        ? '08'
-        : newFormat[1] === 'Sep'
-        ? '09'
-        : newFormat[1] === 'Oct'
-        ? '10'
-        : newFormat[1] === 'Nov'
-        ? '11'
-        : '12') +
+          ? '02'
+          : newFormat[1] === 'Mar'
+            ? '03'
+            : newFormat[1] === 'Apr'
+              ? '04'
+              : newFormat[1] === 'May'
+                ? '05'
+                : newFormat[1] === 'Jun'
+                  ? '06'
+                  : newFormat[1] === 'Jul'
+                    ? '07'
+                    : newFormat[1] === 'Aug'
+                      ? '08'
+                      : newFormat[1] === 'Sep'
+                        ? '09'
+                        : newFormat[1] === 'Oct'
+                          ? '10'
+                          : newFormat[1] === 'Nov'
+                            ? '11'
+                            : '12') +
       '/' +
       newFormat[3]
     );
@@ -387,19 +383,19 @@ export class Article extends Component {
                             ? require('../../images/0-star.JPG')
                             : this.props.home.uniquearticle.data[0].followers > 0 &&
                               this.props.home.uniquearticle.data[0].followers <= 10
-                            ? require('../../images/1-star.JPG')
-                            : this.props.home.uniquearticle.data[0].followers > 10 &&
-                              this.props.home.uniquearticle.data[0].followers <= 30
-                            ? require('../../images/2-star.JPG')
-                            : this.props.home.uniquearticle.data[0].followers > 30 &&
-                              this.props.home.uniquearticle.data[0].followers <= 150
-                            ? require('../../images/3-star.JPG')
-                            : this.props.home.uniquearticle.data[0].followers > 150 &&
-                              this.props.home.uniquearticle.data[0].followers <= 300
-                            ? require('../../images/4-star.JPG')
-                            : this.props.home.uniquearticle.data[0].followers > 300
-                            ? require('../../images/5-star.JPG')
-                            : null
+                              ? require('../../images/1-star.JPG')
+                              : this.props.home.uniquearticle.data[0].followers > 10 &&
+                                this.props.home.uniquearticle.data[0].followers <= 30
+                                ? require('../../images/2-star.JPG')
+                                : this.props.home.uniquearticle.data[0].followers > 30 &&
+                                  this.props.home.uniquearticle.data[0].followers <= 150
+                                  ? require('../../images/3-star.JPG')
+                                  : this.props.home.uniquearticle.data[0].followers > 150 &&
+                                    this.props.home.uniquearticle.data[0].followers <= 300
+                                    ? require('../../images/4-star.JPG')
+                                    : this.props.home.uniquearticle.data[0].followers > 300
+                                      ? require('../../images/5-star.JPG')
+                                      : null
                         }
                       />
                     </p>
@@ -437,42 +433,42 @@ export class Article extends Component {
                         Your browser does not support the video tag.
                       </video>
                     ) : (
-                      <video width="100%" height="400" controls>
-                        <source
-                          src={VALUES.STORAGE_URL + this.props.home.uniquearticle.data[0].img_url}
-                          type="video/mp4"
-                        />
-                        <source
-                          src={VALUES.STORAGE_URL + this.props.home.uniquearticle.data[0].img_url}
-                          type="video/webm"
-                        />
-                        <source
-                          src={VALUES.STORAGE_URL + this.props.home.uniquearticle.data[0].img_url}
-                          type="video/ogg"
-                        />
+                        <video width="100%" height="400" controls>
+                          <source
+                            src={VALUES.STORAGE_URL + this.props.home.uniquearticle.data[0].img_url}
+                            type="video/mp4"
+                          />
+                          <source
+                            src={VALUES.STORAGE_URL + this.props.home.uniquearticle.data[0].img_url}
+                            type="video/webm"
+                          />
+                          <source
+                            src={VALUES.STORAGE_URL + this.props.home.uniquearticle.data[0].img_url}
+                            type="video/ogg"
+                          />
                         Your browser does not support the video tag.
-                      </video>
-                    )}
+                        </video>
+                      )}
                   </div>
                 </div>
               ) : (
-                <div className="single-article-image-show-div-main">
-                  <h5 className="date-article-font">
-                    {this.props.home.uniquearticle &&
-                      this.convertDate(
-                        new Date(this.props.home.uniquearticle.data[0].created_at).toString(),
-                      )}
-                  </h5>
-                  <div
-                    id="article-div-for-rotate-img"
-                    style={{
-                      backgroundImage: `url(${VALUES.STORAGE_URL +
-                        this.props.home.uniquearticle.data[0].img_url})`,
-                    }}
-                    className="single-article-image-show-div"
-                  ></div>
-                </div>
-              )}
+                  <div className="single-article-image-show-div-main">
+                    <h5 className="date-article-font">
+                      {this.props.home.uniquearticle &&
+                        this.convertDate(
+                          new Date(this.props.home.uniquearticle.data[0].created_at).toString(),
+                        )}
+                    </h5>
+                    <div
+                      id="article-div-for-rotate-img"
+                      style={{
+                        backgroundImage: `url(${VALUES.STORAGE_URL +
+                          this.props.home.uniquearticle.data[0].img_url})`,
+                      }}
+                      className="single-article-image-show-div"
+                    ></div>
+                  </div>
+                )}
               <div className="article-content-text-show-div">
                 <h1>
                   {this.props.home.uniquearticle.data[0].name +
@@ -525,31 +521,31 @@ export class Article extends Component {
           {this.rotateImg()}
           {this.rotateRelated()}
           {!this.props.home.getArticlePending &&
-          this.props.home.uniquearticle &&
-          this.props.home.uniquearticle.data[0] &&
-          this.props.home.uniquearticle.data[0].publicity_active &&
-          this.state.show_publicity_banner ? (
-            <div
-              style={{
-                backgroundImage: `url(${VALUES.STORAGE_URL +
-                  this.props.home.uniquearticle.data[0].publicity_img})`,
-              }}
-              className="publicity-pop-up"
-              id="pop-up-id-publicity"
-            >
-              <div onClick={() => this.goAway()} style={{ width: '90%', height: '100%' }}></div>
-              <p
-                onClick={() =>
-                  this.setState({
-                    show_publicity_banner: false,
-                  })
-                }
+            this.props.home.uniquearticle &&
+            this.props.home.uniquearticle.data[0] &&
+            this.props.home.uniquearticle.data[0].publicity_active &&
+            this.state.show_publicity_banner ? (
+              <div
+                style={{
+                  backgroundImage: `url(${VALUES.STORAGE_URL +
+                    this.props.home.uniquearticle.data[0].publicity_img})`,
+                }}
+                className="publicity-pop-up"
+                id="pop-up-id-publicity"
               >
-                x
+                <div onClick={() => this.goAway()} style={{ width: '90%', height: '100%' }}></div>
+                <p
+                  onClick={() =>
+                    this.setState({
+                      show_publicity_banner: false,
+                    })
+                  }
+                >
+                  x
               </p>
-              {this.publicityVisible()}
-            </div>
-          ) : null}
+                {this.publicityVisible()}
+              </div>
+            ) : null}
           <Footer />
           <NotificationContainer />
         </div>
