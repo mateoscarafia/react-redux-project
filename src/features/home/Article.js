@@ -84,6 +84,9 @@ export class Article extends Component {
       });
       NotificationManager.info('Te gusta el articulo');
     }
+    if (this.props.home.userLikePending && nextProps.home.userLikeError) {
+      NotificationManager.info('Ya te gusta el articulo');
+    }
     if (this.props.home.reportArticlePending && !nextProps.home.reportArticleError) {
       NotificationManager.info('Denunciaste el articulo');
     }
