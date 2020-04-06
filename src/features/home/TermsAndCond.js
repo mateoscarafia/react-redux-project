@@ -388,7 +388,7 @@ export class TermsAndCond extends Component {
             antes de que entren en vigor. El uso del Servicio después de esta fecha supondrá la
             aceptación de las modificaciones efectuadas. Si no quieres aceptar estas disposiciones o
             las Condiciones actualizadas, puedes eliminar tu cuenta aquí.{' '}
-            El Articulo 55 describe y determina indiscutiblemente la "responsabilidad", "relacion", "vinculo" entre Woordi y sus usuarios ( Redactores o lectores ).
+            El Articulo 55 es determinante y contundente a la hora de describir la "relacion" existente y aceptada entre Woordi y sus usuarios ( Redactores o lectores ).
           </p>
         </div>
       </div>
