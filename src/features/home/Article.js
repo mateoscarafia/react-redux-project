@@ -6,6 +6,19 @@ import * as actions from './redux/actions';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
 import ReactHtmlParser from 'react-html-parser';
+import Helmet from "react-helmet";
+
+import {
+  WhatsappShareButton,
+  FacebookShareButton,
+  TwitterShareButton,
+  FacebookIcon,
+  TwitterIcon,
+  WhatsappIcon,
+  LinkedinShareButton,
+  LinkedinIcon
+} from "react-share";
+
 import * as VALUES from '../../constants';
 
 //Components
@@ -304,6 +317,25 @@ export class Article extends Component {
     } else {
       return (
         <div className="home-article">
+          {!this.props.home.getArticlePending && this.props.home.uniquearticle && (
+            <Helmet>
+              {/* General tags */}
+              <meta name="description" content={this.props.home.uniquearticle.data[0].title + " - "
+                + this.props.home.uniquearticle.data[0].subtitle || null} />
+              {/* OpenGraph tags */}
+              <meta name="og:url" content={'https://www.woordi.com/news/' + this.props.home.uniquearticle.data[0].id} />
+              <meta name="og:title" content={this.props.home.uniquearticle.data[0].title || null} />
+              <meta name="og:description" content={this.props.home.uniquearticle.data[0].subtitle || null} />
+              <meta name="og:image" content={VALUES.STORAGE_URL + this.props.home.uniquearticle.data[0].img_url || null} />
+              <meta name="og:type" content="website" />
+              {/* Twitter Card tags */}
+              <meta name="twitter:title" content={this.props.home.uniquearticle.data[0].title || null} />
+              <meta name="twitter:description" content={this.props.home.uniquearticle.data[0].subtitle || null} />
+              <meta name="twitter:image" content={VALUES.STORAGE_URL + this.props.home.uniquearticle.data[0].img_url || null} />
+              <meta name="twitter:card" content="summary" />
+            </Helmet>
+          )
+          }
           {this.props.home.categories && (
             <NavBar
               login={this.state.login}
@@ -484,10 +516,6 @@ export class Article extends Component {
                 <div className="single-article-text-font-style">
                   {ReactHtmlParser(this.props.home.uniquearticle.data[0].content)}
                 </div>
-                <p className="single-article-text-visits-cant">
-                  Vistas: {this.props.home.uniquearticle.data[0].total_visits || 0}
-                </p>
-                <br />
                 <div className="review-article-user-div">
                   <p onClick={() => this.likeArticle()} className="review-article-user">
                     <img
@@ -501,6 +529,42 @@ export class Article extends Component {
                   <p className="review-article-user-num">
                     +{this.state.article_likes || this.props.home.uniquearticle.data[0].total_likes}
                   </p>
+                  <p className="single-article-text-visits-cant">
+                    Vistas: {this.props.home.uniquearticle.data[0].total_visits || 0}
+                  </p>
+                </div>
+                <br />
+                <div className="single-article-social-network-icons">
+                  <FacebookShareButton
+                    url={'https://www.woordi.com/news/' + this.props.home.uniquearticle.data[0].id}
+                    quote={this.props.home.uniquearticle.data[0].title}
+                    style={{ margin: '2px 5px 2px 0' }}
+                  >
+                    <FacebookIcon logoFillColor="white" size={25} round={true}/>
+                  </FacebookShareButton>
+                  <TwitterShareButton
+                    url={'https://www.woordi.com/news/' + this.props.home.uniquearticle.data[0].id}
+                    title={this.props.home.uniquearticle.data[0].title}
+                    style={{ margin: '2px 5px 2px 0' }}
+                  >
+                    <TwitterIcon logoFillColor="white" size={25} round={true} />
+                  </TwitterShareButton>
+                  <LinkedinShareButton
+                    url={'https://www.woordi.com/news/' + this.props.home.uniquearticle.data[0].id}
+                    title={this.props.home.uniquearticle.data[0].title}
+                    summary={this.props.home.uniquearticle.data[0].subtitle}
+                    source={'https://www.woordi.com'}
+                    style={{ margin: '2px 5px 2px 0' }}
+                  >
+                    <LinkedinIcon logoFillColor="white" size={25} round={true} />
+                  </LinkedinShareButton>
+                  <WhatsappShareButton
+                    url={'https://www.woordi.com/news/' + this.props.home.uniquearticle.data[0].id}
+                    title={this.props.home.uniquearticle.data[0].title}
+                    style={{ margin: '2px 5px 2px 0' }}
+                  >
+                    <WhatsappIcon logoFillColor="white" size={25} round={true} />
+                  </WhatsappShareButton>
                 </div>
               </div>
             </div>
