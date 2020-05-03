@@ -209,7 +209,7 @@ export class TextEditor extends Component {
         }
       }
     } else {
-      NotificationManager.info('Debes complear todos los campos');
+      NotificationManager.info('Debes completar todos los campos');
       document.getElementById('button-post-article').style.display = 'inline';
       document.getElementById('spinner-button-post-article').style.display = 'none';
     }

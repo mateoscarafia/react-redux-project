@@ -141,7 +141,7 @@ export class NavBar extends Component {
         VALUES.API_KEY,
       )
     });
-    !this.props.home.notifications && localStorage.getItem('token-app-auth-current') && this.props.actions.getNotifications({
+    !this.props.home.notifications && window.screen.width > 800 && localStorage.getItem('token-app-auth-current') && this.props.actions.getNotifications({
       token: localStorage.getItem('token-app-auth-current')
     });
   }
@@ -159,7 +159,6 @@ export class NavBar extends Component {
         return null
       }
     });
-    console.log('has notifi',hasNotifications)
 
     return (
       <div className="home-nav-bar sticky-top">
