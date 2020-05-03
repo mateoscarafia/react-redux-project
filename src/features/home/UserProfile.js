@@ -791,7 +791,7 @@ export class UserProfile extends Component {
                 </a>
                 <br />
               </div>
-              <p className="title-for-popup">Seguidores</p>
+              <p className="title-for-popup"><b>Seguidores</b></p>
               {this.props.home.getFollowersPending && (
                 <p className="smaller-meta-data">Loading...</p>
               )}
@@ -811,7 +811,7 @@ export class UserProfile extends Component {
                 </a>
                 <br />
               </div>
-              <p className="title-for-popup">Siguiendo</p>
+              <p className="title-for-popup"><b>Siguiendo</b></p>
               {this.props.home.getFollowingPending && (
                 <p className="smaller-meta-data">Loading...</p>
               )}

@@ -15,6 +15,7 @@ export class NavBar extends Component {
       feed: true,
       searchEngine: false,
       searchwords: null,
+      openMyNotifications: false
     };
     this.searchArticlesMotor = this.searchArticlesMotor.bind(this);
   }
@@ -30,7 +31,7 @@ export class NavBar extends Component {
           await this.props.actions.getNews({ token: VALUES.DEEP_TOKEN, id: user.id });
           await this.props.actions.getUser({ token: VALUES.DEEP_TOKEN, id: user.id });
           destiny = destiny + user.id;
-        } catch (err) {}
+        } catch (err) { }
       }
       if (destiny.includes('editor')) {
         var user_edit = await jwt.verify(
@@ -133,7 +134,33 @@ export class NavBar extends Component {
     });
   }
 
+  componentWillMount() {
+    this.setState({
+      userLoggedId: localStorage.getItem('token-app-auth-current') && jwt.verify(
+        localStorage.getItem('token-app-auth-current'),
+        VALUES.API_KEY,
+      )
+    });
+    !this.props.home.notifications && localStorage.getItem('token-app-auth-current') && this.props.actions.getNotifications({
+      token: localStorage.getItem('token-app-auth-current')
+    });
+  }
+
   render() {
+    let hasNotifications = []
+    hasNotifications = this.props.home.notifications && this.props.home.notifications.data[0] && this.props.home.notifications.data.map((item) => {
+      if (item.notif_data.includes("Me Gusta") && !item.notif_data.split('||')[1].includes(document.cookie.replace(/ /g, '-').substring(0, 48))) {
+        return 999
+      } else if (item.notif_data.includes("Comentario") && parseInt(item.notif_data.split('||')[2], 10) !== this.state.userLoggedId.id) {
+        return 999
+      } else if (item.notif_data.includes("Visita") && !item.notif_data.split('||')[1].includes(document.cookie.replace(/ /g, '-').substring(0, 48))) {
+        return 999
+      } else {
+        return null
+      }
+    });
+    console.log('has notifi',hasNotifications)
+
     return (
       <div className="home-nav-bar sticky-top">
         <BannerMidd />
@@ -275,6 +302,27 @@ export class NavBar extends Component {
                 <ul className="navbar-nav mr-auto">
                   <li className="nav-item active">
                     <a
+                      onClick={async () => {
+                        this.setState({
+                          openMyNotifications: !this.state.openMyNotifications,
+                        });
+                        this.props.actions.badRequest();
+                      }}
+                      className={!this.props.home.badRequestError && this.props.home.notifications && this.props.home.notifications.data[0] && hasNotifications && hasNotifications[0] ?
+                        "nav-link a-link search-article-navbar-button not-red-circle"
+                        : "nav-link a-link search-article-navbar-button"}
+                    >
+                      <img
+                        title="Mis notificaciones"
+                        alt="Notificaciones"
+                        style={{ opacity: 0.4, marginTop: 1 }}
+                        width="22"
+                        src={require('../../images/notification.png')}
+                      />
+                    </a>
+                  </li>
+                  <li className="nav-item active">
+                    <a
                       onClick={() => {
                         this.routerMethod('/editor/');
                       }}
@@ -296,7 +344,7 @@ export class NavBar extends Component {
                       }}
                       className="nav-link a-link"
                     >
-                     {this.props.username ? this.props.username : 'Mi perfil'}
+                      {this.props.username ? this.props.username : 'Mi perfil'}
                     </a>
                   </li>
                   <li className="nav-item active">
@@ -306,29 +354,29 @@ export class NavBar extends Component {
                   </li>
                 </ul>
               ) : (
-                <ul className="navbar-nav mr-auto">
-                  <li className="nav-item active">
-                    <a
-                      onClick={() => {
-                        this.routerMethod('/login');
-                      }}
-                      className="nav-link a-link"
-                    >
-                      Login
+                  <ul className="navbar-nav mr-auto">
+                    <li className="nav-item active">
+                      <a
+                        onClick={() => {
+                          this.routerMethod('/login');
+                        }}
+                        className="nav-link a-link"
+                      >
+                        Login
                     </a>
-                  </li>
-                  <li className="nav-item">
-                    <a
-                      onClick={() => {
-                        this.routerMethod('/register');
-                      }}
-                      className="nav-link a-link"
-                    >
-                      Registrate
+                    </li>
+                    <li className="nav-item">
+                      <a
+                        onClick={() => {
+                          this.routerMethod('/register');
+                        }}
+                        className="nav-link a-link"
+                      >
+                        Registrate
                     </a>
-                  </li>
-                </ul>
-              )}
+                    </li>
+                  </ul>
+                )}
             </div>
           </div>
         </nav>
@@ -339,6 +387,104 @@ export class NavBar extends Component {
             history={this.props.history}
           />
         )*/}
+        {this.state.openMyNotifications && (
+          <div className="notifications-div">
+            {/*this.props.home.getNewsVisitsPending && (
+                <p className="smaller-meta-d
+                ata">Loading...</p>
+              )*/}
+            <div className="followers-header-edit-user">
+              <a
+                className="close-modal-header-edit-follower"
+                onClick={() => {
+                  this.setState({
+                    openMyNotifications: !this.state.openMyNotifications,
+                  })
+                }}
+              >
+                X
+                </a>
+              <br />
+            </div>
+            <p className="smaller-meta-data">
+              <b>Notificaciones</b>
+            </p>
+            <div key={Math.random()} className="my-readers">
+              {(!hasNotifications || (hasNotifications && !hasNotifications[0])) ? <div className="my-readers-user-div-empty" style={{ position: 'relative', marginBottom: 10 }}>
+                <p
+                  className="my-readers-user"
+                  key={Math.random()}
+                >
+                  - Sin notificaciones -
+                    </p>
+              </div> : null}
+              {this.props.home.notifications && this.props.home.notifications.data[0] &&
+                this.props.home.notifications.data.map((item) => {
+                  if (item.notif_data.includes("Me Gusta") && !item.notif_data.split('||')[1].includes(document.cookie.replace(/ /g, '-').substring(0, 48))) {
+                    return (
+                      <div className="my-readers-user-div" style={{ position: 'relative', paddingLeft: 25, marginBottom: 10 }}>
+                        <img
+                          style={{ position: 'absolute', top: 0, left: 0 }}
+                          title="Mis notificaciones"
+                          alt="Notificaciones"
+                          width="20"
+                          src={require('../../images/likeNot.PNG')}
+                        />
+                        <p
+                          className="my-readers-user"
+                          onClick={() => { window.location.replace(VALUES.FRONTEND_URL + 'news/' + item.news_id); }}
+                          key={Math.random()}
+                        >
+                          A alguien Le Gusta a tu <b>artículo</b> <i>{item.title}</i>
+                        </p>
+                      </div>
+                    )
+                  } else if (item.notif_data.includes("Comentario") && parseInt(item.notif_data.split('||')[2], 10) !== this.state.userLoggedId.id) {
+                    return (
+                      <div className="my-readers-user-div" style={{ position: 'relative', paddingLeft: 25, marginBottom: 10 }}>
+                        <img
+                          style={{ position: 'absolute', top: 0, left: 0 }}
+                          title="Mis notificaciones"
+                          alt="Notificaciones"
+                          width="20"
+                          src={require('../../images/commNot.PNG')}
+                        />
+                        <p
+                          className="my-readers-user"
+                          onClick={() => { window.location.replace(VALUES.FRONTEND_URL + 'news/' + item.news_id); }}
+                          key={Math.random()}
+                        >
+                          Comentaron tu <b>artículo</b> <i>{item.title}</i> - "{item.notif_data.split('||')[1]}"
+                      </p>
+                      </div>
+                    )
+                  } else if (item.notif_data.includes("Visita") && !item.notif_data.split('||')[1].includes(document.cookie.replace(/ /g, '-').substring(0, 48))) {
+                    return (
+                      <div className="my-readers-user-div" style={{ position: 'relative', paddingLeft: 25, marginBottom: 10 }}>
+                        <img
+                          style={{ position: 'absolute', top: 0, left: 0, marginTop: 2 }}
+                          title="Mis notificaciones"
+                          alt="Notificaciones"
+                          width="20"
+                          src={require('../../images/readNot.PNG')}
+                        />
+                        <p
+                          className="my-readers-user"
+                          onClick={() => { window.location.replace(VALUES.FRONTEND_URL + 'news/' + item.news_id); }}
+                          key={Math.random()}
+                        >
+                          Alguien visitó tu <b>artículo</b> <i>{item.title}</i>
+                        </p>
+                      </div>
+                    )
+                  } else {
+                    return null
+                  }
+                })
+              }
+            </div>
+          </div>
+        )}
       </div>
     );
   }

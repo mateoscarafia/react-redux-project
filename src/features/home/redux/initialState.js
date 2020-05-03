@@ -77,6 +77,10 @@ const initialState = {
   forgotPasswordError: null,
   addPublicityPending: false,
   addPublicityError: null,
+  getNotificationsPending: false,
+  getNotificationsError: null,
+  badRequestPending: false,
+  badRequestError: null,
 };
 
 export default initialState;

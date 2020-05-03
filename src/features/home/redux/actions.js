@@ -37,3 +37,5 @@ export { verifyUser, dismissVerifyUserError } from './verifyUser';
 export { verifyCode, dismissVerifyCodeError } from './verifyCode';
 export { forgotPassword, dismissForgotPasswordError } from './forgotPassword';
 export { addPublicity, dismissAddPublicityError } from './addPublicity';
+export { getNotifications, dismissGetNotificationsError } from './getNotifications';
+export { badRequest, dismissBadRequestError } from './badRequest';
