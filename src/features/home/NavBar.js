@@ -141,7 +141,7 @@ export class NavBar extends Component {
         VALUES.API_KEY,
       )
     });
-    !this.props.home.notifications && window.screen.width > 800 && localStorage.getItem('token-app-auth-current') && this.props.actions.getNotifications({
+    !this.props.home.notifications && localStorage.getItem('token-app-auth-current') && this.props.actions.getNotifications({
       token: localStorage.getItem('token-app-auth-current')
     });
   }
@@ -306,6 +306,10 @@ export class NavBar extends Component {
                           openMyNotifications: !this.state.openMyNotifications,
                         });
                         this.props.actions.badRequest();
+                        this.props.home.notifications && this.props.home.notifications.data && this.props.actions.checkNotification({
+                          token: localStorage.getItem('token-app-auth-current'),
+                          notifications: this.props.home.notifications.data
+                        });
                       }}
                       className={!this.props.home.badRequestError && this.props.home.notifications && this.props.home.notifications.data[0] && hasNotifications && hasNotifications[0] ?
                         "nav-link a-link search-article-navbar-button not-red-circle"
@@ -414,7 +418,7 @@ export class NavBar extends Component {
                   className="my-readers-user"
                   key={Math.random()}
                 >
-                  - Sin notificaciones -
+                  {/*- Sin notificaciones -*/}
                     </p>
               </div> : null}
               {this.props.home.notifications && this.props.home.notifications.data[0] &&

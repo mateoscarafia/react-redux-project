@@ -81,6 +81,8 @@ const initialState = {
   getNotificationsError: null,
   badRequestPending: false,
   badRequestError: null,
+  checkNotificationPending: false,
+  checkNotificationError: null,
 };
 
 export default initialState;

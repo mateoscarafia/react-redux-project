@@ -39,3 +39,4 @@ export { forgotPassword, dismissForgotPasswordError } from './forgotPassword';
 export { addPublicity, dismissAddPublicityError } from './addPublicity';
 export { getNotifications, dismissGetNotificationsError } from './getNotifications';
 export { badRequest, dismissBadRequestError } from './badRequest';
+export { checkNotification, dismissCheckNotificationError } from './checkNotification';
