@@ -149,16 +149,19 @@ export class NavBar extends Component {
   render() {
     let hasNotifications = []
     hasNotifications = this.props.home.notifications && this.props.home.notifications.data[0] && this.props.home.notifications.data.map((item) => {
-      if (item.notif_data.includes("Me Gusta") && !item.notif_data.split('||')[1].includes(document.cookie.replace(/ /g, '-').substring(0, 48))) {
+      console.log(item.is_seen)
+      if (item.is_seen === 0 && item.notif_data.includes("Me Gusta") && !item.notif_data.split('||')[1].includes(document.cookie.replace(/ /g, '-').substring(0, 48))) {
         return 999
-      } else if (item.notif_data.includes("Comentario") && parseInt(item.notif_data.split('||')[2], 10) !== this.state.userLoggedId.id) {
+      } else if (item.is_seen === 0 && item.notif_data.includes("Comentario") && parseInt(item.notif_data.split('||')[2], 10) !== this.state.userLoggedId.id) {
         return 999
-      } else if (item.notif_data.includes("Visita") && !item.notif_data.split('||')[1].includes(document.cookie.replace(/ /g, '-').substring(0, 48))) {
+      } else if (item.is_seen === 0 && item.notif_data.includes("Visita") && !item.notif_data.split('||')[1].includes(document.cookie.replace(/ /g, '-').substring(0, 48))) {
         return 999
       } else {
         return null
       }
     });
+
+    console.log(hasNotifications)
 
     return (
       <div className="home-nav-bar sticky-top">
@@ -396,31 +399,25 @@ export class NavBar extends Component {
                 <p className="smaller-meta-d
                 ata">Loading...</p>
               )*/}
-            <div className="followers-header-edit-user">
-              <a
-                className="close-modal-header-edit-follower"
-                onClick={() => {
-                  this.setState({
-                    openMyNotifications: !this.state.openMyNotifications,
-                  })
-                }}
-              >
-                X
-                </a>
-              <br />
-            </div>
-            <p className="smaller-meta-data">
-              <b>Notificaciones</b>
-            </p>
-            <div key={Math.random()} className="my-readers">
-              {(!hasNotifications || (hasNotifications && !hasNotifications[0])) ? <div className="my-readers-user-div-empty" style={{ position: 'relative', marginBottom: 10 }}>
-                <p
-                  className="my-readers-user"
-                  key={Math.random()}
+            <div className="followers-header-user">
+              <div className="followers-header-edit-user">
+                <a
+                  className="close-modal-header-edit-follower"
+                  onClick={() => {
+                    this.setState({
+                      openMyNotifications: !this.state.openMyNotifications,
+                    })
+                  }}
                 >
-                  {/*- Sin notificaciones -*/}
-                    </p>
-              </div> : null}
+                  X
+                </a>
+                <br />
+              </div>
+              <p className="smaller-meta-data">
+                <b>Notificaciones</b>
+              </p>
+            </div>
+            <div key={Math.random()} className="my-readers">
               {this.props.home.notifications && this.props.home.notifications.data[0] &&
                 this.props.home.notifications.data.map((item) => {
                   if (item.notif_data.includes("Me Gusta") && !item.notif_data.split('||')[1].includes(document.cookie.replace(/ /g, '-').substring(0, 48))) {
@@ -438,8 +435,9 @@ export class NavBar extends Component {
                           onClick={() => { window.location.replace(VALUES.FRONTEND_URL + 'news/' + item.news_id); }}
                           key={Math.random()}
                         >
-                          A alguien Le Gusta a tu <b>artículo</b> <i>{item.title}</i>
+                          A alguien Le Gusta tu <b>artículo</b> <i>{item.title}</i>
                         </p>
+                        {item.is_seen === 0 && <p style={{fontSize:'9px', margin:0, marginBottom:'-5px', textAlign:'right'}}> Nuevo </p>}
                       </div>
                     )
                   } else if (item.notif_data.includes("Comentario") && parseInt(item.notif_data.split('||')[2], 10) !== this.state.userLoggedId.id) {
@@ -459,6 +457,7 @@ export class NavBar extends Component {
                         >
                           Comentaron tu <b>artículo</b> <i>{item.title}</i> - "{item.notif_data.split('||')[1]}"
                       </p>
+                      {item.is_seen === 0 && <p style={{fontSize:'9px', margin:0, marginBottom:'-5px', textAlign:'right'}}> Nuevo </p>}
                       </div>
                     )
                   } else if (item.notif_data.includes("Visita") && !item.notif_data.split('||')[1].includes(document.cookie.replace(/ /g, '-').substring(0, 48))) {
@@ -478,6 +477,7 @@ export class NavBar extends Component {
                         >
                           Alguien visitó tu <b>artículo</b> <i>{item.title}</i>
                         </p>
+                        {item.is_seen === 0 && <p style={{fontSize:'9px', margin:0, marginBottom:'-5px', textAlign:'right'}}> Nuevo </p>}
                       </div>
                     )
                   } else {
