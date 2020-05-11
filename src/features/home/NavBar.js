@@ -149,10 +149,11 @@ export class NavBar extends Component {
   render() {
     let hasNotifications = []
     hasNotifications = this.props.home.notifications && this.props.home.notifications.data[0] && this.props.home.notifications.data.map((item) => {
-      console.log(item.is_seen)
       if (item.is_seen === 0 && item.notif_data.includes("Me Gusta") && !item.notif_data.split('||')[1].includes(document.cookie.replace(/ /g, '-').substring(0, 48))) {
         return 999
       } else if (item.is_seen === 0 && item.notif_data.includes("Comentario") && parseInt(item.notif_data.split('||')[2], 10) !== this.state.userLoggedId.id) {
+        return 999
+      } else if (item.is_seen === 0 && item.notif_data.includes("Comentario_Res") && parseInt(item.notif_data.split('||')[2], 10) !== this.state.userLoggedId.id) {
         return 999
       } else if (item.is_seen === 0 && item.notif_data.includes("Visita") && !item.notif_data.split('||')[1].includes(document.cookie.replace(/ /g, '-').substring(0, 48))) {
         return 999
@@ -160,8 +161,6 @@ export class NavBar extends Component {
         return null
       }
     });
-
-    console.log(hasNotifications)
 
     return (
       <div className="home-nav-bar sticky-top">
@@ -437,7 +436,27 @@ export class NavBar extends Component {
                         >
                           A alguien Le Gusta tu <b>artículo</b> <i>{item.title}</i>
                         </p>
-                        {item.is_seen === 0 && <p style={{fontSize:'9px', margin:0, marginBottom:'-5px', textAlign:'right'}}> Nuevo </p>}
+                        {item.is_seen === 0 && <p style={{ fontSize: '9px', margin: 0, marginBottom: '-5px', textAlign: 'right' }}> Nuevo </p>}
+                      </div>
+                    )
+                  } else if (item.notif_data.includes("Comentario_Res") && parseInt(item.notif_data.split('||')[2], 10) !== this.state.userLoggedId.id) {
+                    return (
+                      <div className="my-readers-user-div" style={{ position: 'relative', paddingLeft: 25, marginBottom: 10 }}>
+                        <img
+                          style={{ position: 'absolute', top: 0, left: 0 }}
+                          title="Mis notificaciones"
+                          alt="Notificaciones"
+                          width="20"
+                          src={require('../../images/commNot.PNG')}
+                        />
+                        <p
+                          className="my-readers-user"
+                          onClick={() => { window.location.replace(VALUES.FRONTEND_URL + 'news/' + parseInt(item.notif_data.split('||')[3], 10)); }}
+                          key={Math.random()}
+                        >
+                          Respondieron a tu <b>comentario</b>. Respuesta: <i>"{item.notif_data.split('||')[1].length > 50 ? item.notif_data.split('||')[1].slice(0, 49) + '...' : item.notif_data.split('||')[1]}"</i>
+                        </p>
+                        {item.is_seen === 0 && <p style={{ fontSize: '9px', margin: 0, marginBottom: '-5px', textAlign: 'right' }}> Nuevo </p>}
                       </div>
                     )
                   } else if (item.notif_data.includes("Comentario") && parseInt(item.notif_data.split('||')[2], 10) !== this.state.userLoggedId.id) {
@@ -457,10 +476,11 @@ export class NavBar extends Component {
                         >
                           Comentaron tu <b>artículo</b> <i>{item.title}</i> - "{item.notif_data.split('||')[1]}"
                       </p>
-                      {item.is_seen === 0 && <p style={{fontSize:'9px', margin:0, marginBottom:'-5px', textAlign:'right'}}> Nuevo </p>}
+                        {item.is_seen === 0 && <p style={{ fontSize: '9px', margin: 0, marginBottom: '-5px', textAlign: 'right' }}> Nuevo </p>}
                       </div>
                     )
-                  } else if (item.notif_data.includes("Visita") && !item.notif_data.split('||')[1].includes(document.cookie.replace(/ /g, '-').substring(0, 48))) {
+                  }
+                  else if (item.notif_data.includes("Visita") && !item.notif_data.split('||')[1].includes(document.cookie.replace(/ /g, '-').substring(0, 48))) {
                     return (
                       <div className="my-readers-user-div" style={{ position: 'relative', paddingLeft: 25, marginBottom: 10 }}>
                         <img
@@ -477,7 +497,7 @@ export class NavBar extends Component {
                         >
                           Alguien visitó tu <b>artículo</b> <i>{item.title}</i>
                         </p>
-                        {item.is_seen === 0 && <p style={{fontSize:'9px', margin:0, marginBottom:'-5px', textAlign:'right'}}> Nuevo </p>}
+                        {item.is_seen === 0 && <p style={{ fontSize: '9px', margin: 0, marginBottom: '-5px', textAlign: 'right' }}> Nuevo </p>}
                       </div>
                     )
                   } else {

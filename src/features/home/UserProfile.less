@@ -7,6 +7,15 @@
   text-align: center;
 }
 
+//Chrome, Safari, Opera
+body ::-webkit-scrollbar { width: 0 !important }  
+
+//Firefox
+body { overflow: -moz-scrollbars-none; }
+
+//Internet Explorer, Edge
+body { -ms-overflow-style: none; }
+
 .home-user-profile {
   background-color: #fff;
 
