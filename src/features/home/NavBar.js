@@ -167,7 +167,7 @@ export class NavBar extends Component {
         <BannerMidd />
         <nav className="navbar navbar-expand-lg navbar-light blue-background brand-link-nav">
           <a onClick={() => this.routerMethod('/feed/main')} className="navbar-brand a-link">
-            <img alt="edit" width="30" src={require('../../images/logo.png')} />
+            <img alt="edit" width="33" src={require('../../images/logo.png')} />
           </a>
           <button
             id="navbar-toggler-id-for-clicking"
