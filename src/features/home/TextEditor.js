@@ -299,10 +299,11 @@ export class TextEditor extends Component {
             >
               <img
                 alt="edit"
-                width="30"
-                className="edit-pen-user-profile-style"
-                src={require('../../images/spinner.gif')}
+                width="35"
+                className="edit-pen-user-profile-style less-margin-for-spinner-logo"
+                src={require('../../images/logo.png')}
               />
+              <div class="loader"></div>
             </div>
           )}
           {!this.props.home.getUserPending && (
