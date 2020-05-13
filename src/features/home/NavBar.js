@@ -303,7 +303,7 @@ export class NavBar extends Component {
                 <ul className="navbar-nav mr-auto">
                   <li className="nav-item active">
                     <a
-                      onClick={async () => {
+                      onClick={() => {
                         this.setState({
                           openMyNotifications: !this.state.openMyNotifications,
                         });

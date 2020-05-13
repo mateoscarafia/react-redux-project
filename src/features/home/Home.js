@@ -176,7 +176,7 @@ export class Home extends Component {
             className="edit-pen-user-profile-style less-margin-for-spinner-logo"
             src={require('../../images/logo.png')}
           />
-          <div class="loader"></div>
+          <div className="loader"></div>
         </div>
       );
     } else {
@@ -268,7 +268,7 @@ export class Home extends Component {
                       className="edit-pen-user-profile-style less-margin-for-spinner-logo"
                       src={require('../../images/logo.png')}
                     />
-                    <div class="loader"></div>
+                    <div className="loader"></div>
                   </div>
                 )}
                 {!this.state.spinner &&

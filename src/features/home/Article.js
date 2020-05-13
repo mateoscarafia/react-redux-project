@@ -356,7 +356,7 @@ export class Article extends Component {
                 className="edit-pen-user-profile-style less-margin-for-spinner-logo"
                 src={require('../../images/logo.png')}
               />
-              <div class="loader"></div>
+              <div className="loader"></div>
             </div>
           )}
           {!this.props.home.getArticlePending && this.props.home.uniquearticle && (
