@@ -436,7 +436,7 @@ export class NavBar extends Component {
                         >
                           A alguien Le Gusta tu <b>artículo</b> <i>{item.title}</i>
                         </p>
-                        {item.is_seen === 0 && <p style={{ fontSize: '9px', margin: 0, marginBottom: '-5px', textAlign: 'right' }}> Nuevo </p>}
+                        {item.is_seen === 0 && <div style={{width:'100%',paddingLeft:'75%'}}><p className="new-notification-alert-p" style={{ margin: 0, marginBottom: '-5px', textAlign: 'center' }}> nuevo </p></div>}
                       </div>
                     )
                   } else if (item.notif_data.includes("Comentario_Res") && parseInt(item.notif_data.split('||')[2], 10) !== this.state.userLoggedId.id) {
@@ -456,7 +456,7 @@ export class NavBar extends Component {
                         >
                           Respondieron a tu <b>comentario</b>. Respuesta: <i>"{item.notif_data.split('||')[1].length > 50 ? item.notif_data.split('||')[1].slice(0, 49) + '...' : item.notif_data.split('||')[1]}"</i>
                         </p>
-                        {item.is_seen === 0 && <p style={{ fontSize: '9px', margin: 0, marginBottom: '-5px', textAlign: 'right' }}> Nuevo </p>}
+                        {item.is_seen === 0 && <div style={{width:'100%',paddingLeft:'75%'}}><p className="new-notification-alert-p" style={{ marginBottom: '-5px', textAlign: 'center' }}> nuevo </p></div>}
                       </div>
                     )
                   } else if (item.notif_data.includes("Comentario") && parseInt(item.notif_data.split('||')[2], 10) !== this.state.userLoggedId.id) {
@@ -476,7 +476,7 @@ export class NavBar extends Component {
                         >
                           Comentaron tu <b>artículo</b> <i>{item.title}</i> - "{item.notif_data.split('||')[1]}"
                       </p>
-                        {item.is_seen === 0 && <p style={{ fontSize: '9px', margin: 0, marginBottom: '-5px', textAlign: 'right' }}> Nuevo </p>}
+                        {item.is_seen === 0 && <div style={{width:'100%',paddingLeft:'75%'}}><p className="new-notification-alert-p" style={{ margin: 0, marginBottom: '-5px', textAlign: 'center' }}> nuevo </p></div>}
                       </div>
                     )
                   }
@@ -497,7 +497,7 @@ export class NavBar extends Component {
                         >
                           Alguien visitó tu <b>artículo</b> <i>{item.title}</i>
                         </p>
-                        {item.is_seen === 0 && <p style={{ fontSize: '9px', margin: 0, marginBottom: '-5px', textAlign: 'right' }}> Nuevo </p>}
+                        {item.is_seen === 0 && <div style={{width:'100%',paddingLeft:'75%'}}><p className="new-notification-alert-p" style={{ margin: 0, marginBottom: '-5px', textAlign: 'center' }}> nuevo </p></div>}
                       </div>
                     )
                   } else {
