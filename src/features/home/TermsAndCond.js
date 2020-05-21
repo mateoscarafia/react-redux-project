@@ -14,13 +14,7 @@ export class TermsAndCond extends Component {
     return (
       <div className="home-terms-and-cond">
         <div className="text-div-content-inner">
-          <img
-            style={{ marginBottom: '5px' }}
-            alt="edit"
-            width="40"
-            src={require('../../images/logo.png')}
-          />
-          <h5>Woordi</h5>
+          <img style={{ marginBottom: '5px' }} alt="edit" width="65" src={require('../../images/logo_footer.PNG')} />
           <br />
           <br />
           <h4>Terminos y Condiciones</h4>
@@ -45,7 +39,7 @@ export class TermsAndCond extends Component {
             organizaciones que te interesan: te ayudamos a encontrar personas, grupos, empresas,
             organizaciones y otras entidades que te interesan, así como a conectarte con ellos por
             medio de los Productos de Woordi que usas. En función de los datos que tenemos, te
-            ofrecemos sugerencias a ti y a otras personas. Artículo 55: Los usuarios de Woordi se registran y utilizan la plataforma porque así ellos los desean. No existe convenio, ni compromiso, ni vínculo alguno entre usuarios (redactores/lectores) de la plataforma y Woordi. Cualquier usuario que publique contenido en Woordi puede dejar de hacerlo cuando lo desee. También puede eliminar sin ningún tipo de ataduras contenido publicado en su perfil cuando lo crea oportuno. Nuevamente, Woordi sólo ofrece la estructura digital tecnológica para que los usuarios la utilicen o dejen de utilizar cuando lo crean necesario. El usuario acepta y reconoce no tener vínculo, relación o compromiso de absolutamente ningún tipo con Woordi. El usuario usa la plataforma por asi lo quiere, por interes personal, para crecer intelectualmente, para que otros lean sus artículos o desarrollos literarios. Las comunidades
+            ofrecemos sugerencias a ti y a otras personas. Artículo 55: [ Los usuarios de Woordi se registran y utilizan la plataforma porque así ellos los desean. No existe convenio, ni compromiso, ni vínculo alguno entre usuarios (redactores/lectores) de la plataforma y Woordi. Cualquier usuario que publique contenido en Woordi puede dejar de hacerlo cuando lo desee. También puede eliminar sin ningún tipo de ataduras contenido publicado en su perfil cuando lo crea oportuno. Nuevamente, Woordi sólo ofrece la estructura digital tecnológica para que los usuarios la utilicen o dejen de utilizar cuando lo crean necesario. El usuario acepta y reconoce no tener vínculo, relación o compromiso de absolutamente ningún tipo con Woordi. El usuario usa la plataforma porque asi lo quiere, por interes personal, para crecer intelectualmente, para que otros lean sus artículos o desarrollos literarios. ] Las comunidades
             funcionan mejor cuanto más estrechos son los lazos que unen a sus miembros, por eso
             creemos que nuestros servicios son más útiles si las personas se conectan con gente,
             grupos y organizaciones que les interesan. Te proporcionamos las herramientas que
