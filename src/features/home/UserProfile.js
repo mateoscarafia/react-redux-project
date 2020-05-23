@@ -660,7 +660,7 @@ export class UserProfile extends Component {
             />
           )}
           <div className="user-profile-wrapper">
-            {(this.props.home.getUserProfilePending || !this.props.home.user) && (
+            {(this.props.home.getUserProfilePending) && (
               <div
                 id="spinner-div-for-news-id-container-home-waiting"
                 className="spinner-div-for-news-home-when-no-content-user-spin"
@@ -1115,6 +1115,17 @@ export class UserProfile extends Component {
                           className="edit-pen-user-profile-style"
                           src={require('../../images/spinner.gif')}
                         />
+                      </button>
+                    </div>
+                    <hr />
+                    <div className="div-edit-user-button-save-change">
+                      <button
+                        onClick={() => this.updatePassword()}
+                        type="button"
+                        id="cambiar-pwd-id"
+                        className="btn btn-primary edit-user-button-form"
+                      >
+                        Logout
                       </button>
                     </div>
                     <hr />
