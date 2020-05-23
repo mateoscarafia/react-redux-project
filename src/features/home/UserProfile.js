@@ -480,6 +480,7 @@ export class UserProfile extends Component {
     if (this.props.home.editUserPending && nextProps.home.editeduser) {
       NotificationManager.info('Datos guardados');
       this.props.actions.getUserProfile({ token: VALUES.DEEP_TOKEN, id: this.state.id });
+      this.props.actions.getUser({ token: VALUES.DEEP_TOKEN, id: this.state.id });
       this.setState({
         editUser: false,
       });
