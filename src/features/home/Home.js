@@ -189,6 +189,7 @@ export class Home extends Component {
               history={this.props.history}
               categories={this.props.home.categories}
               user={this.state.id}
+              img_url={this.props.home.user && this.props.home.user.data[0] && this.props.home.user.data[0].profile_img_url}
               username={null}
             />
           )}

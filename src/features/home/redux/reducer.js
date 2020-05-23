@@ -41,6 +41,7 @@ import { reducer as addPublicityReducer } from './addPublicity';
 import { reducer as getNotificationsReducer } from './getNotifications';
 import { reducer as badRequestReducer } from './badRequest';
 import { reducer as checkNotificationReducer } from './checkNotification';
+import { reducer as getUserProfileReducer } from './getUserProfile';
 
 const reducers = [
   getNewsReducer,
@@ -85,6 +86,7 @@ const reducers = [
   getNotificationsReducer,
   badRequestReducer,
   checkNotificationReducer,
+  getUserProfileReducer,
 ];
 
 export default function reducer(state = initialState, action) {

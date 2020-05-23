@@ -108,8 +108,8 @@ export class EditArticle extends Component {
           token: VALUES.DEEP_TOKEN,
           id: id,
         });
-        await this.props.actions.getUser({ token: VALUES.DEEP_TOKEN, id: user.id });
-        await this.props.actions.getCategories();
+        !this.props.home.user && await this.props.actions.getUser({ token: VALUES.DEEP_TOKEN, id: user.id });
+        !this.props.home.categories && await this.props.actions.getCategories();
         window.scrollTo(0, 0);
       }
     } else {
@@ -359,6 +359,7 @@ export class EditArticle extends Component {
               history={this.props.history}
               categories={this.props.home.categories}
               user={this.state.id}
+              img_url={this.props.home.user && this.props.home.user.data[0] && this.props.home.user.data[0].profile_img_url}
               username={null}
             />
           )}

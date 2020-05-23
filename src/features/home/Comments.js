@@ -251,6 +251,14 @@ export class Comments extends Component {
       <div className="home-comments">
         <div className="row">
           <div className="col-lg-8 col-md-8 col-sm-12 col-xs-12 home-comments-list-div-history">
+            {this.props.home.getCommentsPending &&
+              <div className='spinner-article-waiting-user-profile'><img
+                alt="edit"
+                width="20"
+                className="edit-pen-user-profile-style"
+                src={require('../../images/spinner.gif')}
+              /></div>
+            }
             {this.props.home.comments && !this.props.home.getCommentsPending && this.buildCommentsList()}
             {this.props.home.comments && !this.props.home.getCommentsPending && !this.props.home.comments.data[0] && (
               <p style={{ fontSize: '12px' }}>- Sin opiniones -</p>

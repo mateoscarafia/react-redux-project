@@ -91,8 +91,8 @@ export class TextEditor extends Component {
         });
       }
     }
-    this.props.actions.getUser({ token: VALUES.DEEP_TOKEN, id: id });
-    this.props.actions.getCategories();
+    !this.props.home.user && this.props.actions.getUser({ token: VALUES.DEEP_TOKEN, id: id });
+    !this.props.home.categories && this.props.actions.getCategories();
     window.scrollTo(0, 0);
   }
 
@@ -289,6 +289,7 @@ export class TextEditor extends Component {
               history={this.props.history}
               categories={this.props.home.categories}
               user={this.state.id}
+              img_url={this.props.home.user && this.props.home.user.data[0] && this.props.home.user.data[0].profile_img_url}
               username={null}
             />
           )}

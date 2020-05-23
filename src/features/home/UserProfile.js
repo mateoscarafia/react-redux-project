@@ -75,6 +75,7 @@ export class UserProfile extends Component {
 
   routerMethod = async (destiny, id) => {
     if (destiny.includes('profile')) {
+      this.props.actions.getUserProfile({ token: VALUES.DEEP_TOKEN, id: id });
       this.props.actions.getNews({ token: VALUES.DEEP_TOKEN, id: id });
     }
     id &&
@@ -83,7 +84,6 @@ export class UserProfile extends Component {
         openMyFollowings: false,
         openMyReaders: false,
       });
-    id && (await this.props.actions.getUser({ token: VALUES.DEEP_TOKEN, id: id }));
     id &&
       (await this.props.actions.isFollow({
         token: localStorage.getItem('token-app-auth-current'),
@@ -126,7 +126,7 @@ export class UserProfile extends Component {
 
   goAway = () => {
     if (this.props.home.uniquearticle.data[0].publicity_link !== 'null') {
-      window.open(this.props.home.user.data[0].publicity_link, '_blank');
+      window.open(this.props.home.userProfile.data[0].publicity_link, '_blank');
     }
   };
 
@@ -255,26 +255,26 @@ export class UserProfile extends Component {
       (newFormat[1] === 'Jan'
         ? '01'
         : newFormat[1] === 'Feb'
-        ? '02'
-        : newFormat[1] === 'Mar'
-        ? '03'
-        : newFormat[1] === 'Abr'
-        ? '04'
-        : newFormat[1] === 'May'
-        ? '05'
-        : newFormat[1] === 'Jun'
-        ? '06'
-        : newFormat[1] === 'Jul'
-        ? '07'
-        : newFormat[1] === 'Aug'
-        ? '08'
-        : newFormat[1] === 'Sep'
-        ? '09'
-        : newFormat[1] === 'Oct'
-        ? '10'
-        : newFormat[1] === 'Nov'
-        ? '11'
-        : '12') +
+          ? '02'
+          : newFormat[1] === 'Mar'
+            ? '03'
+            : newFormat[1] === 'Abr'
+              ? '04'
+              : newFormat[1] === 'May'
+                ? '05'
+                : newFormat[1] === 'Jun'
+                  ? '06'
+                  : newFormat[1] === 'Jul'
+                    ? '07'
+                    : newFormat[1] === 'Aug'
+                      ? '08'
+                      : newFormat[1] === 'Sep'
+                        ? '09'
+                        : newFormat[1] === 'Oct'
+                          ? '10'
+                          : newFormat[1] === 'Nov'
+                            ? '11'
+                            : '12') +
       '/' +
       newFormat[3]
     );
@@ -329,6 +329,7 @@ export class UserProfile extends Component {
         window.location.replace(VALUES.FRONTEND_URL + 'feed/main');
       }
       if (user) {
+        !this.props.home.user && this.props.actions.getUser({ token: VALUES.DEEP_TOKEN, id: user.id });
         this.setState({
           login: true,
           id: user.id,
@@ -342,8 +343,8 @@ export class UserProfile extends Component {
     }
     //For every user
     id && this.props.actions.getNews({ token: VALUES.DEEP_TOKEN, id: id });
-    id && this.props.actions.getUser({ token: VALUES.DEEP_TOKEN, id: id });
-    this.props.actions.getCategories();
+    id && this.props.actions.getUserProfile({ token: VALUES.DEEP_TOKEN, id: id });
+    !this.props.home.categories && this.props.actions.getCategories();
   }
 
   handleChange = event => {
@@ -415,22 +416,22 @@ export class UserProfile extends Component {
 
       let dataUpdate = {
         token: localStorage.getItem('token-app-auth-current'),
-        profile_img_url: res.data.filename || this.props.home.user.data[0].profile_img_url,
-        banner_img_url: resP.data.filename || this.props.home.user.data[0].banner_img_url,
-        username: (this.state.username || this.props.home.user.data[0].username)
+        profile_img_url: res.data.filename || this.props.home.userProfile.data[0].profile_img_url,
+        banner_img_url: resP.data.filename || this.props.home.userProfile.data[0].banner_img_url,
+        username: (this.state.username || this.props.home.userProfile.data[0].username)
           .replace(/"/g, '\\"')
           .replace(/'/g, '\\"')
           .replace(/`/g, '\\"'),
-        profession: (this.state.profession || this.props.home.user.data[0].profession)
+        profession: (this.state.profession || this.props.home.userProfile.data[0].profession)
           .replace(/"/g, '\\"')
           .replace(/'/g, '\\"')
           .replace(/`/g, '\\"'),
-        aboutme: (this.state.about_me || this.props.home.user.data[0].about_me)
+        aboutme: (this.state.about_me || this.props.home.userProfile.data[0].about_me)
           .replace(/"/g, '\\"')
           .replace(/'/g, '\\"')
           .replace(/`/g, '\\"'),
       };
-      this.props.actions.editUser(dataUpdate);
+      await this.props.actions.editUser(dataUpdate);
       this.setState({
         file: null,
         fileP: null,
@@ -459,14 +460,14 @@ export class UserProfile extends Component {
       }
       let dataUpdate = {
         token: localStorage.getItem('token-app-auth-current'),
-        publicity_img: res.data.filename || this.props.home.user.data[0].publicity_img,
-        publicity_link: this.state.publicity_link || this.props.home.user.data[0].publicity_link,
+        publicity_img: res.data.filename || this.props.home.userProfile.data[0].publicity_img,
+        publicity_link: this.state.publicity_link || this.props.home.userProfile.data[0].publicity_link,
         publicity_active:
           this.state.publicity_active === '1'
             ? 1
             : this.state.publicity_active === '0'
-            ? 0
-            : this.props.home.user.data[0].publicity_active,
+              ? 0
+              : this.props.home.userProfile.data[0].publicity_active,
       };
       this.props.actions.addPublicity(dataUpdate);
       this.setState({
@@ -478,7 +479,7 @@ export class UserProfile extends Component {
   componentWillReceiveProps(nextProps) {
     if (this.props.home.editUserPending && nextProps.home.editeduser) {
       NotificationManager.info('Datos guardados');
-      this.props.actions.getUser({ token: VALUES.DEEP_TOKEN, id: this.state.id });
+      this.props.actions.getUserProfile({ token: VALUES.DEEP_TOKEN, id: this.state.id });
       this.setState({
         editUser: false,
       });
@@ -542,32 +543,32 @@ export class UserProfile extends Component {
               }}
             ></div>
           ) : (
-            <div
-              className="img-div"
-              onClick={() => this.routerMethod('../news/' + item.id, item.user_id)}
-            >
-              <img
-                alt="video"
-                className="play-video-style-div"
-                src={require('../../images/play_video.png')}
-              />
-              {window.screen.width < 800 ? (
-                <video width="100%" height="200" poster={VALUES.STORAGE_URL + item.img_url} muted>
-                  <source src={VALUES.STORAGE_URL + item.img_url} type="video/mp4" />
-                  <source src={VALUES.STORAGE_URL + item.img_url} type="video/webm" />
-                  <source src={VALUES.STORAGE_URL + item.img_url} type="video/ogg" />
+              <div
+                className="img-div"
+                onClick={() => this.routerMethod('../news/' + item.id, item.user_id)}
+              >
+                <img
+                  alt="video"
+                  className="play-video-style-div"
+                  src={require('../../images/play_video.png')}
+                />
+                {window.screen.width < 800 ? (
+                  <video width="100%" height="200" poster={VALUES.STORAGE_URL + item.img_url} muted>
+                    <source src={VALUES.STORAGE_URL + item.img_url} type="video/mp4" />
+                    <source src={VALUES.STORAGE_URL + item.img_url} type="video/webm" />
+                    <source src={VALUES.STORAGE_URL + item.img_url} type="video/ogg" />
                   Your browser does not support the video tag.
-                </video>
-              ) : (
-                <video width="100%" height="200" muted>
-                  <source src={VALUES.STORAGE_URL + item.img_url} type="video/mp4" />
-                  <source src={VALUES.STORAGE_URL + item.img_url} type="video/webm" />
-                  <source src={VALUES.STORAGE_URL + item.img_url} type="video/ogg" />
+                  </video>
+                ) : (
+                    <video width="100%" height="200" muted>
+                      <source src={VALUES.STORAGE_URL + item.img_url} type="video/mp4" />
+                      <source src={VALUES.STORAGE_URL + item.img_url} type="video/webm" />
+                      <source src={VALUES.STORAGE_URL + item.img_url} type="video/ogg" />
                   Your browser does not support the video tag.
-                </video>
-              )}
-            </div>
-          )}
+                    </video>
+                  )}
+              </div>
+            )}
           <div
             className="wrapper-news-div-hover"
             onClick={() => this.routerMethod('../news/' + item.id, item.user_id)}
@@ -592,7 +593,7 @@ export class UserProfile extends Component {
 
   render() {
     try {
-      var userLogged = this.props.home.user
+      var userLogged = this.props.home.userProfile
         ? localStorage.getItem('token-app-auth-current')
           ? jwt.verify(localStorage.getItem('token-app-auth-current'), VALUES.API_KEY)
           : null
@@ -600,19 +601,19 @@ export class UserProfile extends Component {
       var $imagePreview,
         $imagePreviewP,
         $imagePreviewPublicity = null;
-      if (this.props.home.user) {
+      if (this.props.home.userProfile) {
         var imagePreviewUrl =
           this.state.imagePreviewUrl ||
-          VALUES.STORAGE_URL + this.props.home.user.data[0].profile_img_url;
+          VALUES.STORAGE_URL + this.props.home.userProfile.data[0].profile_img_url;
         var imagePreviewUrlP =
           this.state.imagePreviewUrlP ||
-          VALUES.STORAGE_URL + this.props.home.user.data[0].banner_img_url;
+          VALUES.STORAGE_URL + this.props.home.userProfile.data[0].banner_img_url;
         var imagePreviewUrlPublicity =
           this.state.imagePreviewUrlPublicity ||
           VALUES.STORAGE_URL +
-            (this.props.home.user.data[0].publicity_img !== 'null'
-              ? this.props.home.user.data[0].publicity_img
-              : 'default-user-banner.PNG');
+          (this.props.home.userProfile.data[0].publicity_img !== 'null'
+            ? this.props.home.userProfile.data[0].publicity_img
+            : 'default-user-banner.PNG');
         if (imagePreviewUrl) {
           $imagePreview = <img alt="img-preview" src={imagePreviewUrl} />;
         }
@@ -632,13 +633,13 @@ export class UserProfile extends Component {
       return null;
     } else if (this.props.home.categories && !this.props.home.categories.data[0]) {
       this.goToErrorLanding();
-    } else if (this.props.home.user && !this.props.home.user.data[0]) {
+    } else if (this.props.home.userProfile && !this.props.home.userProfile.data[0]) {
       this.goToErrorLanding();
       return null;
     } else if (
-      this.props.home.user &&
-      this.props.home.user.data[0] &&
-      this.props.home.user.data[0].username === 'blocked-user-woordi-secure-integrity'
+      this.props.home.userProfile &&
+      this.props.home.userProfile.data[0] &&
+      this.props.home.userProfile.data[0].username === 'blocked-user-woordi-secure-integrity'
     ) {
       this.removeTokenAndKill();
       return null;
@@ -651,11 +652,13 @@ export class UserProfile extends Component {
               history={this.props.history}
               categories={this.props.home.categories}
               user={this.state.id}
+              img_url={this.props.home.user &&
+                this.props.home.user.data[0] && this.props.home.user.data[0].profile_img_url}
               username={null}
             />
           )}
           <div className="user-profile-wrapper">
-            {(this.props.home.getUserPending || !this.props.home.user) && (
+            {(this.props.home.getUserProfilePending || !this.props.home.user) && (
               <div
                 id="spinner-div-for-news-id-container-home-waiting"
                 className="spinner-div-for-news-home-when-no-content-user-spin"
@@ -669,21 +672,21 @@ export class UserProfile extends Component {
                 <div className="loader"></div>
               </div>
             )}
-            {!this.props.home.getUserPending && this.props.home.user && (
+            {!this.props.home.getUserProfilePending && this.props.home.userProfile && (
               <UserHeader
                 profileComp={true}
                 isProfile={this.state.isProfile}
-                user={this.props.home.user.data[0]}
+                user={this.props.home.userProfile.data[0]}
                 user_id={this.props.match.params.id}
               />
             )}
           </div>
           <div className="profile-wrapper-content">
-            {!this.props.home.getUserPending && this.props.home.user && (
+            {!this.props.home.getUserProfilePending && this.props.home.userProfile && (
               <div className="about-me-user-profile">
                 <h4 style={{ margin: '0' }}>
-                  {this.props.home.user.data[0].username}
-                  {this.props.home.user.data[0].id === this.state.id && (
+                  {this.props.home.userProfile.data[0].username}
+                  {this.props.home.userProfile.data[0].id === this.state.id && (
                     <img
                       alt="edit"
                       title="Editar mi perfil"
@@ -694,7 +697,7 @@ export class UserProfile extends Component {
                       src={require('../../images/edit-pen.PNG')}
                     />
                   )}
-                  {this.props.home.user.data[0].id === this.state.id && (
+                  {this.props.home.userProfile.data[0].id === this.state.id && (
                     <img
                       alt="Publicidad"
                       title="Mi publicidad"
@@ -712,23 +715,23 @@ export class UserProfile extends Component {
                   width="100px"
                   style={{ marginTop: '0px', marginBottom: '10px' }}
                   src={
-                    this.props.home.user.data[0].followers < 1
+                    this.props.home.userProfile.data[0].followers < 1
                       ? require('../../images/0-star.JPG')
-                      : this.props.home.user.data[0].followers > 0 &&
-                        this.props.home.user.data[0].followers <= 10
-                      ? require('../../images/1-star.JPG')
-                      : this.props.home.user.data[0].followers > 10 &&
-                        this.props.home.user.data[0].followers <= 30
-                      ? require('../../images/2-star.JPG')
-                      : this.props.home.user.data[0].followers > 30 &&
-                        this.props.home.user.data[0].followers <= 150
-                      ? require('../../images/3-star.JPG')
-                      : this.props.home.user.data[0].followers > 150 &&
-                        this.props.home.user.data[0].followers <= 300
-                      ? require('../../images/4-star.JPG')
-                      : this.props.home.user.data[0].followers > 300
-                      ? require('../../images/5-star.JPG')
-                      : null
+                      : this.props.home.userProfile.data[0].followers > 0 &&
+                        this.props.home.userProfile.data[0].followers <= 10
+                        ? require('../../images/1-star.JPG')
+                        : this.props.home.userProfile.data[0].followers > 10 &&
+                          this.props.home.userProfile.data[0].followers <= 30
+                          ? require('../../images/2-star.JPG')
+                          : this.props.home.userProfile.data[0].followers > 30 &&
+                            this.props.home.userProfile.data[0].followers <= 150
+                            ? require('../../images/3-star.JPG')
+                            : this.props.home.userProfile.data[0].followers > 150 &&
+                              this.props.home.userProfile.data[0].followers <= 300
+                              ? require('../../images/4-star.JPG')
+                              : this.props.home.userProfile.data[0].followers > 300
+                                ? require('../../images/5-star.JPG')
+                                : null
                   }
                 />
                 <h5 className="country-city-user-profile">
@@ -741,7 +744,7 @@ export class UserProfile extends Component {
                     {' '}
                     Seguidores:{' '}
                   </span>
-                  {this.props.home.user.data[0].followers + ' - '}
+                  {this.props.home.userProfile.data[0].followers + ' - '}
                   <span
                     className="span-hover-follows-inte"
                     onClick={() =>
@@ -751,32 +754,40 @@ export class UserProfile extends Component {
                     {' '}
                     Siguiendo:{' '}
                   </span>
-                  {this.props.home.user.data[0].following +
+                  {this.props.home.userProfile.data[0].following +
                     ' - Artículos: ' +
-                    this.props.home.user.data[0].num_articles}
+                    this.props.home.userProfile.data[0].num_articles}
                 </h5>
-                {this.props.home.user.data[0].id === this.state.id && (
+                {this.props.home.userProfile.data[0].id === this.state.id && (
                   <p onClick={() => this.openMyReaders()} className="who-reads-my-news">
                     Mis lectores
                   </p>
                 )}
                 <p className="my-description-user-profile-div-p">
-                  {this.props.home.user.data[0].about_me}
+                  {this.props.home.userProfile.data[0].about_me}
                 </p>
               </div>
             )}
             <div className="user-profile-wrapper-content">
               <p className="user-profile-wrapper-content-title">
-                {!this.props.home.getUserPending &&
-                  this.props.home.user &&
+                {!this.props.home.getUserProfilePending &&
+                  this.props.home.userProfile &&
                   !this.state.isProfile &&
-                  'Artículos de ' + this.props.home.user.data[0].username}
+                  'Artículos de ' + this.props.home.userProfile.data[0].username}
                 {this.state.isProfile && 'Tus artículos'}
               </p>
               <div className="row">
-                {this.props.home.userarticles &&
+                {this.props.home.getNewsPending &&
+                  <div className='spinner-article-waiting-user-profile'><img
+                    alt="edit"
+                    width="25"
+                    className="edit-pen-user-profile-style"
+                    src={require('../../images/spinner.gif')}
+                  /></div>
+                }
+                {!this.props.home.getNewsPending && this.props.home.userarticles &&
                   this.props.home.userarticles.data[0] &&
-                  this.buildNews()}
+                this.buildNews()}
               </div>
             </div>
           </div>
@@ -841,9 +852,9 @@ export class UserProfile extends Component {
                 this.buildReaders()}
             </div>
           )}
-          {this.props.home.user &&
+          {this.props.home.userProfile &&
             this.state.myPublicity &&
-            this.props.home.user.data[0].id === this.state.id && (
+            this.props.home.userProfile.data[0].id === this.state.id && (
               <div className="edit-user-modal-absolute">
                 <div className="modal-header-edit-user">
                   <a
@@ -897,9 +908,9 @@ export class UserProfile extends Component {
                         value={
                           this.state.publicity_link !== null
                             ? this.state.publicity_link
-                            : this.props.home.user.data[0].publicity_link !== 'null'
-                            ? this.props.home.user.data[0].publicity_link
-                            : ''
+                            : this.props.home.userProfile.data[0].publicity_link !== 'null'
+                              ? this.props.home.userProfile.data[0].publicity_link
+                              : ''
                         }
                         className="form-control"
                         onChange={this.handleChange}
@@ -916,7 +927,7 @@ export class UserProfile extends Component {
                         name="publicity_active"
                         value={
                           this.state.publicity_active ||
-                          this.props.home.user.data[0].publicity_active
+                          this.props.home.userProfile.data[0].publicity_active
                         }
                       >
                         <option value={1}>SI</option>
@@ -950,9 +961,9 @@ export class UserProfile extends Component {
               </div>
             )}
 
-          {this.props.home.user &&
+          {this.props.home.userProfile &&
             this.state.editUser &&
-            this.props.home.user.data[0].id === this.state.id && (
+            this.props.home.userProfile.data[0].id === this.state.id && (
               <div className="edit-user-modal-absolute">
                 <div className="modal-header-edit-user">
                   <a
@@ -974,7 +985,7 @@ export class UserProfile extends Component {
                         value={
                           this.state.username !== null
                             ? this.state.username
-                            : this.props.home.user.data[0].username
+                            : this.props.home.userProfile.data[0].username
                         }
                         className="form-control"
                         onChange={this.handleChange}
@@ -1014,7 +1025,7 @@ export class UserProfile extends Component {
                         value={
                           this.state.profession !== null
                             ? this.state.profession
-                            : this.props.home.user.data[0].profession
+                            : this.props.home.userProfile.data[0].profession
                         }
                         onChange={this.handleChange}
                         className="form-control"
@@ -1030,7 +1041,7 @@ export class UserProfile extends Component {
                         value={
                           this.state.about_me !== null
                             ? this.state.about_me
-                            : this.props.home.user.data[0].about_me
+                            : this.props.home.userProfile.data[0].about_me
                         }
                         className="form-control"
                         onChange={this.handleChange}
@@ -1109,33 +1120,33 @@ export class UserProfile extends Component {
                 </div>
               </div>
             )}
-          {!this.props.home.getUserPending &&
-          this.props.home.user &&
-          this.props.home.user.data[0] &&
-          this.props.home.user.data[0].publicity_active &&
-          this.state.show_publicity_banner ? (
-            <div
-              style={{
-                backgroundColor: '#f5f5f5',
-                backgroundImage: `url(${VALUES.STORAGE_URL +
-                  this.props.home.user.data[0].publicity_img})`,
-              }}
-              id="pop-up-id-publicity"
-              className="publicity-pop-up"
-            >
-              <div onClick={() => this.goAway()} style={{ width: '90%', height: '100%' }}></div>
-              <p
-                onClick={() =>
-                  this.setState({
-                    show_publicity_banner: false,
-                  })
-                }
+          {!this.props.home.getUserProfilePending &&
+            this.props.home.userProfile &&
+            this.props.home.userProfile.data[0] &&
+            this.props.home.userProfile.data[0].publicity_active &&
+            this.state.show_publicity_banner ? (
+              <div
+                style={{
+                  backgroundColor: '#f5f5f5',
+                  backgroundImage: `url(${VALUES.STORAGE_URL +
+                    this.props.home.userProfile.data[0].publicity_img})`,
+                }}
+                id="pop-up-id-publicity"
+                className="publicity-pop-up"
               >
-                x
+                <div onClick={() => this.goAway()} style={{ width: '90%', height: '100%' }}></div>
+                <p
+                  onClick={() =>
+                    this.setState({
+                      show_publicity_banner: false,
+                    })
+                  }
+                >
+                  x
               </p>
-              {this.publicityVisible()}
-            </div>
-          ) : null}
+                {this.publicityVisible()}
+              </div>
+            ) : null}
           {this.rotate()}
           <NotificationContainer />
         </div>

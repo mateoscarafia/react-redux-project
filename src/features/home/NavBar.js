@@ -29,7 +29,7 @@ export class NavBar extends Component {
             VALUES.API_KEY,
           );
           await this.props.actions.getNews({ token: VALUES.DEEP_TOKEN, id: user.id });
-          await this.props.actions.getUser({ token: VALUES.DEEP_TOKEN, id: user.id });
+          await this.props.actions.getUserProfile({ token: VALUES.DEEP_TOKEN, id: user.id });
           destiny = destiny + user.id;
         } catch (err) { }
       }
@@ -63,13 +63,13 @@ export class NavBar extends Component {
 
   buildList = num => {
     return this.props.categories.data.map((item, index) => {
-      return !num && index < 7 ? (
+      return !num && index < 9 ? (
         <li className="nav-item" key={item.name}>
           <a className="nav-link a-link" onClick={() => this.handleNews(item.id, item.name)}>
             {item.name}
           </a>
         </li>
-      ) : num && index > 6 ? (
+      ) : num && index > 8 ? (
         <a
           key={item.name}
           onClick={() => this.handleNews(item.id, item.name)}
@@ -285,7 +285,7 @@ export class NavBar extends Component {
                         name="searchwords"
                         onChange={this.handleChange}
                         placeholder="Buscar.."
-                        className="form-control"
+                        className="form-control search-bar-menu"
                         id="searchwords"
                       />
                       <img
@@ -320,7 +320,7 @@ export class NavBar extends Component {
                       <img
                         title="Mis notificaciones"
                         alt="Notificaciones"
-                        style={{ opacity: 0.4, marginTop: 1 }}
+                        style={{ opacity: 0.4, marginTop: -6 }}
                         width="22"
                         src={require('../../images/notification.png')}
                       />
@@ -336,26 +336,32 @@ export class NavBar extends Component {
                       <img
                         title="Escribir artículo"
                         alt="edit"
-                        style={{ opacity: 0.4 }}
+                        style={{ opacity: 0.4, marginTop: -4 }}
                         width="25"
                         src={require('../../images/write.png')}
                       />
                     </a>
                   </li>
                   <li className="nav-item active">
-                    <a
+                    <div
+                      id="img-div-article-news-header-id-rotation"
+                      className="img-div-article-news-header"
+                      title="Mi perfil"
                       onClick={() => {
                         this.routerMethod('/profile/');
                       }}
-                      className="nav-link a-link"
-                    >
-                      {this.props.username ? this.props.username : 'Mi perfil'}
-                    </a>
+                      style={{
+                        backgroundImage: `url(${VALUES.STORAGE_URL +
+                          (this.props.img_url && this.props.img_url)})`,
+                      }}
+                    ></div>
                   </li>
                   <li className="nav-item active">
-                    <a onClick={this.logoutUser} className="nav-link a-link">
-                      Logout
+                    <a className="nav-link a-link">
                     </a>
+                    {/*<a onClick={this.logoutUser} className="nav-link a-link">
+                      Logout
+                  </a>*/}
                   </li>
                 </ul>
               ) : (

@@ -83,6 +83,8 @@ const initialState = {
   badRequestError: null,
   checkNotificationPending: false,
   checkNotificationError: null,
+  getUserProfilePending: false,
+  getUserProfileError: null,
 };
 
 export default initialState;

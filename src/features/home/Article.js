@@ -65,7 +65,7 @@ export class Article extends Component {
     }
   };
 
-  componentWillMount() {
+  async componentWillMount() {
     if (localStorage.getItem('token-app-auth-current')) {
       try {
         var user = jwt.verify(localStorage.getItem('token-app-auth-current'), VALUES.API_KEY);
@@ -74,6 +74,8 @@ export class Article extends Component {
         window.location.replace(VALUES.FRONTEND_URL + 'feed/main');
       }
       if (user) {
+        let data = { token: localStorage.getItem('token-app-auth-current'), id: user.id };
+        !this.props.home.user && await this.props.actions.getUser(data);
         this.setState({
           login: true,
           id: user.id,
@@ -342,6 +344,7 @@ export class Article extends Component {
               history={this.props.history}
               categories={this.props.home.categories}
               user={this.state.id}
+              img_url={this.props.home.user && this.props.home.user.data[0] && this.props.home.user.data[0].profile_img_url}
               username={null}
             />
           )}
@@ -541,7 +544,7 @@ export class Article extends Component {
                     quote={this.props.home.uniquearticle.data[0].title}
                     style={{ margin: '2px 5px 2px 0' }}
                   >
-                    <FacebookIcon logoFillColor="white" size={25} round={true}/>
+                    <FacebookIcon logoFillColor="white" size={25} round={true} />
                   </FacebookShareButton>
                   <TwitterShareButton
                     url={'https://www.woordi.com/news/' + this.props.home.uniquearticle.data[0].id}
