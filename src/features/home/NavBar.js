@@ -53,6 +53,13 @@ export class NavBar extends Component {
     }
   };
 
+  rotateUserProfileImage = () => {
+    if (document.getElementById('img-div-navbar-news-header-id-rotation') && this.props.rotate_img_profile) {
+      document.getElementById('img-div-navbar-news-header-id-rotation').style.transform =
+        'rotate(' + this.props.rotate_img_profile + 'deg)';
+    }
+  };
+
   async handleNews(news_id, news_name) {
     window.screen.width < 800 && document.getElementById('navbar-toggler-id-for-clicking').click();
     window.location.href.includes('feed') &&
@@ -344,7 +351,7 @@ export class NavBar extends Component {
                   </li>
                   <li className="nav-item active">
                     <div
-                      id="img-div-article-news-header-id-rotation"
+                      id="img-div-navbar-news-header-id-rotation"
                       className="img-div-article-news-header"
                       title="Mi perfil"
                       onClick={() => {
@@ -514,6 +521,7 @@ export class NavBar extends Component {
             </div>
           </div>
         )}
+        {this.rotateUserProfileImage()}
       </div>
     );
   }
