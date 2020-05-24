@@ -78,6 +78,9 @@ export class UserProfile extends Component {
       this.props.actions.getUserProfile({ token: VALUES.DEEP_TOKEN, id: id });
       this.props.actions.getNews({ token: VALUES.DEEP_TOKEN, id: id });
     }
+    if (destiny.includes('news')) {
+      this.props.actions.getComments({ news_id: id, token: VALUES.DEEP_TOKEN });
+    }
     id &&
       this.setState({
         openMyFollowers: false,
@@ -474,6 +477,11 @@ export class UserProfile extends Component {
         filePublicity: null,
       });
     }
+  };
+
+  logoutUser = () => {
+    localStorage.removeItem('token-app-auth-current');
+    window.location.replace(VALUES.FRONTEND_URL + 'feed/main');
   };
 
   componentWillReceiveProps(nextProps) {
@@ -1120,12 +1128,11 @@ export class UserProfile extends Component {
                     <hr />
                     <div className="div-edit-user-button-save-change">
                       <button
-                        onClick={() => this.updatePassword()}
+                        onClick={() => this.logoutUser()}
                         type="button"
-                        id="cambiar-pwd-id"
-                        className="btn btn-primary edit-user-button-form"
+                        className="btn btn-primary edit-user-button-form-white-black-butt"
                       >
-                        Logout
+                        Cerrar sesión
                       </button>
                     </div>
                     <hr />
