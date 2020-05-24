@@ -60,7 +60,7 @@ export class TextEditor extends Component {
       }, 1000);
     }
     if (this.props.home.postArticlePending && !nextProps.home.postarticle.data.id) {
-      setTimeout(function() {
+      setTimeout(function () {
         document.getElementById('button-post-article').style.display = 'inline';
         document.getElementById('spinner-button-post-article').style.display = 'none';
       }, 1000);
@@ -147,6 +147,10 @@ export class TextEditor extends Component {
         NotificationManager.info('Lo sentimos, el archivo es muy grande');
         document.getElementById('button-post-article').style.display = 'inline';
         document.getElementById('spinner-button-post-article').style.display = 'none';
+      } else if (this.state.file.type !== 'image/jpeg' && this.state.file.type !== 'image/jpg' && this.state.file.type !== 'image/png' && this.state.file.type !== 'image/gif') {
+        NotificationManager.info('Solo se permiten imagenes JPEG, JPG, PNG, GIF.');
+        document.getElementById('button-post-article').style.display = 'inline';
+        document.getElementById('spinner-button-post-article').style.display = 'none';
       } else {
         NotificationManager.info('Esto puede tardar unos segundos, por favor aguarde');
         var secret_key = await this.safetyNet();
@@ -196,6 +200,7 @@ export class TextEditor extends Component {
                 img_url: res.data.filename,
                 content: content_final,
                 key_words: keywords,
+                epigraph: null,
                 user_id: this.props.home.user.data[0].id,
                 rotate_img: this.state.rotateAngle !== 'no-value' ? this.state.rotateAngle : 0,
                 is_video: this.state.file ? (this.state.file.type.includes('video') ? 1 : 0) : 0,
@@ -217,7 +222,7 @@ export class TextEditor extends Component {
 
   buildCategories = () => {
     let cats = [];
-    this.props.home.categories.data.map(function(item) {
+    this.props.home.categories.data.map(function (item) {
       cats.push({ value: item.name, label: item.name });
       return null;
     });
@@ -289,7 +294,7 @@ export class TextEditor extends Component {
               history={this.props.history}
               categories={this.props.home.categories}
               user={this.state.id}
-              rotate_img_profile = {this.props.home.user && this.props.home.user.data[0] && this.props.home.user.data[0].rotate_img_profile}
+              rotate_img_profile={this.props.home.user && this.props.home.user.data[0] && this.props.home.user.data[0].rotate_img_profile}
               img_url={this.props.home.user && this.props.home.user.data[0] && this.props.home.user.data[0].profile_img_url}
               username={null}
             />
@@ -377,7 +382,7 @@ export class TextEditor extends Component {
                           style={{ opacity: '0.8' }}
                           src={require('../../images/img-vid.png')}
                         />
-                         <p className="content-warning-message">Videos de 5 minutos</p>
+                        <p className="content-warning-message">Videos de 5 minutos</p>
                       </label>
                     </form>
                     {this.state.file ? (
@@ -404,8 +409,8 @@ export class TextEditor extends Component {
                           ></div>
                         </div>
                       ) : (
-                        <label className="badge badge-info">Archivo cargado</label>
-                      )
+                          <label className="badge badge-info">Archivo cargado</label>
+                        )
                     ) : null}
                   </div>
                 </div>

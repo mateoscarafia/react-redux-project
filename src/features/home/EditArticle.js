@@ -54,7 +54,7 @@ export class EditArticle extends Component {
       }, 1000);
     }
     if (this.props.home.editArticlePending && nextProps.home.editArticleError) {
-      setTimeout(function() {
+      setTimeout(function () {
         document.getElementById('edit-button-id').style.display = 'inline';
         document.getElementById('spinner-edit-button-id').style.display = 'none';
       }, 1000);
@@ -67,7 +67,7 @@ export class EditArticle extends Component {
       }, 1000);
     }
     if (this.props.home.deleteArticlePending && nextProps.home.deleteArticleError) {
-      setTimeout(function() {
+      setTimeout(function () {
         document.getElementById('delete-button-id').style.display = 'inline';
         document.getElementById('spinner-delete-button-id-final').style.display = 'none';
       }, 1000);
@@ -189,6 +189,10 @@ export class EditArticle extends Component {
         NotificationManager.info('Lo sentimos, el archivo es muy grande');
         document.getElementById('edit-button-id').style.display = 'inline';
         document.getElementById('spinner-edit-button-id').style.display = 'none';
+      } else if (this.state.file.type !== 'image/jpeg' && this.state.file.type !== 'image/jpg' && this.state.file.type !== 'image/png' && this.state.file.type !== 'image/gif') {
+        NotificationManager.info('Solo se permiten imagenes JPEG, JPG, PNG, GIF.');
+        document.getElementById('button-post-article').style.display = 'inline';
+        document.getElementById('spinner-button-post-article').style.display = 'none';
       } else {
         NotificationManager.info('Esto puede tardar unos segundos, por favor aguarde');
         var secret_key = await this.safetyNet();
@@ -230,25 +234,26 @@ export class EditArticle extends Component {
                 token: localStorage.getItem('token-app-auth-current'),
                 title: this.state.title
                   ? this.state.title
-                      .replace(/"/g, '\\"')
-                      .replace(/'/g, '\\"')
-                      .replace(/`/g, '\\"')
+                    .replace(/"/g, '\\"')
+                    .replace(/'/g, '\\"')
+                    .replace(/`/g, '\\"')
                   : this.props.home.uniquearticle.data[0].title
-                      .replace(/"/g, '\\"')
-                      .replace(/'/g, '\\"')
-                      .replace(/`/g, '\\"'),
+                    .replace(/"/g, '\\"')
+                    .replace(/'/g, '\\"')
+                    .replace(/`/g, '\\"'),
                 subtitle: this.state.subtitle
                   ? this.state.subtitle
-                      .replace(/"/g, '\\"')
-                      .replace(/'/g, '\\"')
-                      .replace(/`/g, '\\"')
+                    .replace(/"/g, '\\"')
+                    .replace(/'/g, '\\"')
+                    .replace(/`/g, '\\"')
                   : this.props.home.uniquearticle.data[0].subtitle
-                      .replace(/"/g, '\\"')
-                      .replace(/'/g, '\\"')
-                      .replace(/`/g, '\\"'),
+                    .replace(/"/g, '\\"')
+                    .replace(/'/g, '\\"')
+                    .replace(/`/g, '\\"'),
                 category_id: categoryObj.id,
                 img_url: res.data.filename || this.props.home.uniquearticle.data[0].img_url,
                 content: content_final,
+                epigraph: null,
                 key_words: keyword_content,
                 rotate_img: this.state.rotateAngle
                   ? this.state.rotateAngle
@@ -272,7 +277,7 @@ export class EditArticle extends Component {
 
   buildCategories = () => {
     let cats = [];
-    this.props.home.categories.data.map(function(item) {
+    this.props.home.categories.data.map(function (item) {
       cats.push({ value: item.name, label: item.name });
       return null;
     });
@@ -359,7 +364,7 @@ export class EditArticle extends Component {
               history={this.props.history}
               categories={this.props.home.categories}
               user={this.state.id}
-              rotate_img_profile = {this.props.home.user && this.props.home.user.data[0] && this.props.home.user.data[0].rotate_img_profile}
+              rotate_img_profile={this.props.home.user && this.props.home.user.data[0] && this.props.home.user.data[0].rotate_img_profile}
               img_url={this.props.home.user && this.props.home.user.data[0] && this.props.home.user.data[0].profile_img_url}
               username={null}
             />
@@ -375,7 +380,7 @@ export class EditArticle extends Component {
                 className="edit-pen-user-profile-style less-margin-for-spinner-logo"
                 src={require('../../images/logo.png')}
               />
-               <div className="loader"></div>
+              <div className="loader"></div>
             </div>
           )}
           {!this.props.home.getUserPending && this.props.home.uniquearticle && (
@@ -501,22 +506,22 @@ export class EditArticle extends Component {
                           Your browser does not support the video tag.
                         </video>
                       ) : (
-                        <video width="200" height="200" controls>
-                          <source
-                            src={VALUES.STORAGE_URL + this.props.home.uniquearticle.data[0].img_url}
-                            type="video/mp4"
-                          />
-                          <source
-                            src={VALUES.STORAGE_URL + this.props.home.uniquearticle.data[0].img_url}
-                            type="video/webm"
-                          />
-                          <source
-                            src={VALUES.STORAGE_URL + this.props.home.uniquearticle.data[0].img_url}
-                            type="video/ogg"
-                          />
+                            <video width="200" height="200" controls>
+                              <source
+                                src={VALUES.STORAGE_URL + this.props.home.uniquearticle.data[0].img_url}
+                                type="video/mp4"
+                              />
+                              <source
+                                src={VALUES.STORAGE_URL + this.props.home.uniquearticle.data[0].img_url}
+                                type="video/webm"
+                              />
+                              <source
+                                src={VALUES.STORAGE_URL + this.props.home.uniquearticle.data[0].img_url}
+                                type="video/ogg"
+                              />
                           Your browser does not support the video tag.
-                        </video>
-                      )
+                            </video>
+                          )
                     ) : null}
                     {this.state.file ? (
                       this.state.file.type.includes('image') ? (
@@ -542,8 +547,8 @@ export class EditArticle extends Component {
                           ></div>
                         </div>
                       ) : (
-                        <label className="badge badge-info">Archivo cargado</label>
-                      )
+                          <label className="badge badge-info">Archivo cargado</label>
+                        )
                     ) : null}
                   </div>
                 </div>
