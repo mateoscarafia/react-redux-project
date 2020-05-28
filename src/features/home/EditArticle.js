@@ -191,8 +191,8 @@ export class EditArticle extends Component {
         document.getElementById('spinner-edit-button-id').style.display = 'none';
       } else if (this.state.file && this.state.file.type && this.state.file.type.includes('image') && this.state.file.type !== 'image/jpeg' && this.state.file.type !== 'image/jpg' && this.state.file.type !== 'image/png' && this.state.file.type !== 'image/gif') {
         NotificationManager.info('Solo se permiten imagenes JPEG, JPG, PNG, GIF.');
-        document.getElementById('button-post-article').style.display = 'inline';
-        document.getElementById('spinner-button-post-article').style.display = 'none';
+        document.getElementById('edit-button-id').style.display = 'inline';
+        document.getElementById('spinner-edit-button-id').style.display = 'none';
       } else {
         NotificationManager.info('Esto puede tardar unos segundos, por favor aguarde');
         var secret_key = await this.safetyNet();
