@@ -7,6 +7,7 @@ import { NotificationContainer, NotificationManager } from 'react-notifications'
 import 'react-notifications/lib/notifications.css';
 import ReactHtmlParser from 'react-html-parser';
 import Helmet from "react-helmet";
+import ReactPlayer from 'react-player'
 
 import {
   WhatsappShareButton,
@@ -180,8 +181,6 @@ export class Article extends Component {
           <div
             key={item.title + '-' + item.id}
             className="design-120-60-related-news"
-            onMouseEnter={() => this.articleDivInfoVisible('news-hover-' + item.id)}
-            onMouseLeave={() => this.articleDivInfoInvisible('news-hover-' + item.id)}
           >
             {item.is_video !== 1 ? (
               <div
@@ -202,21 +201,7 @@ export class Article extends Component {
                     className="play-video-style-div"
                     src={require('../../images/play_video.png')}
                   />
-                  {window.screen.width < 800 ? (
-                    <video width="100%" poster={VALUES.STORAGE_URL + item.img_url} height="200" muted>
-                      <source src={VALUES.STORAGE_URL + item.img_url} type="video/mp4" />
-                      <source src={VALUES.STORAGE_URL + item.img_url} type="video/webm" />
-                      <source src={VALUES.STORAGE_URL + item.img_url} type="video/ogg" />
-                    Your browser does not support the video tag.
-                    </video>
-                  ) : (
-                      <video width="100%" height="200" muted>
-                        <source src={VALUES.STORAGE_URL + item.img_url} type="video/mp4" />
-                        <source src={VALUES.STORAGE_URL + item.img_url} type="video/webm" />
-                        <source src={VALUES.STORAGE_URL + item.img_url} type="video/ogg" />
-                    Your browser does not support the video tag.
-                      </video>
-                    )}
+                  <ReactPlayer style={{ height: '70%', width: '100%' }} url={VALUES.STORAGE_URL + item.img_url} />
                 </div>
               )}
             <div
@@ -344,7 +329,7 @@ export class Article extends Component {
               history={this.props.history}
               categories={this.props.home.categories}
               user={this.state.id}
-              rotate_img_profile = {this.props.home.user && this.props.home.user.data[0] && this.props.home.user.data[0].rotate_img_profile}
+              rotate_img_profile={this.props.home.user && this.props.home.user.data[0] && this.props.home.user.data[0].rotate_img_profile}
               img_url={this.props.home.user && this.props.home.user.data[0] && this.props.home.user.data[0].profile_img_url}
               username={null}
             />

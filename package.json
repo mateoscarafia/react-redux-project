@@ -59,7 +59,9 @@
     "react-draft-wysiwyg": "^1.13.2",
     "react-facebook": "^8.1.4",
     "react-facebook-login": "^4.1.1",
+    "react-ga": "^2.7.0",
     "react-google-login": "^5.0.7",
+    "react-helmet": "^5.2.1",
     "react-hot-loader": "^4.0.0",
     "react-html-parser": "^2.0.2",
     "react-images-upload": "^1.2.7",
@@ -70,6 +72,7 @@
     "react-notifications": "^1.4.3",
     "react-notifications-component": "^2.1.0",
     "react-photo-gallery": "^8.0.0",
+    "react-player": "^2.1.0",
     "react-progress-button": "^5.1.0",
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.2.2",
@@ -100,7 +103,7 @@
     "build": "node scripts/build.js",
     "test": "node scripts/test.js --env=jsdom",
     "serve": "pm2 start server.sh",
-    "serve_http":"pm2 start server_http.sh"
+    "serve_http": "pm2 start server_http.sh"
   },
   "rekit": {
     "devPort": 80,

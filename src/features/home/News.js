@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import history from '../../common/history';
 import * as VALUES from '../../constants';
+import ReactPlayer from 'react-player'
 
 export class News extends Component {
   static propTypes = {
@@ -58,16 +59,6 @@ export class News extends Component {
             <div
               key={this.props.articles.data.main_feed[prop].id}
               className={design}
-              onMouseEnter={() =>
-                this.articleDivInfoVisible(
-                  'news-hover-' + this.props.articles.data.main_feed[prop].id,
-                )
-              }
-              onMouseLeave={() =>
-                this.articleDivInfoInvisible(
-                  'news-hover-' + this.props.articles.data.main_feed[prop].id,
-                )
-              }
             >
               {this.props.articles.data.main_feed[prop].is_video === 1 ? (
                 <div
@@ -81,57 +72,22 @@ export class News extends Component {
                     className="play-video-style-div"
                     src={require('../../images/play_video.png')}
                   />
-                  {window.screen.width < 800 ? (
-                    <video
-                      poster={VALUES.STORAGE_URL + this.props.articles.data.main_feed[prop].img_url}
-                      width="100%"
-                      muted
-                    >
-                      <source
-                        src={VALUES.STORAGE_URL + this.props.articles.data.main_feed[prop].img_url}
-                        type="video/mp4"
-                      />
-                      <source
-                        src={VALUES.STORAGE_URL + this.props.articles.data.main_feed[prop].img_url}
-                        type="video/webm"
-                      />
-                      <source
-                        src={VALUES.STORAGE_URL + this.props.articles.data.main_feed[prop].img_url}
-                        type="video/ogg"
-                      />
-                      Your browser does not support the video tag.
-                    </video>
-                  ) : (
-                    <video width="100%" muted>
-                      <source
-                        src={VALUES.STORAGE_URL + this.props.articles.data.main_feed[prop].img_url}
-                        type="video/mp4"
-                      />
-                      <source
-                        src={VALUES.STORAGE_URL + this.props.articles.data.main_feed[prop].img_url}
-                        type="video/webm"
-                      />
-                      <source
-                        src={VALUES.STORAGE_URL + this.props.articles.data.main_feed[prop].img_url}
-                        type="video/ogg"
-                      />
-                      Your browser does not support the video tag.
-                    </video>
-                  )}
+                  <ReactPlayer style={{ height: '70%', width: '100%' }} url={VALUES.STORAGE_URL + this.props.articles.data.main_feed[prop].img_url} />
                 </div>
+
               ) : (
-                <div
-                  id={'id-article-unique-key-' + this.props.articles.data.main_feed[prop].id}
-                  className="img-div"
-                  onClick={() =>
-                    this.routerMethod('news/' + this.props.articles.data.main_feed[prop].id)
-                  }
-                  style={{
-                    backgroundImage: `url(${VALUES.STORAGE_URL +
-                      this.props.articles.data.main_feed[prop].img_url})`,
-                  }}
-                ></div>
-              )}
+                  <div
+                    id={'id-article-unique-key-' + this.props.articles.data.main_feed[prop].id}
+                    className="img-div"
+                    onClick={() =>
+                      this.routerMethod('news/' + this.props.articles.data.main_feed[prop].id)
+                    }
+                    style={{
+                      backgroundImage: `url(${VALUES.STORAGE_URL +
+                        this.props.articles.data.main_feed[prop].img_url})`,
+                    }}
+                  ></div>
+                )}
               <div
                 className={
                   !this.props.id ? 'wrapper-news-div-hover' : 'wrapper-news-div-hover'
@@ -143,12 +99,12 @@ export class News extends Component {
               >
                 <p>
                   {this.props.articles.data.main_feed[prop].username.length > 20
-                    ? this.props.articles.data.main_feed[prop].username.substring(0, 20) +
-                      '... - ' +
-                      this.props.articles.data.main_feed[prop].name
-                    : this.props.articles.data.main_feed[prop].username +
-                      ' - ' +
-                      this.props.articles.data.main_feed[prop].name}
+                    ? this.props.articles.data.main_feed[prop].name +
+                    ' | ' +
+                    this.props.articles.data.main_feed[prop].username.substring(0, 20) + '...'
+                    : this.props.articles.data.main_feed[prop].name +
+                    ' | ' +
+                    this.props.articles.data.main_feed[prop].username}
                 </p>
                 <h1>
                   {this.props.articles.data.main_feed[prop].title.length > 100
@@ -168,16 +124,6 @@ export class News extends Component {
             <div
               key={this.props.articles.data.backup_feed[prop].id}
               className={design}
-              onMouseEnter={() =>
-                this.articleDivInfoVisible(
-                  'news-hover-' + this.props.articles.data.backup_feed[prop].id,
-                )
-              }
-              onMouseLeave={() =>
-                this.articleDivInfoInvisible(
-                  'news-hover-' + this.props.articles.data.backup_feed[prop].id,
-                )
-              }
             >
               {this.props.articles.data.backup_feed[prop].is_video === 1 ? (
                 <div
@@ -191,71 +137,21 @@ export class News extends Component {
                     className="play-video-style-div"
                     src={require('../../images/play_video.png')}
                   />
-                  {window.screen.width < 800 ? (
-                    <video
-                      poster={
-                        VALUES.STORAGE_URL + this.props.articles.data.backup_feed[prop].img_url
-                      }
-                      width="100%"
-                      muted
-                    >
-                      <source
-                        src={
-                          VALUES.STORAGE_URL + this.props.articles.data.backup_feed[prop].img_url
-                        }
-                        type="video/mp4"
-                      />
-                      <source
-                        src={
-                          VALUES.STORAGE_URL + this.props.articles.data.backup_feed[prop].img_url
-                        }
-                        type="video/webm"
-                      />
-                      <source
-                        src={
-                          VALUES.STORAGE_URL + this.props.articles.data.backup_feed[prop].img_url
-                        }
-                        type="video/ogg"
-                      />
-                      Your browser does not support the video tag.
-                    </video>
-                  ) : (
-                    <video width="100%" muted>
-                      <source
-                        src={
-                          VALUES.STORAGE_URL + this.props.articles.data.backup_feed[prop].img_url
-                        }
-                        type="video/mp4"
-                      />
-                      <source
-                        src={
-                          VALUES.STORAGE_URL + this.props.articles.data.backup_feed[prop].img_url
-                        }
-                        type="video/webm"
-                      />
-                      <source
-                        src={
-                          VALUES.STORAGE_URL + this.props.articles.data.backup_feed[prop].img_url
-                        }
-                        type="video/ogg"
-                      />
-                      Your browser does not support the video tag.
-                    </video>
-                  )}
+                  <ReactPlayer style={{ height: '70%', width: '100%' }} url={VALUES.STORAGE_URL + this.props.articles.data.backup_feed[prop].img_url} />
                 </div>
               ) : (
-                <div
-                  id={'id-article-unique-key-' + this.props.articles.data.backup_feed[prop].id}
-                  onClick={() =>
-                    this.routerMethod('news/' + this.props.articles.data.backup_feed[prop].id)
-                  }
-                  className="img-div"
-                  style={{
-                    backgroundImage: `url(${VALUES.STORAGE_URL +
-                      this.props.articles.data.backup_feed[prop].img_url})`,
-                  }}
-                ></div>
-              )}
+                  <div
+                    id={'id-article-unique-key-' + this.props.articles.data.backup_feed[prop].id}
+                    onClick={() =>
+                      this.routerMethod('news/' + this.props.articles.data.backup_feed[prop].id)
+                    }
+                    className="img-div"
+                    style={{
+                      backgroundImage: `url(${VALUES.STORAGE_URL +
+                        this.props.articles.data.backup_feed[prop].img_url})`,
+                    }}
+                  ></div>
+                )}
               <div
                 className={
                   !this.props.id ? 'wrapper-news-div-hover' : 'wrapper-news-div-hover'
@@ -267,12 +163,11 @@ export class News extends Component {
               >
                 <p>
                   {this.props.articles.data.backup_feed[prop].username.length > 20
-                    ? this.props.articles.data.backup_feed[prop].username.substring(0, 20) +
-                      '... - ' +
-                      this.props.articles.data.backup_feed[prop].name
-                    : this.props.articles.data.backup_feed[prop].username +
-                      ' - ' +
-                      this.props.articles.data.backup_feed[prop].name}
+                    ? this.props.articles.data.backup_feed[prop].name + ' | ' + this.props.articles.data.backup_feed[prop].username.substring(0, 20) +
+                    '...'
+                    : this.props.articles.data.backup_feed[prop].name +
+                    ' | ' +
+                    this.props.articles.data.backup_feed[prop].username}
                 </p>
                 <h1>
                   {this.props.articles.data.backup_feed[prop].title.length > 100
@@ -304,14 +199,6 @@ export class News extends Component {
         <div
           key={this.props.articles.data.main_feed[prop].id}
           className={'design-120-60'}
-          onMouseEnter={() =>
-            this.articleDivInfoVisible('news-hover-' + this.props.articles.data.main_feed[prop].id)
-          }
-          onMouseLeave={() =>
-            this.articleDivInfoInvisible(
-              'news-hover-' + this.props.articles.data.main_feed[prop].id,
-            )
-          }
         >
           {this.props.articles.data.main_feed[prop].is_video === 1 ? (
             <div
@@ -325,56 +212,20 @@ export class News extends Component {
                 className="play-video-style-div"
                 src={require('../../images/play_video.png')}
               />
-              {window.screen.width < 800 ? (
-                <video
-                  poster={VALUES.STORAGE_URL + this.props.articles.data.main_feed[prop].img_url}
-                  width="100%"
-                  muted
-                >
-                  <source
-                    src={VALUES.STORAGE_URL + this.props.articles.data.main_feed[prop].img_url}
-                    type="video/mp4"
-                  />
-                  <source
-                    src={VALUES.STORAGE_URL + this.props.articles.data.main_feed[prop].img_url}
-                    type="video/webm"
-                  />
-                  <source
-                    src={VALUES.STORAGE_URL + this.props.articles.data.main_feed[prop].img_url}
-                    type="video/ogg"
-                  />
-                  Your browser does not support the video tag.
-                </video>
-              ) : (
-                <video width="100%" muted>
-                  <source
-                    src={VALUES.STORAGE_URL + this.props.articles.data.main_feed[prop].img_url}
-                    type="video/mp4"
-                  />
-                  <source
-                    src={VALUES.STORAGE_URL + this.props.articles.data.main_feed[prop].img_url}
-                    type="video/webm"
-                  />
-                  <source
-                    src={VALUES.STORAGE_URL + this.props.articles.data.main_feed[prop].img_url}
-                    type="video/ogg"
-                  />
-                  Your browser does not support the video tag.
-                </video>
-              )}
+              <ReactPlayer style={{ height: '70%', width: '100%' }} url={VALUES.STORAGE_URL + this.props.articles.data.main_feed[prop].img_url} />
             </div>
           ) : (
-            <div
-              className="img-div"
-              onClick={() =>
-                this.routerMethod('news/' + this.props.articles.data.main_feed[prop].id)
-              }
-              style={{
-                backgroundImage: `url(${VALUES.STORAGE_URL +
-                  this.props.articles.data.main_feed[prop].img_url})`,
-              }}
-            ></div>
-          )}
+              <div
+                className="img-div"
+                onClick={() =>
+                  this.routerMethod('news/' + this.props.articles.data.main_feed[prop].id)
+                }
+                style={{
+                  backgroundImage: `url(${VALUES.STORAGE_URL +
+                    this.props.articles.data.main_feed[prop].img_url})`,
+                }}
+              ></div>
+            )}
           <div
             className={!this.props.id ? 'wrapper-news-div-hover' : 'wrapper-news-div-hover'}
             onClick={() => this.routerMethod('news/' + this.props.articles.data.main_feed[prop].id)}
@@ -398,11 +249,11 @@ export class News extends Component {
       this.props.articles.data.main_feed[0] ? (
         data
       ) : (
-        <h5 className="no-result-tag-title">{'Sin resultados'}</h5>
-      )
+          <h5 className="no-result-tag-title">{'Sin resultados'}</h5>
+        )
     ) : (
-      <h5 className="no-result-tag-title">{'Sin resultados'}</h5>
-    );
+        <h5 className="no-result-tag-title">{'Sin resultados'}</h5>
+      );
   };
 
   newsDistribution = () => {
