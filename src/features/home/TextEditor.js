@@ -151,7 +151,7 @@ export class TextEditor extends Component {
         NotificationManager.info('Lo sentimos, el archivo es muy grande');
         document.getElementById('button-post-article').style.display = 'inline';
         document.getElementById('spinner-button-post-article').style.display = 'none';
-      } else if (this.state.file && this.state.file.type && this.state.file.type.includes('image') && this.state.file.type !== 'image/jpeg' && this.state.file.type !== 'image/jpg' && this.state.file.type !== 'image/png' && this.state.file.type !== 'image/gif') {
+      } else if (this.state.file && this.state.file.type && this.state.file.type.includes('image') && this.state.file.type !== 'image/PNG' && this.state.file.type !== 'image/jpeg' && this.state.file.type !== 'image/jpg' && this.state.file.type !== 'image/png' && this.state.file.type !== 'image/gif') {
         NotificationManager.info('Solo se permiten imagenes JPEG, JPG, PNG, GIF.');
         document.getElementById('button-post-article').style.display = 'inline';
         document.getElementById('spinner-button-post-article').style.display = 'none';
