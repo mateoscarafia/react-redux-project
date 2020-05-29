@@ -380,10 +380,10 @@ export class TextEditor extends Component {
                         <input onChange={this._handleImageChange} type="file" />
                         <img
                           alt="imagen/video"
-                          width="90px"
+                          width="70px"
                           title="Subir imagen/video"
                           className="play-video-style-div"
-                          style={{ opacity: '0.8' }}
+                          style={{ opacity: '0.8', marginTop:20 }}
                           src={require('../../images/img-vid.png')}
                         />
                         <p className="content-warning-message">Videos de 5 minutos</p>

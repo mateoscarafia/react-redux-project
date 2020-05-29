@@ -450,9 +450,9 @@ export class EditArticle extends Component {
                         <input onChange={this._handleImageChange} type="file" />
                         <img
                           alt="imagen/video"
-                          width="90px"
+                          width="70px"
                           title="Subir imagen/video"
-                          style={{ opacity: '0.8' }}
+                          style={{ opacity: '0.8', marginTop:15 }}
                           className="play-video-style-div"
                           src={require('../../images/img-vid.png')}
                         />
