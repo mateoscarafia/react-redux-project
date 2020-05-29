@@ -129,7 +129,7 @@ export class UserProfile extends Component {
   };
 
   goAway = () => {
-    if (this.props.home.uniquearticle.data[0].publicity_link !== 'null') {
+    if (this.props.home.userProfile.data[0].publicity_link !== 'null') {
       window.open(this.props.home.userProfile.data[0].publicity_link, '_blank');
     }
   };
@@ -929,7 +929,7 @@ export class UserProfile extends Component {
                         <option value={0}>NO</option>
                       </select>
                     </div>
-                    <div className="div-edit-user-button-save-change">
+                    <div style={{marginTop:-20}} className="div-edit-user-button-save-change">
                       <button
                         onClick={() => this.sendPublicity()}
                         type="button"
