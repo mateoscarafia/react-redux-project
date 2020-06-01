@@ -481,7 +481,7 @@ export class UserProfile extends Component {
   };
 
   logoutUser = () => {
-    if (window.confirm('¿Seguro que desea cerrar sesion?')){
+    if (window.confirm('¿Seguro que desea cerrar sesión?')){
     localStorage.removeItem('token-app-auth-current');
     window.location.replace(VALUES.FRONTEND_URL + 'feed/main');
     }
