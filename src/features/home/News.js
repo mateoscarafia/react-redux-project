@@ -136,7 +136,7 @@ export class News extends Component {
                   className="img-div"
                   style={{
                     backgroundImage: `url(${VALUES.STORAGE_URL +
-                      this.props.articles.data.main_feed[prop].profile_img_url})`,
+                      this.props.articles.data.backup_feed[prop].profile_img_url})`,
                   }}
                 >
                   <img
