@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import history from '../../common/history';
 import * as VALUES from '../../constants';
-import ReactPlayer from 'react-player'
+//import ReactPlayer from 'react-player'
 
 export class News extends Component {
   static propTypes = {
@@ -66,13 +66,16 @@ export class News extends Component {
                   onClick={() =>
                     this.routerMethod('news/' + this.props.articles.data.main_feed[prop].id)
                   }
+                  style={{
+                    backgroundImage: `url(${VALUES.STORAGE_URL +
+                      this.props.articles.data.main_feed[prop].profile_img_url})`,
+                  }}
                 >
                   <img
                     alt="video"
                     className="play-video-style-div"
                     src={require('../../images/play_video.png')}
                   />
-                  <ReactPlayer style={{ height: '70%', width: '100%' }} url={VALUES.STORAGE_URL + this.props.articles.data.main_feed[prop].img_url} />
                 </div>
 
               ) : (
@@ -131,13 +134,16 @@ export class News extends Component {
                     this.routerMethod('news/' + this.props.articles.data.backup_feed[prop].id)
                   }
                   className="img-div"
+                  style={{
+                    backgroundImage: `url(${VALUES.STORAGE_URL +
+                      this.props.articles.data.main_feed[prop].profile_img_url})`,
+                  }}
                 >
                   <img
                     alt="video"
                     className="play-video-style-div"
                     src={require('../../images/play_video.png')}
                   />
-                  <ReactPlayer style={{ height: '70%', width: '100%' }} url={VALUES.STORAGE_URL + this.props.articles.data.backup_feed[prop].img_url} />
                 </div>
               ) : (
                   <div
@@ -206,13 +212,16 @@ export class News extends Component {
               onClick={() =>
                 this.routerMethod('news/' + this.props.articles.data.main_feed[prop].id)
               }
+              style={{
+                backgroundImage: `url(${VALUES.STORAGE_URL +
+                  this.props.articles.data.main_feed[prop].profile_img_url})`,
+              }}
             >
               <img
                 alt="video"
                 className="play-video-style-div"
                 src={require('../../images/play_video.png')}
               />
-              <ReactPlayer style={{ height: '70%', width: '100%' }} url={VALUES.STORAGE_URL + this.props.articles.data.main_feed[prop].img_url} />
             </div>
           ) : (
               <div

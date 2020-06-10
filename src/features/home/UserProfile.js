@@ -562,7 +562,7 @@ export class UserProfile extends Component {
                     className="play-video-style-div"
                     src={require('../../images/play_video.png')}
                   />
-                <ReactPlayer style={{ height: '70%', width: '100%' }} url={VALUES.STORAGE_URL + item.img_url} />
+                <ReactPlayer style={{ height: '70%', width: '100%' }} url={VALUES.STORAGE_URL + item.img_url} muted playing={false}/>
               </div>
             )}
           <div

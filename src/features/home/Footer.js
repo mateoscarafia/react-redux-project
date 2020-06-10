@@ -14,7 +14,7 @@ export class Footer extends Component {
     return (
       <div className="home-footer">
         <br />
-        <img style={{marginBottom:'10px', marginLeft:'10px'}} alt="edit" width="55" src={require('../../images/logo_footer.PNG')} />
+        <img style={{marginBottom:'5px', marginLeft:'10px'}} alt="edit" width="55" src={require('../../images/logo_footer.PNG')} />
         <p>Vos sos el periodista</p>
         <br />
       </div>
