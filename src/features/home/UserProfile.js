@@ -788,7 +788,7 @@ export class UserProfile extends Component {
               </div>
             </div>
           </div>
-          <Footer />
+          <Footer history={this.props.history} />
           {this.state.openMyFollowers && (
             <div className="followers-div">
               <div className="followers-header-edit-user">

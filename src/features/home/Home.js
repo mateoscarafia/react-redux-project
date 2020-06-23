@@ -286,7 +286,7 @@ export class Home extends Component {
               </div>
             </div>
           </div>
-          <Footer />
+          <Footer history={this.props.history} />
           <NotificationContainer />
         </div>
       );

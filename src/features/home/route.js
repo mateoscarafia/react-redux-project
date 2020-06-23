@@ -9,6 +9,7 @@ import {
   TermsAndCond,
   EditArticle,
   ErrorLanding,
+  Wewoordi,
 } from './';
 
 export default {
@@ -29,5 +30,6 @@ export default {
     { path: '/terminosycondiciones', name: 'Terms and cond', component: TermsAndCond },
     { path: 'editarticle/:id', name: 'Edit article', component: EditArticle },
     { path: 'errorlanding', name: 'Error landing', component: ErrorLanding },
+    { path: '/wewoordi', name: 'Wewoordi', component: Wewoordi },
   ],
 };

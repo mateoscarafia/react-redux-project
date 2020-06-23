@@ -616,7 +616,7 @@ export class EditArticle extends Component {
             </div>
           )}
           {this.rotateImg()}
-          <Footer />
+          <Footer history={this.props.history} />
           <NotificationContainer />
         </div>
       );

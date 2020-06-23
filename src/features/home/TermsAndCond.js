@@ -17,7 +17,7 @@ export class TermsAndCond extends Component {
           <img style={{ marginBottom: '5px' }} alt="edit" width="65" src={require('../../images/logo_footer.PNG')} />
           <br />
           <br />
-          <h4>Terminos y Condiciones</h4>
+          <h4>Términos y Condiciones</h4>
           <br />
           <p>
             ¡Te damos la bienvenida a Woordi! Woordi desarrolla tecnologías y servicios que permiten

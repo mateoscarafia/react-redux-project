@@ -603,7 +603,7 @@ export class Article extends Component {
                 {this.publicityVisible()}
               </div>
             ) : null}
-          <Footer />
+          <Footer history={this.props.history} />
           <NotificationContainer />
         </div>
       );
