@@ -6,7 +6,6 @@ import * as actions from './redux/actions';
 
 //var txt = 'Lorem ipsum typing effect!';
 
-
 export class Wewoordi extends Component {
   static propTypes = {
     home: PropTypes.object.isRequired,
@@ -20,23 +19,36 @@ export class Wewoordi extends Component {
       i++;
       setTimeout(this.typeWriter(), 50);
     }*/
+  };
+
+  componentDidMount() {
+    if (document.getElementById('demo')) {
+      setTimeout(() => {
+        document.getElementById(
+          'demo',
+        ).innerHTML = `Woordi es una red social de periodismo y opinión. Woordi es una plataforma digital que permite a sus usuarios publicar contenido estructurado bajo el concepto de noticia. Es decir, el esquema de sus comunicados responde al de un periódico digital (Artículos/Videos).
+        Buscamos generar una comunidad de redactores independientes que encuentren en Woordi un espacio de libre expresión capaz de catapultar al público sus ideas y percepción de la realidad. Creemos que la concepción de diario digital puede ser adaptado a las tendencias actuales. Hoy en dia es el público quien genera el contenido para si mismo, la tecnología ha permitido esta descentralización y queremos hacer uso de ella.`;
+        document.getElementById('demo').style.transition = 'opacity 4s';
+        document.getElementById('demo').style.opacity = 1;
+      }, 500);
+    }
   }
 
   render() {
     return (
       <div className="home-wewoordi">
         <div className="text-div-content-inner">
-          <br/>
+          <br />
           <img
             style={{ marginBottom: '5px' }}
             alt="edit"
             width="65"
             src={require('../../images/logo_footer.PNG')}
           />
-          <br/><br/>
-          <br/>
-          <p id='demo'>Woordi es una red social de periodismo y opinión. Woordi es una plataforma digital que permite a sus usuarios publicar contenido estructurado bajo el concepto de noticia. Es decir, el esquema de sus comunicados responde al de un periódico digital (Artículos/Videos).
-          Buscamos generar una comunidad de redactores independientes que encuentren en Woordi un espacio de libre expresión capaz de catapultar al público sus ideas y percepción de la realidad. Creemos que la concepción de diario digital puede ser adaptado a las tendencias actuales. Hoy en dia es el público quien genera el contenido para si mismo, la tecnología ha permitido esta descentralización y queremos hacer uso de ella.</p>
+          <br />
+          <br />
+          <br />
+          <p id="demo"></p>
         </div>
       </div>
     );
